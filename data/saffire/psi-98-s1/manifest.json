@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-98:t0:r2",
+  "investigationId": "PSI-98",
+  "label": "SAFFIRE I · S1",
+  "doi": "10.60555/0t15-1z43",
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98",
+  "material": "SIBAL",
+  "fiberOrientation": null,
+  "geometry": {
+    "lengthMm": 940,
+    "widthMm": 406,
+    "thicknessMm": 0.37
+  },
+  "conditions": {
+    "flowCmS": 20,
+    "oxygenPct": [
+      21.5,
+      21.7
+    ],
+    "pressureKpa": null,
+    "flowDirection": "concurrent"
+  },
+  "ignition": {
+    "edge": "upstream",
+    "durationS": 8,
+    "powerW": 182
+  },
+  "sourceRecord": {
+    "file": "PSI-98_Experimental table_SAFFIRE-1.csv",
+    "row": 2
+  },
+  "corrections": [
+    {
+      "field": "thicknessMm",
+      "raw": "0.37 under Sample Thickness (cm)",
+      "adopted": 0.37,
+      "source": "https://ntrs.nasa.gov/citations/20180005168",
+      "locator": "Tabela 1"
+    },
+    {
+      "field": "geometry",
+      "raw": "Length 40.6 cm, Width 94 cm",
+      "adopted": "Length 94 cm, Width 40.6 cm",
+      "source": "https://ntrs.nasa.gov/citations/20180005168",
+      "locator": "Tabela 1"
+    }
+  ],
+  "assets": [
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE-I_ImageFrameSizes_ROI_Offsets_Grid_1280x920_v1.0.pdf",
+      "sizeBytes": 784299,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE-I_ImageFrameSizes_ROI_Offsets_Grid_1280x920_v1.0.pdf&version=1&redirect=false",
+      "version": 1,
+      "required": false,
+      "status": "error",
+      "error": "HTTP 404"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C1_JPEG_Mapped_part1.zip",
+      "sizeBytes": 148690336,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C1_JPEG_Mapped_part1.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C1",
+      "frameCount": 5000,
+      "firstMs": 1465937101465,
+      "lastMs": 1465937275176,
+      "status": "available",
+      "sha256": "ed7abe8c7eacfce4f54afdcdd163a12c99b6cab9723eb381bf32d9304e077efa"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C1_JPEG_Mapped_part2.zip",
+      "sizeBytes": 135089071,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C1_JPEG_Mapped_part2.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C1",
+      "frameCount": 5000,
+      "firstMs": 1465937275209,
+      "lastMs": 1465937442678,
+      "status": "available",
+      "sha256": "35693452df98b9033bdfeee0747195db5c91375354eca744a4a5d20b8d457bb3"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C1_JPEG_Mapped_part3.zip",
+      "sizeBytes": 109190886,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C1_JPEG_Mapped_part3.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C1",
+      "frameCount": 4388,
+      "firstMs": 1465937442712,
+      "lastMs": 1465937703389,
+      "status": "available",
+      "sha256": "b3dfc3b507bab207c37db4324c3e14b9a690f320a507d01f8e2566d42d92c861"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C2_JPEG_Mapped_Part1.zip",
+      "sizeBytes": 131787172,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C2_JPEG_Mapped_Part1.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C2",
+      "frameCount": 5000,
+      "firstMs": 1465937098443,
+      "lastMs": 1465937268996,
+      "status": "available",
+      "sha256": "2c29190a2a8317bfed86ab7618db392203440e73b267488b99e04e85f4721b69"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C2_JPEG_Mapped_part2.zip",
+      "sizeBytes": 134910758,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C2_JPEG_Mapped_part2.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C2",
+      "frameCount": 5000,
+      "firstMs": 1465937269029,
+      "lastMs": 1465937436584,
+      "status": "available",
+      "sha256": "b537fb368f2f750b31a8b499d0d65ffad3651a1406e30e8128851a6387f9d935"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C2_JPEG_Mapped_part3.zip",
+      "sizeBytes": 134910758,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C2_JPEG_Mapped_part3.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C2",
+      "frameCount": 5000,
+      "firstMs": 1465937269029,
+      "lastMs": 1465937436584,
+      "status": "available",
+      "sha256": "b537fb368f2f750b31a8b499d0d65ffad3651a1406e30e8128851a6387f9d935"
+    },
+    {
+      "name": "PSI-98_Raw Data_SAFFIRE_I_S1C2_JPEG_Mapped_part4.zip",
+      "sizeBytes": 121572185,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SAFFIRE_I_S1C2_JPEG_Mapped_part4.zip&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "camera": "S1C2",
+      "frameCount": 4553,
+      "firstMs": 1465937436621,
+      "lastMs": 1465937675659,
+      "status": "available",
+      "sha256": "b6e375c65c18f3fea3afacc56495e6a8416163bf5e48464f2596bdaf830e1138"
+    },
+    {
+      "name": "PSI-98_Raw Data_SFSDP-VIS-0295_Saffire 1 and 3_Thermocouple Placement.pdf",
+      "sizeBytes": 1065733,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_SFSDP-VIS-0295_Saffire+1+and+3_Thermocouple+Placement.pdf&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "status": "available",
+      "sha256": "e792c665b700656152adbf2594b68bc5d73c3fc0f6711608b4330a9d7535653f"
+    },
+    {
+      "name": "PSI-98_Raw Data_Saffire-I Sample 1 Sensor Data Complete TM graphs.xlsx",
+      "sizeBytes": 25066841,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Raw+Data_Saffire-I+Sample+1+Sensor+Data+Complete+TM+graphs.xlsx&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "status": "available",
+      "sha256": "8250e4585859c057e5d1b374546d63e40eda02b8c43ebb5356b6ecb4e2981a1d"
+    },
+    {
+      "name": "PSI-98_Science Documents_SAFFIRE-I Image Directory Nomenclature.pdf",
+      "sizeBytes": 262860,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Science+Documents_SAFFIRE-I+Image+Directory+Nomenclature.pdf&version=1&redirect=false",
+      "version": 1,
+      "required": true,
+      "status": "available",
+      "sha256": "c775153b5c68f5aa8bbdcdb455ef9f737f5291da752ce6befe1f5558cf3fd6ce"
+    }
+  ]
+}

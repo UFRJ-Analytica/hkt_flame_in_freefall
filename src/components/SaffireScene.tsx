@@ -1,0 +1,67 @@
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import type { Grid, SaffireModel } from "../saffire";
+
+export default function SaffireScene({
+  model, grid, resetCameraKey,
+}: {
+  model: SaffireModel;
+  grid: Grid;
+  resetCameraKey: number;
+}) {
+  const { lengthMm, widthMm, dxMm, dyMm } = model.grid;
+  const length = lengthMm / 1000;
+  const width = widthMm / 1000;
+  return (
+    <Canvas camera={{ position: [0.36, 0.95, 1.13], fov: 38 }}>
+      <color attach="background" args={["#09141e"]} />
+      <ambientLight intensity={1.65} />
+      <directionalLight position={[0, 2, 1]} intensity={2.1} />
+      <mesh position={[0, -0.014, 0]}>
+        <boxGeometry args={[length + 0.035, 0.023, width + 0.035]} />
+        <meshStandardMaterial color="#4d6775" />
+      </mesh>
+      {grid.map((cells, row) => {
+        const lo = row * dyMm / 1000;
+        const hi = Math.min(width, (row + 1) * dyMm / 1000);
+        const z = (lo + hi - width) / 2;
+        const rowWidth = hi - lo;
+        const runs: { start: number; end: number; state: number | null }[] = [];
+        cells.forEach((state, index) => {
+          const last = runs[runs.length - 1];
+          if (last && last.state === state) last.end = index + 1;
+          else runs.push({ start: index, end: index + 1, state });
+        });
+        return (
+          <group key={row} position={[0, 0, z]}>
+            {runs.map(run => {
+              const start = run.start * dxMm / 1000;
+              const end = Math.min(length, run.end * dxMm / 1000);
+              return <group key={run.start}>
+                <mesh position={[(start + end - length) / 2, 0, 0]}>
+                  <boxGeometry args={[end - start, 0.002, rowWidth]} />
+                  <meshStandardMaterial color={run.state === null ? "#62747e" : run.state === 1 ? "#452f31" : "#cdc09b"} />
+                </mesh>
+                {run.state === 1 && end < length && <mesh position={[end - length / 2, 0.005, 0]}>
+                  <boxGeometry args={[0.006, 0.005, rowWidth]} />
+                  <meshStandardMaterial color="#ff9f43" emissive="#ff680e" emissiveIntensity={0.7} />
+                </mesh>}
+              </group>;
+            })}
+          </group>
+        );
+      })}
+      <group position={[0, 0.012, width / 2 + 0.065]} rotation={[0, 0, -Math.PI / 2]}>
+        <mesh>
+          <cylinderGeometry args={[0.004, 0.004, length * 0.68, 10]} />
+          <meshBasicMaterial color="#5de6e3" />
+        </mesh>
+        <mesh position={[0, length * 0.34 + 0.009, 0]}>
+          <coneGeometry args={[0.015, 0.039, 16]} />
+          <meshBasicMaterial color="#5de6e3" />
+        </mesh>
+      </group>
+      <OrbitControls key={resetCameraKey} makeDefault maxDistance={2.8} minDistance={0.37} />
+    </Canvas>
+  );
+}

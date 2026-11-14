@@ -8,4 +8,5 @@ dist/
 __pycache__/
 .venv/
 .scratch/
+data/cache/saffire/
 .DS_Store

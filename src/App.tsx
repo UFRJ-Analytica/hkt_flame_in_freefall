@@ -48,6 +48,7 @@ import { useResearch } from "./research/useResearch";
 import { applyConditions, CONDITION_FIELDS, initialOrigins, invalidConditions, originLabel } from "./research/provenance";
 import type { ConditionOrigins } from "./research/provenance";
 import type { ResearchContext } from "./research/types";
+import { readSaffireModel, SAFFIRE_SOURCE, simulateSaffire, type SaffireModel } from "./saffire";
 import {
   INITIAL_MATERIALS,
   MATERIALS,
@@ -62,6 +63,7 @@ import type {
   VehicleId,
 } from "./types";
 const CabinScene = lazy(() => import("./components/CabinScene"));
+const SaffireScene = lazy(() => import("./components/SaffireScene"));
 type Page = "lab" | "experiments" | "sources";
 const OVERLAYS = [
   { id: "materials", label: "Materiais", icon: Layers3 },
@@ -72,6 +74,32 @@ const OVERLAYS = [
 export default function App() {
   const { data, error, loading, reload } = useNasaData();
   const [page, setPage] = useState<Page>("lab");
+  const [labMode, setLabMode] = useState<"cabin" | "saffire">("cabin");
+  const [saffire, setSaffire] = useState<SaffireModel | null>(null);
+  const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
+  const isSaffire = labMode === "saffire";
+  const duration = isSaffire ? (saffire?.durationSeconds ?? 0) : 90;
+  const saffireSteps = useMemo(() => saffire ? simulateSaffire(saffire) : [], [saffire]);
+  useEffect(() => {
+    if (!isSaffire) return;
+    const request = new AbortController();
+    setSaffire(null);
+    setSaffireStatus("Carregando dados do ensaio…");
+    fetch(`${import.meta.env.BASE_URL}data/saffire/psi-98-s1-neighbors.json`, { signal: request.signal })
+      .then((response) => {
+        if (!response.ok || !response.headers.get("content-type")?.includes("json")) {
+          throw new Error("O resultado do processamento SAFFIRE ainda não está disponível.");
+        }
+        return response.json();
+      })
+      .then((value) => {
+        if (!request.signal.aborted) setSaffire(readSaffireModel(value));
+      })
+      .catch((error: unknown) => {
+        if (!request.signal.aborted) setSaffireStatus(error instanceof Error ? error.message : "Dados indisponíveis.");
+      });
+    return () => request.abort();
+  }, [isSaffire]);
   const [vehicle, setVehicle] = useState<VehicleId>("orion");
   const [atmosphere, setAtmosphere] = useState<Atmosphere>({
     ...PRESETS[0].atmosphere,
@@ -100,6 +128,8 @@ export default function App() {
   const [cutaway, setCutaway] = useState(true);
   const [overlay, setOverlay] = useState<Overlay>("materials");
   const [time, setTime] = useState(0);
+  const saffireStepIndex = saffire ? Math.min(saffireSteps.length - 1, Math.floor(time / saffire.stepSeconds)) : 0;
+  const saffireBlocked = saffireSteps.slice(0, saffireStepIndex + 1).reduce((sum, step) => sum + step.blocked, 0);
   const [playing, setPlaying] = useState(false);
   const [runId, setRunId] = useState(0);
   const [ignitionSurface, setIgnitionSurface] = useState<string | null>(null);
@@ -128,17 +158,17 @@ export default function App() {
       () =>
         setTime(
           Math.min(
-            90,
+            duration,
             startTime + ((performance.now() - startedAt) / 1000) * speed,
           ),
         ),
       100,
     );
     return () => window.clearInterval(timer);
-  }, [playing, speed, runId]);
+  }, [playing, speed, runId, duration]);
   useEffect(() => {
-    if (time >= 90) setPlaying(false);
-  }, [time]);
+    if (time >= duration) setPlaying(false);
+  }, [time, duration]);
   useEffect(() => {
     if (!notice) return;
     const timer = setTimeout(() => setNotice(null), 5500);
@@ -170,11 +200,19 @@ export default function App() {
     setTime(0);
   }
   function run() {
-    setIgnitionSurface(selectedSurface);
+    if (isSaffire && !saffire) return;
+    setIgnitionSurface(isSaffire ? null : selectedSurface);
     setRunId((r) => r + 1);
     setTime(0);
     setPlaying(true);
-    setOverlay("thermal");
+    if (!isSaffire) setOverlay("thermal");
+  }
+  function changeLabMode(mode: "cabin" | "saffire") {
+    setLabMode(mode);
+    setPlaying(false);
+    setTime(0);
+    setRunId(0);
+    setIgnitionSurface(null);
   }
   function applyTest(test: ExperimentTest) {
     const invalid = invalidConditions(test);
@@ -213,6 +251,7 @@ export default function App() {
       sourceFile: test.sourceFile,
       sourceRow: test.sourceRow,
     });
+    setLabMode("cabin");
     setPreset("experiment");
     setPendingTest(null);
     setPage("lab");
@@ -221,7 +260,13 @@ export default function App() {
     );
   }
   function exportScenario() {
-    const payload = {
+    if (isSaffire && !saffire) return;
+    const payload = isSaffire && saffire ? {
+      product: "HabitatFire",
+      version: 1,
+      visualization: { mode: "saffire-surface-transition", timeSeconds: time },
+      model: saffire,
+    } : {
       product: "HabitatFire",
       version: 2,
       vehicle,
@@ -253,11 +298,12 @@ export default function App() {
     );
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "habitatfire-cenario.json";
+    anchor.download = isSaffire ? "habitatfire-saffire-i-s1.json" : "habitatfire-cenario.json";
     anchor.click();
     URL.revokeObjectURL(url);
     setNotice(
-      "Cenário exportado com condições, hipóteses e referência do snapshot NASA.",
+      isSaffire ? "Modelo SAFFIRE exportado com a fonte e a checagem temporal."
+        : "Cenário exportado com condições, hipóteses e referência do snapshot NASA.",
     );
   }
   return (
@@ -355,13 +401,15 @@ export default function App() {
               </div>
               <h1>O fogo muda. A sua perspectiva também.</h1>
               <p>
-                Explore uma cabine em microgravidade e conecte suas perguntas à
-                ciência da NASA.
+                {isSaffire
+                  ? "Explore a propagação medida em uma amostra do SAFFIRE I."
+                  : "Explore uma cabine em microgravidade e conecte suas perguntas à ciência da NASA."}
               </p>
             </div>
             <button
               className="button secondary export-button"
               onClick={exportScenario}
+              disabled={isSaffire && !saffire}
             >
               <ArrowDownToLine size={15} />
               Exportar cenário
@@ -374,6 +422,24 @@ export default function App() {
                 <h2>Seu cenário</h2>
                 <span className="tiny-tag">0 g</span>
               </div>
+              <section className="control-section">
+                <label className="preset-select">
+                  <select aria-label="Modo do laboratório" value={labMode}
+                    onChange={(event) => changeLabMode(event.target.value === "saffire" ? "saffire" : "cabin")}>
+                    <option value="cabin">Cabine ilustrativa</option>
+                    <option value="saffire">SAFFIRE I · S1</option>
+                  </select>
+                  <ChevronDown size={14} />
+                </label>
+              </section>
+              {isSaffire ? (
+                <section className="control-section">
+                  <h3>Amostra SIBAL</h3>
+                  <p>94 × 40,6 cm · 0,37 mm de espessura</p>
+                  <p>Fluxo nominal de 20 cm/s · O₂ de 21,5 a 21,7%</p>
+                  <p>Ignição na borda a montante</p>
+                </section>
+              ) : <>
               <section className="control-section">
                 <div className="step-label">
                   <span>01</span>
@@ -557,6 +623,7 @@ export default function App() {
                   Atribuições hipotéticas, não materiais reais do veículo.
                 </p>
               </section>
+              </>}
               <div className="scenario-footer">
                 <span>
                   <ShieldCheck size={14} />
@@ -573,7 +640,7 @@ export default function App() {
                   <div className="scene-title">
                     <i className="dot amber" />
                     <span>
-                      {vehicle === "orion"
+                      {isSaffire ? "SAFFIRE I / AMOSTRA S1" : vehicle === "orion"
                         ? "ORION / CREW CABIN"
                         : "ORBITAL / LAB MODULE"}
                     </span>
@@ -581,16 +648,24 @@ export default function App() {
                   <span className="scene-scale">3D · MICROGRAVIDADE</span>
                 </div>
                 <div className="scene-canvas">
-                  <SceneBoundary>
+                  <SceneBoundary key={labMode}>
                     <Suspense
                       fallback={
                         <div className="scene-loading">
                           <LoaderCircle size={24} className="spin" />
-                          <span>Construindo a cabine…</span>
+                          <span>Carregando cena…</span>
                         </div>
                       }
                     >
-                      <CabinScene
+                      {isSaffire ? saffire ? (
+                        <SaffireScene
+                          model={saffire}
+                          grid={saffireSteps[saffireStepIndex].grid}
+                          resetCameraKey={resetCameraKey}
+                        />
+                      ) : (
+                        <div className="scene-fallback" role="status"><p>{saffireStatus}</p></div>
+                      ) : <CabinScene
                         vehicle={vehicle}
                         cutaway={cutaway}
                         overlay={overlay}
@@ -603,12 +678,12 @@ export default function App() {
                         atmosphere={atmosphere}
                         materialAssignments={assignments}
                         resetCameraKey={resetCameraKey}
-                      />
+                      />}
                     </Suspense>
                   </SceneBoundary>
                 </div>
                 <div className="scene-left-tools">
-                  <button
+                  {!isSaffire && <button
                     className={`tool-button ${cutaway ? "active" : ""}`}
                     title="Alternar vista em corte"
                     aria-label="Alternar vista em corte"
@@ -616,7 +691,7 @@ export default function App() {
                     onClick={() => setCutaway((v) => !v)}
                   >
                     <Layers3 size={17} />
-                  </button>
+                  </button>}
                   <button
                     className="tool-button"
                     title="Restaurar câmera"
@@ -645,7 +720,7 @@ export default function App() {
                     <Expand size={16} />
                   </button>
                 </div>
-                <div className="scene-overlay-controls">
+                {!isSaffire && <div className="scene-overlay-controls">
                   {OVERLAYS.map((layer) => (
                     <button
                       key={layer.id}
@@ -656,10 +731,10 @@ export default function App() {
                       {layer.label}
                     </button>
                   ))}
-                </div>
+                </div>}
                 <div className="scene-bottom">
                   <div className="scene-legend">
-                    {overlay === "thermal" ? (
+                    {isSaffire ? <><span className="heat-legend" /> Frente de pirólise simulada</> : overlay === "thermal" ? (
                       <>
                         <span className="heat-legend" />
                         Intensidade visual · ilustrativa
@@ -685,34 +760,35 @@ export default function App() {
                 <div className="scene-instructions">
                   <MousePointer2 size={12} />
                   Arraste para orbitar<span>·</span>Role para aproximar
-                  <span>·</span>Clique para selecionar
+                  {!isSaffire && <><span>·</span>Clique para selecionar</>}
                 </div>
               </div>
               <section className="playback-panel">
                 <div className="playback-header">
                   <div>
-                    <span className="eyebrow">EXPLORAR UM CENÁRIO</span>
+                    <span className="eyebrow">{isSaffire ? "ENSAIO SAFFIRE I · S1" : "EXPLORAR UM CENÁRIO"}</span>
                     <h2>
-                      {ignitionSurface
+                      {isSaffire ? "Propagação sobre o SIBAL" : ignitionSurface
                         ? `Ignição em ${SURFACES.find((s) => s.id === ignitionSurface)?.name.toLowerCase()}`
                         : "Como o ambiente influencia a chama?"}
                     </h2>
                   </div>
                   <span className="illustrative-pill">
                     <Info size={12} />
-                    Ilustrativo
+                    {isSaffire ? "Modelo de um ensaio" : "Ilustrativo"}
                   </span>
                 </div>
                 <div className="timeline">
                   <button
                     className="play-button"
+                    disabled={isSaffire && !saffire}
                     aria-label={
                       playing ? "Pausar animação" : "Reproduzir animação"
                     }
                     onClick={() => {
                       if (!runId) run();
                       else {
-                        if (time >= 90) setTime(0);
+                        if (time >= duration) setTime(0);
                         setPlaying((p) => !p);
                       }
                     }}
@@ -728,7 +804,7 @@ export default function App() {
                       aria-label="Progresso da animação ilustrativa, não tempo físico"
                       type="range"
                       min={0}
-                      max={90}
+                      max={duration}
                       step={0.1}
                       value={time}
                       disabled={!runId}
@@ -738,20 +814,20 @@ export default function App() {
                       }}
                       style={
                         {
-                          "--range-progress": `${(time / 90) * 100}%`,
+                          "--range-progress": `${duration ? (time / duration) * 100 : 0}%`,
                         } as React.CSSProperties
                       }
                     />
                     <div className="timeline-ticks">
-                      <span>0%</span>
-                      <span>33%</span>
-                      <span>67%</span>
-                      <span>100%</span>
+                      <span>{isSaffire ? "0 s" : "0%"}</span>
+                      <span>{isSaffire ? `${number(duration / 3, 0)} s` : "33%"}</span>
+                      <span>{isSaffire ? `${number(2 * duration / 3, 0)} s` : "67%"}</span>
+                      <span>{isSaffire ? `${number(duration, 0)} s` : "100%"}</span>
                     </div>
                   </div>
                   <div className="time-readout">
-                    <strong>{number((time / 90) * 100, 0)}%</strong>
-                    <span>animação</span>
+                    <strong>{isSaffire ? number(time, 1) : `${number((time / 90) * 100, 0)}%`}</strong>
+                    <span>{isSaffire ? `/ ${number(duration, 0)} s` : "animação"}</span>
                   </div>
                   <button
                     className="speed-button"
@@ -771,23 +847,27 @@ export default function App() {
                 <div className="playback-footer">
                   <p>
                     <Info size={12} />
-                    Animação de hipótese. Sem previsão validada de propagação.
+                    {isSaffire
+                      ? saffireBlocked
+                        ? `${saffireBlocked} tentativas de transição sem estimativa foram suspensas nesta reprodução.`
+                        : "Simulação por vizinhança, com checagem temporal no mesmo ensaio."
+                      : "Animação de hipótese. Sem previsão validada de propagação."}
                   </p>
-                  <button className="button primary" onClick={run}>
+                  <button className="button primary" onClick={run} disabled={isSaffire && !saffire}>
                     <Flame size={15} />
-                    {runId ? "Reiniciar cenário" : "Visualizar ignição"}
+                    {isSaffire ? (runId ? "Reiniciar simulação" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
                     <ArrowRight size={15} />
                   </button>
                 </div>
               </section>
             </div>
-            <ResearchPanel
+            {isSaffire ? <SaffireEvidence model={saffire} /> : <ResearchPanel
               research={research}
               context={researchContext}
               onApply={applyTest}
               onExplore={() => setPage("experiments")}
               onSources={() => setPage("sources")}
-            />
+            />}
           </main>
           <footer className="app-footer">
             <span>
@@ -999,5 +1079,54 @@ function RangeControl({
         </span>
       </span>
     </label>
+  );
+}
+
+function SaffireEvidence({ model }: { model: SaffireModel | null }) {
+  return (
+    <aside className="evidence-panel" aria-label="Evidência SAFFIRE">
+      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+      <section className="evidence-card featured">
+        <div className="evidence-card-title">
+          <h3>SAFFIRE I · S1</h3>
+          <a href={SAFFIRE_SOURCE} target="_blank" rel="noreferrer" aria-label="Abrir SAFFIRE I na NASA">
+            <ArrowUpRight size={17} />
+          </a>
+        </div>
+        <p>Frente de pirólise observada nas duas câmeras do ensaio.</p>
+        {model && <>
+          <div className="evidence-numbers">
+            <div>
+              <strong>{number(model.comparison.neighborhood.positionMaeMm.mean)} mm</strong>
+              <span>Erro médio por vizinhança</span>
+            </div>
+            <div>
+              <strong>{number(model.comparison.baseline.positionMaeMm.mean)} mm</strong>
+              <span>Erro médio do modelo anterior</span>
+            </div>
+          </div>
+          <p>Probabilidade de avanço em 2 s por vizinhança. As direções laterais são relativas à amostra.</p>
+          <div className="saffire-probabilities">
+            {Object.entries(model.combinations).filter(([key]) => key !== "000").map(([key, value]) => (
+              <p key={key}>
+                <strong>{[key[0] === "1" && "Montante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}</strong>
+                {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
+                {" · "}{number(value.transitions, 0)}/{number(value.exposures, 0)}
+                {value.exposures > 0 && value.exposures < 100 ? " · poucos dados" : ""}
+                {value.probability !== null && value.transitions < 5 ? " · poucos avanços" : ""}
+              </p>
+            ))}
+          </div>
+          <div className="domain-note">
+            <Info size={14} />
+            <span>
+              Em {model.comparison.seedCount} simulações do trecho reservado, a velocidade média foi
+              {" "}{number(model.comparison.neighborhood.simulatedSpeedMmS.mean, 2)} mm/s
+              e nas imagens {number(model.comparison.observedSpeedMmS, 2)} mm/s. As taxas representam associações observadas.
+            </span>
+          </div>
+        </>}
+      </section>
+    </aside>
   );
 }
