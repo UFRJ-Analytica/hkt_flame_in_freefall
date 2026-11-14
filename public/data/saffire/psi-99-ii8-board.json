@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r9",
+  "kind": "localized-observation",
+  "camera": "S8C1",
+  "durationSeconds": 639.978,
+  "ignitionEdge": "left",
+  "observations": [
+    {
+      "timeSeconds": 2.067,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 6.067,
+      "orangePixels": 813,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 11.97,
+      "orangePixels": 2516,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 19.669,
+      "orangePixels": 4066,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 29.868,
+      "orangePixels": 3737,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 39.464,
+      "orangePixels": 348,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 79.46,
+      "orangePixels": 2832,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 120.168,
+      "orangePixels": 4193,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 169.463,
+      "orangePixels": 5610,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 259.456,
+      "orangePixels": 5559,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 449.769,
+      "orangePixels": 5162,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 599.656,
+      "orangePixels": 4808,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 639.978,
+      "orangePixels": 0,
+      "edgeGlow": false
+    }
+  ],
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+  "inputArchives": [
+    "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part1.zip",
+    "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part2.zip",
+    "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part3.zip",
+    "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part4.zip"
+  ],
+  "probability": null
+}

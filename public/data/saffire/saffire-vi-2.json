@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 3,
+  "status": "ready",
+  "experimentId": "SAFFIRE-VI-2",
+  "sample": "VI-2",
+  "material": "SIBAL",
+  "aliases": [
+    {
+      "id": "SAFFIRE VI · Evento 5",
+      "source": {
+        "label": "Cronologia do SAFFIRE VI, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20250002675"
+      }
+    }
+  ],
+  "measuredGeometry": {
+    "lengthMm": 500,
+    "widthMm": 400,
+    "widthApproximate": true,
+    "source": {
+      "label": "Cronologia do SAFFIRE VI, Tabela 1",
+      "url": "https://ntrs.nasa.gov/citations/20250002675"
+    }
+  },
+  "conditions": {
+    "oxygenPct": 31,
+    "pressureKpa": 54.1,
+    "source": {
+      "label": "Resultados preliminares de SAFFIRE VI, Tabela 1",
+      "url": "https://ntrs.nasa.gov/citations/20240002981"
+    },
+    "context": "Condições do ensaio na tabela do relatório preliminar",
+    "flowCmS": 20,
+    "direction": "concurrent"
+  },
+  "otherReportedConditions": [
+    {
+      "lengthMm": 500,
+      "widthMm": 410,
+      "source": {
+        "label": "Resultados preliminares de SAFFIRE VI, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20240002981"
+      },
+      "context": "Largura nominal no resumo do relatório preliminar"
+    }
+  ],
+  "calibration": {
+    "speedMmS": 4.05,
+    "variable": "Velocidade longitudinal de propagação da chama",
+    "source": {
+      "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+      "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+    },
+    "kind": "published-speed",
+    "formula": "p = speedMmS × stepSeconds / dxMm"
+  },
+  "media": [
+    {
+      "label": "Relato e vídeo público da NASA, referência visual",
+      "url": "https://www.nasa.gov/centers-and-facilities/glenn/flame-burns-out-on-nasas-long-running-spacecraft-fire-experiment/"
+    }
+  ],
+  "directionSource": {
+    "label": "Cronologia do SAFFIRE VI, Tabela 1",
+    "url": "https://ntrs.nasa.gov/citations/20250002675"
+  },
+  "relatedEvidence": [
+    {
+      "id": "VI-1",
+      "material": "Nomex",
+      "status": "ignition-failed",
+      "outcome": "A tentativa de ignição não produziu chama.",
+      "source": {
+        "label": "Resultados preliminares de SAFFIRE VI, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20240002981"
+      },
+      "aliases": [
+        {
+          "id": "Evento 4",
+          "source": {
+            "label": "Cronologia do SAFFIRE VI, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20250002675"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VI-3",
+      "material": "PMMA de duas faces",
+      "status": "anchored-flame",
+      "outcome": "A chama cresceu até a redução do fluxo. O estudo comparativo registrou crescimento da chama e avanço por regressão local.",
+      "source": {
+        "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+        "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+      },
+      "aliases": [
+        {
+          "id": "Evento 6",
+          "source": {
+            "label": "Cronologia do SAFFIRE VI, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20250002675"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VI-4",
+      "material": "PMMA de uma face",
+      "status": "anchored-flame",
+      "outcome": "A chama cresceu até a redução do fluxo. O estudo comparativo registrou crescimento da chama e avanço por regressão local.",
+      "source": {
+        "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+        "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+      },
+      "aliases": [
+        {
+          "id": "Evento 8",
+          "source": {
+            "label": "Cronologia do SAFFIRE VI, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20250002675"
+          }
+        }
+      ]
+    }
+  ],
+  "grid": {
+    "lengthMm": 500,
+    "widthMm": 406,
+    "dxMm": 10,
+    "dyMm": 20,
+    "columns": 50,
+    "rows": 21
+  },
+  "stepSeconds": 2,
+  "durationSeconds": 122,
+  "ignition": {
+    "edge": "upstream",
+    "initialReachedColumns": 1
+  },
+  "playbackSeed": 1951,
+  "probability": 0.8099999999999999,
+  "directionProbabilities": {
+    "concurrent": 0.8099999999999999,
+    "opposed": null,
+    "lateral": null
+  },
+  "validation": {
+    "kind": "numerical-speed-only",
+    "reason": "As fontes públicas consultadas trazem a taxa e dados agregados, sem série de posição comparável.",
+    "seedCount": 20,
+    "seeds": [
+      1951,
+      1952,
+      1953,
+      1954,
+      1955,
+      1956,
+      1957,
+      1958,
+      1959,
+      1960,
+      1961,
+      1962,
+      1963,
+      1964,
+      1965,
+      1966,
+      1967,
+      1968,
+      1969,
+      1970
+    ],
+    "testGrid": {
+      "lengthMm": 1000,
+      "widthMm": 406,
+      "dxMm": 10,
+      "dyMm": 20,
+      "columns": 100,
+      "rows": 21
+    },
+    "durationSeconds": 100,
+    "simulatedSpeedMmS": 4.064523809523809
+  }
+}

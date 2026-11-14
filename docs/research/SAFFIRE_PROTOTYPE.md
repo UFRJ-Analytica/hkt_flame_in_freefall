@@ -39,6 +39,12 @@ Para incluir outro ensaio, acrescente uma configuração com o ID do catálogo, 
 
 ## Verificação
 
+### Frente contínua na cena central
+
+O simulador atual avança na primeira célula intacta da faixa em cada sentido. Os estados dos vizinhos laterais selecionam a taxa conjunta quando a combinação tem pelo menos 30 exposições. Para combinações sem estimativa, aplica-se a média longitudinal da mesma direção. Essa regra mantém a região alcançada contínua em cada faixa.
+
+O S2 usa a câmera S2C2 com a região previamente alterada censurada. O ajuste contra o fluxo usa 29 avanços em 96 exposições com vizinho a jusante (30,2% por passo). Os casos com vizinhos laterais ativos ficaram abaixo do mínimo. A checagem temporal usa 12 faixas com observações disponíveis ao longo de todo o trecho reservado. Em 20 sementes, a velocidade média simulada foi 1,49 mm/s, comparada a 2,00 mm/s nas observações, com erro médio de posição de 3,7 mm. A revisão visual foi feita nas sobreposições do detector. Para S1, a frente contínua teve erro médio de 14,5 mm e velocidade de 1,84 mm/s, comparada a 1,95 mm/s observados. A ignição central combina esses ajustes em uma cena ilustrativa.
+
 ```powershell
 python -m unittest discover -s scripts
 npm run build

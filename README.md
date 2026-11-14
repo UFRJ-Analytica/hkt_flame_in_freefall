@@ -50,7 +50,10 @@ npm run preview
 - Atmosfera, ventilação e hipóteses de materiais editáveis.
 - Camadas de materiais, representação térmica ilustrativa e representação de ventilação.
 - Ignição ilustrativa com reprodução, pausa, velocidade e linha do tempo.
-- Modo **SAFFIRE I · S1** com simulação da frente de pirólise sobre a amostra SIBAL. Consulte o [procedimento de ingestão e ajuste](docs/research/SAFFIRE_PROTOTYPE.md).
+- **SAFFIRE I e III** com avanço a favor e contra o fluxo calibrado pelas imagens dos dois ensaios de cada voo. Consulte os procedimentos de [I](docs/research/SAFFIRE_PROTOTYPE.md) e [III](docs/research/SAFFIRE_III.md).
+- **SAFFIRE II** com nove amostras. II-5 e II-6 têm avanço estocástico calibrado pelas imagens. As demais exibem a atividade observada na borda. Consulte os [dados e a metodologia de II](docs/research/SAFFIRE_II.md).
+- **SAFFIRE IV-1, V-2 e VI-2** com avanço estocástico a favor do fluxo, calibrado por velocidade publicada. Consulte os [dados e checagens de IV a VI](docs/research/SAFFIRE_IV_V_VI.md).
+- [Relatório SAFFIRE I a VI em PDF](docs/research/relatorio_saffire_i_a_vi.pdf) com metodologia, probabilidades, validação e desfechos dos 25 casos.
 - Catálogo real com filtros, busca, paginação, campos originais, exportação e aplicação das condições numéricas disponíveis ao cenário; verificado no navegador com BASS-II e FLEX.
 - Proveniência e limitações visíveis na aplicação.
 
@@ -99,7 +102,7 @@ Ausências não viram zero, desfechos não são inventados e valores aproximados
 
 Sólidos, gotas, gases e detecção são contextos diferentes. Não há classificador treinado que misture esses rótulos. Os números apresentados no catálogo são campos de experimentos, não probabilidades de risco de uma cabine.
 
-A cabine usa geometria aproximada e atribuições hipotéticas de materiais. O modo SAFFIRE I · S1 usa um autômato estocástico ajustado à frente de pirólise em um ensaio, com checagem temporal no mesmo experimento. Suas probabilidades são condicionadas à vizinhança e não demonstram causalidade lateral. Esse modelo não representa CFD nem uma previsão validada para outras geometrias ou condições e não se destina à certificação ou à segurança operacional.
+A cabine usa geometria aproximada e atribuições hipotéticas de materiais. As cenas SAFFIRE reproduzem as amostras nas condições de cada ensaio. I e III usam probabilidades condicionadas à vizinhança e checadas em um trecho reservado do próprio ensaio. Os parâmetros laterais descrevem associações observadas. Os modelos têm finalidade exploratória e validade restrita às condições analisadas.
 
 PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenários dos sketches históricos de modelos físicos. Reprodução experimental exige mídia/tempo medidos; previsão calibrada exige observações e validação independentes. Nenhum desses modos deve ser fabricado a partir de um score de busca.
 
@@ -109,7 +112,7 @@ PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenár
 src/
   App.tsx                          laboratório e integração do cenário
   components/CabinScene.tsx        cena Three.js / React Three Fiber
-  components/SaffireScene.tsx      cena da amostra SAFFIRE I · S1
+  components/SaffireScene.tsx      cena da amostra SAFFIRE na grade
   components/ExperimentExplorer.tsx catálogo e fontes
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos

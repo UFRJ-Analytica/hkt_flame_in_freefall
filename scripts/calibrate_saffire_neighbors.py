@@ -104,6 +104,32 @@ def simulate_baseline(front: list[int | None], probability: float, steps: int, s
     return [make_grid(row) for row in history]
 
 
+def simulate_contiguous(front, combinations, probability, steps, seed):
+    """Advance at the first intact cell in each row; lateral states modulate its rate."""
+    history = [make_grid(front)]
+    for _ in range(steps):
+        previous = history[-1]
+        following = [row[:] for row in previous]
+        for y, row in enumerate(previous):
+            x = next((i for i, cell in enumerate(row) if cell == 0), None)
+            if x is None or x == 0 or row[x-1] != 1:
+                continue
+            key = neighbors(previous, y, x)
+            joint = combinations[key]['probability'] if key else None
+            seed = (1664525 * seed + 1013904223) & 0xffffffff
+            if seed / 2**32 < (probability if joint is None else joint):
+                following[y][x] = 1
+        history.append(following)
+    return history
+
+
+def contiguous_validation(observed, combinations, probability):
+    runs = [evaluate(observed, simulate_contiguous(observed[0], combinations, probability, len(observed)-1, seed))
+            for seed in range(1951, 1971)]
+    return {key: float(np.mean([run[key] for run in runs])) for key in
+            ('positionMaeMm', 'shapeMaeMm', 'observedSpeedMmS', 'simulatedSpeedMmS')} | {'seedCount': len(runs)}
+
+
 def front_positions(grid: list[list[int | None]]) -> list[int | None]:
     return [None if any(value is None for value in row) else max((i + 1 for i, value in enumerate(row) if value == 1), default=0)
             for row in grid]
@@ -223,6 +249,7 @@ def main() -> None:
     product = {
         **original, 'schemaVersion': 2, 'model': 'neighborhood', 'combinations': combinations,
         'neighborhoodTraining': {'censoredCellSteps': train['censored'], 'minimumExposures': MIN_EXPOSURES},
+        'contiguousValidation': contiguous_validation(observed[split:], combinations, baseline_probability),
         'neighborhoodHoldout': holdout,
         'lateralOverlays': overlays,
         'comparison': {'seedCount': len(validation), 'observedSpeedMmS': validation[0]['baseline']['observedSpeedMmS'],

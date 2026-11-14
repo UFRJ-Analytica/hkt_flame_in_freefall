@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r6",
+  "status": "ready",
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+  "camera": "S5C1",
+  "direction": "concurrent",
+  "material": "SIBAL",
+  "conditions": {
+    "flowCmS": 20,
+    "oxygenPctApprox": 22.1,
+    "thicknessMm": 0.37
+  },
+  "grid": {
+    "lengthMm": 290,
+    "widthMm": 50,
+    "dxMm": 10,
+    "dyMm": 20,
+    "columns": 29,
+    "rows": 3
+  },
+  "stepSeconds": 2,
+  "durationSeconds": 144,
+  "probability": 0.4583333333333333,
+  "train": {
+    "transitions": 44,
+    "exposures": 96
+  },
+  "sampling": {
+    "imagesInArchive": 9600,
+    "decodedCandidates": 329,
+    "requestedSlots": 47,
+    "registrationPx": [
+      16,
+      619,
+      44,
+      157
+    ],
+    "acceptedFrames": 47,
+    "coverage": 0.9645390070921985,
+    "windowS": [
+      22,
+      114
+    ],
+    "holdoutStartsS": 86
+  },
+  "validation": {
+    "seedCount": 20,
+    "comparableRows": 1,
+    "observedSpeedMmS": 2.053571428571429,
+    "simulatedSpeedMmS": 2.2883928571428584,
+    "positionMaeMm": 10.0
+  },
+  "reportedSpeedMmS": 2.1,
+  "inputArchives": [
+    {
+      "name": "SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sha256": "e273157ccc6e91a6a03fb1a2fa73e4622ff19988133187d72a6093847a7fa9a7"
+    },
+    {
+      "name": "SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sha256": "92ef811b5ede33faff94f1dfbd2814adcdcc134bd7738b8a10c5b2f79bf01e3b"
+    }
+  ]
+}

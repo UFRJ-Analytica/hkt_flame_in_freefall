@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r5",
+  "camera": "S4C2",
+  "kind": "observed-frames",
+  "frames": [
+    {
+      "timeSeconds": 2.066,
+      "path": "ii-replays/4/00.jpg"
+    },
+    {
+      "timeSeconds": 6.066,
+      "path": "ii-replays/4/01.jpg"
+    },
+    {
+      "timeSeconds": 9.465,
+      "path": "ii-replays/4/02.jpg"
+    },
+    {
+      "timeSeconds": 11.465,
+      "path": "ii-replays/4/03.jpg"
+    },
+    {
+      "timeSeconds": 13.465,
+      "path": "ii-replays/4/04.jpg"
+    },
+    {
+      "timeSeconds": 15.865,
+      "path": "ii-replays/4/05.jpg"
+    },
+    {
+      "timeSeconds": 20.065,
+      "path": "ii-replays/4/06.jpg"
+    },
+    {
+      "timeSeconds": 28.064,
+      "path": "ii-replays/4/07.jpg"
+    },
+    {
+      "timeSeconds": 40.063,
+      "path": "ii-replays/4/08.jpg"
+    },
+    {
+      "timeSeconds": 60.061,
+      "path": "ii-replays/4/09.jpg"
+    }
+  ],
+  "durationSeconds": 60.061,
+  "frameCountInArchives": 15000,
+  "timestampOriginMs": 1479774852682,
+  "inputArchives": [
+    "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part1.zip",
+    "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part2.zip",
+    "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part3.zip"
+  ],
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+}

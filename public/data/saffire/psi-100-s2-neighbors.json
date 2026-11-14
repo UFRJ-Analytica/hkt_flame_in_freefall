@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100",
+  "stepSeconds": 2,
+  "experimentId": "PSI-100:t0:r3",
+  "status": "ready",
+  "camera": "S2C2",
+  "material": "SIBAL",
+  "conditions": {
+    "flowCmS": 25,
+    "oxygenPct": 21.2
+  },
+  "geometry": {
+    "lengthMm": 940,
+    "widthMm": 406
+  },
+  "provenance": {
+    "manifestSha256": "329e05fbb181e0264f57aea984d9997a206fd40406958d154590918d77d69ff7",
+    "registration": {
+      "S1C1": {
+        "edgeX": 1435,
+        "edgeMm": 0,
+        "scale": 2.24,
+        "top": 185,
+        "bottom": 1094,
+        "left": 180,
+        "right": 1420,
+        "sign": -1
+      },
+      "S1C2": {
+        "edgeX": 326,
+        "edgeMm": 940,
+        "scale": 2.24,
+        "top": 154,
+        "bottom": 1068,
+        "left": 550,
+        "right": 1570,
+        "sign": -1
+      },
+      "S2C2": {
+        "edgeX": 326,
+        "edgeMm": 0,
+        "scale": 2.24,
+        "top": 154,
+        "bottom": 1068,
+        "left": 333,
+        "right": 645,
+        "sign": 1
+      }
+    },
+    "samplingWindow": [
+      1496610689000,
+      62
+    ],
+    "review": "Visual inspection of registered overlays; no independent pixel annotations."
+  },
+  "grid": {
+    "lengthMm": 940,
+    "widthMm": 406,
+    "dxMm": 10,
+    "dyMm": 20,
+    "columns": 94,
+    "rows": 21
+  },
+  "durationSeconds": 62,
+  "initialFront": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "probability": 0.1927437641723356,
+  "train": {
+    "exposures": 441,
+    "transitions": 85,
+    "jumps": 0,
+    "gaps": 0,
+    "retreats": 0
+  },
+  "validation": {
+    "exposures": 210,
+    "transitions": 41,
+    "jumps": 0,
+    "gaps": 0,
+    "retreats": 0,
+    "positionMaeMm": 7.532467532467533,
+    "observedSpeedMmS": 1.0454545454545452,
+    "simulatedSpeedMmS": 0.9090909090909087,
+    "comparedCellTimes": 231,
+    "trajectory": [
+      {
+        "timeS": 0,
+        "observedMm": 70.0,
+        "simulatedMm": 70.0
+      },
+      {
+        "timeS": 2,
+        "observedMm": 70.0,
+        "simulatedMm": 70.0
+      },
+      {
+        "timeS": 4,
+        "observedMm": 80.0,
+        "simulatedMm": 70.0
+      },
+      {
+        "timeS": 6,
+        "observedMm": 80.0,
+        "simulatedMm": 70.0
+      },
+      {
+        "timeS": 8,
+        "observedMm": 80.0,
+        "simulatedMm": 70.0
+      },
+      {
+        "timeS": 10,
+        "observedMm": 80.0,
+        "simulatedMm": 80.0
+      },
+      {
+        "timeS": 12,
+        "observedMm": 80.0,
+        "simulatedMm": 80.0
+      },
+      {
+        "timeS": 14,
+        "observedMm": 90.0,
+        "simulatedMm": 80.0
+      },
+      {
+        "timeS": 16,
+        "observedMm": 90.0,
+        "simulatedMm": 80.0
+      },
+      {
+        "timeS": 18,
+        "observedMm": 90.0,
+        "simulatedMm": 80.0
+      },
+      {
+        "timeS": 20,
+        "observedMm": 90.0,
+        "simulatedMm": 90.0
+      }
+    ]
+  },
+  "combinations": {
+    "000": {
+      "exposures": 0,
+      "transitions": 0,
+      "probability": null,
+      "reason": "nenhum vizinho ativo"
+    },
+    "001": {
+      "exposures": 0,
+      "transitions": 0,
+      "probability": null,
+      "reason": "sem exposições"
+    },
+    "010": {
+      "exposures": 0,
+      "transitions": 0,
+      "probability": null,
+      "reason": "sem exposições"
+    },
+    "011": {
+      "exposures": 0,
+      "transitions": 0,
+      "probability": null,
+      "reason": "sem exposições"
+    },
+    "100": {
+      "exposures": 408,
+      "transitions": 55,
+      "probability": 0.13480392156862744,
+      "reason": null
+    },
+    "101": {
+      "exposures": 11,
+      "transitions": 11,
+      "probability": null,
+      "reason": "menos de 30 exposições"
+    },
+    "110": {
+      "exposures": 18,
+      "transitions": 15,
+      "probability": null,
+      "reason": "menos de 30 exposições"
+    },
+    "111": {
+      "exposures": 4,
+      "transitions": 4,
+      "probability": null,
+      "reason": "menos de 30 exposições"
+    }
+  },
+  "neighborhoodTraining": {
+    "minimumExposures": 30,
+    "censoredCellSteps": 0
+  },
+  "contiguousValidation": {
+    "positionMaeMm": 7.023809523809524,
+    "shapeMaeMm": 6.149659863945578,
+    "observedSpeedMmS": 1.0454545454545454,
+    "simulatedSpeedMmS": 0.7590909090909095,
+    "seedCount": 20
+  },
+  "comparison": {
+    "seedCount": 20,
+    "observedSpeedMmS": 1.0454545454545452,
+    "neighborhood": {
+      "positionMaeMm": {
+        "mean": 9.712121212121213,
+        "min": 8.96103896103896,
+        "max": 10.519480519480519
+      },
+      "shapeMaeMm": {
+        "mean": 6.4157905586477,
+        "min": 4.601113172541743,
+        "max": 8.645640074211501
+      },
+      "simulatedSpeedMmS": {
+        "mean": 1.9276940800632895e-15,
+        "min": 1.92769408006329e-15,
+        "max": 1.92769408006329e-15
+      }
+    },
+    "baseline": {
+      "positionMaeMm": {
+        "mean": 6.932900432900434,
+        "min": 5.670995670995671,
+        "max": 9.913419913419913
+      },
+      "shapeMaeMm": {
+        "mean": 6.839620696763555,
+        "min": 5.405071119356834,
+        "max": 9.420737992166563
+      },
+      "simulatedSpeedMmS": {
+        "mean": 0.9500000000000002,
+        "min": 0.545454545454546,
+        "max": 1.1818181818181819
+      }
+    }
+  },
+  "diagnostics": {
+    "coverage": 1.0,
+    "overlapPoints": 0,
+    "medianOverlapErrorMm": null,
+    "splitTimeS": 42,
+    "firstObservedSecond": 0
+  },
+  "model": "contiguous-with-longitudinal-fallback",
+  "longitudinal": {
+    "exposures": 441,
+    "transitions": 85,
+    "jumps": 0,
+    "gaps": 0,
+    "retreats": 0,
+    "probability": 0.1927437641723356
+  }
+}

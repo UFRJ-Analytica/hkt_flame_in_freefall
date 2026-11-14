@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r4",
+  "kind": "localized-observation",
+  "camera": "S3C2",
+  "durationSeconds": 60.062,
+  "ignitionEdge": "left",
+  "observations": [
+    {
+      "timeSeconds": 2.067,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 6.066,
+      "orangePixels": 23,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 9.27,
+      "orangePixels": 2561,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 11.87,
+      "orangePixels": 2780,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 13.469,
+      "orangePixels": 2752,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 15.466,
+      "orangePixels": 1055,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 20.058,
+      "orangePixels": 9,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 28.065,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 40.064,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 60.062,
+      "orangePixels": 0,
+      "edgeGlow": false
+    }
+  ],
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+  "inputArchives": [
+    "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part1.zip",
+    "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part2.zip",
+    "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part3.zip"
+  ],
+  "probability": null
+}
