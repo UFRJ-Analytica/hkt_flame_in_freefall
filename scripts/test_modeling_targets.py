@@ -40,6 +40,7 @@ class ModelingTargets(unittest.TestCase):
         self.assertIsNone(by_id["PSI-99:2-4"]["thicknessMm"])
         self.assertIsNone(by_id["PSI-100:S1"]["thicknessMm"])
         self.assertIsNone(by_id["PSI-100:S1"]["oxygenPct"])
+        self.assertIsNone(by_id["PSI-100:S2"]["thicknessMm"])
 
     def test_all_records_are_microgravity(self):
         self.assertTrue(all(r["gravity"] == "microgravity" for r in self.data["records"]))

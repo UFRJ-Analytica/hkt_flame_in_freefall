@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw" / "psi"
 OUT = ROOT / "public" / "data" / "modeling-targets.json"
 SAFFIRE_MODEL = ROOT / "public" / "data" / "saffire" / "psi-98-s1-neighbors.json"
+SAFFIRE_III_MODEL = ROOT / "public" / "data" / "saffire" / "psi-100-s1.json"
 PORTAL = "https://psi.nasa.gov/physci/repo/data/investigations/"
 NTRS_SAFFIRE_I = "https://ntrs.nasa.gov/api/citations/20170008805/downloads/20170008805.pdf"
 
@@ -229,12 +230,15 @@ def saffire_iii() -> list[dict]:
             "burnLengthMm": None,
             "onegComparison": None,
             "cameras": [raw.get("Camera 1"), raw.get("Camera 2")],
-            "framesStatus": "available",
+            "framesStatus": "processed" if sample == "S1" and SAFFIRE_III_MODEL.exists() else "available",
         })
         record["notes"] = [
             "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
-            "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados.",
+            "O₂ e desfecho não tabulados." + (" Frames da câmera 1 processados (ver derivado)." if record["framesStatus"] == "processed" else " Frames públicos disponíveis e ainda não processados."),
         ]
+        if record["framesStatus"] == "processed":
+            record["outcome"] = "sustained"
+            record["notes"].append("Desfecho \"propagação sustentada\" observado nos frames (frente atravessa todo o campo da câmera 1), não tabulado pela NASA.")
         out.append(record)
     return out
 
@@ -252,7 +256,22 @@ def derived_targets() -> list[dict]:
         "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
         "artifactSha256": hashlib.sha256(SAFFIRE_MODEL.read_bytes()).hexdigest(),
         "limits": "Mesmo ensaio usado no ajuste; registro espacial manual aproximado.",
-    }]
+    }] + ([] if not SAFFIRE_III_MODEL.exists() else [saffire_iii_derived()])
+
+
+def saffire_iii_derived() -> dict:
+    data = json.loads(SAFFIRE_III_MODEL.read_text(encoding="utf-8"))
+    return {
+        "id": "PSI-100:S1:front-speed",
+        "recordId": "PSI-100:S1",
+        "quantity": "Velocidade da frente de contraste (câmera 1)",
+        "value": round(data["observed"]["speedMmS"], 3),
+        "unit": "mm/s",
+        "method": "Mesmo observável e estimador do SAFFIRE I · S1 (scripts/calibrate_saffire_iii.py); OLS da mediana entre faixas.",
+        "artifact": "public/data/saffire/psi-100-s1.json",
+        "artifactSha256": hashlib.sha256(SAFFIRE_III_MODEL.read_bytes()).hexdigest(),
+        "limits": "Só câmera 1 (~590 mm); registro manual em um quadro; O₂ e pressão não tabulados.",
+    }
 
 
 def main() -> int:

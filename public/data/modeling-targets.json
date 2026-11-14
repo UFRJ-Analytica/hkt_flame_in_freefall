@@ -787,7 +787,8 @@
       },
       "notes": [
         "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
-        "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados."
+        "O₂ e desfecho não tabulados. Frames da câmera 1 processados (ver derivado).",
+        "Desfecho \"propagação sustentada\" observado nos frames (frente atravessa todo o campo da câmera 1), não tabulado pela NASA."
       ],
       "material": "SIBAL",
       "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
@@ -799,7 +800,7 @@
       "oxygenPct": null,
       "ignition": null,
       "burnTimeS": null,
-      "outcome": null,
+      "outcome": "sustained",
       "spreadRateMmS": null,
       "burnLengthMm": null,
       "onegComparison": null,
@@ -807,7 +808,7 @@
         "S1C1",
         "S1C2"
       ],
-      "framesStatus": "available"
+      "framesStatus": "processed"
     },
     {
       "id": "PSI-100:S2",
@@ -870,6 +871,17 @@
       "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
       "artifactSha256": "267c79b9ca68274bfd6c3b54ee36dc63b307b2128915d792ba3129173533c836",
       "limits": "Mesmo ensaio usado no ajuste; registro espacial manual aproximado."
+    },
+    {
+      "id": "PSI-100:S1:front-speed",
+      "recordId": "PSI-100:S1",
+      "quantity": "Velocidade da frente de contraste (câmera 1)",
+      "value": 2.204,
+      "unit": "mm/s",
+      "method": "Mesmo observável e estimador do SAFFIRE I · S1 (scripts/calibrate_saffire_iii.py); OLS da mediana entre faixas.",
+      "artifact": "public/data/saffire/psi-100-s1.json",
+      "artifactSha256": "0e6dd4c68fedec1b56369d983e63567b9a33477f0f16383f5b43d9663dc77d20",
+      "limits": "Só câmera 1 (~590 mm); registro manual em um quadro; O₂ e pressão não tabulados."
     }
   ],
   "limits": [

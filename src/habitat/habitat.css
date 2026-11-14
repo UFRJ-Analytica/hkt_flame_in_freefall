@@ -81,3 +81,13 @@
 @media (max-width: 900px) {
   .workbench.habitat-workbench { grid-template-columns: 1fr; }
 }
+
+.ct-bars { display: grid; gap: 8px; margin: 10px 0 4px; }
+.ct-row { display: grid; grid-template-columns: 1fr; gap: 4px; }
+.ct-row > span { font-size: 10.5px; color: var(--muted); }
+.ct-row i { position: relative; height: 8px; border-radius: 4px; background: #ffffff0a; display: block; }
+.ct-row i b { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: #f4a46788; }
+.ct-row.observed i b { background: var(--obs, #d9e2ec); }
+.ct-row strong { font-family: var(--mono); font-weight: 450; font-size: 12px; color: #e3e8ee; display: flex; gap: 8px; align-items: baseline; }
+.ct-row strong small { font-size: 9.5px; color: var(--faint); }
+.ct-row strong em { font-style: normal; font-size: 10px; color: var(--warn); }

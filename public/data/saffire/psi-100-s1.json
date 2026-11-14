@@ -1,0 +1,1560 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-100:S1",
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100",
+  "material": "SIBAL",
+  "conditions": {
+    "flowCmS": 30.0,
+    "flowDirection": "concurrent",
+    "oxygenPct": null,
+    "pressureKpa": null
+  },
+  "camera": {
+    "id": "S1C1",
+    "edgeX": 1432,
+    "edgeMm": 0.0,
+    "pixelsPerMm": 2.2389162561576357,
+    "topAtX750": 186,
+    "bottomAtX750": 1095,
+    "slopeY": 0.0,
+    "visibleX": [
+      110,
+      1420
+    ]
+  },
+  "visibleLengthMm": 590.5,
+  "frames": {
+    "total": 19033,
+    "illuminatedBursts": 317,
+    "stepSeconds": 2
+  },
+  "observedTrajectory": [
+    {
+      "timeS": 0.0,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 2.01,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 4.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 6.01,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 8.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 10.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 12.03,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 14.04,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 15.98,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 17.98,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 19.99,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 22.0,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 24.01,
+      "frontMedianMm": 100.0
+    },
+    {
+      "timeS": 26.01,
+      "frontMedianMm": 110.0
+    },
+    {
+      "timeS": 28.02,
+      "frontMedianMm": 110.0
+    },
+    {
+      "timeS": 30.03,
+      "frontMedianMm": 120.0
+    },
+    {
+      "timeS": 32.03,
+      "frontMedianMm": 130.0
+    },
+    {
+      "timeS": 34.04,
+      "frontMedianMm": 140.0
+    },
+    {
+      "timeS": 36.05,
+      "frontMedianMm": 140.0
+    },
+    {
+      "timeS": 38.05,
+      "frontMedianMm": 150.0
+    },
+    {
+      "timeS": 40.0,
+      "frontMedianMm": 150.0
+    },
+    {
+      "timeS": 42.0,
+      "frontMedianMm": 160.0
+    },
+    {
+      "timeS": 44.01,
+      "frontMedianMm": 160.0
+    },
+    {
+      "timeS": 46.02,
+      "frontMedianMm": 170.0
+    },
+    {
+      "timeS": 48.02,
+      "frontMedianMm": 180.0
+    },
+    {
+      "timeS": 50.03,
+      "frontMedianMm": 180.0
+    },
+    {
+      "timeS": 52.04,
+      "frontMedianMm": 180.0
+    },
+    {
+      "timeS": 54.05,
+      "frontMedianMm": 190.0
+    },
+    {
+      "timeS": 56.05,
+      "frontMedianMm": 190.0
+    },
+    {
+      "timeS": 57.99,
+      "frontMedianMm": 200.0
+    },
+    {
+      "timeS": 60.0,
+      "frontMedianMm": 200.0
+    },
+    {
+      "timeS": 62.01,
+      "frontMedianMm": 210.0
+    },
+    {
+      "timeS": 64.02,
+      "frontMedianMm": 210.0
+    },
+    {
+      "timeS": 66.02,
+      "frontMedianMm": 220.0
+    },
+    {
+      "timeS": 68.03,
+      "frontMedianMm": 220.0
+    },
+    {
+      "timeS": 70.04,
+      "frontMedianMm": 230.0
+    },
+    {
+      "timeS": 72.04,
+      "frontMedianMm": 230.0
+    },
+    {
+      "timeS": 74.05,
+      "frontMedianMm": 230.0
+    },
+    {
+      "timeS": 75.99,
+      "frontMedianMm": 240.0
+    },
+    {
+      "timeS": 78.0,
+      "frontMedianMm": 240.0
+    },
+    {
+      "timeS": 80.0,
+      "frontMedianMm": 250.0
+    },
+    {
+      "timeS": 82.01,
+      "frontMedianMm": 250.0
+    },
+    {
+      "timeS": 84.02,
+      "frontMedianMm": 260.0
+    },
+    {
+      "timeS": 86.03,
+      "frontMedianMm": 260.0
+    },
+    {
+      "timeS": 88.03,
+      "frontMedianMm": 260.0
+    },
+    {
+      "timeS": 90.04,
+      "frontMedianMm": 270.0
+    },
+    {
+      "timeS": 92.05,
+      "frontMedianMm": 270.0
+    },
+    {
+      "timeS": 94.06,
+      "frontMedianMm": 280.0
+    },
+    {
+      "timeS": 96.0,
+      "frontMedianMm": 280.0
+    },
+    {
+      "timeS": 98.0,
+      "frontMedianMm": 290.0
+    },
+    {
+      "timeS": 100.01,
+      "frontMedianMm": 290.0
+    },
+    {
+      "timeS": 102.02,
+      "frontMedianMm": 290.0
+    },
+    {
+      "timeS": 104.02,
+      "frontMedianMm": 300.0
+    },
+    {
+      "timeS": 106.03,
+      "frontMedianMm": 300.0
+    },
+    {
+      "timeS": 108.04,
+      "frontMedianMm": 310.0
+    },
+    {
+      "timeS": 110.05,
+      "frontMedianMm": 310.0
+    },
+    {
+      "timeS": 112.05,
+      "frontMedianMm": 320.0
+    },
+    {
+      "timeS": 113.99,
+      "frontMedianMm": 320.0
+    },
+    {
+      "timeS": 116.0,
+      "frontMedianMm": 330.0
+    },
+    {
+      "timeS": 118.01,
+      "frontMedianMm": 330.0
+    },
+    {
+      "timeS": 120.01,
+      "frontMedianMm": 330.0
+    },
+    {
+      "timeS": 122.02,
+      "frontMedianMm": 340.0
+    },
+    {
+      "timeS": 124.02,
+      "frontMedianMm": 340.0
+    },
+    {
+      "timeS": 126.03,
+      "frontMedianMm": 350.0
+    },
+    {
+      "timeS": 128.03,
+      "frontMedianMm": 350.0
+    },
+    {
+      "timeS": 130.04,
+      "frontMedianMm": 350.0
+    },
+    {
+      "timeS": 132.04,
+      "frontMedianMm": 360.0
+    },
+    {
+      "timeS": 134.05,
+      "frontMedianMm": 360.0
+    },
+    {
+      "timeS": 136.05,
+      "frontMedianMm": 370.0
+    },
+    {
+      "timeS": 138.05,
+      "frontMedianMm": 370.0
+    },
+    {
+      "timeS": 140.06,
+      "frontMedianMm": 380.0
+    },
+    {
+      "timeS": 142.0,
+      "frontMedianMm": 380.0
+    },
+    {
+      "timeS": 144.0,
+      "frontMedianMm": 390.0
+    },
+    {
+      "timeS": 146.0,
+      "frontMedianMm": 390.0
+    },
+    {
+      "timeS": 148.01,
+      "frontMedianMm": 390.0
+    },
+    {
+      "timeS": 150.02,
+      "frontMedianMm": 400.0
+    },
+    {
+      "timeS": 152.02,
+      "frontMedianMm": 400.0
+    },
+    {
+      "timeS": 154.02,
+      "frontMedianMm": 410.0
+    },
+    {
+      "timeS": 156.03,
+      "frontMedianMm": 410.0
+    },
+    {
+      "timeS": 158.03,
+      "frontMedianMm": 410.0
+    },
+    {
+      "timeS": 160.04,
+      "frontMedianMm": 420.0
+    },
+    {
+      "timeS": 162.04,
+      "frontMedianMm": 420.0
+    },
+    {
+      "timeS": 164.04,
+      "frontMedianMm": 430.0
+    },
+    {
+      "timeS": 166.05,
+      "frontMedianMm": 430.0
+    },
+    {
+      "timeS": 168.05,
+      "frontMedianMm": 440.0
+    },
+    {
+      "timeS": 170.06,
+      "frontMedianMm": 440.0
+    },
+    {
+      "timeS": 172.0,
+      "frontMedianMm": 450.0
+    },
+    {
+      "timeS": 174.07,
+      "frontMedianMm": 450.0
+    },
+    {
+      "timeS": 176.0,
+      "frontMedianMm": 450.0
+    },
+    {
+      "timeS": 178.01,
+      "frontMedianMm": 460.0
+    },
+    {
+      "timeS": 180.01,
+      "frontMedianMm": 460.0
+    },
+    {
+      "timeS": 182.02,
+      "frontMedianMm": 470.0
+    },
+    {
+      "timeS": 184.02,
+      "frontMedianMm": 470.0
+    },
+    {
+      "timeS": 186.03,
+      "frontMedianMm": 480.0
+    },
+    {
+      "timeS": 188.03,
+      "frontMedianMm": 480.0
+    },
+    {
+      "timeS": 190.03,
+      "frontMedianMm": 490.0
+    },
+    {
+      "timeS": 192.03,
+      "frontMedianMm": 490.0
+    },
+    {
+      "timeS": 194.1,
+      "frontMedianMm": 490.0
+    },
+    {
+      "timeS": 196.1,
+      "frontMedianMm": 500.0
+    },
+    {
+      "timeS": 198.1,
+      "frontMedianMm": 500.0
+    },
+    {
+      "timeS": 200.03,
+      "frontMedianMm": 510.0
+    },
+    {
+      "timeS": 202.03,
+      "frontMedianMm": 510.0
+    },
+    {
+      "timeS": 204.1,
+      "frontMedianMm": 510.0
+    },
+    {
+      "timeS": 206.1,
+      "frontMedianMm": 510.0
+    },
+    {
+      "timeS": 208.1,
+      "frontMedianMm": 520.0
+    },
+    {
+      "timeS": 210.1,
+      "frontMedianMm": 520.0
+    },
+    {
+      "timeS": 212.03,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 214.1,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 216.03,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 218.03,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 220.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 222.03,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 224.1,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 226.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 228.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 230.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 232.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 234.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 236.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 238.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 240.09,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 242.23,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 244.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 246.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 248.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 250.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 252.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 254.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 256.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 258.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 260.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 262.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 264.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 266.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 268.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 270.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 272.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 274.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 276.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 278.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 280.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 282.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 284.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 286.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 288.16,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 290.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 292.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 294.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 296.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 298.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 300.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 302.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 304.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 306.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 308.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 310.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 312.36,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 314.15,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 316.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 318.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 320.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 322.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 324.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 326.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 328.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 330.29,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 332.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 334.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 336.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 338.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 340.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 342.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 344.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 346.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 348.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 350.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 352.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 354.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 356.22,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 358.02,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 360.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 362.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 364.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 366.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 368.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 370.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 372.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 374.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 376.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 378.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 380.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 382.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 384.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 386.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 388.01,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 390.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 392.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 394.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 396.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 398.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 400.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 402.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 404.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 406.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 408.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 410.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 412.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 414.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 416.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 418.35,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 420.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 422.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 424.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 426.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 428.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 430.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 432.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 434.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 436.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 438.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 440.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 442.28,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 444.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 446.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 448.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 450.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 452.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 454.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 456.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 458.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 460.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 462.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 464.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 466.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 468.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 470.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 472.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 474.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 476.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 478.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 480.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 482.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 484.21,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 486.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 488.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 490.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 492.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 494.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 496.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 498.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 500.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 502.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 504.14,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 506.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 508.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 510.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 512.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 514.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 516.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 518.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 520.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 522.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 524.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 526.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 528.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 530.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 532.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 534.34,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 536.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 538.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 540.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 542.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 544.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 546.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 548.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 550.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 552.27,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 554.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 556.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 558.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 560.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 562.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 564.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 566.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 568.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 570.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 572.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 574.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 576.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 578.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 580.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 582.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 584.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 586.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 588.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 590.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 592.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 594.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 596.4,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 598.2,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 600.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 602.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 604.39,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 606.39,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 608.39,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 610.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 612.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 614.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 616.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 618.39,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 620.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 622.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 624.06,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 626.33,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 628.39,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 630.26,
+      "frontMedianMm": null
+    },
+    {
+      "timeS": 632.26,
+      "frontMedianMm": null
+    }
+  ],
+  "observed": {
+    "speedMmS": 2.20403409693066,
+    "standardErrorMmS": 0.01023696779603607,
+    "points": 94,
+    "note": "OLS sobre a mediana entre faixas; erro padrão ignora autocorrelação temporal (subestima a incerteza)."
+  },
+  "neighborhood": {
+    "combinations": {
+      "000": {
+        "exposures": 0,
+        "transitions": 0,
+        "probability": null,
+        "reason": "nenhum vizinho ativo"
+      },
+      "001": {
+        "exposures": 54,
+        "transitions": 0,
+        "probability": 0.0,
+        "reason": null
+      },
+      "010": {
+        "exposures": 70,
+        "transitions": 0,
+        "probability": 0.0,
+        "reason": null
+      },
+      "011": {
+        "exposures": 0,
+        "transitions": 0,
+        "probability": null,
+        "reason": "sem exposições"
+      },
+      "100": {
+        "exposures": 1210,
+        "transitions": 400,
+        "probability": 0.3305785123966942,
+        "reason": null
+      },
+      "101": {
+        "exposures": 381,
+        "transitions": 272,
+        "probability": 0.7139107611548556,
+        "reason": null
+      },
+      "110": {
+        "exposures": 312,
+        "transitions": 186,
+        "probability": 0.5961538461538461,
+        "reason": null
+      },
+      "111": {
+        "exposures": 19,
+        "transitions": 19,
+        "probability": null,
+        "reason": "menos de 30 exposições"
+      }
+    },
+    "censored": 1852
+  },
+  "comparisonWithSaffireI": {
+    "saffireIObservedSpeedMmS": 1.950257289879926,
+    "saffireIIIObservedSpeedMmS": 2.20403409693066,
+    "speedRatio": 1.1301247832107109,
+    "flowRatio": 1.5,
+    "beta": 0.30169810373679185,
+    "betaNote": "v ∝ u^beta a partir de dois ensaios (20 e 30 cm/s); beta = 1 é a hipótese linear. Dois pontos não testam a forma funcional."
+  },
+  "prediction": {
+    "description": "Modelo de vizinhança do SAFFIRE-I aplicado sem reajuste ao SAFFIRE-III, a partir da frente observada.",
+    "startTimeS": 24.006,
+    "steps": 93,
+    "seeds": 20,
+    "unscaledSpeedMmS": 1.81147274500596,
+    "unscaledRuns": [
+      1.8235017881010003,
+      1.7433442907199357,
+      1.9152548495466528,
+      1.7162879745692299,
+      1.8085467615504096,
+      1.8021890691037818,
+      1.8185890257558788,
+      1.8143987284615104,
+      1.8358920637214173,
+      1.8867174800419029,
+      1.851677925080374,
+      1.864899035509157,
+      1.975038832496477,
+      1.7918578188780114,
+      1.7939168442726583,
+      1.7792508037423689,
+      1.6804537080518729,
+      1.9616732290575443,
+      1.7917133258678608,
+      1.774699273922624
+    ],
+    "linearFlowSpeedMmS": 2.4170068272947294,
+    "linearFlowRuns": [
+      2.4140447205866415,
+      2.347505689412274,
+      2.496044503847126,
+      2.419968934002817,
+      2.384784886031138,
+      2.547267275945526,
+      2.3279268865368636,
+      2.4007874869053203,
+      2.37163602210743,
+      2.470324748040314,
+      2.3475056894122743,
+      2.504714084456164,
+      2.36809594335874,
+      2.450348589386988,
+      2.301845898204674,
+      2.4396922298883785,
+      2.4630278510277064,
+      2.505111440234079,
+      2.3561030235162375,
+      2.530614456525665
+    ],
+    "observedSpeedMmS": 2.20403409693066
+  },
+  "speedMatch": {
+    "description": "Fator único de intensidade (lambda) por ensaio para que a simulação reproduza a velocidade mediana medida; a estrutura de vizinhança vem das contagens.",
+    "saffireI": {
+      "factor": 1.0718408082114048,
+      "targetSpeedMmS": 1.950257289879926,
+      "simulatedBeforeMmS": 1.8670794307577776,
+      "simulatedAfterMmS": 1.9540542061252402,
+      "spreadAfterMmS": [
+        1.8861991655269126,
+        2.1374932913211335
+      ],
+      "combinations": {
+        "000": {
+          "exposures": 0,
+          "transitions": 0,
+          "probability": null,
+          "reason": "nenhum vizinho ativo"
+        },
+        "001": {
+          "exposures": 160,
+          "transitions": 1,
+          "probability": 0.006697498190851192,
+          "reason": null
+        },
+        "010": {
+          "exposures": 281,
+          "transitions": 2,
+          "probability": 0.007626805512901846,
+          "reason": null
+        },
+        "011": {
+          "exposures": 0,
+          "transitions": 0,
+          "probability": null,
+          "reason": "sem exposições"
+        },
+        "100": {
+          "exposures": 1280,
+          "transitions": 249,
+          "probability": 0.20695257741950368,
+          "reason": null
+        },
+        "101": {
+          "exposures": 669,
+          "transitions": 333,
+          "probability": 0.5220015159342006,
+          "reason": null
+        },
+        "110": {
+          "exposures": 472,
+          "transitions": 257,
+          "probability": 0.5695104921287992,
+          "reason": null
+        },
+        "111": {
+          "exposures": 38,
+          "transitions": 36,
+          "probability": 0.9574029320337535,
+          "reason": null
+        }
+      }
+    },
+    "saffireIII": {
+      "factor": 0.787221750306523,
+      "targetSpeedMmS": 2.20403409693066,
+      "simulatedBeforeMmS": 2.558609977242351,
+      "simulatedAfterMmS": 2.207401654444966,
+      "spreadAfterMmS": [
+        1.95325651121627,
+        2.399161940541126
+      ],
+      "combinations": {
+        "000": {
+          "exposures": 0,
+          "transitions": 0,
+          "probability": null,
+          "reason": "nenhum vizinho ativo"
+        },
+        "001": {
+          "exposures": 54,
+          "transitions": 0,
+          "probability": 0.0,
+          "reason": null
+        },
+        "010": {
+          "exposures": 70,
+          "transitions": 0,
+          "probability": 0.0,
+          "reason": null
+        },
+        "011": {
+          "exposures": 0,
+          "transitions": 0,
+          "probability": null,
+          "reason": "sem exposições"
+        },
+        "100": {
+          "exposures": 1210,
+          "transitions": 400,
+          "probability": 0.2709002114857275,
+          "reason": null
+        },
+        "101": {
+          "exposures": 381,
+          "transitions": 272,
+          "probability": 0.6266241906030192,
+          "reason": null
+        },
+        "110": {
+          "exposures": 312,
+          "transitions": 186,
+          "probability": 0.5102159570778438,
+          "reason": null
+        },
+        "111": {
+          "exposures": 38,
+          "transitions": 36,
+          "probability": 0.9015224235377891,
+          "reason": null
+        }
+      }
+    }
+  },
+  "limits": [
+    "Contagens por vizinhança reconstruídas por faixa não reproduzem sozinhas a velocidade agregada (SAFFIRE-III simula +16% sem o fator); por isso a calibração por simulação.",
+    "Só a câmera 1 (cerca de 590 mm a partir da borda de ignição); a câmera 2 não foi processada.",
+    "Registro manual em um quadro (t = 100 s), escala 2,24 px/mm pela largura de 406 mm; sem propagação de erro de registro.",
+    "O₂ e pressão não constam da tabela PSI-100; assumidos semelhantes ao SAFFIRE-I, não verificados.",
+    "Espessura tabulada como \".33 cm\" (provavelmente 0,33 mm), diferente dos 0,37 mm do SAFFIRE-I."
+  ],
+  "provenance": {
+    "zips": {
+      "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part1.zip": 135195584,
+      "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part2.zip": 113400742,
+      "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part3.zip": 101943407,
+      "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part4.zip": 82260660
+    },
+    "script": "a9d49f243c14ee0847762dbc18b392e33b13f85e73e99ad2e892c2a807ac2028"
+  }
+}

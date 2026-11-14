@@ -9,7 +9,7 @@ import { GRAVITY_ENVIRONMENTS, gravityOf, PARTIAL_GRAVITY_SOURCES, type GravityI
 import type { EnsembleResult, EngineInput } from "./engine";
 import {
   buildGrid, buildKernel, CELL, CELL_AREA_M2, DEFAULT_ZONES, GRID, ignitionMask, MATERIAL_IDS, MATERIAL_INFO,
-  materialRule, type MaterialId, type Tier, type Zone,
+  materialRule, type MaterialId, type SecondTrial, type Tier, type Zone,
 } from "./habitatModel";
 import type { ViewMode } from "./HabitatScene";
 import "./habitat.css";
@@ -41,20 +41,27 @@ const fmtTime = (s: number) => s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)
 
 function useSaffire() {
   const [model, setModel] = useState<SaffireModel | null>(null);
+  const [second, setSecond] = useState<SecondTrial | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const request = new AbortController();
-    fetch(`${import.meta.env.BASE_URL}data/saffire/psi-98-s1-neighbors.json`, { signal: request.signal })
+    const base = import.meta.env.BASE_URL;
+    fetch(`${base}data/saffire/psi-98-s1-neighbors.json`, { signal: request.signal })
       .then((r) => { if (!r.ok) throw new Error("Modelo SAFFIRE indisponível."); return r.json(); })
       .then((v) => setModel(readSaffireModel(v)))
       .catch((e: unknown) => { if (!request.signal.aborted) setError(e instanceof Error ? e.message : "Erro ao carregar o modelo."); });
+    // Second trial is optional: without it the flow scaling falls back to the linear hypothesis.
+    fetch(`${base}data/saffire/psi-100-s1.json`, { signal: request.signal })
+      .then((r) => r.ok ? r.json() : null)
+      .then((v) => { if (v?.neighborhood && v?.comparisonWithSaffireI) setSecond(v as SecondTrial); })
+      .catch(() => undefined);
     return () => request.abort();
   }, []);
-  return { model, error };
+  return { model, second, error };
 }
 
 export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: ReactNode; onOpenCalibration: () => void }) {
-  const { model, error } = useSaffire();
+  const { model, second, error } = useSaffire();
   const [preset, setPreset] = useState("lunar");
   const [oxygen, setOxygen] = useState(34);
   const [pressure, setPressure] = useState(56.5);
@@ -74,7 +81,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
   const conditions = useMemo(() => ({ oxygen, pressure, flow, gravityG: gravityOf(gravity).g }), [oxygen, pressure, flow, gravity]);
   const grid = useMemo(() => buildGrid(zones, conditions), [zones, conditions]);
   const sibalRule = materialRule("SIBAL", conditions);
-  const kernel = useMemo(() => model ? buildKernel(model, conditions, sibalRule.tier) : null, [model, conditions, sibalRule.tier]);
+  const kernel = useMemo(() => model ? buildKernel(model, second, conditions, sibalRule.tier) : null, [model, second, conditions, sibalRule.tier]);
 
   // Ensemble in a worker: recomputed whenever any input changes.
   const workerRef = useRef<Worker | null>(null);
@@ -131,7 +138,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
     return () => window.clearTimeout(t);
   }, [notice]);
 
-  const metrics = useMemo(() => ensemble ? computeMetrics(ensemble, grid.zoneIndex, grid.behavior, zones.length) : null, [ensemble, grid, zones.length]);
+  const metrics = useMemo(() => ensemble ? computeMetrics(ensemble, grid.zoneIndex, grid.behavior, zones.length, ignition.row) : null, [ensemble, grid, zones.length, ignition.row]);
   const areaNow = metrics ? quantiles(metrics.area.map((curve) => curve[step])) : null;
 
   function applyPreset(id: string) {
@@ -301,10 +308,12 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
             <div>
               <span>Velocidade da frente</span>
               <strong>{metrics ? num(metrics.speedMmS, 2) : "—"} <small>mm/s</small></strong>
-              <em>mediana, avanço máximo a jusante</em>
+              <em>mediana entre faixas da linha de ignição, como nos ensaios</em>
             </div>
           </section>
           {metrics && <AreaChart curves={metrics.area} step={step} />}
+
+          {second && <CrossTrial second={second} />}
 
           <section>
             <h3 className="model-h">Até onde o fogo chega</h3>
@@ -369,7 +378,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
             <h3 className="model-h">Premissas do modelo</h3>
             <ul className="assumptions">
               <li>Regra de transição e probabilidades do SAFFIRE I · S1 por vizinhança (montante, faixas laterais), na grade original de 10 × 20 mm e passo de 2 s.</li>
-              <li>{kernel?.quench ? "Ventilação abaixo de 2 cm/s: regime de extinção radiativa para combustível fino (mapa de Olson); a propagação é suprimida, sem calibração." : sibalRule.tier === "calibrated" ? "Velocidade do escoamento igual à do ensaio: sem escalonamento." : `Intensidade escalada por ${num(kernel?.flowFactor ?? 1, 2)}× (velocidade/20 cm/s), hipótese de propagação concorrente linear na velocidade; acima de 40 cm/s o fator é limitado (blowoff).`}</li>
+              <li>{kernel?.quench ? "Ventilação abaixo de 2 cm/s: regime de extinção radiativa para combustível fino (mapa de Olson); a propagação é suprimida, sem calibração." : sibalRule.tier === "calibrated" ? `Núcleo ${kernel?.reference ?? ""} aplicado sem escalonamento.` : `Núcleo ${kernel?.reference ?? ""}, intensidade × ${num(kernel?.flowFactor ?? 1, 2)} = (u/u_ref)^${num(kernel?.beta ?? 1, 2)}${second ? ", expoente medido entre os dois ensaios" : ", hipótese linear (segundo ensaio indisponível)"}; acima de 40 cm/s o fator é limitado (blowoff).`}</li>
               <li>O avanço ocorre a jusante da ventilação e lateralmente. Propagação contra o escoamento não é calibrada (amostra S2 ainda não processada).</li>
               <li>Zonas contíguas do mesmo material são tratadas como uma folha contínua; não há transferência por radiação entre superfícies separadas.</li>
               <li>Não modela fumaça, CO, calor liberado, detecção ou supressão. A faixa entre realizações é a variabilidade do próprio modelo, não incerteza experimental.</li>
@@ -396,12 +405,69 @@ function Range({ label, unit, value, min, max, step, onChange }: { label: string
   );
 }
 
+/** Out-of-trial check: the SAFFIRE-I kernel predicting SAFFIRE-III (30 cm/s) without refitting. */
+function CrossTrial({ second }: { second: SecondTrial }) {
+  const observed = second.observed.speedMmS;
+  const rows = [
+    { label: "SAFFIRE I, sem ajuste", value: second.prediction.unscaledSpeedMmS },
+    { label: "SAFFIRE I, escala linear", value: second.prediction.linearFlowSpeedMmS },
+    { label: "Observado no SAFFIRE-III", value: observed, observed: true },
+  ];
+  const max = Math.max(...rows.map((r) => r.value)) * 1.08;
+  return (
+    <section className="cross-trial">
+      <h3 className="model-h">Teste em outro ensaio <span className="model-badge ok">independente</span></h3>
+      <p className="model-caption">O modelo ajustado no SAFFIRE I (20 cm/s) previu a velocidade da frente no SAFFIRE-III (30 cm/s, mesmo tecido), sem usar dados deste ensaio.</p>
+      <div className="ct-bars">
+        {rows.map((row) => (
+          <div key={row.label} className={`ct-row ${row.observed ? "observed" : ""}`}>
+            <span>{row.label}</span>
+            <i><b style={{ width: `${(row.value / max) * 100}%` }} /></i>
+            <strong>{num(row.value, 2)} <small>mm/s</small>{!row.observed && <em>{row.value > observed ? "+" : ""}{num(((row.value - observed) / observed) * 100, 0)}%</em>}</strong>
+          </div>
+        ))}
+      </div>
+      <p className="model-caption">
+        Medido: {num(second.comparisonWithSaffireI.saffireIObservedSpeedMmS, 2)} mm/s a 20 cm/s e {num(observed, 2)} ± {num(second.observed.standardErrorMmS, 2)} mm/s a 30 cm/s,
+        v ∝ u<sup>{num(second.comparisonWithSaffireI.beta, 2)}</sup>. A simulação usa esse expoente, não a hipótese linear. Dois ensaios não fixam a forma da curva; espessura (0,33 × 0,37 mm) e O₂ do SAFFIRE-III não são idênticos.
+      </p>
+    </section>
+  );
+}
+
 function quantiles(values: number[]) {
   const sorted = [...values].sort((a, b) => a - b);
   return { min: sorted[0], median: sorted[sorted.length >> 1], max: sorted[sorted.length - 1] };
 }
 
-function computeMetrics(ensemble: EnsembleResult, zoneIndex: Uint8Array, behavior: Uint8Array, zoneCount: number) {
+/** Front speed with the same statistic as the SAFFIRE trials: median over the strips of the
+ *  40 cm ignition line of the furthest reached cell, OLS against time while inside the liner. */
+function bandSpeed(arrival: Int16Array, steps: number, row0: number): number | null {
+  const rows: Int16Array[] = [];
+  for (let y = Math.max(0, row0 - 10); y < Math.min(GRID.rows, row0 + 10); y++) {
+    const front = new Int16Array(steps + 1);
+    for (let x = 0; x < GRID.cols; x++) {
+      const a = arrival[y * GRID.cols + x];
+      if (a >= 0 && x + 1 > front[a]) front[a] = x + 1;
+    }
+    for (let t = 1; t <= steps; t++) if (front[t - 1] > front[t]) front[t] = front[t - 1];
+    rows.push(front);
+  }
+  const ts: number[] = [], xs: number[] = [];
+  const start = [...rows.map((r) => r[0])].sort((a, b) => a - b)[rows.length >> 1];
+  for (let t = 0; t <= steps; t += 5) {
+    const median = rows.map((r) => r[t]).sort((a, b) => a - b)[rows.length >> 1];
+    if (median >= GRID.cols - 5) break;
+    if (median > start + 3) { ts.push(t * CELL.stepSeconds); xs.push(median * CELL.alongMm); }
+  }
+  if (ts.length < 4) return null;
+  const mt = ts.reduce((a, b) => a + b) / ts.length, mx = xs.reduce((a, b) => a + b) / xs.length;
+  let num = 0, den = 0;
+  ts.forEach((t, i) => { num += (t - mt) * (xs[i] - mx); den += (t - mt) ** 2; });
+  return num / den;
+}
+
+function computeMetrics(ensemble: EnsembleResult, zoneIndex: Uint8Array, behavior: Uint8Array, zoneCount: number, ignitionRow: number) {
   const steps = ensemble.steps;
   const area: Float32Array[] = [];
   const zoneEvents: number[][] = Array.from({ length: zoneCount }, () => []);
@@ -409,16 +475,12 @@ function computeMetrics(ensemble: EnsembleResult, zoneIndex: Uint8Array, behavio
   ensemble.arrivals.forEach((arrival, s) => {
     const histogram = new Float32Array(steps + 1);
     const first = new Array(zoneCount).fill(-1);
-    let maxCol0 = 0, maxColEnd = 0, lastStep = 0;
     for (let i = 0; i < arrival.length; i++) {
       const a = arrival[i];
       const z = zoneIndex[i];
       if (a >= 0) {
         histogram[a] += CELL_AREA_M2;
         if (first[z] < 0 || a < first[z]) first[z] = a;
-        const col = i % GRID.cols;
-        if (a === 0) maxCol0 = Math.max(maxCol0, col);
-        if (col > maxColEnd) { maxColEnd = col; lastStep = a; }
       } else if (behavior[i] >= 2) {
         const c = ensemble.contacts[s][i];
         if (c >= 0 && (first[z] < 0 || c < first[z])) first[z] = c;
@@ -427,7 +489,8 @@ function computeMetrics(ensemble: EnsembleResult, zoneIndex: Uint8Array, behavio
     for (let t = 1; t <= steps; t++) histogram[t] += histogram[t - 1];
     area.push(histogram);
     first.forEach((value, z) => zoneEvents[z].push(value));
-    if (lastStep > 0) speeds.push(((maxColEnd - maxCol0) * CELL.alongMm) / (lastStep * CELL.stepSeconds));
+    const speed = bandSpeed(arrival, steps, ignitionRow);
+    if (speed !== null) speeds.push(speed);
   });
   speeds.sort((a, b) => a - b);
   return { area, zoneEvents, speedMmS: speeds.length ? speeds[speeds.length >> 1] : 0 };

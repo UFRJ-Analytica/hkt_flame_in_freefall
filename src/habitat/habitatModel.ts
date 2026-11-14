@@ -70,10 +70,14 @@ export function materialRule(material: MaterialId, c: Conditions): MaterialRule 
   const saffireAtmosphere = c.oxygen <= SAFFIRE_II_O2_MAX + 0.5 && nearAtmosphere(c.pressure) && microgravity;
   switch (material) {
     case "SIBAL": {
-      const calibrated = c.oxygen >= 21 && c.oxygen <= 22.2 && nearAtmosphere(c.pressure) && microgravity && Math.abs(c.flow - 20) <= 1;
-      if (calibrated) return {
+      const testAtmosphere = c.oxygen >= 21 && c.oxygen <= 22.2 && nearAtmosphere(c.pressure) && microgravity;
+      if (testAtmosphere && Math.abs(c.flow - 20) <= 1) return {
         behavior: 1, tier: "calibrated", title: "Calibrado",
         evidence: "Probabilidades de avanço ajustadas nas imagens do SAFFIRE I · S1 (SIBAL, 20 cm/s, 21,5–21,7% O₂, µg).",
+      };
+      if (testAtmosphere && Math.abs(c.flow - 30) <= 1.5) return {
+        behavior: 1, tier: "calibrated", title: "Calibrado",
+        evidence: "Probabilidades de avanço ajustadas nas imagens do SAFFIRE-III · S1 (SIBAL, 30 cm/s, µg; O₂ não tabulado, assumido como no SAFFIRE-I).",
       };
       const bias = [
         c.oxygen > 22.2 && "O₂ acima do ensaio acelera a propagação: a simulação tende a subestimar.",
@@ -83,7 +87,7 @@ export function materialRule(material: MaterialId, c: Conditions): MaterialRule 
       ].filter(Boolean).join(" ");
       return {
         behavior: 1, tier: "exploratory", title: "Exploratório",
-        evidence: "Núcleo calibrado no SAFFIRE I · S1, com a intensidade escalada linearmente pela velocidade do escoamento (propagação concorrente cresce ~linearmente com a velocidade). Efeitos de O₂, pressão e gravidade não modelados.",
+        evidence: "Núcleo do ensaio mais próximo (SAFFIRE I a 20 cm/s ou SAFFIRE-III a 30 cm/s), com a intensidade escalada por (u/u_ref)^β, β medido entre os dois ensaios. Efeitos de O₂, pressão e gravidade não modelados.",
         bias: bias || undefined,
       };
     }
@@ -106,19 +110,51 @@ export function materialRule(material: MaterialId, c: Conditions): MaterialRule 
   }
 }
 
-/** Advance probabilities per 2 s step for the propagating material, keyed by upstream/above/below. */
-export function buildKernel(model: SaffireModel, c: Conditions, tier: Tier): { p: (number | null)[]; flowFactor: number; quench: boolean } {
+/** SAFFIRE-III S1 (30 cm/s), measured with the same pipeline; see scripts/calibrate_saffire_iii.py. */
+export interface SecondTrial {
+  neighborhood: { combinations: Record<string, { exposures: number; transitions: number; probability: number | null }> };
+  observed: { speedMmS: number; standardErrorMmS: number };
+  comparisonWithSaffireI: { saffireIObservedSpeedMmS: number; beta: number };
+  prediction: { unscaledSpeedMmS: number; linearFlowSpeedMmS: number; observedSpeedMmS: number };
+  /** Simulation-calibrated kernels: one hazard factor per trial so the simulated speed matches the measured one. */
+  speedMatch?: Record<"saffireI" | "saffireIII", {
+    factor: number; targetSpeedMmS: number; simulatedBeforeMmS: number; simulatedAfterMmS: number;
+    combinations: Record<string, { probability: number | null }>;
+  }>;
+}
+
+export interface Kernel {
+  p: (number | null)[];
+  flowFactor: number;
+  quench: boolean;
+  reference: "SAFFIRE I · S1 (20 cm/s)" | "SAFFIRE-III · S1 (30 cm/s)";
+  beta: number;
+}
+
+/** Advance probabilities per 2 s step for the propagating material, keyed by upstream/above/below.
+ *  Base kernel = the trial at the nearest measured flow; outside it the hazard is scaled by
+ *  (u/u_ref)^beta, beta measured between the two trials (falls back to 1 without the second trial). */
+export function buildKernel(model: SaffireModel, second: SecondTrial | null, c: Conditions, tier: Tier): Kernel {
   const quench = c.flow < 2;
-  const flowFactor = tier === "calibrated" ? 1 : Math.min(40, Math.max(2, c.flow)) / 20;
+  const useSecond = second !== null && c.flow > 25;
+  const uRef = useSecond ? 30 : 20;
+  const beta = second?.comparisonWithSaffireI.beta ?? 1;
+  const flowFactor = tier === "calibrated" ? 1 : Math.pow(Math.min(40, Math.max(2, c.flow)) / uRef, beta);
   const p: (number | null)[] = [];
   for (let key = 0; key < 8; key++) {
-    const entry = model.combinations[key.toString(2).padStart(3, "0")];
-    if (!entry || entry.probability === null) { p.push(null); continue; }
+    const k = key.toString(2).padStart(3, "0");
+    // Prefer the simulation-calibrated kernels; keys without an estimate at 30 cm/s fall back to 20 cm/s.
+    const matched = second?.speedMatch;
+    const kernel20 = matched?.saffireI.combinations ?? model.combinations;
+    const kernel30 = matched?.saffireIII.combinations ?? second?.neighborhood.combinations;
+    const primary = useSecond ? kernel30?.[k]?.probability ?? null : null;
+    const base = primary ?? kernel20[k]?.probability ?? null;
+    if (base === null) { p.push(null); continue; }
     if (quench) { p.push(0); continue; }
     // Constant-hazard equivalence: lambda = -ln(1-p)/dt scaled by the flow factor.
-    p.push(1 - Math.pow(1 - entry.probability, flowFactor));
+    p.push(1 - Math.pow(1 - base, flowFactor));
   }
-  return { p, flowFactor, quench };
+  return { p, flowFactor, quench, reference: useSecond ? "SAFFIRE-III · S1 (30 cm/s)" : "SAFFIRE I · S1 (20 cm/s)", beta };
 }
 
 export function buildGrid(zones: Zone[], c: Conditions) {
