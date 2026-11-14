@@ -48,7 +48,11 @@ import { useResearch } from "./research/useResearch";
 import { applyConditions, CONDITION_FIELDS, initialOrigins, invalidConditions, originLabel } from "./research/provenance";
 import type { ConditionOrigins } from "./research/provenance";
 import type { ResearchContext } from "./research/types";
-import { readSaffireModel, SAFFIRE_SOURCE, simulateSaffire, type SaffireModel } from "./saffire";
+import { frontEnsemble, frontMedianMm, readSaffireModel, simulateSaffire, type SaffireModel } from "./saffire";
+import { SaffireEvidence } from "./model/SaffireEvidence";
+import { ModelApplicability } from "./model/ModelApplicability";
+import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from "./model/domain";
+const ENSEMBLE_SEEDS = Array.from({ length: 20 }, (_, i) => 1951 + i);
 import {
   INITIAL_MATERIALS,
   MATERIALS,
@@ -79,7 +83,11 @@ export default function App() {
   const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
   const isSaffire = labMode === "saffire";
   const duration = isSaffire ? (saffire?.durationSeconds ?? 0) : 90;
-  const saffireSteps = useMemo(() => saffire ? simulateSaffire(saffire) : [], [saffire]);
+  const [saffireSeed, setSaffireSeed] = useState(1951);
+  const saffireSteps = useMemo(() => saffire ? simulateSaffire(saffire, saffireSeed) : [], [saffire, saffireSeed]);
+  const saffireEnsemble = useMemo(() => saffire ? frontEnsemble(saffire, ENSEMBLE_SEEDS) : [], [saffire]);
+  const [gravity, setGravity] = useState<GravityId>("orbit");
+  const gravityEnv = gravityOf(gravity);
   useEffect(() => {
     if (!isSaffire) return;
     const request = new AbortController();
@@ -122,7 +130,7 @@ export default function App() {
     vehicle, surfaceId: selectedSurface, surfaceName: surface.name,
     structureKind: surface.kind, material: assignments[selectedSurface],
     oxygenPct: atmosphere.oxygen, pressureKpa: atmosphere.pressure,
-    flowCmS: atmosphere.flow, gravityG: 0,
+    flowCmS: atmosphere.flow, gravityG: gravityEnv.g,
   };
   const research = useResearch(researchContext);
   const [cutaway, setCutaway] = useState(true);
@@ -201,6 +209,7 @@ export default function App() {
   }
   function run() {
     if (isSaffire && !saffire) return;
+    if (isSaffire && runId) setSaffireSeed((seed) => seed + 1);
     setIgnitionSurface(isSaffire ? null : selectedSurface);
     setRunId((r) => r + 1);
     setTime(0);
@@ -263,8 +272,15 @@ export default function App() {
     if (isSaffire && !saffire) return;
     const payload = isSaffire && saffire ? {
       product: "HabitatFire",
-      version: 1,
-      visualization: { mode: "saffire-surface-transition", timeSeconds: time },
+      version: 2,
+      target: "Avanço da frente condicionado à ignição forçada; não é probabilidade de ignição.",
+      visualization: {
+        mode: "saffire-surface-transition",
+        timeSecondsSinceWindowStart: time,
+        step: saffireStepIndex,
+        seed: saffireSeed,
+        simulatedFrontMedianMm: saffireSteps[saffireStepIndex] ? frontMedianMm(saffire, saffireSteps[saffireStepIndex].grid) : null,
+      },
       model: saffire,
     } : {
       product: "HabitatFire",
@@ -274,7 +290,8 @@ export default function App() {
         oxygenPct: atmosphere.oxygen,
         pressureKpa: atmosphere.pressure,
         flowCmS: atmosphere.flow,
-        gravityG: 0,
+        gravityG: gravityEnv.g,
+        gravityEnvironment: gravity,
       },
       materialAssignments: assignments,
       ignitionSurface,
@@ -420,7 +437,7 @@ export default function App() {
               <div className="panel-title">
                 <Settings2 size={15} />
                 <h2>Seu cenário</h2>
-                <span className="tiny-tag">0 g</span>
+                <span className="tiny-tag">{isSaffire ? "µg" : gravityEnv.short}</span>
               </div>
               <section className="control-section">
                 <label className="preset-select">
@@ -438,6 +455,7 @@ export default function App() {
                   <p>94 × 40,6 cm · 0,37 mm de espessura</p>
                   <p>Fluxo nominal de 20 cm/s · O₂ de 21,5 a 21,7%</p>
                   <p>Ignição na borda a montante</p>
+                  <p className="preset-note">Realização {saffireSeed - 1950} · semente {saffireSeed}. As condições são as do ensaio e não são editáveis: o modelo só é válido nelas.</p>
                 </section>
               ) : <>
               <section className="control-section">
@@ -501,10 +519,12 @@ export default function App() {
                     aria-label="Preset de atmosfera"
                     value={preset}
                     onChange={(e) => {
-                      const p = PRESETS.find((p) => p.id === e.target.value);
+                      const surfacePreset = SURFACE_PRESETS.find((p) => p.id === e.target.value);
+                      const p = surfacePreset ?? PRESETS.find((p) => p.id === e.target.value);
                       if (p) {
                         setPreset(p.id);
                         changeConditions({ ...p.atmosphere }, p.label);
+                        if (surfacePreset) setGravity(surfacePreset.gravity);
                       }
                     }}
                   >
@@ -514,14 +534,30 @@ export default function App() {
                     <option value="experiment" disabled>
                       Condições de experimento
                     </option>
-                    {PRESETS.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
-                    ))}
+                    <optgroup label="Órbita">
+                      {PRESETS.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Superfície">
+                      {SURFACE_PRESETS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+                    </optgroup>
                   </select>
                   <ChevronDown size={14} />
                 </label>
+                {SURFACE_PRESETS.find((p) => p.id === preset) && (
+                  <p className="preset-note">{SURFACE_PRESETS.find((p) => p.id === preset)!.note}</p>
+                )}
+                <div className="gravity-select" role="group" aria-label="Gravidade do ambiente">
+                  {GRAVITY_ENVIRONMENTS.map((env) => (
+                    <button key={env.id} type="button" aria-pressed={gravity === env.id}
+                      onClick={() => { setGravity(env.id); setPlaying(false); setRunId(0); setTime(0); setIgnitionSurface(null); }}>
+                      {env.label}<small>{env.short}</small>
+                    </button>
+                  ))}
+                </div>
                 <details className="condition-origins">
                   <summary>Origem de cada condição</summary>
                   {CONDITION_FIELDS.map((field) => <p key={field.key}><strong>{field.label} · {number(atmosphere[field.key])} {field.unit}</strong><br />{originLabel(origins[field.key])}</p>)}
@@ -645,7 +681,9 @@ export default function App() {
                         : "ORBITAL / LAB MODULE"}
                     </span>
                   </div>
-                  <span className="scene-scale">3D · MICROGRAVIDADE</span>
+                  <span className="scene-scale">
+                    {isSaffire ? "3D · MICROGRAVIDADE · ENSAIO" : `3D · ${gravity === "orbit" ? "MICROGRAVIDADE" : `${gravityEnv.label.toUpperCase()} ${gravityEnv.short}`} · ILUSTRATIVO`}
+                  </span>
                 </div>
                 <div className="scene-canvas">
                   <SceneBoundary key={labMode}>
@@ -661,6 +699,7 @@ export default function App() {
                         <SaffireScene
                           model={saffire}
                           grid={saffireSteps[saffireStepIndex].grid}
+                          observedFrontMm={saffire.observedTrajectory?.[Math.min(saffire.observedTrajectory.length - 1, saffireStepIndex)]?.frontMedianMm ?? null}
                           resetCameraKey={resetCameraKey}
                         />
                       ) : (
@@ -734,7 +773,7 @@ export default function App() {
                 </div>}
                 <div className="scene-bottom">
                   <div className="scene-legend">
-                    {isSaffire ? <><span className="heat-legend" /> Frente de pirólise simulada</> : overlay === "thermal" ? (
+                    {isSaffire ? <><span className="heat-legend" /> Frente simulada <span className="observed-legend" /> Frente observada nas câmeras</> : overlay === "thermal" ? (
                       <>
                         <span className="heat-legend" />
                         Intensidade visual · ilustrativa
@@ -801,11 +840,11 @@ export default function App() {
                   </button>
                   <div className="timeline-track">
                     <input
-                      aria-label="Progresso da animação ilustrativa, não tempo físico"
+                      aria-label={isSaffire ? "Tempo desde o início da janela analisada do ensaio" : "Progresso da animação ilustrativa, não tempo físico"}
                       type="range"
                       min={0}
                       max={duration}
-                      step={0.1}
+                      step={isSaffire ? saffire?.stepSeconds ?? 2 : 0.1}
                       value={time}
                       disabled={!runId}
                       onChange={(e) => {
@@ -826,8 +865,8 @@ export default function App() {
                     </div>
                   </div>
                   <div className="time-readout">
-                    <strong>{isSaffire ? number(time, 1) : `${number((time / 90) * 100, 0)}%`}</strong>
-                    <span>{isSaffire ? `/ ${number(duration, 0)} s` : "animação"}</span>
+                    <strong>{isSaffire ? `${number(saffireStepIndex * (saffire?.stepSeconds ?? 2), 0)} s` : `${number((time / 90) * 100, 0)}%`}</strong>
+                    <span>{isSaffire ? `passo ${saffireStepIndex} · desde o início da janela` : "animação"}</span>
                   </div>
                   <button
                     className="speed-button"
@@ -839,11 +878,19 @@ export default function App() {
                     {speed}×
                   </button>
                 </div>
-                <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
-                  <button aria-pressed="true" onClick={() => setNotice("Modo ilustrativo: o progresso não representa tempo físico de incêndio.")}>Ilustrativo</button>
-                  <button disabled title="Sem séries temporais medidas recuperadas">Replay medido indisponível</button>
-                  <button disabled title="Sem modelo calibrado e validação independente">Previsão indisponível</button>
-                </div>
+                {isSaffire ? (
+                  <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
+                    <button aria-pressed="true" title="Frente medida nas câmeras do ensaio, linha ciano">Observação reconstruída</button>
+                    <button aria-pressed="true" title="Avanço condicionado à ignição, no domínio do ensaio">Previsão condicional · domínio do ensaio</button>
+                    <button disabled title="Nenhum segundo ensaio processado para teste independente">Transferência não validada</button>
+                  </div>
+                ) : (
+                  <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
+                    <button aria-pressed="true" onClick={() => setNotice("Modo ilustrativo: o progresso não representa tempo físico de incêndio.")}>Ilustrativo</button>
+                    <button disabled title="Replay medido disponível no modo SAFFIRE I · S1">Replay medido: modo SAFFIRE</button>
+                    <button disabled title="Veja a aplicabilidade do modelo calibrado abaixo">Previsão: ver aplicabilidade</button>
+                  </div>
+                )}
                 <div className="playback-footer">
                   <p>
                     <Info size={12} />
@@ -855,13 +902,26 @@ export default function App() {
                   </p>
                   <button className="button primary" onClick={run} disabled={isSaffire && !saffire}>
                     <Flame size={15} />
-                    {isSaffire ? (runId ? "Reiniciar simulação" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
+                    {isSaffire ? (runId ? "Nova realização" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
                     <ArrowRight size={15} />
                   </button>
                 </div>
               </section>
+              {!isSaffire && (
+                <ModelApplicability
+                  scenario={{
+                    material: assignments[selectedSurface],
+                    oxygen: atmosphere.oxygen,
+                    pressure: atmosphere.pressure,
+                    flow: atmosphere.flow,
+                    gravityG: gravityEnv.g,
+                  }}
+                  surfaceName={surface.name}
+                  onOpenModel={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                />
+              )}
             </div>
-            {isSaffire ? <SaffireEvidence model={saffire} /> : <ResearchPanel
+            {isSaffire ? <SaffireEvidence model={saffire} ensemble={saffireEnsemble} time={saffireStepIndex * (saffire?.stepSeconds ?? 2)} seedCount={ENSEMBLE_SEEDS.length} /> : <ResearchPanel
               research={research}
               context={researchContext}
               onApply={applyTest}
@@ -1079,54 +1139,5 @@ function RangeControl({
         </span>
       </span>
     </label>
-  );
-}
-
-function SaffireEvidence({ model }: { model: SaffireModel | null }) {
-  return (
-    <aside className="evidence-panel" aria-label="Evidência SAFFIRE">
-      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
-      <section className="evidence-card featured">
-        <div className="evidence-card-title">
-          <h3>SAFFIRE I · S1</h3>
-          <a href={SAFFIRE_SOURCE} target="_blank" rel="noreferrer" aria-label="Abrir SAFFIRE I na NASA">
-            <ArrowUpRight size={17} />
-          </a>
-        </div>
-        <p>Frente de pirólise observada nas duas câmeras do ensaio.</p>
-        {model && <>
-          <div className="evidence-numbers">
-            <div>
-              <strong>{number(model.comparison.neighborhood.positionMaeMm.mean)} mm</strong>
-              <span>Erro médio por vizinhança</span>
-            </div>
-            <div>
-              <strong>{number(model.comparison.baseline.positionMaeMm.mean)} mm</strong>
-              <span>Erro médio do modelo anterior</span>
-            </div>
-          </div>
-          <p>Probabilidade de avanço em 2 s por vizinhança. As direções laterais são relativas à amostra.</p>
-          <div className="saffire-probabilities">
-            {Object.entries(model.combinations).filter(([key]) => key !== "000").map(([key, value]) => (
-              <p key={key}>
-                <strong>{[key[0] === "1" && "Montante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}</strong>
-                {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
-                {" · "}{number(value.transitions, 0)}/{number(value.exposures, 0)}
-                {value.exposures > 0 && value.exposures < 100 ? " · poucos dados" : ""}
-                {value.probability !== null && value.transitions < 5 ? " · poucos avanços" : ""}
-              </p>
-            ))}
-          </div>
-          <div className="domain-note">
-            <Info size={14} />
-            <span>
-              Em {model.comparison.seedCount} simulações do trecho reservado, a velocidade média foi
-              {" "}{number(model.comparison.neighborhood.simulatedSpeedMmS.mean, 2)} mm/s
-              e nas imagens {number(model.comparison.observedSpeedMmS, 2)} mm/s. As taxas representam associações observadas.
-            </span>
-          </div>
-        </>}
-      </section>
-    </aside>
   );
 }

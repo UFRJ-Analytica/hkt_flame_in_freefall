@@ -1,0 +1,880 @@
+{
+  "schemaVersion": 1,
+  "description": "Alvos de modelagem curados das tabelas SAFFIRE I/II/III, com célula original e interpretação explícita.",
+  "outcomeLabels": {
+    "sustained": "Propagação sustentada",
+    "no-sustained": "Sem propagação sustentada",
+    "anchored": "Chama ancorada na base",
+    "not-ignited": "Não ignitou"
+  },
+  "records": [
+    {
+      "id": "PSI-98:S1",
+      "investigation": "PSI-98",
+      "campaign": "SAFFIRE-I",
+      "sample": "S1",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-98_Experimental table_SAFFIRE-1.csv",
+        "row": 2,
+        "sha256": "c01f29c62455f0a3b512290ab85e5687ecded326733189f002f580368402308d",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+      },
+      "raw": {
+        "Sample Number": "S1",
+        "Material": "SIBAL Fabric",
+        "Sample Thickness (cm)": "0.37",
+        "Sample Length (cm)": "40.6",
+        "Sample Width (cm)": "94",
+        "Air Flow (cm/s)": "20",
+        "Percent O2": "21.5 - 21.7",
+        "Ignition Power (W)": "182",
+        "Ignition Time (s)": "8",
+        "Burn Time (s)": "420",
+        "Flow Direction": "Concurrent",
+        "Camera 1": "S1C1",
+        "Camera 2": "S1C2"
+      },
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": 0.37,
+      "lengthMm": 940,
+      "widthMm": 406,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        21.5,
+        21.7
+      ],
+      "ignition": {
+        "powerW": 182,
+        "durationS": 8
+      },
+      "burnTimeS": 420,
+      "outcome": "sustained",
+      "spreadRateMmS": 1.8,
+      "burnLengthMm": null,
+      "onegComparison": null,
+      "cameras": [
+        "S1C1",
+        "S1C2"
+      ],
+      "framesStatus": "processed",
+      "spreadRateSource": {
+        "kind": "publication",
+        "label": "NTRS 20170008805: média de 1,8 mm/s",
+        "url": "https://ntrs.nasa.gov/api/citations/20170008805/downloads/20170008805.pdf"
+      }
+    },
+    {
+      "id": "PSI-98:S2",
+      "investigation": "PSI-98",
+      "campaign": "SAFFIRE-I",
+      "sample": "S2",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-98_Experimental table_SAFFIRE-1.csv",
+        "row": 3,
+        "sha256": "c01f29c62455f0a3b512290ab85e5687ecded326733189f002f580368402308d",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+      },
+      "raw": {
+        "Sample Number": "S2",
+        "Material": "SIBAL Fabric",
+        "Sample Thickness (cm)": "0.37",
+        "Sample Length (cm)": "40.6",
+        "Sample Width (cm)": "94",
+        "Air Flow (cm/s)": "20",
+        "Percent O2": "~ 21.5",
+        "Ignition Power (W)": "182",
+        "Ignition Time (s)": "8",
+        "Burn Time (s)": "70",
+        "Flow Direction": "Opposed",
+        "Camera 1": "S2C1",
+        "Camera 2": "S2C2"
+      },
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
+        "Desfecho não tabulado; a tabela registra 70 s de queima. Frames públicos ainda não processados."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": 0.37,
+      "lengthMm": 940,
+      "widthMm": 406,
+      "flowCmS": 20,
+      "flowDirection": "opposed",
+      "oxygenPct": [
+        21.5,
+        21.5
+      ],
+      "ignition": {
+        "powerW": 182,
+        "durationS": 8
+      },
+      "burnTimeS": 70,
+      "outcome": null,
+      "spreadRateMmS": null,
+      "burnLengthMm": null,
+      "onegComparison": null,
+      "cameras": [
+        "S2C1",
+        "S2C2"
+      ],
+      "framesStatus": "available",
+      "oxygenApproximate": true
+    },
+    {
+      "id": "PSI-99:2-1",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-1",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 2,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-1",
+        "Material": "Silicone",
+        "Samle Thickness": "0.27 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 21.5",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "Insignificant",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "~ 0",
+        "?-g Spread Length": "n/a",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "Acceleratory",
+        "Camera 1": "S1C1",
+        "Camera 2": "S1C2"
+      },
+      "notes": [
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento queimado em µg registrado como \"~ 0\"."
+      ],
+      "material": "Silicone",
+      "materialDetail": "Silicone",
+      "thicknessMm": 0.27,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        21.5,
+        21.5
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": null,
+      "outcome": "no-sustained",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 0,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "Acceleratory"
+      },
+      "cameras": [
+        "S1C1",
+        "S1C2"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-2",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-2",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 3,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-2",
+        "Material": "Silicone",
+        "Samle Thickness": "0.61 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "Insignificant",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "~ 0",
+        "?-g Spread Length": "n/a",
+        "1-g Burn Length": "7.6 cm",
+        "1-g Spread Rate": "1.2 mm/s",
+        "Camera 1": "n/a",
+        "Camera 2": "S2C2"
+      },
+      "notes": [
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento queimado em µg registrado como \"~ 0\"."
+      ],
+      "material": "Silicone",
+      "materialDetail": "Silicone",
+      "thicknessMm": 0.61,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": null,
+      "outcome": "no-sustained",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 0,
+      "onegComparison": {
+        "burnLength": "7.6 cm",
+        "spreadRate": "1.2 mm/s"
+      },
+      "cameras": [
+        "S2C2"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-3",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-3",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 4,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-3",
+        "Material": "Silicone",
+        "Samle Thickness": "1.03 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "Insignificant",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "~ 0",
+        "?-g Spread Length": "n/a",
+        "1-g Burn Length": "~ 0",
+        "1-g Spread Rate": "n/a",
+        "Camera 2": "S3C2"
+      },
+      "notes": [
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento queimado em µg registrado como \"~ 0\"."
+      ],
+      "material": "Silicone",
+      "materialDetail": "Silicone",
+      "thicknessMm": 1.03,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": null,
+      "outcome": "no-sustained",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 0,
+      "onegComparison": {
+        "burnLength": "~ 0",
+        "spreadRate": "n/a"
+      },
+      "cameras": [
+        "S3C2"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-4",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-4",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 5,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-4",
+        "Material": "Silicone",
+        "Samle Thickness": "037 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "Insignificant",
+        "Flow Direction": "Opposed",
+        "?-g Burn Length": "~ 0",
+        "?-g Spread Length": "n/a",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "0.6 mm/s",
+        "Camera 1": "S4C1",
+        "Camera 2": "S4C1"
+      },
+      "notes": [
+        "Espessura registrada como \"037 mm\"; grafia ambígua, mantida sem interpretação.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento queimado em µg registrado como \"~ 0\"."
+      ],
+      "material": "Silicone",
+      "materialDetail": "Silicone",
+      "thicknessMm": null,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "opposed",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": null,
+      "outcome": "no-sustained",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 0,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "0.6 mm/s"
+      },
+      "cameras": [
+        "S4C1",
+        "S4C1"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-5",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-5",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 6,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-5",
+        "Material": "Cotton-Fiberglass (SIBAL)",
+        "Samle Thickness": "037 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "145 s",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "29 cm",
+        "?-g Spread Length": "2.1 mm/s",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "Acceleratory",
+        "Camera 1": "S5C1",
+        "Camera 2": "S5C2"
+      },
+      "notes": [
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm, o mesmo tecido do SAFFIRE-I.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação)."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": 0.37,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": 145,
+      "outcome": "sustained",
+      "spreadRateMmS": 2.1,
+      "spreadRateSource": {
+        "kind": "table",
+        "label": "Tabela PSI-99, coluna de propagação em µg"
+      },
+      "burnLengthMm": 290,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "Acceleratory"
+      },
+      "cameras": [
+        "S5C1",
+        "S5C2"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-6",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-6",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 7,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-6",
+        "Samle Thickness": "037 mm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "115 s",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "29 cm",
+        "?-g Spread Length": "2.6 mm/s",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "Acceleratory",
+        "Camera 1": "S6C1",
+        "Camera 2": "S56C2"
+      },
+      "notes": [
+        "Célula de material vazia; interpretada como continuação da linha anterior (SIBAL).",
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação)."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": 0.37,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": 115,
+      "outcome": "sustained",
+      "spreadRateMmS": 2.6,
+      "spreadRateSource": {
+        "kind": "table",
+        "label": "Tabela PSI-99, coluna de propagação em µg"
+      },
+      "burnLengthMm": 290,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "Acceleratory"
+      },
+      "cameras": [
+        "S6C1",
+        "S56C2"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-7",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-7",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 8,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-7",
+        "Material": "PMMA & Nomex",
+        "Samle Thickness": "0.85 and 0.37 mm",
+        "Sample Length": "5 and 24 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "~ 22.1",
+        "Ignition Power (W)": "80 W",
+        "Ignition Time (s)": "9.2 s",
+        "Burn Time (s)": "140 s",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "5 cm & 0 (note 2)",
+        "?-g Spread Length": "n/a (Nomex)",
+        "1-g Burn Length": "~ 0 (Nomex)",
+        "1-g Spread Rate": "n/a (Nomex)",
+        "Camera 1": "S7C1",
+        "Camera 2": "n/a"
+      },
+      "notes": [
+        "Nota 2 da tabela: a porção de PMMA foi totalmente consumida, mas o Nomex não ignitou.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação)."
+      ],
+      "material": "PMMA + Nomex",
+      "materialDetail": "PMMA 0,85 mm (5 cm) seguido de Nomex 0,37 mm (24 cm)",
+      "thicknessMm": null,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.1,
+        22.1
+      ],
+      "oxygenApproximate": true,
+      "ignition": {
+        "powerW": 80,
+        "durationS": 9.2
+      },
+      "burnTimeS": 140,
+      "outcome": "not-ignited",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 50,
+      "onegComparison": {
+        "burnLength": "~ 0 (Nomex)",
+        "spreadRate": "n/a (Nomex)"
+      },
+      "cameras": [
+        "S7C1"
+      ],
+      "framesStatus": "not-in-psi"
+    },
+    {
+      "id": "PSI-99:2-8",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-8",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 9,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-8",
+        "Material": "PMMA",
+        "Samle Thickness": "See Fig. 5",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "22.1 to 22.0",
+        "Ignition Power (W)": "97 W",
+        "Ignition Time (s)": "30 s",
+        "Burn Time (s)": "600 s",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "~ 10 cm (note 3)",
+        "?-g Spread Length": "Note 4",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "Acceleratory",
+        "Camera 1": "S8C1",
+        "Camera 2": "n/a"
+      },
+      "notes": [
+        "Espessura: \"See Fig. 5\" (perfil variável, não tabulado).",
+        "Nota 4: chamas ancoradas na base, regressão muito lenta (0,01 a 0,04 mm/s).",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento em µg é o trecho com dano visível significativo (nota 3), aproximado."
+      ],
+      "material": "PMMA",
+      "materialDetail": "PMMA",
+      "thicknessMm": null,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        22.0,
+        22.1
+      ],
+      "oxygenApproximate": false,
+      "ignition": {
+        "powerW": 97,
+        "durationS": 30
+      },
+      "burnTimeS": 600,
+      "outcome": "anchored",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 100,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "Acceleratory"
+      },
+      "cameras": [
+        "S8C1"
+      ],
+      "framesStatus": "not-in-psi",
+      "burnLengthApproximate": true
+    },
+    {
+      "id": "PSI-99:2-9",
+      "investigation": "PSI-99",
+      "campaign": "SAFFIRE-II",
+      "sample": "2-9",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+        "row": 10,
+        "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+      },
+      "raw": {
+        "Sample Number": "2-9",
+        "Samle Thickness": "1 cm",
+        "Sample Length": "29 cm",
+        "Sample Width (cm)": "5 cm",
+        "Air Flow (cm/s)": "20 cm/s",
+        "Percent O2 (Note 1)": "22.0 to 21.9",
+        "Ignition Power (W)": "97 W",
+        "Ignition Time (s)": "30 s",
+        "Burn Time (s)": "900 s",
+        "Flow Direction": "Concurrent",
+        "?-g Burn Length": "~ 10 cm (note 4)",
+        "?-g Spread Length": "Note 4",
+        "1-g Burn Length": "Complete",
+        "1-g Spread Rate": "Acceleratory",
+        "Camera 1": "S9C1",
+        "Camera 2": "n/a"
+      },
+      "notes": [
+        "Célula de material vazia; interpretada como continuação da linha anterior (PMMA).",
+        "Nota 4: chamas ancoradas na base, regressão muito lenta (0,01 a 0,04 mm/s).",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "Comprimento em µg é o trecho com dano visível significativo (nota 3), aproximado."
+      ],
+      "material": "PMMA",
+      "materialDetail": "PMMA",
+      "thicknessMm": 10.0,
+      "lengthMm": 290,
+      "widthMm": 50,
+      "flowCmS": 20,
+      "flowDirection": "concurrent",
+      "oxygenPct": [
+        21.9,
+        22.0
+      ],
+      "oxygenApproximate": false,
+      "ignition": {
+        "powerW": 97,
+        "durationS": 30
+      },
+      "burnTimeS": 900,
+      "outcome": "anchored",
+      "spreadRateMmS": null,
+      "spreadRateSource": null,
+      "burnLengthMm": 100,
+      "onegComparison": {
+        "burnLength": "Complete",
+        "spreadRate": "Acceleratory"
+      },
+      "cameras": [
+        "S9C1"
+      ],
+      "framesStatus": "not-in-psi",
+      "burnLengthApproximate": true
+    },
+    {
+      "id": "PSI-100:S1",
+      "investigation": "PSI-100",
+      "campaign": "SAFFIRE-III",
+      "sample": "S1",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-100_Experimental table_SAFFIRE-3.csv",
+        "row": 2,
+        "sha256": "4d3c717ec20dd0247db670b2784a9fd7d746788bc54a936f80693e48eb8cd117",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+      },
+      "raw": {
+        "Sample Number": "S1",
+        "Material": "SIBAL Fabric",
+        "Sample Thickness": ".33 cm",
+        "Sample Length": "94 cm",
+        "Sample Width": "40.6 cm",
+        "Air Flow": "30 cm/s",
+        "Direction": "Concurrent",
+        "Camera 1": "S1C1",
+        "Camera 2": "S1C2"
+      },
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": null,
+      "lengthMm": 940,
+      "widthMm": 406,
+      "flowCmS": 30,
+      "flowDirection": "concurrent",
+      "oxygenPct": null,
+      "ignition": null,
+      "burnTimeS": null,
+      "outcome": null,
+      "spreadRateMmS": null,
+      "burnLengthMm": null,
+      "onegComparison": null,
+      "cameras": [
+        "S1C1",
+        "S1C2"
+      ],
+      "framesStatus": "available"
+    },
+    {
+      "id": "PSI-100:S2",
+      "investigation": "PSI-100",
+      "campaign": "SAFFIRE-III",
+      "sample": "S2",
+      "gravity": "microgravity",
+      "platform": "Cygnus (órbita, após saída da ISS)",
+      "pressureKpa": null,
+      "source": {
+        "file": "PSI-100_Experimental table_SAFFIRE-3.csv",
+        "row": 3,
+        "sha256": "4d3c717ec20dd0247db670b2784a9fd7d746788bc54a936f80693e48eb8cd117",
+        "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+      },
+      "raw": {
+        "Sample Number": "S2",
+        "Material": "SIBAL Fabric",
+        "Sample Thickness": ".33 cm",
+        "Sample Length": "94 cm",
+        "Sample Width": "40.6 cm",
+        "Air Flow": "30 cm/s",
+        "Direction": "Opposed",
+        "Camera 1": "S2C1",
+        "Camera 2": "S2C2"
+      },
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados."
+      ],
+      "material": "SIBAL",
+      "materialDetail": "Tecido algodão/fibra de vidro (SIBAL)",
+      "thicknessMm": null,
+      "lengthMm": 940,
+      "widthMm": 406,
+      "flowCmS": 30,
+      "flowDirection": "opposed",
+      "oxygenPct": null,
+      "ignition": null,
+      "burnTimeS": null,
+      "outcome": null,
+      "spreadRateMmS": null,
+      "burnLengthMm": null,
+      "onegComparison": null,
+      "cameras": [
+        "S2C1",
+        "S2C2"
+      ],
+      "framesStatus": "available"
+    }
+  ],
+  "derived": [
+    {
+      "id": "PSI-98:S1:front-speed-holdout",
+      "recordId": "PSI-98:S1",
+      "quantity": "Velocidade da frente de contraste (trecho reservado)",
+      "value": 1.95,
+      "unit": "mm/s",
+      "method": "Frente de contraste no canal verde, câmeras mapeadas S1C1/S1C2, amostragem a cada 2 s; últimos 30% da janela analisada.",
+      "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
+      "artifactSha256": "267c79b9ca68274bfd6c3b54ee36dc63b307b2128915d792ba3129173533c836",
+      "limits": "Mesmo ensaio usado no ajuste; registro espacial manual aproximado."
+    }
+  ],
+  "limits": [
+    "Todos os ensaios ocorreram em microgravidade na Cygnus; nenhum registro cobre gravidade lunar ou marciana.",
+    "Pressão de cabine não tabulada nos ensaios SAFFIRE I–III.",
+    "Desfechos são do ensaio específico (geometria, largura, ignição); não são propriedades universais do material."
+  ]
+}

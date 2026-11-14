@@ -14,6 +14,9 @@ export interface SaffireModel {
   validation: { positionMaeMm: number; observedSpeedMmS: number; simulatedSpeedMmS: number };
   combinations: Record<string, { exposures: number; transitions: number; probability: number | null; reason: string | null }>;
   neighborhoodTraining: { minimumExposures: number; censoredCellSteps: number };
+  neighborhoodHoldout?: { combinations: Record<string, { exposures: number; transitions: number }> };
+  observedTrajectory?: { timeS: number; frontMedianMm: number | null; visibleRows: number }[];
+  diagnostics?: { splitTimeS?: number; coverage?: number; annotation?: { annotatedPoints: number; matchedPoints: number; maeMm: number }; medianOverlapErrorMm?: number };
   comparison: {
     observedSpeedMmS: number;
     seedCount: number;
@@ -66,8 +69,33 @@ export type Cell = 0 | 1 | null;
 export type Grid = Cell[][];
 export type SimulationStep = { grid: Grid; blocked: number };
 
-export function simulateSaffire(model: SaffireModel): SimulationStep[] {
-  let seed = 1951;
+/** Median over visible rows of the furthest reached cell edge, in mm (same statistic as observedTrajectory). */
+export function frontMedianMm(model: SaffireModel, grid: Grid): number | null {
+  const fronts: number[] = [];
+  for (const row of grid) {
+    if (row.every((cell) => cell === null)) continue;
+    let last = -1;
+    row.forEach((cell, x) => { if (cell === 1) last = x; });
+    fronts.push((last + 1) * model.grid.dxMm);
+  }
+  if (!fronts.length) return null;
+  fronts.sort((a, b) => a - b);
+  const mid = fronts.length >> 1;
+  return fronts.length % 2 ? fronts[mid] : (fronts[mid - 1] + fronts[mid]) / 2;
+}
+
+/** Monte Carlo band of the median front: the spread of the model's own stochasticity at fixed
+ *  parameters, not experimental or parameter uncertainty. */
+export function frontEnsemble(model: SaffireModel, seeds: number[]) {
+  const runs = seeds.map((seed) => simulateSaffire(model, seed).map((step) => frontMedianMm(model, step.grid) ?? 0));
+  return runs[0].map((_, i) => {
+    const values = runs.map((run) => run[i]).sort((a, b) => a - b);
+    return { timeS: i * model.stepSeconds, min: values[0], max: values[values.length - 1], median: values[values.length >> 1] };
+  });
+}
+
+export function simulateSaffire(model: SaffireModel, initialSeed = 1951): SimulationStep[] {
+  let seed = initialSeed;
   const grid: Grid = model.initialFront.map(front =>
     Array.from({ length: model.grid.columns }, (_, x) => front === null ? null : x < front ? 1 : 0));
   const steps: SimulationStep[] = [{ grid, blocked: 0 }];

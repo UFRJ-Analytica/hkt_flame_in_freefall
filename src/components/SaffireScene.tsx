@@ -3,11 +3,13 @@ import { OrbitControls } from "@react-three/drei";
 import type { Grid, SaffireModel } from "../saffire";
 
 export default function SaffireScene({
-  model, grid, resetCameraKey,
+  model, grid, resetCameraKey, observedFrontMm = null,
 }: {
   model: SaffireModel;
   grid: Grid;
   resetCameraKey: number;
+  /** Median front measured in the camera frames at this step; drawn as a cyan line. */
+  observedFrontMm?: number | null;
 }) {
   const { lengthMm, widthMm, dxMm, dyMm } = model.grid;
   const length = lengthMm / 1000;
@@ -51,6 +53,12 @@ export default function SaffireScene({
           </group>
         );
       })}
+      {observedFrontMm !== null && (
+        <mesh position={[observedFrontMm / 1000 - length / 2, 0.009, 0]}>
+          <boxGeometry args={[0.003, 0.003, width + 0.02]} />
+          <meshBasicMaterial color="#5de6e3" transparent opacity={0.9} />
+        </mesh>
+      )}
       <group position={[0, 0.012, width / 2 + 0.065]} rotation={[0, 0, -Math.PI / 2]}>
         <mesh>
           <cylinderGeometry args={[0.004, 0.004, length * 0.68, 10]} />

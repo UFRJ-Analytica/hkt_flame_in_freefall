@@ -16,7 +16,8 @@
     "data:check": "python -m unittest discover -s scripts -p test_sync_nasa.py",
     "research:corpus": "python scripts/build_research_corpus.py",
     "media:index": "python scripts/build_media_index.py",
-    "research:check": "python -m unittest discover -s backend -p test_*.py"
+    "research:check": "python -m unittest discover -s backend -p test_*.py",
+    "targets:build": "python scripts/build_modeling_targets.py"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
