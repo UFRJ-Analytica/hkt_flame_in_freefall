@@ -107,3 +107,12 @@
 @media (max-width: 1250px) { .workbench:has(.research-panel) { grid-template-columns: 230px minmax(300px, 1fr); } .evidence-panel.research-panel { grid-column: 1 / -1; position: static; } .research-panel-body { max-height: none; overflow: visible; padding: 24px; } .research-panel .research-intro h2 br { display: none; } .research-form textarea { min-height: 72px; } }
 @media (max-width: 900px) { .workbench:has(.research-panel) { grid-template-columns: 210px minmax(0, 1fr); } }
 @media (max-width: 650px) { .workbench:has(.research-panel) { grid-template-columns: minmax(0, 1fr); margin: 0 12px; } .evidence-panel.research-panel { display: block; grid-column: 1; } .research-panel-body { padding: 20px 16px; } .research-panel .button, .research-starters button { min-height: 40px; } .research-condition-table { font-size: 11px; } .research-compare-bar { bottom: 10px; } .condition-actions .button { flex: 1; min-height: 44px; } }
+.record-videos { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 11px; display: grid; gap: 8px; }
+.record-videos.muted { display: flex; align-items: flex-start; gap: 8px; }
+.record-videos a { color: var(--accent); }
+.record-videos-heading { margin: 0; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.record-videos ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.record-videos li { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.record-videos li span { flex: 1 1 180px; min-width: 0; overflow-wrap: anywhere; font-family: var(--mono, monospace); }
+.record-videos li .button { font-size: 10px; display: inline-flex; align-items: center; gap: 4px; }
+.record-video-player { width: 100%; max-height: 320px; border-radius: 6px; background: #000; }

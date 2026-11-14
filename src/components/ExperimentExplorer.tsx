@@ -12,6 +12,7 @@ import {
 import type { ExperimentTest, Investigation, NasaData } from "../types";
 import { CATEGORY_LABELS, number } from "../config";
 import { useModalFocus } from "../hooks/useModalFocus";
+import { RecordVideos } from "./research/RecordVideos";
 
 export function ExperimentExplorer({
   data,
@@ -363,6 +364,7 @@ export function ExperimentExplorer({
                   {detail.normalizationNotes.join(" ")}
                 </div>
               )}
+            <RecordVideos recordId={detail.id} investigationId={detail.investigationId} />
             <div className="raw-fields">
               {Object.entries(detail.raw)
                 .filter(([, value]) => value != null && value !== "")

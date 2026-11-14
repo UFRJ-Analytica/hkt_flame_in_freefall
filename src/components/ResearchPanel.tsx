@@ -7,6 +7,7 @@ import type { EvidenceSource, ResearchContext, ResearchIntent } from "../researc
 import type { ResearchState } from "../research/useResearch";
 import { bundleCsv, CONDITION_FIELDS, downloadFile } from "../research/provenance";
 import "../research/research.css";
+import { RecordVideos } from "./research/RecordVideos";
 
 const INTENTS: { id: ResearchIntent; label: string }[] = [
   { id: "prevention", label: "Prevenção" }, { id: "detection", label: "Detecção" },
@@ -97,7 +98,7 @@ export function ResearchPanel({ research, context, onApply, onExplore, onSources
           {!!item.unknowns.length && <details><summary>Condições desconhecidas ({item.unknowns.length})</summary><ul>{item.unknowns.map((text, i) => <li key={i}>{text}</li>)}</ul></details>}
           {item.sources.map((source) => <Source key={source.id} source={source} />)}
           {item.records.length ? <details className="research-records"><summary>{item.records.length} registros para inspecionar</summary>{item.records.map((record) => <div className="research-record" key={record.id}>
-            <h4>{record.label || record.id}</h4><span className="research-location">{record.id}</span><Conditions records={[record]} context={context} />
+            <h4>{record.label || record.id}</h4><span className="research-location">{record.id}</span><Conditions records={[record]} context={context} /><RecordVideos recordId={record.id} investigationId={record.investigationId} />
             <details className="research-raw"><summary>Inspecionar todos os campos originais</summary><p>{record.sourceFile ?? "Arquivo não informado"} · linha {record.sourceRow ?? "não informada"}</p>{record.normalizationNotes?.map((note, i) => <p key={i}>{note}</p>)}<dl>{Object.entries(record.raw).map(([field, value]) => <div key={field}><dt>{field}</dt><dd>{value == null || value === "" ? "Não informado" : String(value)}</dd></div>)}</dl></details>
             <div className="research-record-actions"><label><input type="checkbox" checked={chosen.some((r) => r.id === record.id)} disabled={chosen.length >= 3 && !chosen.some((r) => r.id === record.id)} onChange={(e) => setChosen((rows) => e.target.checked ? [...rows, record] : rows.filter((r) => r.id !== record.id))} />Comparar</label><button className="button secondary small" disabled={CONDITION_FIELDS.every((f) => record[f.record] == null)} onClick={() => onApply(record)}>Revisar aplicação</button></div>
           </div>)}</details> : <p className="research-location">Sem registros tabulares recuperados. Não há condições numéricas para aplicar.</p>}

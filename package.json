@@ -15,6 +15,7 @@
     "data:offline": "python scripts/sync_nasa.py --offline",
     "data:check": "python -m unittest discover -s scripts -p test_sync_nasa.py",
     "research:corpus": "python scripts/build_research_corpus.py",
+    "media:index": "python scripts/build_media_index.py",
     "research:check": "python -m unittest discover -s backend -p test_*.py"
   },
   "dependencies": {

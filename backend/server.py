@@ -7,9 +7,10 @@ import os
 import threading
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from backend.env import load_env
+from backend.media import MediaResolver
 from backend.research import ResearchService
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,7 @@ MAX_BODY = 32768
 
 def make_handler(service, root=ROOT):
     dist = (Path(root) / "dist").resolve()
+    media = MediaResolver(root)
 
     class Handler(BaseHTTPRequestHandler):
         server_version = "HabitatFire/1"
@@ -50,6 +52,22 @@ def make_handler(service, root=ROOT):
                 return
             if path == "/api/research/status":
                 self._send(200, service.status())
+                return
+            if path == "/api/media":
+                query = parse_qs(urlsplit(self.path).query)
+                try:
+                    location = media.resolve(query.get("investigation", [""])[0], query.get("file", [""])[0])
+                except LookupError as exc:
+                    self._send(404, {"error": str(exc)})
+                    return
+                except ConnectionError as exc:
+                    self._send(502, {"error": str(exc)})
+                    return
+                self.send_response(302)
+                self.send_header("Location", location)
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
                 return
             if path.startswith("/api/"):
                 self._send(404, {"error": "Endpoint desconhecido."})
