@@ -1,0 +1,4 @@
+# Dependencies for the SAFFIRE ingestion/calibration scripts (scripts/*saffire*.py).
+numpy==2.4.6
+scipy==1.17.1
+pillow==13.0.0
