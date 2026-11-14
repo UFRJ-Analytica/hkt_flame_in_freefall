@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ArrowUpRight, BookOpen, Info } from "lucide-react";
 import { SAFFIRE_SOURCE, type SaffireModel } from "../saffire";
 import { wilson } from "./domain";
@@ -12,11 +13,13 @@ const NEIGHBOUR_LABEL = (key: string) =>
 
 export type EnsemblePoint = { timeS: number; min: number; max: number; median: number };
 
-export function SaffireEvidence({ model, ensemble, time, seedCount }: {
+export function SaffireEvidence({ model, ensemble, time, seedCount, children }: {
   model: SaffireModel | null;
   ensemble: EnsemblePoint[];
   time: number;
   seedCount: number;
+  /** Extra sections rendered before the sources, e.g. the opposed-flow (S2) card. */
+  children?: ReactNode;
 }) {
   if (!model) {
     return (
@@ -133,6 +136,8 @@ export function SaffireEvidence({ model, ensemble, time, seedCount }: {
             <span>Separação temporal dentro de um único ensaio. Não valida outro material, geometria, atmosfera ou gravidade.</span>
           </div>
         </section>
+
+        {children}
 
         <div className="model-sources">
           <a href={SAFFIRE_SOURCE} target="_blank" rel="noreferrer">PSI-98 · dados e frames <ArrowUpRight size={12} /></a>

@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 1,
+  "investigationId": "PSI-99",
+  "inventorySource": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-99/versions",
+  "assets": [
+    {
+      "name": "SAFFIRE-II-S6C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 39900054,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II-S6C1_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S6C1",
+      "sequences": {
+        "S6C1": {
+          "frames": 4600,
+          "firstMs": 1479776019413,
+          "lastMs": 1479776172699
+        }
+      },
+      "status": "available",
+      "sha256": "fbff8bc2b12e2b951c8bbd5adcb5547d80d2f3b57f29367eb22cfcd7de5519d3"
+    },
+    {
+      "name": "SAFFIRE-II_Image_Directory_Nomenclature_v3.0.pdf",
+      "sizeBytes": 755236,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_Image_Directory_Nomenclature_v3.0.pdf&version=1&redirect=false",
+      "cameraInCatalog": null,
+      "status": "available",
+      "sha256": "edb5b6f4ebc7c32bd26f45f728902d766affa395677d818e9ef932c704321dbe"
+    },
+    {
+      "name": "SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part1.zip",
+      "sizeBytes": 29086033,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S1C2",
+      "sequences": {
+        "S1C2": {
+          "frames": 5000,
+          "firstMs": 1479773202565,
+          "lastMs": 1479773369196
+        }
+      },
+      "status": "available",
+      "sha256": "ca411dce12e9696eba345e36978a9f6d046aaf07b532c1cb6902b18ed5b147b6"
+    },
+    {
+      "name": "SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part2.zip",
+      "sizeBytes": 30911591,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S1C2",
+      "sequences": {
+        "S1C2": {
+          "frames": 5000,
+          "firstMs": 1479773369230,
+          "lastMs": 1479773535849
+        }
+      },
+      "status": "available",
+      "sha256": "979c654a79111ccb9bf7ebdd6275c9cbd04ecb76afebec197b5787575658b9a8"
+    },
+    {
+      "name": "SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part3.zip",
+      "sizeBytes": 8557413,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S1C2_Image_Data_All-JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S1C2",
+      "sequences": {
+        "S1C2": {
+          "frames": 1400,
+          "firstMs": 1479773535883,
+          "lastMs": 1479773582512
+        }
+      },
+      "status": "available",
+      "sha256": "25b5245d6c0b43e46767fe57417961ee38a33641c9a8512304c5400bed60cab3"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 30258445,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S3C2": {
+          "frames": 5000,
+          "firstMs": 1479774262644,
+          "lastMs": 1479774429264
+        }
+      },
+      "status": "available",
+      "sha256": "79d6ef900a087f13a0016c001dc566f24f4fd3683680d48846d594152e5c30df"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 32310501,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S3C2": {
+          "frames": 5000,
+          "firstMs": 1479774429297,
+          "lastMs": 1479774595917
+        }
+      },
+      "status": "available",
+      "sha256": "333a1d107a534c62dc06a7647a008b3edb8e1dcd97af5233db19b2d9eb711427"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part3.zip",
+      "sizeBytes": 31875432,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S3C2": {
+          "frames": 5000,
+          "firstMs": 1479774595950,
+          "lastMs": 1479774762570
+        }
+      },
+      "status": "available",
+      "sha256": "f4431d9cff4cf01ee4c0b7cb8532690753c1c4168d1f1c1e4c1676ecd1e3540a"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part1.zip",
+      "sizeBytes": 22682813,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S2C2": {
+          "frames": 5000,
+          "firstMs": 1479773672624,
+          "lastMs": 1479773839244
+        }
+      },
+      "status": "available",
+      "sha256": "cf451eaff6cf7e1e6dead727ef7d3f1ec02f2255bfaa045ef96011d3be9fa0f3"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part2.zip",
+      "sizeBytes": 23658708,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S2C2": {
+          "frames": 5000,
+          "firstMs": 1479773839277,
+          "lastMs": 1479774005897
+        }
+      },
+      "status": "available",
+      "sha256": "d54565e2b8e7a5561648d36657b02b9611a6ad641033b9dfa7e678d4ac237832"
+    },
+    {
+      "name": "SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part3.zip",
+      "sizeBytes": 23681876,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S2C2_Image_Data_All_JPEGs_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S2C2",
+      "sequences": {
+        "S2C2": {
+          "frames": 5000,
+          "firstMs": 1479774005930,
+          "lastMs": 1479774172550
+        }
+      },
+      "status": "available",
+      "sha256": "ffb99da3c6147194773330a342d86d7c749ce9241513a73e9de02cbc8e0d813b"
+    },
+    {
+      "name": "SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 11297895,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C1",
+      "sequences": {
+        "S4C1": {
+          "frames": 5000,
+          "firstMs": 1479774852666,
+          "lastMs": 1479775019300
+        }
+      },
+      "status": "available",
+      "sha256": "f2300d7b69b992608f0abd2f24987634192d0b50fd2b58a567e0e85135ccc8a8"
+    },
+    {
+      "name": "SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 11051040,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C1",
+      "sequences": {
+        "S4C1": {
+          "frames": 5000,
+          "firstMs": 1479775019334,
+          "lastMs": 1479775185952
+        }
+      },
+      "status": "available",
+      "sha256": "4458881db3135231a9b3433fbc6d0e1696e76f60b507edbec3f3d78a53f0597e"
+    },
+    {
+      "name": "SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part3.zip",
+      "sizeBytes": 11045768,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C1_Image_Data_All_JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C1",
+      "sequences": {
+        "S4C1": {
+          "frames": 5000,
+          "firstMs": 1479775185986,
+          "lastMs": 1479775352605
+        }
+      },
+      "status": "available",
+      "sha256": "0f164a05d6fb5a43d35174bf6a6a37ed67a667dbad044a5b05c0f719b33b8aef"
+    },
+    {
+      "name": "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part1.zip",
+      "sizeBytes": 35212174,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C2",
+      "sequences": {
+        "S4C2": {
+          "frames": 5000,
+          "firstMs": 1479774852682,
+          "lastMs": 1479775019301
+        }
+      },
+      "status": "available",
+      "sha256": "3a407035ba2f00a978b0e8d640e530001183053e85e9eecb4639b04d6925b6e3"
+    },
+    {
+      "name": "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part2.zip",
+      "sizeBytes": 35640500,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C2",
+      "sequences": {
+        "S4C2": {
+          "frames": 5000,
+          "firstMs": 1479775019335,
+          "lastMs": 1479775185954
+        }
+      },
+      "status": "available",
+      "sha256": "23e0195c439350871bcf4f9c16c52c931701c6db6f559ad5840ebbb556b1b93e"
+    },
+    {
+      "name": "SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part3.zip",
+      "sizeBytes": 35206958,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S4C2_Image_Data_All-JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S4C2",
+      "sequences": {
+        "S4C2": {
+          "frames": 5000,
+          "firstMs": 1479775185988,
+          "lastMs": 1479775352607
+        }
+      },
+      "status": "available",
+      "sha256": "a62114c9364e16ed2cb3a05fae74b328a28d582dfa582aad7f02c642e7a0fed6"
+    },
+    {
+      "name": "SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 18909381,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S5C1",
+      "sequences": {
+        "S5C1": {
+          "frames": 5000,
+          "firstMs": 1479775442720,
+          "lastMs": 1479775609339
+        }
+      },
+      "status": "available",
+      "sha256": "e273157ccc6e91a6a03fb1a2fa73e4622ff19988133187d72a6093847a7fa9a7"
+    },
+    {
+      "name": "SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 32078494,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S5C1_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S5C1",
+      "sequences": {
+        "S5C1": {
+          "frames": 4600,
+          "firstMs": 1479775609373,
+          "lastMs": 1479775762659
+        }
+      },
+      "status": "available",
+      "sha256": "92ef811b5ede33faff94f1dfbd2814adcdcc134bd7738b8a10c5b2f79bf01e3b"
+    },
+    {
+      "name": "SAFFIRE-II_S5C2_Image_Data_All-JPEGs_Mapped_part2.zip",
+      "sizeBytes": 38613363,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S5C2_Image_Data_All-JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S5C2",
+      "sequences": {
+        "S5C2": {
+          "frames": 4600,
+          "firstMs": 1479775609373,
+          "lastMs": 1479775762661
+        }
+      },
+      "status": "available",
+      "sha256": "19e71f2a51e56597c68e7bbedcc1e53839b0f99e97bd431455377ee207a1ae8c"
+    },
+    {
+      "name": "SAFFIRE-II_S5C2_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 22493787,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S5C2_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S5C2",
+      "sequences": {
+        "S5C2": {
+          "frames": 5000,
+          "firstMs": 1479775442720,
+          "lastMs": 1479775609340
+        }
+      },
+      "status": "available",
+      "sha256": "ac6566120e33de484785e773dee378cbf2daa25359c0034ba39c383c444bf8e7"
+    },
+    {
+      "name": "SAFFIRE-II_S6C1_Image_Data_All-JPEGs_Mapped_part1.zip",
+      "sizeBytes": 25353083,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S6C1_Image_Data_All-JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S6C1",
+      "sequences": {
+        "S6C1": {
+          "frames": 5000,
+          "firstMs": 1479775852760,
+          "lastMs": 1479776019379
+        }
+      },
+      "status": "available",
+      "sha256": "98f256b60092f4041aff68b4059621034db0e5333bd9ff37bb076acfd98d9975"
+    },
+    {
+      "name": "SAFFIRE-II_S6C2_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 21323672,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S6C2_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S6C2",
+      "sequences": {
+        "S6C2": {
+          "frames": 5000,
+          "firstMs": 1479775852761,
+          "lastMs": 1479776019380
+        }
+      },
+      "status": "available",
+      "sha256": "c146a13686a679b9d6b844272dc141df8713c3c643735f534c40972cbe172a95"
+    },
+    {
+      "name": "SAFFIRE-II_S6C2_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 31413958,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S6C2_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S6C2",
+      "sequences": {
+        "S6C2": {
+          "frames": 4600,
+          "firstMs": 1479776019414,
+          "lastMs": 1479776172701
+        }
+      },
+      "status": "available",
+      "sha256": "b6b867b8279b88ea0e12ac9e70927e85b39495e04defb8925c087136b3a599ba"
+    },
+    {
+      "name": "SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 19717841,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S7C1",
+      "sequences": {
+        "S7C1": {
+          "frames": 5000,
+          "firstMs": 1479779174944,
+          "lastMs": 1479779341563
+        }
+      },
+      "status": "available",
+      "sha256": "b6c2cf2d1ca9817052e44ce719d7f5a604ce6273131462dd61ad1b452c07e98b"
+    },
+    {
+      "name": "SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 33018339,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S7C1",
+      "sequences": {
+        "S7C1": {
+          "frames": 5000,
+          "firstMs": 1479779341596,
+          "lastMs": 1479779508215
+        }
+      },
+      "status": "available",
+      "sha256": "82bc77a5e98124e374cd7a5f4e7f1e578f6ca802d4b58baeb0c0b964cf909146"
+    },
+    {
+      "name": "SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part3.zip",
+      "sizeBytes": 34200823,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S7C1",
+      "sequences": {
+        "S7C1": {
+          "frames": 5000,
+          "firstMs": 1479779508248,
+          "lastMs": 1479779674867
+        }
+      },
+      "status": "available",
+      "sha256": "8403b2e2260c3d1bfaa3d9c9366b94afb52e4cd1bbc47d2dab9edfa9bd86fcb0"
+    },
+    {
+      "name": "SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part4.zip",
+      "sizeBytes": 25002611,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S7C1_Image_Data_All_JPEGs_Mapped_part4.zip&version=1&redirect=false",
+      "cameraInCatalog": "S7C1",
+      "sequences": {
+        "S7C1": {
+          "frames": 3600,
+          "firstMs": 1479779674900,
+          "lastMs": 1479779794857
+        }
+      },
+      "status": "available",
+      "sha256": "cc724eea3d611282411400097077d289b53e04996a3b7266a5a050a126f955c6"
+    },
+    {
+      "name": "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part1.zip",
+      "sizeBytes": 20441624,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S8C1",
+      "sequences": {
+        "S8C1": {
+          "frames": 5000,
+          "firstMs": 1479779884984,
+          "lastMs": 1479780051581
+        }
+      },
+      "status": "available",
+      "sha256": "7680c1d9adf2b87c657f34a05a9349f9550fb8fb64383e8a198af8a90367d60f"
+    },
+    {
+      "name": "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part2.zip",
+      "sizeBytes": 20258671,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S8C1",
+      "sequences": {
+        "S8C1": {
+          "frames": 5000,
+          "firstMs": 1479780051612,
+          "lastMs": 1479780218231
+        }
+      },
+      "status": "available",
+      "sha256": "7855dac16471998873cfc8c16243af892928e702b09810758740e19a011a0d42"
+    },
+    {
+      "name": "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part3.zip",
+      "sizeBytes": 19707562,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S8C1",
+      "sequences": {
+        "S8C1": {
+          "frames": 5000,
+          "firstMs": 1479780218265,
+          "lastMs": 1479780384882
+        }
+      },
+      "status": "available",
+      "sha256": "768a982eae61d603533228884e49f7d432081090c9fa30fd9ea9a75c030501e2"
+    },
+    {
+      "name": "SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part4.zip",
+      "sizeBytes": 28301866,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S8C1_Image_Data_All-JPEGs_Mapped_part4.zip&version=1&redirect=false",
+      "cameraInCatalog": "S8C1",
+      "sequences": {
+        "S8C1": {
+          "frames": 4950,
+          "firstMs": 1479780384915,
+          "lastMs": 1479780549893
+        }
+      },
+      "status": "available",
+      "sha256": "52822cc84aef34f64e93d439a5bfad41b06321c9886071a220259682ab763d2e"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+      "sizeBytes": 18984727,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part1.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 5000,
+          "firstMs": 1479780640026,
+          "lastMs": 1479780806644
+        }
+      },
+      "status": "available",
+      "sha256": "37ba39e834fa135e24b1f733d264a5ab8bcd2e31e42ed171f2c7b6ddce35287b"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+      "sizeBytes": 19575623,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part2.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 5000,
+          "firstMs": 1479780806678,
+          "lastMs": 1479780973278
+        }
+      },
+      "status": "available",
+      "sha256": "67784a069c62d70fa2ef1ed2a634d52910e6c0ea9389ff28baa1ba945f3b2678"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part3.zip",
+      "sizeBytes": 20051795,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part3.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 5000,
+          "firstMs": 1479780973312,
+          "lastMs": 1479781139930
+        }
+      },
+      "status": "available",
+      "sha256": "578737533a2e7393373dc3d13793b720d88cd50075453602ec78d15ead020c2a"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part4.zip",
+      "sizeBytes": 21355054,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part4.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 5000,
+          "firstMs": 1479781139963,
+          "lastMs": 1479781306588
+        }
+      },
+      "status": "available",
+      "sha256": "1e6d157f6e2ab789e8f5c3c7dc49fada4a8acbdad513606a9bde05c1f086d639"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part5.zip",
+      "sizeBytes": 21877968,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part5.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 5000,
+          "firstMs": 1479781306617,
+          "lastMs": 1479781473236
+        }
+      },
+      "status": "available",
+      "sha256": "5ee4c85ab553dca01427e4957b0be9873bdd78cfad1a67807b94c85acde042e5"
+    },
+    {
+      "name": "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part6.zip",
+      "sizeBytes": 24729624,
+      "url": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part6.zip&version=1&redirect=false",
+      "cameraInCatalog": "S9C1",
+      "sequences": {
+        "S9C1": {
+          "frames": 3950,
+          "firstMs": 1479781473270,
+          "lastMs": 1479781604908
+        }
+      },
+      "status": "available",
+      "sha256": "c96afdfa60be94432ad8c522535b670f37162e0ee5e1f44e91cc34ecfd5bcf35"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r10",
+  "camera": "S9C1",
+  "kind": "observed-frames",
+  "frames": [
+    {
+      "timeSeconds": 2.066,
+      "path": "ii-replays/9/00.jpg"
+    },
+    {
+      "timeSeconds": 6.066,
+      "path": "ii-replays/9/01.jpg"
+    },
+    {
+      "timeSeconds": 12.069,
+      "path": "ii-replays/9/02.jpg"
+    },
+    {
+      "timeSeconds": 19.769,
+      "path": "ii-replays/9/03.jpg"
+    },
+    {
+      "timeSeconds": 30.468,
+      "path": "ii-replays/9/04.jpg"
+    },
+    {
+      "timeSeconds": 40.263,
+      "path": "ii-replays/9/05.jpg"
+    },
+    {
+      "timeSeconds": 80.159,
+      "path": "ii-replays/9/06.jpg"
+    },
+    {
+      "timeSeconds": 120.356,
+      "path": "ii-replays/9/07.jpg"
+    },
+    {
+      "timeSeconds": 170.379,
+      "path": "ii-replays/9/08.jpg"
+    },
+    {
+      "timeSeconds": 260.158,
+      "path": "ii-replays/9/09.jpg"
+    },
+    {
+      "timeSeconds": 449.674,
+      "path": "ii-replays/9/10.jpg"
+    },
+    {
+      "timeSeconds": 599.464,
+      "path": "ii-replays/9/11.jpg"
+    },
+    {
+      "timeSeconds": 750.053,
+      "path": "ii-replays/9/12.jpg"
+    },
+    {
+      "timeSeconds": 900.369,
+      "path": "ii-replays/9/13.jpg"
+    },
+    {
+      "timeSeconds": 940.051,
+      "path": "ii-replays/9/14.jpg"
+    }
+  ],
+  "durationSeconds": 940.051,
+  "frameCountInArchives": 28950,
+  "timestampOriginMs": 1479780640026,
+  "inputArchives": [
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part3.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part4.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part5.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part6.zip"
+  ],
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+}

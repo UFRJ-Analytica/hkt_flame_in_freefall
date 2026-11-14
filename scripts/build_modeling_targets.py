@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw" / "psi"
 OUT = ROOT / "public" / "data" / "modeling-targets.json"
 SAFFIRE_MODEL = ROOT / "public" / "data" / "saffire" / "psi-98-s1-neighbors.json"
-SAFFIRE_III_MODEL = ROOT / "public" / "data" / "saffire" / "psi-100-s1.json"
+SAFFIRE_III_MODEL = ROOT / "public" / "data" / "saffire" / "crosstrial-i-iii.json"
 PORTAL = "https://psi.nasa.gov/physci/repo/data/investigations/"
 NTRS_SAFFIRE_I = "https://ntrs.nasa.gov/api/citations/20170008805/downloads/20170008805.pdf"
 
@@ -220,7 +220,7 @@ def saffire_iii() -> list[dict]:
             "thicknessMm": None,
             "lengthMm": 940,
             "widthMm": 406,
-            "flowCmS": 30,
+            "flowCmS": 25,
             "flowDirection": "concurrent" if sample == "S1" else "opposed",
             "oxygenPct": None,
             "ignition": None,
@@ -234,6 +234,7 @@ def saffire_iii() -> list[dict]:
         })
         record["notes"] = [
             "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+            "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
             "O₂ e desfecho não tabulados." + (" Frames da câmera 1 processados (ver derivado)." if record["framesStatus"] == "processed" else " Frames públicos disponíveis e ainda não processados."),
         ]
         if record["framesStatus"] == "processed":
@@ -268,9 +269,9 @@ def saffire_iii_derived() -> dict:
         "value": round(data["observed"]["speedMmS"], 3),
         "unit": "mm/s",
         "method": "Mesmo observável e estimador do SAFFIRE I · S1 (scripts/calibrate_saffire_iii.py); OLS da mediana entre faixas.",
-        "artifact": "public/data/saffire/psi-100-s1.json",
+        "artifact": "public/data/saffire/crosstrial-i-iii.json",
         "artifactSha256": hashlib.sha256(SAFFIRE_III_MODEL.read_bytes()).hexdigest(),
-        "limits": "Só câmera 1 (~590 mm); registro manual em um quadro; O₂ e pressão não tabulados.",
+        "limits": "Só câmera 1 (~590 mm); registro manual em um quadro. A calibração do laboratório com as duas câmeras mede 2,43 mm/s no trecho reservado.",
     }
 
 

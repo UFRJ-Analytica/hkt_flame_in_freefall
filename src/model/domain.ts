@@ -74,14 +74,14 @@ export function assessSaffireS1(s: Scenario): Assessment {
       ? "A pressão não consta da tabela do ensaio; compatibilidade com cabine próxima de 1 atm não verificada."
       : "Pressão reduzida altera a propagação; nenhum ensaio SAFFIRE I–III tabula pressão diferente.",
   });
-  const flowGap = Math.min(Math.abs(s.flow - 20), Math.abs(s.flow - 30));
-  const between = s.flow > 20 && s.flow < 30;
+  const flowGap = Math.min(Math.abs(s.flow - 20), Math.abs(s.flow - 25));
+  const between = s.flow > 20 && s.flow < 25;
   criteria.push({
-    id: "flow", label: "Escoamento", scenario: `${fmt(s.flow)} cm/s`, domain: "20 e 30 cm/s, concorrente",
+    id: "flow", label: "Escoamento", scenario: `${fmt(s.flow)} cm/s`, domain: "20 e 25 cm/s, concorrente",
     status: flowGap <= 1.5 ? "ok" : between || flowGap <= 5 ? "warn" : "out",
     note: flowGap <= 1.5
       ? "Velocidade de um dos ensaios (SAFFIRE I ou III); a direção do escoamento em relação à superfície do cenário não é modelada."
-      : "Velocidade medida em dois ensaios: v ∝ u^0,30 entre 20 e 30 cm/s. Fora desse intervalo a dependência é extrapolada.",
+      : "Velocidade medida em dois ensaios (20 e 25 cm/s). Fora desse intervalo a dependência é extrapolada com o expoente medido.",
   });
   const gravity = s.gravityG < 0.01;
   criteria.push({

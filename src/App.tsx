@@ -48,17 +48,16 @@ import { useResearch } from "./research/useResearch";
 import { applyConditions, CONDITION_FIELDS, initialOrigins, invalidConditions, originLabel } from "./research/provenance";
 import type { ConditionOrigins } from "./research/provenance";
 import type { ResearchContext } from "./research/types";
-import { frontEnsemble, frontMedianMm, readSaffireModel, simulateSaffire, type SaffireModel } from "./saffire";
-import { SaffireEvidence } from "./model/SaffireEvidence";
+import { readOpposedModel, readSaffireII5Model, readSaffireIILocalized, readSaffireModel, saffireIIId, saffireIILocalizedGrid, SAFFIRE_II_BOARD, SAFFIRE_II_CASES, SAFFIRE_MISSIONS, simulateLongitudinal, simulateSaffire, simulateSaffireII5, type OpposedModel, type SaffireIICase, type SaffireII5Model, type SaffireIILocalized, type SaffireMission, type SaffireModel } from "./saffire";
+import { publishedCaseForMode, readPublishedModel, SAFFIRE_PUBLISHED_CASES, type PublishedCase, type PublishedModel } from "./saffirePublished";
 import { ModelApplicability } from "./model/ModelApplicability";
 import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from "./model/domain";
 import { HabitatLab } from "./habitat/HabitatLab";
 import "./habitat/habitat.css";
-const ENSEMBLE_SEEDS = Array.from({ length: 20 }, (_, i) => 1951 + i);
-type LabMode = "habitat" | "cabin" | "saffire";
-const LAB_MODES: { id: LabMode; label: string; hint: string }[] = [
+type LabMode = "habitat" | "cabin" | SaffireMission;
+const LAB_TABS: { id: "habitat" | "saffire" | "cabin"; label: string; hint: string }[] = [
   { id: "habitat", label: "Habitat lunar · simulação 3D", hint: "propagação calibrada nas superfícies" },
-  { id: "saffire", label: "Ensaio SAFFIRE I · S1", hint: "calibração e validação do modelo" },
+  { id: "saffire", label: "Ensaios SAFFIRE I a VI", hint: "calibração e validação por ensaio" },
   { id: "cabin", label: "Cabine e evidências", hint: "busca, catálogo e aplicabilidade" },
 ];
 import {
@@ -87,35 +86,70 @@ export default function App() {
   const { data, error, loading, reload } = useNasaData();
   const [page, setPage] = useState<Page>("lab");
   const [labMode, setLabMode] = useState<LabMode>("habitat");
-  const [saffire, setSaffire] = useState<SaffireModel | null>(null);
+  const [loadedSaffire, setSaffire] = useState<SaffireModel | SaffireII5Model | PublishedModel | null>(null);
+  const [loadedLocal, setLocalized] = useState<SaffireIILocalized | null>(null);
+  const [sample, setSample] = useState<SaffireIICase>(SAFFIRE_II_CASES[4]);
+  const [opposed, setOpposed] = useState<OpposedModel>({ status: "unavailable" });
   const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
-  const isSaffire = labMode === "saffire";
-  const duration = isSaffire ? (saffire?.durationSeconds ?? 0) : 90;
-  const [saffireSeed, setSaffireSeed] = useState(1951);
-  const saffireSteps = useMemo(() => saffire ? simulateSaffire(saffire, saffireSeed) : [], [saffire, saffireSeed]);
-  const saffireEnsemble = useMemo(() => saffire ? frontEnsemble(saffire, ENSEMBLE_SEEDS) : [], [saffire]);
+  const mission = labMode === "cabin" || labMode === "habitat" ? null : SAFFIRE_MISSIONS[labMode];
+  const isSaffire = mission !== null;
+  const iiCase = labMode === "saffire-ii" ? sample : null;
+  const publishedCase = publishedCaseForMode(labMode);
+  const isLocalized = iiCase?.model === false;
+  const experimentId = iiCase ? saffireIIId(iiCase.sample) : publishedCase ? mission?.accession : `${mission?.accession}:t0:r2`;
+  const saffire = loadedSaffire?.experimentId === experimentId ? loadedSaffire : null;
+  const published = saffire?.schemaVersion === 3 ? saffire : null;
+  const localized = loadedLocal?.experimentId === experimentId ? loadedLocal : null;
+  const unavailable = isSaffire && !saffire && !localized;
+  const duration = isSaffire ? (saffire?.durationSeconds ?? localized?.durationSeconds ?? 0) : 90;
+  const saffireSteps = useMemo(() => {
+    if (!saffire) return [];
+    if (saffire.schemaVersion === 1) return simulateSaffireII5(saffire, SAFFIRE_II_BOARD.rows);
+    if (saffire.schemaVersion === 3) return simulateLongitudinal(saffire);
+    return simulateSaffire(saffire, opposed);
+  }, [saffire, opposed]);
   const [gravity, setGravity] = useState<GravityId>("orbit");
   const gravityEnv = gravityOf(gravity);
   useEffect(() => {
-    if (!isSaffire) return;
+    if (!mission) return;
     const request = new AbortController();
     setSaffire(null);
+    setLocalized(null);
+    setOpposed({ status: "unavailable", reason: "Carregando análise de S2…" });
     setSaffireStatus("Carregando dados do ensaio…");
-    fetch(`${import.meta.env.BASE_URL}data/saffire/psi-98-s1-neighbors.json`, { signal: request.signal })
+    const base = `${import.meta.env.BASE_URL}data/saffire/${mission.accession.toLowerCase()}`;
+    const s2 = iiCase || publishedCase ? null : fetch(`${base}-s2-neighbors.json`, { signal: request.signal })
+      .then(response => {
+        if (!response.ok) throw new Error("Resultado de S2 indisponível.");
+        return response.json();
+      })
+      .then(value => readOpposedModel(value, `${mission.accession}:t0:r3`))
+      .catch((error: unknown): OpposedModel => ({
+        status: "unavailable", reason: error instanceof Error ? error.message : "Resultado de S2 indisponível.",
+      }));
+    const file = publishedCase ? `${base}.json`
+      : iiCase ? `${base}-ii${iiCase.sample}${isLocalized ? "-board" : ""}.json` : `${base}-s1-neighbors.json`;
+    fetch(file, { signal: request.signal })
       .then((response) => {
         if (!response.ok || !response.headers.get("content-type")?.includes("json")) {
           throw new Error("O resultado do processamento SAFFIRE ainda não está disponível.");
         }
         return response.json();
       })
-      .then((value) => {
-        if (!request.signal.aborted) setSaffire(readSaffireModel(value));
+      .then(async (value) => {
+        const s2Model = await s2;
+        if (!request.signal.aborted) {
+          if (publishedCase) setSaffire(readPublishedModel(value, mission.accession));
+          else if (iiCase?.model === false) setLocalized(readSaffireIILocalized(value, iiCase.sample));
+          else setSaffire(iiCase ? readSaffireII5Model(value, iiCase.sample) : readSaffireModel(value, experimentId));
+          if (s2Model) setOpposed(s2Model);
+        }
       })
       .catch((error: unknown) => {
         if (!request.signal.aborted) setSaffireStatus(error instanceof Error ? error.message : "Dados indisponíveis.");
       });
     return () => request.abort();
-  }, [isSaffire]);
+  }, [mission, iiCase, isLocalized, experimentId, publishedCase]);
   const [vehicle, setVehicle] = useState<VehicleId>("orion");
   const [atmosphere, setAtmosphere] = useState<Atmosphere>({
     ...PRESETS[0].atmosphere,
@@ -145,6 +179,7 @@ export default function App() {
   const [overlay, setOverlay] = useState<Overlay>("materials");
   const [time, setTime] = useState(0);
   const saffireStepIndex = saffire ? Math.min(saffireSteps.length - 1, Math.floor(time / saffire.stepSeconds)) : 0;
+  const localizedGrid = useMemo(() => localized ? saffireIILocalizedGrid(localized, time) : null, [localized, time]);
   const saffireBlocked = saffireSteps.slice(0, saffireStepIndex + 1).reduce((sum, step) => sum + step.blocked, 0);
   const [playing, setPlaying] = useState(false);
   const [runId, setRunId] = useState(0);
@@ -216,8 +251,7 @@ export default function App() {
     setTime(0);
   }
   function run() {
-    if (isSaffire && !saffire) return;
-    if (isSaffire && runId) setSaffireSeed((seed) => seed + 1);
+    if (unavailable) return;
     setIgnitionSurface(isSaffire ? null : selectedSurface);
     setRunId((r) => r + 1);
     setTime(0);
@@ -226,9 +260,11 @@ export default function App() {
   }
   const modeSwitch = (
     <div className="lab-mode-tabs" role="group" aria-label="Modo do laboratório">
-      {LAB_MODES.map((mode) => (
-        <button key={mode.id} type="button" aria-pressed={labMode === mode.id} onClick={() => changeLabMode(mode.id)}>
-          {mode.label}<small>{mode.hint}</small>
+      {LAB_TABS.map((tab) => (
+        <button key={tab.id} type="button"
+          aria-pressed={tab.id === "saffire" ? isSaffire : labMode === tab.id}
+          onClick={() => changeLabMode(tab.id === "saffire" ? (isSaffire ? labMode : "saffire") : tab.id)}>
+          {tab.label}<small>{tab.hint}</small>
         </button>
       ))}
     </div>
@@ -286,19 +322,19 @@ export default function App() {
     );
   }
   function exportScenario() {
-    if (isSaffire && !saffire) return;
-    const payload = isSaffire && saffire ? {
+    if (unavailable) return;
+    const payload = localized ? {
       product: "HabitatFire",
-      version: 2,
-      target: "Avanço da frente condicionado à ignição forçada; não é probabilidade de ignição.",
-      visualization: {
-        mode: "saffire-surface-transition",
-        timeSecondsSinceWindowStart: time,
-        step: saffireStepIndex,
-        seed: saffireSeed,
-        simulatedFrontMedianMm: saffireSteps[saffireStepIndex] ? frontMedianMm(saffire, saffireSteps[saffireStepIndex].grid) : null,
-      },
+      version: 1,
+      visualization: { mode: "saffire-localized-observation", timeSeconds: time, grid: SAFFIRE_II_BOARD },
+      localized,
+    } : isSaffire && saffire ? {
+      product: "HabitatFire",
+      version: 1,
+      visualization: { mode: iiCase || published ? "saffire-edge-ignition" : "saffire-central-ignition", timeSeconds: time,
+        ...(iiCase || published ? { grid: published?.grid ?? SAFFIRE_II_BOARD } : {}) },
       model: saffire,
+      opposed: iiCase || published ? { status: "unavailable", reason: "Sem estimativa contra o fluxo para este ensaio." } : opposed,
     } : {
       product: "HabitatFire",
       version: 2,
@@ -332,11 +368,13 @@ export default function App() {
     );
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = isSaffire ? "habitatfire-saffire-i-s1.json" : "habitatfire-cenario.json";
+    anchor.download = mission ? `habitatfire-${mission.accession.toLowerCase()}${iiCase ? `-ii${iiCase.sample}` : ""}.json` : "habitatfire-cenario.json";
     anchor.click();
     URL.revokeObjectURL(url);
     setNotice(
-      isSaffire ? "Modelo SAFFIRE exportado com a fonte e a checagem temporal."
+      localized ? "Observações de borda exportadas com os tempos e a fonte."
+      : published ? "Modelo de velocidade publicada exportado com evidências e limites."
+      : isSaffire ? "Modelo SAFFIRE exportado com a fonte e a checagem temporal."
         : "Cenário exportado com condições, hipóteses e referência do snapshot NASA.",
     );
   }
@@ -438,14 +476,14 @@ export default function App() {
                 {labMode === "habitat"
                   ? "Simule a propagação de um incêndio nas superfícies de um habitat lunar, com o modelo calibrado em imagens da NASA."
                   : isSaffire
-                  ? "Explore a propagação medida em uma amostra do SAFFIRE I."
+                  ? `Explore as medições e o modelo de propagação do ${mission.label}.`
                   : "Explore uma cabine em microgravidade e conecte suas perguntas à ciência da NASA."}
               </p>
             </div>
             {labMode !== "habitat" && <button
               className="button secondary export-button"
               onClick={exportScenario}
-              disabled={isSaffire && !saffire}
+              disabled={unavailable}
             >
               <ArrowDownToLine size={15} />
               Exportar cenário
@@ -461,13 +499,44 @@ export default function App() {
                 <span className="tiny-tag">{isSaffire ? "µg" : gravityEnv.short}</span>
               </div>
               <section className="control-section">{modeSwitch}</section>
+              {isSaffire && <section className="control-section">
+                <label className="preset-select">
+                  <select aria-label="Ensaio SAFFIRE" value={labMode}
+                    onChange={(event) => changeLabMode(event.target.value as SaffireMission)}>
+                    <option value="saffire">SAFFIRE I · Ignição central</option>
+                    <option value="saffire-ii">SAFFIRE II</option>
+                    <option value="saffire-iii">SAFFIRE III · Ignição central</option>
+                    {Object.entries(SAFFIRE_PUBLISHED_CASES).map(([mode, item]) => (
+                      <option key={mode} value={mode}>{SAFFIRE_MISSIONS[mode as SaffireMission].label} · {item.material}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={14} />
+                </label>
+                {iiCase && <label className="preset-select">
+                  <select aria-label="Amostra do SAFFIRE II" value={iiCase.sample} onChange={event => {
+                    const selected = SAFFIRE_II_CASES.find(item => item.sample === Number(event.target.value));
+                    if (selected) {
+                      setSample(selected);
+                      changeLabMode("saffire-ii");
+                    }
+                  }}>
+                    {SAFFIRE_II_CASES.map(item => <option key={item.sample} value={item.sample}>2-{item.sample} · {item.material}</option>)}
+                  </select>
+                  <ChevronDown size={14} />
+                </label>}
+              </section>}
               {isSaffire ? (
                 <section className="control-section">
-                  <h3>Amostra SIBAL</h3>
-                  <p>94 × 40,6 cm · 0,37 mm de espessura</p>
-                  <p>Fluxo nominal de 20 cm/s · O₂ de 21,5 a 21,7%</p>
-                  <p>Ignição na borda a montante</p>
-                  <p className="preset-note">Realização {saffireSeed - 1950} · semente {saffireSeed}. As condições são as do ensaio e não são editáveis: o modelo só é válido nelas.</p>
+                  <h3>Amostra {publishedCase?.material ?? iiCase?.material ?? "SIBAL"}</h3>
+                  {publishedCase ? <>
+                    <p>Placa visual de 50 × 40,6 cm</p>
+                    {published?.measuredGeometry.widthApproximate &&
+                      <p>Largura publicada de cerca de {number(published.measuredGeometry.widthMm / 10, 0)} cm</p>}
+                  </> : <p>{iiCase ? `29 × 5 cm${iiCase.thickness ? ` · ${iiCase.thickness} de espessura` : ""}` : `94 × 40,6 cm${labMode === "saffire" ? " · 0,37 mm de espessura" : ""}`}</p>}
+                  {iiCase && <p>Placa visual de 29 × 40,6 cm · largura extrapolada</p>}
+                  <p>Fluxo de referência de {published?.conditions.flowCmS ?? iiCase?.flow ?? mission.flow} cm/s · O₂ {published ? `${number(published.conditions.oxygenPct, 1)}%` : iiCase?.oxygen ?? mission.oxygen}
+                    {published && ` · ${number(published.conditions.pressureKpa, 1)} kPa`}</p>
+                  <p>{publishedCase ? "Ignição na borda a montante · avanço a favor do fluxo" : iiCase ? `Ensaio ${iiCase.direction} do fluxo` : "Ignição central ilustrativa"}</p>
                 </section>
               ) : <>
               <section className="control-section">
@@ -688,7 +757,7 @@ export default function App() {
                   <div className="scene-title">
                     <i className="dot amber" />
                     <span>
-                      {isSaffire ? "SAFFIRE I / AMOSTRA S1" : vehicle === "orion"
+                      {mission ? `${mission.label} / ${publishedCase ? "IGNIÇÃO NA BORDA" : iiCase ? `2-${iiCase.sample}` : "IGNIÇÃO CENTRAL"}` : vehicle === "orion"
                         ? "ORION / CREW CABIN"
                         : "ORBITAL / LAB MODULE"}
                     </span>
@@ -698,7 +767,7 @@ export default function App() {
                   </span>
                 </div>
                 <div className="scene-canvas">
-                  <SceneBoundary key={labMode}>
+                  <SceneBoundary key={experimentId}>
                     <Suspense
                       fallback={
                         <div className="scene-loading">
@@ -709,11 +778,13 @@ export default function App() {
                     >
                       {isSaffire ? saffire ? (
                         <SaffireScene
-                          model={saffire}
+                          model={iiCase ? { grid: SAFFIRE_II_BOARD } : saffire}
                           grid={saffireSteps[saffireStepIndex].grid}
-                          observedFrontMm={saffire.observedTrajectory?.[Math.min(saffire.observedTrajectory.length - 1, saffireStepIndex)]?.frontMedianMm ?? null}
                           resetCameraKey={resetCameraKey}
                         />
+                      ) : localizedGrid ? (
+                        <SaffireScene model={{ grid: SAFFIRE_II_BOARD }} grid={localizedGrid}
+                          resetCameraKey={resetCameraKey} />
                       ) : (
                         <div className="scene-fallback" role="status"><p>{saffireStatus}</p></div>
                       ) : <CabinScene
@@ -785,7 +856,7 @@ export default function App() {
                 </div>}
                 <div className="scene-bottom">
                   <div className="scene-legend">
-                    {isSaffire ? <><span className="heat-legend" /> Frente simulada <span className="observed-legend" /> Frente observada nas câmeras</> : overlay === "thermal" ? (
+                    {isLocalized ? <><span className="heat-legend" /> Luminosidade na borda · observação</> : isSaffire ? <><span className="heat-legend" /> {publishedCase ? "Frente longitudinal simulada" : "Frente de pirólise simulada"}</> : overlay === "thermal" ? (
                       <>
                         <span className="heat-legend" />
                         Intensidade visual · ilustrativa
@@ -817,22 +888,22 @@ export default function App() {
               <section className="playback-panel">
                 <div className="playback-header">
                   <div>
-                    <span className="eyebrow">{isSaffire ? "ENSAIO SAFFIRE I · S1" : "EXPLORAR UM CENÁRIO"}</span>
+                    <span className="eyebrow">{mission?.label ?? "EXPLORAR UM CENÁRIO"}</span>
                     <h2>
-                      {isSaffire ? "Propagação sobre o SIBAL" : ignitionSurface
+                      {isLocalized ? `Comportamento de borda · ${iiCase.material}` : isSaffire ? `Propagação sobre ${publishedCase?.material ?? "SIBAL"}` : ignitionSurface
                         ? `Ignição em ${SURFACES.find((s) => s.id === ignitionSurface)?.name.toLowerCase()}`
                         : "Como o ambiente influencia a chama?"}
                     </h2>
                   </div>
                   <span className="illustrative-pill">
                     <Info size={12} />
-                    {isSaffire ? "Modelo de um ensaio" : "Ilustrativo"}
+                    Ilustrativo
                   </span>
                 </div>
                 <div className="timeline">
                   <button
                     className="play-button"
-                    disabled={isSaffire && !saffire}
+                    disabled={unavailable}
                     aria-label={
                       playing ? "Pausar animação" : "Reproduzir animação"
                     }
@@ -852,7 +923,7 @@ export default function App() {
                   </button>
                   <div className="timeline-track">
                     <input
-                      aria-label={isSaffire ? "Tempo desde o início da janela analisada do ensaio" : "Progresso da animação ilustrativa, não tempo físico"}
+                      aria-label={isSaffire ? "Tempo da reprodução em segundos" : "Progresso da animação ilustrativa"}
                       type="range"
                       min={0}
                       max={duration}
@@ -890,31 +961,35 @@ export default function App() {
                     {speed}×
                   </button>
                 </div>
-                {isSaffire ? (
+                {isSaffire && !iiCase && !publishedCase ? (
                   <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
-                    <button aria-pressed="true" title="Frente medida nas câmeras do ensaio, linha ciano">Observação reconstruída</button>
-                    <button aria-pressed="true" title="Avanço condicionado à ignição, no domínio do ensaio">Previsão condicional · domínio do ensaio</button>
-                    <button disabled title="Nenhum segundo ensaio processado para teste independente">Transferência não validada</button>
+                    <button aria-pressed="true" title="Frentes medidas nas câmeras dos dois ensaios do voo">Observação reconstruída</button>
+                    <button aria-pressed="true" title="Avanço condicionado à ignição, nas condições do ensaio">Previsão condicional · domínio do ensaio</button>
+                    <button disabled title="A ignição central combina os ajustes de S1 e S2 em uma cena ilustrativa">Ignição central ilustrativa</button>
                   </div>
-                ) : (
+                ) : !isSaffire && (
                   <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
                     <button aria-pressed="true" onClick={() => setNotice("Modo ilustrativo: o progresso não representa tempo físico de incêndio.")}>Ilustrativo</button>
-                    <button disabled title="Replay medido disponível no modo SAFFIRE I · S1">Replay medido: modo SAFFIRE</button>
+                    <button disabled title="Replay medido disponível nos modos SAFFIRE">Replay medido: modos SAFFIRE</button>
                     <button disabled title="Veja a aplicabilidade do modelo calibrado abaixo">Previsão: ver aplicabilidade</button>
                   </div>
                 )}
                 <div className="playback-footer">
                   <p>
                     <Info size={12} />
-                    {isSaffire
+                    {isLocalized ? "A grade marca a atividade observada na borda. Probabilidade de avanço indisponível."
+                      : publishedCase ? "Avanço longitudinal calibrado por velocidade publicada."
+                      : iiCase ? "Simulação longitudinal com a taxa medida em 5 cm aplicada à largura visual de 40,6 cm."
+                      : isSaffire
                       ? saffireBlocked
                         ? `${saffireBlocked} tentativas de transição sem estimativa foram suspensas nesta reprodução.`
                         : "Simulação por vizinhança, com checagem temporal no mesmo ensaio."
                       : "Animação de hipótese. Sem previsão validada de propagação."}
                   </p>
-                  <button className="button primary" onClick={run} disabled={isSaffire && !saffire}>
+                  <button className="button primary" onClick={run} disabled={unavailable}>
                     <Flame size={15} />
-                    {isSaffire ? (runId ? "Nova realização" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
+                    {isLocalized ? (runId ? "Reiniciar cenário" : "Visualizar ensaio")
+                      : isSaffire ? (runId ? "Reiniciar simulação" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
                     <ArrowRight size={15} />
                   </button>
                 </div>
@@ -933,7 +1008,10 @@ export default function App() {
                 />
               )}
             </div>
-            {isSaffire ? <SaffireEvidence model={saffire} ensemble={saffireEnsemble} time={saffireStepIndex * (saffire?.stepSeconds ?? 2)} seedCount={ENSEMBLE_SEEDS.length} /> : <ResearchPanel
+            {publishedCase ? <SaffirePublishedEvidence sample={publishedCase} model={published} />
+              : iiCase ? <SaffireIIEvidence sample={iiCase} localized={localized} model={saffire?.schemaVersion === 1 ? saffire : null} />
+              : mission ? <SaffireEvidence model={saffire?.schemaVersion === 2 ? saffire : null} opposed={opposed}
+              accession={mission.accession} /> : <ResearchPanel
               research={research}
               context={researchContext}
               onApply={applyTest}
@@ -1151,5 +1229,158 @@ function RangeControl({
         </span>
       </span>
     </label>
+  );
+}
+
+function SaffirePublishedEvidence({ sample, model }: { sample: PublishedCase; model: PublishedModel | null }) {
+  const check = model?.validation;
+  return (
+    <aside className="evidence-panel" aria-label={`Evidência ${sample.sample}`}>
+      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+      <section className="evidence-card featured">
+        <div className="evidence-card-title">
+          <h3>{sample.sample} · {sample.material}</h3>
+          {model && <a href={model.calibration.source.url} target="_blank" rel="noreferrer" aria-label={model.calibration.source.label}>
+            <ArrowUpRight size={17} />
+          </a>}
+        </div>
+        {model && <>
+          <div className="evidence-numbers">
+            <div><strong>{number(model.probability * 100, 0)}%</strong><span>Chance derivada por 2 s</span></div>
+            <div><strong>{number(model.calibration.speedMmS, 2)} mm/s</strong><span>Velocidade publicada</span></div>
+          </div>
+          <p>Calibrado por velocidade publicada. Cada faixa sorteia o avanço de uma célula de 10 mm por passo de 2 s.</p>
+          <p>Avanço lateral e contra o fluxo sem estimativa. A variação entre faixas vem dos sorteios do modelo.</p>
+        </>}
+        {check?.kind === "same-trial-curve" && <>
+          <h4>Checagem por curva no mesmo ensaio</h4>
+          <p>{check.variable}, de {check.digitization.intervalSeconds.join(" a ")} s na Figura 8.
+            Inclinação de {number(check.observedSpeedMmS, 2)} mm/s no gráfico e {number(check.simulatedSpeedMmS, 2)} mm/s
+            na média de {check.seedCount} sementes. Erro médio de posição de {number(check.positionMaeMm, 1)} mm.</p>
+          {sample.sample === "V-2" && <p>A checagem termina antes de o tecido enrolar. A cena segue até o horizonte estimado de travessia.</p>}
+        </>}
+        {check?.kind === "numerical-speed-only" && <>
+          <h4>Trajetória experimental indisponível</h4>
+          <p>{check.reason} A checagem numérica obteve {number(check.simulatedSpeedMmS, 2)} mm/s na média de {check.seedCount} sementes.</p>
+        </>}
+      </section>
+      {model?.relatedEvidence.map(item => (
+        <section className="evidence-card" key={item.id}>
+          <div className="evidence-card-title">
+            <h3>{item.id} · {item.material}</h3>
+            <a href={item.source.url} target="_blank" rel="noreferrer" aria-label={item.source.label}><ArrowUpRight size={17} /></a>
+          </div>
+          <p>{item.outcome}</p>
+          <p>Simulação indisponível.</p>
+        </section>
+      ))}
+    </aside>
+  );
+}
+
+function SaffireIIEvidence({ sample, model, localized }: {
+  sample: SaffireIICase; model: SaffireII5Model | null; localized: SaffireIILocalized | null;
+}) {
+  return (
+    <aside className="evidence-panel" aria-label="Evidência SAFFIRE II">
+      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+      <section className="evidence-card featured">
+        <div className="evidence-card-title">
+          <h3>II-{sample.sample} · {sample.material}</h3>
+          <a href="https://psi.nasa.gov/physci/repo/data/investigations/PSI-99" target="_blank" rel="noreferrer" aria-label="Abrir investigação na NASA">
+            <ArrowUpRight size={17} />
+          </a>
+        </div>
+        {model && <>
+          <div className="evidence-numbers">
+            <div><strong>{number(model.probability * 100, 1)}%</strong><span>Chance de avanço em 2 s</span></div>
+            <div><strong>{model.train.transitions}/{model.train.exposures}</strong><span>Avanços por exposições</span></div>
+          </div>
+          <p>Taxa medida em {model.sampling.acceptedFrames} quadros da câmera {model.camera}. A cena aplica essa taxa às 21 faixas da placa visual, com sorteios próprios.</p>
+          <p>Nas {model.validation.comparableRows} de 3 faixas acompanhadas durante todo o trecho reservado, a frente avançou a {number(model.validation.observedSpeedMmS, 2)} mm/s nas imagens e {number(model.validation.simulatedSpeedMmS, 2)} mm/s na média de {model.validation.seedCount} simulações.</p>
+        </>}
+        {sample.model ? <p>Avanço contra o fluxo e efeito lateral · sem estimativa aplicada.</p> : <>
+          <p>{sample.outcome}</p>
+          {localized && <p>{localized.observations.length} quadros da câmera {localized.camera} analisados para marcar a luminosidade na borda. Essa medida inclui o ignitor e não identifica uma frente de pirólise em avanço.</p>}
+        </>}
+      </section>
+    </aside>
+  );
+}
+
+function SaffireEvidence({ model, opposed, accession }: {
+  model: SaffireModel | null; opposed: OpposedModel; accession: string;
+}) {
+  const forwardCheck = model?.contiguousValidation;
+  const opposedCheck = opposed.contiguousValidation;
+  return (
+    <aside className="evidence-panel" aria-label="Evidência SAFFIRE">
+      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+      <section className="evidence-card featured">
+        <div className="evidence-card-title">
+          <h3>A favor da ventilação · S1</h3>
+          <a href={`https://psi.nasa.gov/physci/repo/data/investigations/${accession}`} target="_blank" rel="noreferrer" aria-label="Abrir investigação na NASA">
+            <ArrowUpRight size={17} />
+          </a>
+        </div>
+        <p>Frente de pirólise observada nas duas câmeras do ensaio.</p>
+        {model && <>
+          <div className="evidence-numbers">
+            <div>
+              <strong>{number(forwardCheck?.positionMaeMm ?? model.comparison.neighborhood.positionMaeMm.mean)} mm</strong>
+              <span>Erro médio de posição</span>
+            </div>
+            <div>
+              <strong>{number(model.comparison.baseline.positionMaeMm.mean)} mm</strong>
+              <span>Erro médio do modelo anterior</span>
+            </div>
+          </div>
+          <p>Probabilidade de avanço em 2 s na borda de cada faixa. Os vizinhos laterais modificam essa chance quando há dados suficientes. Para combinações sem estimativa, aplica-se a média longitudinal do ensaio.</p>
+          <div className="saffire-probabilities">
+            {Object.entries(model.combinations).filter(([key]) => key.startsWith("1")).map(([key, value]) => (
+              <p key={key}>
+                <strong>{[key[0] === "1" && "Montante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}</strong>
+                {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
+                {" · "}{number(value.transitions, 0)}/{number(value.exposures, 0)}
+                {value.exposures > 0 && value.exposures < 100 ? " · poucos dados" : ""}
+                {value.probability !== null && value.transitions < 5 ? " · poucos avanços" : ""}
+              </p>
+            ))}
+          </div>
+          <div className="domain-note">
+            <Info size={14} />
+            <span>
+              Em {forwardCheck?.seedCount ?? model.comparison.seedCount} simulações do trecho reservado, a velocidade média foi
+              {" "}{number(forwardCheck?.simulatedSpeedMmS ?? model.comparison.neighborhood.simulatedSpeedMmS.mean, 2)} mm/s
+              e nas imagens {number(forwardCheck?.observedSpeedMmS ?? model.comparison.observedSpeedMmS, 2)} mm/s. As taxas representam associações observadas.
+            </span>
+          </div>
+        </>}
+      </section>
+      <section className="evidence-card">
+        <h3>Contra a ventilação · S2</h3>
+        <p>{opposed.status === "ready" ? `Calibração pela câmera ${opposed.camera ?? "S2"}.`
+          : opposed.reason ?? "Avanço contra a ventilação indisponível."}</p>
+        {opposed.status === "ready" && opposed.longitudinal && <>
+          <p>
+            Média longitudinal · {number((opposed.longitudinal.probability ?? 0) * 100, 1)}% por passo de 2 s
+            {" · "}{opposed.longitudinal.transitions}/{opposed.longitudinal.exposures}
+          </p>
+          <p>Em S2, os casos com vizinhos laterais ficaram abaixo do mínimo de exposições. Nesses casos se aplica a média longitudinal.</p>
+          {opposedCheck && <p>
+            Velocidade no trecho reservado · {number(opposedCheck.observedSpeedMmS, 2)} mm/s observados
+            {" · "}{number(opposedCheck.simulatedSpeedMmS, 2)} mm/s simulados
+            {" · "}{number(opposedCheck.positionMaeMm, 1)} mm de erro médio
+          </p>}
+        </>}
+        {opposed.status === "ready" && Object.entries(opposed.combinations ?? {}).filter(([key]) => key.startsWith("1")).map(([key, value]) => (
+          <p key={key}>
+            {[key[0] === "1" && "Jusante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}
+            {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
+            {" · "}{value.transitions}/{value.exposures}
+          </p>
+        ))}
+      </section>
+    </aside>
   );
 }

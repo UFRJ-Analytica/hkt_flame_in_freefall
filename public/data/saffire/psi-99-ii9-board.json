@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-99:t0:r10",
+  "kind": "localized-observation",
+  "camera": "S9C1",
+  "durationSeconds": 940.051,
+  "ignitionEdge": "left",
+  "observations": [
+    {
+      "timeSeconds": 2.066,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 6.066,
+      "orangePixels": 898,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 12.069,
+      "orangePixels": 2938,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 19.769,
+      "orangePixels": 3915,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 30.468,
+      "orangePixels": 3758,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 40.263,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 80.159,
+      "orangePixels": 0,
+      "edgeGlow": false
+    },
+    {
+      "timeSeconds": 120.356,
+      "orangePixels": 685,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 170.379,
+      "orangePixels": 3608,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 260.158,
+      "orangePixels": 4838,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 449.674,
+      "orangePixels": 5862,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 599.464,
+      "orangePixels": 5738,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 750.053,
+      "orangePixels": 7376,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 900.369,
+      "orangePixels": 6309,
+      "edgeGlow": true
+    },
+    {
+      "timeSeconds": 940.051,
+      "orangePixels": 0,
+      "edgeGlow": false
+    }
+  ],
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+  "inputArchives": [
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part1.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part2.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part3.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part4.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part5.zip",
+    "SAFFIRE-II_S9C1_Image_Data_All_JPEGs_Mapped_part6.zip"
+  ],
+  "probability": null
+}

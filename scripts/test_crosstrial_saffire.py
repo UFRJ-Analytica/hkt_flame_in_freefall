@@ -1,9 +1,9 @@
-"""Invariants of the published SAFFIRE-III S1 artefact (no frames needed)."""
+"""Invariants of the published SAFFIRE I/III cross-trial artefact (no frames needed)."""
 import json
 import unittest
 from pathlib import Path
 
-DATA = json.loads((Path(__file__).resolve().parents[1] / 'public/data/saffire/psi-100-s1.json').read_text(encoding='utf-8'))
+DATA = json.loads((Path(__file__).resolve().parents[1] / 'public/data/saffire/crosstrial-i-iii.json').read_text(encoding='utf-8'))
 
 
 class SaffireIIIArtefact(unittest.TestCase):
@@ -17,7 +17,7 @@ class SaffireIIIArtefact(unittest.TestCase):
     def test_beta_matches_the_two_speeds(self):
         import math
         c = DATA['comparisonWithSaffireI']
-        self.assertAlmostEqual(c['beta'], math.log(c['saffireIIIObservedSpeedMmS'] / c['saffireIObservedSpeedMmS']) / math.log(1.5))
+        self.assertAlmostEqual(c['beta'], math.log(c['saffireIIIObservedSpeedMmS'] / c['saffireIObservedSpeedMmS']) / math.log(c['flowRatio']))
 
     def test_front_is_monotone_and_inside_the_camera_field(self):
         values = [p['frontMedianMm'] for p in DATA['observedTrajectory'] if p['frontMedianMm'] is not None]

@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 3,
+  "status": "ready",
+  "experimentId": "SAFFIRE-V-2",
+  "sample": "V-2",
+  "material": "Algodão jersey",
+  "aliases": [
+    {
+      "id": "SAFFIRE V · Evento 5",
+      "source": {
+        "label": "Cronologia do SAFFIRE V, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20240008602"
+      }
+    },
+    {
+      "id": "SAFFIRE V · Amostra 5",
+      "source": {
+        "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+        "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+      }
+    }
+  ],
+  "measuredGeometry": {
+    "lengthMm": 500,
+    "widthMm": 406,
+    "widthApproximate": false,
+    "source": {
+      "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+      "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+    }
+  },
+  "conditions": {
+    "oxygenPct": 26.9,
+    "pressureKpa": 76,
+    "source": {
+      "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+      "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+    },
+    "context": "Condições adotadas no estudo de propagação",
+    "flowCmS": 20,
+    "direction": "concurrent"
+  },
+  "otherReportedConditions": [
+    {
+      "oxygenPct": 26.2,
+      "pressureKpa": 70.7,
+      "source": {
+        "label": "Resultados preliminares de SAFFIRE VI, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20240002981"
+      },
+      "context": "Condições do ensaio na tabela comparativa preliminar"
+    },
+    {
+      "oxygenPct": 28,
+      "pressureKpa": 74.1,
+      "source": {
+        "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+        "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+      },
+      "context": "Valores arredondados da tabela comparativa de calor e fumaça"
+    },
+    {
+      "oxygenPct": 26.5,
+      "pressureKpa": null,
+      "source": {
+        "label": "Cronologia do SAFFIRE V, Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20240008602"
+      },
+      "context": "Condições do evento 5; pressão reduzida, sem valor na linha do evento"
+    }
+  ],
+  "calibration": {
+    "speedMmS": 3.4,
+    "variable": "Posição da base da chama em quadros escuros",
+    "source": {
+      "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+      "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+    },
+    "fitWindow": "Antes de 100 s e de 300 mm, antes do enrolamento",
+    "kind": "published-speed",
+    "formula": "p = speedMmS × stepSeconds / dxMm"
+  },
+  "media": [],
+  "relatedEvidence": [
+    {
+      "id": "V-1",
+      "material": "PMMA estruturado",
+      "status": "not-completed",
+      "outcome": "A amostra prevista para fluxo concorrente não entrou nos ensaios concluídos.",
+      "source": {
+        "label": "Resultados preliminares de SAFFIRE IV e V, Figura 2 e Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20210011521"
+      },
+      "aliases": [
+        {
+          "id": "Evento 4",
+          "source": {
+            "label": "Cronologia do SAFFIRE V, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20240008602"
+          }
+        }
+      ]
+    },
+    {
+      "id": "V-3",
+      "material": "PMMA de uma face",
+      "status": "anchored-flame",
+      "outcome": "A chama cresceu e permaneceu ancorada na borda. Houve regressão local do material.",
+      "source": {
+        "label": "Resultados preliminares de SAFFIRE IV e V, Figura 2 e Tabela 1",
+        "url": "https://ntrs.nasa.gov/citations/20210011521"
+      },
+      "aliases": [
+        {
+          "id": "Evento 6",
+          "source": {
+            "label": "Cronologia do SAFFIRE V, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20240008602"
+          }
+        }
+      ]
+    },
+    {
+      "id": "V-4",
+      "material": "PMMA estruturado",
+      "status": "rib-spread",
+      "outcome": "Houve avanço contra o fluxo nas nervuras. A taxa de até 0,88 mm/s vale para uma nervura estreita. A ventilação passou de 20 para 5 cm/s.",
+      "source": {
+        "label": "Propagação contrária ao fluxo no PMMA estruturado de SAFFIRE V",
+        "url": "https://ntrs.nasa.gov/citations/20210017785"
+      },
+      "aliases": [
+        {
+          "id": "Evento 8",
+          "source": {
+            "label": "Cronologia do SAFFIRE V, Tabela 1",
+            "url": "https://ntrs.nasa.gov/citations/20240008602"
+          }
+        }
+      ],
+      "direction": "opposed",
+      "narrowRibSpeedMmS": 0.88,
+      "flowPhases": [
+        {
+          "fromSeconds": 0,
+          "flowCmS": 20
+        },
+        {
+          "fromSeconds": 360,
+          "flowCmS": 5
+        }
+      ]
+    }
+  ],
+  "grid": {
+    "lengthMm": 500,
+    "widthMm": 406,
+    "dxMm": 10,
+    "dyMm": 20,
+    "columns": 50,
+    "rows": 21
+  },
+  "stepSeconds": 2,
+  "durationSeconds": 146,
+  "ignition": {
+    "edge": "upstream",
+    "initialReachedColumns": 1
+  },
+  "playbackSeed": 1951,
+  "probability": 0.6799999999999999,
+  "directionProbabilities": {
+    "concurrent": 0.6799999999999999,
+    "opposed": null,
+    "lateral": null
+  },
+  "validation": {
+    "kind": "same-trial-curve",
+    "variable": "Posição da base da chama em quadros escuros",
+    "digitization": {
+      "source": {
+        "label": "Manuscrito aceito, Figura 8, p. 15 do PDF",
+        "url": "https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf",
+        "sha256": "455b945bb5cb50eb5e5e34e0c8e8911a561d6336ffb942f185d28e4f13e9f3cc"
+      },
+      "series": "ss dark base (laranja)",
+      "intervalSeconds": [
+        32,
+        92
+      ],
+      "axesPx": {
+        "time": [
+          [
+            486,
+            0
+          ],
+          [
+            978,
+            180
+          ]
+        ],
+        "position": [
+          [
+            1119,
+            0
+          ],
+          [
+            753,
+            650
+          ]
+        ]
+      },
+      "renderDpi": 180,
+      "points": [
+        [
+          32,
+          83.5
+        ],
+        [
+          38,
+          99.5
+        ],
+        [
+          44,
+          121.7
+        ],
+        [
+          50,
+          147.4
+        ],
+        [
+          56,
+          165.2
+        ],
+        [
+          62,
+          188.3
+        ],
+        [
+          68,
+          209.6
+        ],
+        [
+          74,
+          222
+        ],
+        [
+          80,
+          241.5
+        ],
+        [
+          86,
+          261.1
+        ],
+        [
+          92,
+          285.9
+        ]
+      ],
+      "method": "Mediana dos pixels laranja a ±2 px de cada tempo, restringindo a busca à vizinhança da curva; conversão com eixo esquerdo. Resolução de cerca de 2 mm por pixel."
+    },
+    "initialObservedPositionMm": 83.5,
+    "seedCount": 20,
+    "seeds": [
+      1951,
+      1952,
+      1953,
+      1954,
+      1955,
+      1956,
+      1957,
+      1958,
+      1959,
+      1960,
+      1961,
+      1962,
+      1963,
+      1964,
+      1965,
+      1966,
+      1967,
+      1968,
+      1969,
+      1970
+    ],
+    "simulatedMeanPositionsMm": [
+      83.5,
+      104.33333333333333,
+      125.26190476190474,
+      145.5952380952381,
+      165.78571428571428,
+      186.19047619047618,
+      206.52380952380952,
+      226.73809523809524,
+      247.8095238095238,
+      267.90476190476187,
+      288.6428571428571
+    ],
+    "positionMaeMm": 3.656666666666659,
+    "observedSpeedMmS": 3.35060606060606,
+    "simulatedSpeedMmS": 3.410101010101009
+  }
+}

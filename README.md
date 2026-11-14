@@ -50,9 +50,13 @@ npm run preview
 - Atmosfera, ventilação e hipóteses de materiais editáveis.
 - Camadas de materiais, representação térmica ilustrativa e representação de ventilação.
 - Ignição ilustrativa com reprodução, pausa, velocidade e linha do tempo.
-- Modo **SAFFIRE I · S1** com simulação da frente de pirólise sobre a amostra SIBAL. Consulte o [procedimento de ingestão e ajuste](docs/research/SAFFIRE_PROTOTYPE.md). A cena mostra a frente simulada e a frente observada nas câmeras; o painel traz ensemble de 20 realizações, probabilidades por vizinhança com IC 95% e frequência no trecho reservado, Brier de 1 passo e domínio de validade. O modelo responde ao avanço após ignição forçada; não estima probabilidade de ignição.
-- Aplicabilidade de modelos calibrados: para cada cenário (material, O₂, pressão, escoamento e gravidade — órbita, Lua ou Marte, com preset de atmosfera de exploração 56,5 kPa/34% O₂), o laboratório compara as entradas com o domínio medido do modelo SAFFIRE I · S1, critério a critério. Fora do domínio, mostra os ensaios medidos mais próximos em vez de um número. Em gravidade parcial, cita LUCI/FM²: nem µg nem 1 g são limites conservadores.
-- Alvos de modelagem curados (`npm run targets:build` → `public/data/modeling-targets.json`, exportáveis em JSON/CSV): 13 amostras SAFFIRE I/II/III com material, espessura, escoamento, O₂, ignição, desfecho em µg e taxa de propagação. Cada valor interpretado guarda a célula original do CSV, e o script falha se ela mudar.
+- **SAFFIRE I e III** com avanço a favor e contra o fluxo calibrado pelas imagens dos dois ensaios de cada voo. Consulte os procedimentos de [I](docs/research/SAFFIRE_PROTOTYPE.md) e [III](docs/research/SAFFIRE_III.md).
+- **SAFFIRE II** com nove amostras. II-5 e II-6 têm avanço estocástico calibrado pelas imagens. As demais exibem a atividade observada na borda. Consulte os [dados e a metodologia de II](docs/research/SAFFIRE_II.md).
+- **SAFFIRE IV-1, V-2 e VI-2** com avanço estocástico a favor do fluxo, calibrado por velocidade publicada. Consulte os [dados e checagens de IV a VI](docs/research/SAFFIRE_IV_V_VI.md).
+- [Relatório SAFFIRE I a VI em PDF](docs/research/relatorio_saffire_i_a_vi.pdf) com metodologia, probabilidades, validação e desfechos dos 25 casos.
+- **Habitat lunar · simulação 3D** (modo inicial): módulo de superfície em corte; o foco de ignição é clicado na parede e o fogo se propaga pelo revestimento com o modelo de vizinhança do SAFFIRE, na grade original (10 × 20 mm, 2 s). Entradas: O₂, pressão, ventilação, gravidade e material por zona; cada material recebe um nível de evidência (calibrado, exploratório, sem propagação medida, sem evidência, inerte). Ensemble de 20 realizações em Web Worker com mapa de probabilidade. Núcleos calibrados por simulação em SAFFIRE I (20 cm/s) e III (25 cm/s); validação entre ensaios em `scripts/crosstrial_saffire.py`.
+- Aplicabilidade de modelos calibrados no modo cabine: compara material, O₂, pressão, escoamento e gravidade com o domínio medido, critério a critério; fora do domínio mostra os ensaios medidos mais próximos. Em gravidade parcial, cita LUCI/FM².
+- Alvos de modelagem curados (`npm run targets:build` → `public/data/modeling-targets.json`, exportáveis em JSON/CSV) com a célula original de cada valor interpretado.
 - Catálogo real com filtros, busca, paginação, campos originais, exportação e aplicação das condições numéricas disponíveis ao cenário; verificado no navegador com BASS-II e FLEX.
 - Proveniência e limitações visíveis na aplicação.
 - Vídeos brutos da NASA por registro: 1.629 vídeos referenciados pelos metadados PSI, 790 registros ligados por regra explícita de nome de arquivo (ensaio exato no BASS-II, ACME Flame Design/CFI-G e CFI; mesmo dia de teste nos resumos diários do ACME). Os vídeos não são redistribuídos: `/api/media` aceita só arquivos do índice e redireciona para o link assinado do PSI. Reconstruir o índice: `npm run media:index`.
@@ -102,7 +106,7 @@ Ausências não viram zero, desfechos não são inventados e valores aproximados
 
 Sólidos, gotas, gases e detecção são contextos diferentes. Não há classificador treinado que misture esses rótulos. Os números apresentados no catálogo são campos de experimentos, não probabilidades de risco de uma cabine.
 
-A cabine usa geometria aproximada e atribuições hipotéticas de materiais. O modo SAFFIRE I · S1 usa um autômato estocástico ajustado à frente de pirólise em um ensaio, com checagem temporal no mesmo experimento. Suas probabilidades são condicionadas à vizinhança e não demonstram causalidade lateral. Esse modelo não representa CFD nem uma previsão validada para outras geometrias ou condições e não se destina à certificação ou à segurança operacional.
+A cabine usa geometria aproximada e atribuições hipotéticas de materiais. As cenas SAFFIRE reproduzem as amostras nas condições de cada ensaio. I e III usam probabilidades condicionadas à vizinhança e checadas em um trecho reservado do próprio ensaio. Os parâmetros laterais descrevem associações observadas. Os modelos têm finalidade exploratória e validade restrita às condições analisadas.
 
 PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenários dos sketches históricos de modelos físicos. Reprodução experimental exige mídia/tempo medidos; previsão calibrada exige observações e validação independentes. Nenhum desses modos deve ser fabricado a partir de um score de busca.
 
@@ -112,7 +116,7 @@ PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenár
 src/
   App.tsx                          laboratório e integração do cenário
   components/CabinScene.tsx        cena Three.js / React Three Fiber
-  components/SaffireScene.tsx      cena da amostra SAFFIRE I · S1
+  components/SaffireScene.tsx      cena da amostra SAFFIRE na grade
   components/ExperimentExplorer.tsx catálogo e fontes
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos

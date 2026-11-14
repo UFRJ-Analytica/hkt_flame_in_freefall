@@ -1828,5 +1828,12 @@
         "eligibleCellSteps": 1303
       }
     ]
+  },
+  "contiguousValidation": {
+    "positionMaeMm": 14.517683465959328,
+    "shapeMaeMm": 13.411075323144289,
+    "observedSpeedMmS": 1.9502572898799264,
+    "simulatedSpeedMmS": 1.8447255574614023,
+    "seedCount": 20
   }
 }

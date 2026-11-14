@@ -51,7 +51,7 @@ function useSaffire() {
       .then((v) => setModel(readSaffireModel(v)))
       .catch((e: unknown) => { if (!request.signal.aborted) setError(e instanceof Error ? e.message : "Erro ao carregar o modelo."); });
     // Second trial is optional: without it the flow scaling falls back to the linear hypothesis.
-    fetch(`${base}data/saffire/psi-100-s1.json`, { signal: request.signal })
+    fetch(`${base}data/saffire/crosstrial-i-iii.json`, { signal: request.signal })
       .then((r) => r.ok ? r.json() : null)
       .then((v) => { if (v?.neighborhood && v?.comparisonWithSaffireI) setSecond(v as SecondTrial); })
       .catch(() => undefined);
@@ -405,7 +405,7 @@ function Range({ label, unit, value, min, max, step, onChange }: { label: string
   );
 }
 
-/** Out-of-trial check: the SAFFIRE-I kernel predicting SAFFIRE-III (30 cm/s) without refitting. */
+/** Out-of-trial check: the SAFFIRE-I kernel predicting SAFFIRE-III (25 cm/s) without refitting. */
 function CrossTrial({ second }: { second: SecondTrial }) {
   const observed = second.observed.speedMmS;
   const rows = [
@@ -417,7 +417,7 @@ function CrossTrial({ second }: { second: SecondTrial }) {
   return (
     <section className="cross-trial">
       <h3 className="model-h">Teste em outro ensaio <span className="model-badge ok">independente</span></h3>
-      <p className="model-caption">O modelo ajustado no SAFFIRE I (20 cm/s) previu a velocidade da frente no SAFFIRE-III (30 cm/s, mesmo tecido), sem usar dados deste ensaio.</p>
+      <p className="model-caption">O modelo ajustado no SAFFIRE I (20 cm/s) previu a velocidade da frente no SAFFIRE-III (25 cm/s, mesmo tecido), sem usar dados deste ensaio.</p>
       <div className="ct-bars">
         {rows.map((row) => (
           <div key={row.label} className={`ct-row ${row.observed ? "observed" : ""}`}>
@@ -428,8 +428,8 @@ function CrossTrial({ second }: { second: SecondTrial }) {
         ))}
       </div>
       <p className="model-caption">
-        Medido: {num(second.comparisonWithSaffireI.saffireIObservedSpeedMmS, 2)} mm/s a 20 cm/s e {num(observed, 2)} ± {num(second.observed.standardErrorMmS, 2)} mm/s a 30 cm/s,
-        v ∝ u<sup>{num(second.comparisonWithSaffireI.beta, 2)}</sup>. A simulação usa esse expoente, não a hipótese linear. Dois ensaios não fixam a forma da curva; espessura (0,33 × 0,37 mm) e O₂ do SAFFIRE-III não são idênticos.
+        Medido: {num(second.comparisonWithSaffireI.saffireIObservedSpeedMmS, 2)} mm/s a 20 cm/s e {num(observed, 2)} ± {num(second.observed.standardErrorMmS, 2)} mm/s a 25 cm/s (câmera 1; 2,43 mm/s com as duas câmeras),
+        v ∝ u<sup>{num(second.comparisonWithSaffireI.beta, 2)}</sup>. A simulação usa esse expoente, não a hipótese linear. Dois ensaios não fixam a forma da curva; espessura (0,33 × 0,37 mm) e O₂ (21,2 × 21,6%) não são idênticos; a tabela PSI registra 30 cm/s, o artigo da equipe 25 cm/s.
       </p>
     </section>
   );

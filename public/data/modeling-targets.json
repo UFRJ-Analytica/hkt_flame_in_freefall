@@ -787,6 +787,7 @@
       },
       "notes": [
         "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
         "O₂ e desfecho não tabulados. Frames da câmera 1 processados (ver derivado).",
         "Desfecho \"propagação sustentada\" observado nos frames (frente atravessa todo o campo da câmera 1), não tabulado pela NASA."
       ],
@@ -795,7 +796,7 @@
       "thicknessMm": null,
       "lengthMm": 940,
       "widthMm": 406,
-      "flowCmS": 30,
+      "flowCmS": 25,
       "flowDirection": "concurrent",
       "oxygenPct": null,
       "ignition": null,
@@ -837,6 +838,7 @@
       },
       "notes": [
         "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
         "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados."
       ],
       "material": "SIBAL",
@@ -844,7 +846,7 @@
       "thicknessMm": null,
       "lengthMm": 940,
       "widthMm": 406,
-      "flowCmS": 30,
+      "flowCmS": 25,
       "flowDirection": "opposed",
       "oxygenPct": null,
       "ignition": null,
@@ -869,7 +871,7 @@
       "unit": "mm/s",
       "method": "Frente de contraste no canal verde, câmeras mapeadas S1C1/S1C2, amostragem a cada 2 s; últimos 30% da janela analisada.",
       "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
-      "artifactSha256": "267c79b9ca68274bfd6c3b54ee36dc63b307b2128915d792ba3129173533c836",
+      "artifactSha256": "ef2511736924bfe9025e552694df631b962e367f9949b7a93bf2c51d15f11fe8",
       "limits": "Mesmo ensaio usado no ajuste; registro espacial manual aproximado."
     },
     {
@@ -879,9 +881,9 @@
       "value": 2.204,
       "unit": "mm/s",
       "method": "Mesmo observável e estimador do SAFFIRE I · S1 (scripts/calibrate_saffire_iii.py); OLS da mediana entre faixas.",
-      "artifact": "public/data/saffire/psi-100-s1.json",
-      "artifactSha256": "0e6dd4c68fedec1b56369d983e63567b9a33477f0f16383f5b43d9663dc77d20",
-      "limits": "Só câmera 1 (~590 mm); registro manual em um quadro; O₂ e pressão não tabulados."
+      "artifact": "public/data/saffire/crosstrial-i-iii.json",
+      "artifactSha256": "484beddb8edd5f8940ffc9392badfbdef90bbb3bb5d52768b2817898cf101c48",
+      "limits": "Só câmera 1 (~590 mm); registro manual em um quadro. A calibração do laboratório com as duas câmeras mede 2,43 mm/s no trecho reservado."
     }
   ],
   "limits": [

@@ -4,10 +4,12 @@
   "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100",
   "material": "SIBAL",
   "conditions": {
-    "flowCmS": 30.0,
+    "flowCmS": 25.0,
     "flowDirection": "concurrent",
-    "oxygenPct": null,
-    "pressureKpa": null
+    "oxygenPct": 21.2,
+    "pressureKpa": null,
+    "source": "doi:10.1016/j.combustflame.2018.10.012",
+    "conflict": "Tabela PSI-100 registra 30 cm/s."
   },
   "camera": {
     "id": "S1C1",
@@ -1361,9 +1363,9 @@
     "saffireIObservedSpeedMmS": 1.950257289879926,
     "saffireIIIObservedSpeedMmS": 2.20403409693066,
     "speedRatio": 1.1301247832107109,
-    "flowRatio": 1.5,
-    "beta": 0.30169810373679185,
-    "betaNote": "v ∝ u^beta a partir de dois ensaios (20 e 30 cm/s); beta = 1 é a hipótese linear. Dois pontos não testam a forma funcional."
+    "flowRatio": 1.25,
+    "beta": 0.5482034032675926,
+    "betaNote": "v ∝ u^beta a partir de dois ensaios (20 e 25 cm/s); beta = 1 é a hipótese linear. Dois pontos não testam a forma funcional."
   },
   "prediction": {
     "description": "Modelo de vizinhança do SAFFIRE-I aplicado sem reajuste ao SAFFIRE-III, a partir da frente observada.",
@@ -1393,28 +1395,28 @@
       1.7917133258678608,
       1.774699273922624
     ],
-    "linearFlowSpeedMmS": 2.4170068272947294,
+    "linearFlowSpeedMmS": 2.1858902575587904,
     "linearFlowRuns": [
-      2.4140447205866415,
-      2.347505689412274,
-      2.496044503847126,
-      2.419968934002817,
-      2.384784886031138,
-      2.547267275945526,
-      2.3279268865368636,
-      2.4007874869053203,
-      2.37163602210743,
-      2.470324748040314,
-      2.3475056894122743,
-      2.504714084456164,
-      2.36809594335874,
-      2.450348589386988,
-      2.301845898204674,
-      2.4396922298883785,
-      2.4630278510277064,
-      2.505111440234079,
-      2.3561030235162375,
-      2.530614456525665
+      2.1818444532745724,
+      2.1718021890691035,
+      2.2366434273742004,
+      2.163168731712603,
+      2.1782682512733444,
+      2.212260231911281,
+      2.095401509951955,
+      2.217606473286855,
+      2.0858288480294758,
+      2.189647075822707,
+      2.1821334392948737,
+      2.1938734963696134,
+      2.180760755698443,
+      2.3643391250948236,
+      2.0992666979734853,
+      2.211537766860528,
+      2.2296716396344323,
+      2.264205469060434,
+      2.031499476212838,
+      2.247516526388036
     ],
     "observedSpeedMmS": 2.20403409693066
   },
@@ -1545,7 +1547,8 @@
     "Contagens por vizinhança reconstruídas por faixa não reproduzem sozinhas a velocidade agregada (SAFFIRE-III simula +16% sem o fator); por isso a calibração por simulação.",
     "Só a câmera 1 (cerca de 590 mm a partir da borda de ignição); a câmera 2 não foi processada.",
     "Registro manual em um quadro (t = 100 s), escala 2,24 px/mm pela largura de 406 mm; sem propagação de erro de registro.",
-    "O₂ e pressão não constam da tabela PSI-100; assumidos semelhantes ao SAFFIRE-I, não verificados.",
+    "O₂ (21,2%) e escoamento (25 cm/s) do artigo da equipe; a tabela PSI-100 registra 30 cm/s. Pressão não tabulada.",
+    "A calibração do laboratório (calibrate_saffire_iii.py, duas câmeras, trecho reservado) mede 2,43 mm/s; esta, só câmera 1 e janela inteira, mede ~2,2 mm/s.",
     "Espessura tabulada como \".33 cm\" (provavelmente 0,33 mm), diferente dos 0,37 mm do SAFFIRE-I."
   ],
   "provenance": {
@@ -1555,6 +1558,6 @@
       "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part3.zip": 101943407,
       "PSI-100_Raw Data_SAFFIRE_III_S1C1_JPEG_Mapped_part4.zip": 82260660
     },
-    "script": "a9d49f243c14ee0847762dbc18b392e33b13f85e73e99ad2e892c2a807ac2028"
+    "script": "0f87bc3144444bd21431edca30013399863aa96a6ea3b333d32a7d78d4b9550f"
   }
 }

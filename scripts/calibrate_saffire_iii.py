@@ -1,241 +1,255 @@
-"""SAFFIRE-III S1 (PSI-100): measure the front at 30 cm/s and test the SAFFIRE-I model on it.
-
-Same observable and estimator as the SAFFIRE-I S1 pipeline (green-channel contrast boundary,
-2 s illumination bursts, 10 x 20 mm cells, neighbourhood counts), so the two trials differ in
-the flow speed (20 vs 30 cm/s, both concurrent, same SIBAL fabric) and not in the method.
-
-Outputs public/data/saffire/psi-100-s1.json with:
-  - the observed median front and its speed (camera 1 field of view, ~590 mm);
-  - neighbourhood probabilities fitted at 30 cm/s;
-  - an out-of-trial prediction: the SAFFIRE-I kernel run unchanged and with the hazard scaled
-    by (30/20)^beta, compared with the observed front; beta fitted from the two trials.
-
-Run: python scripts/calibrate_saffire_iii.py   (needs data/cache/saffire/psi-100-s1/*.zip)
-"""
-from __future__ import annotations
-
-import hashlib
-import json
-import re
+"""Fit SAFFIRE III transition tables on mapped, green-lit frames."""
+from contextlib import ExitStack
 from io import BytesIO
-from pathlib import Path
-from zipfile import ZipFile
+import json
+from zipfile import BadZipFile, ZipFile
 
 import numpy as np
 from PIL import Image, ImageDraw
 
-from calibrate_saffire import COLUMNS, ROWS, grid_front, measure, monotone_fronts
-from calibrate_saffire_neighbors import count_neighborhoods, simulate_grid
+from calibrate_saffire import (
+    COLUMNS, DX, DY, LENGTH, ROWS, ROW_CENTRES, STEP, WIDTH, boundary,
+    compare, grid_front, merge, monotone_fronts, nearest, scan_green, simulate,
+    transition_counts,
+)
+from calibrate_saffire_neighbors import contiguous_validation, count_neighborhoods, evaluate, simulate_baseline, simulate_grid
+from ingest_saffire import CACHE, sha256
+from ingest_saffire_iii import SOURCE, SLUG, frames
 from sync_nasa import ROOT, atomic_write, json_bytes
 
-CACHE = ROOT / 'data/cache/saffire/psi-100-s1'
-OUTPUT = ROOT / 'public/data/saffire/psi-100-s1.json'
-SAFFIRE_I = ROOT / 'public/data/saffire/psi-98-s1-neighbors.json'
-FRAME = re.compile(r'Mapped_S1C1-(\d{13})\.jpe?g$', re.I)
-# Manual registration on the illuminated frame at t = 100 s (Mapped_S1C1, 1581 x 1202 px):
-# sample holder top edge y = 186, bottom edge y = 1095 (406 mm), upstream (ignition) edge x = 1432.
-CAMERA = {
-    'id': 'S1C1', 'edgeX': 1432, 'edgeMm': 0.0, 'pixelsPerMm': (1095 - 186) / 406,
-    'topAtX750': 186, 'bottomAtX750': 1095, 'slopeY': 0.0, 'visibleX': [110, 1420],
+DIRECTORY = CACHE / SLUG
+MANIFEST = ROOT / f'data/saffire/{SLUG}/manifest.json'
+PUBLIC = ROOT / 'public/data/saffire'
+GRID = dict(lengthMm=LENGTH, widthMm=WIDTH, dxMm=DX, dyMm=DY, columns=COLUMNS, rows=ROWS)
+# Mounting edges and fabric width as measured in the mapped images.
+# Coordinate x increases in the direction of spread, independently of pixel x.
+# In S1C2 the left cutoff excludes the dark strip already burned by S2.
+CAMERAS = {
+    'S1C1': dict(edgeX=1435, edgeMm=0, scale=2.24, top=185, bottom=1094, left=180, right=1420, sign=-1),
+    'S1C2': dict(edgeX=326, edgeMm=940, scale=2.24, top=154, bottom=1068, left=550, right=1570, sign=-1),
+    'S2C2': dict(edgeX=326, edgeMm=0, scale=2.24, top=154, bottom=1068, left=333, right=645, sign=1),
 }
-VISIBLE_MM = (CAMERA['edgeX'] - CAMERA['visibleX'][0]) / CAMERA['pixelsPerMm']
-FLOW_I, FLOW_III = 20.0, 30.0
-SEEDS = list(range(1951, 1971))
+WINDOWS = {'S1': (1496610904000, 292), 'S2': (1496610689000, 62)}
+MIN_VALIDATION_POINTS = 21
+MAX_SPEED_ERROR_FRACTION = 0.30
+MAX_POSITION_MAE_MM = 30
 
 
-def frames() -> list[tuple[int, ZipFile, str]]:
-    found: dict[int, tuple[ZipFile, str]] = {}
-    for path in sorted(CACHE.glob('*S1C1_JPEG_Mapped_part*.zip')):
-        archive = ZipFile(path)
-        for name in archive.namelist():
-            match = FRAME.search(name)
-            if match and not name.startswith('__MACOSX'):
-                found.setdefault(int(match[1]), (archive, name))
-    return [(t, *found[t]) for t in sorted(found)]
-
-
-def green_mean(archive: ZipFile, name: str) -> float:
-    image = Image.open(BytesIO(archive.read(name)))
-    image.draft('RGB', (200, 150))
-    return float(np.asarray(image.convert('RGB'))[:, :, 1].mean())
-
-
-def lit_bursts(items: list[tuple[int, ZipFile, str]]) -> list[tuple[int, ZipFile, str, float]]:
-    """Brightest frame of each 2 s illumination burst."""
-    chosen, burst = [], []
-    for t, archive, name in items[::2]:
-        g = green_mean(archive, name)
-        if g < 8:  # dark frames ~2.5; lit frames fall from ~165 to ~19 as the burnt area grows
+def sequence(stack, assets, camera):
+    entries = {}
+    for asset in assets:
+        if asset.get('camera') != camera:
             continue
-        if burst and t - burst[-1][0] > 600:
-            chosen.append(max(burst, key=lambda b: b[3]))
-            burst = []
-        burst.append((t, archive, name, g))
-    if burst:
-        chosen.append(max(burst, key=lambda b: b[3]))
-    return chosen
+        path = DIRECTORY / asset['name']
+        if asset['status'] != 'available' or sha256(path) != asset['sha256']:
+            raise ValueError(f'Arquivo ausente ou hash inválido para {camera}.')
+        archive = stack.enter_context(ZipFile(path))
+        for ts, entry in frames(archive, camera).items():
+            old = entries.setdefault(ts, (archive, entry))
+            if old[1].CRC != entry.CRC:
+                raise ValueError(f'{camera}: quadros divergentes em {ts}.')
+    if not entries:
+        raise ValueError(f'Sem quadros para {camera}.')
+    return entries
 
 
-def median_front_mm(fronts: list[list[int | None]]) -> list[float | None]:
-    out = []
-    for row in fronts:
-        values = [v for v in row if v is not None]
-        out.append(float(np.median(values)) * 10 if len(values) >= ROWS // 2 else None)
-    return out
+def observation(entries, timestamps, target, camera):
+    # Green illumination is periodic. A few offsets cover the pulse while
+    # keeping each timestamp attached to its original 2 s sample.
+    best = None
+    for offset in (-100, 0, 100, 200, 300, 400, 500):
+        ts = nearest(timestamps, target + offset, 22)
+        if ts is None:
+            continue
+        archive, entry = entries[ts]
+        with Image.open(BytesIO(archive.read(entry))) as original:
+            original.draft('RGB', (240, 180))
+            sample = np.asarray(original.convert('RGB'), dtype=np.int16)
+        score = float(np.percentile(sample[:, :, 1] - sample[:, :, 0], 85))
+        if best is None or score > best[0]:
+            best = (score, ts)
+    if best is None or best[0] < 30:
+        return None, None
+    archive, entry = entries[best[1]]
+    with Image.open(BytesIO(archive.read(entry))) as original:
+        image = original.convert('RGB')
+    return best[1], image
 
 
-def fit_speed(times: np.ndarray, positions: np.ndarray) -> dict:
-    slope, intercept = np.polyfit(times, positions, 1)
-    residual = positions - (slope * times + intercept)
-    se = float(np.sqrt(residual.var(ddof=2) / ((times - times.mean()) ** 2).sum()))
-    return {'speedMmS': float(slope), 'standardErrorMmS': se, 'points': int(len(times)),
-            'note': 'OLS sobre a mediana entre faixas; erro padrão ignora autocorrelação temporal (subestima a incerteza).'}
-
-
-def scaled(combinations: dict, factor: float) -> dict:
-    out = {}
-    for key, value in combinations.items():
-        p = value.get('probability')
-        out[key] = {**value, 'probability': None if p is None else 1 - (1 - p) ** factor}
-    return out
-
-
-def simulated_speed(front: list[int | None], combinations: dict, steps: int) -> tuple[float, list[float]]:
-    speeds = []
-    for seed in SEEDS:
-        history, _, _ = simulate_grid(front, combinations, steps, seed)
-        positions = []
-        for grid in history:
-            fronts = [max((x + 1 for x, c in enumerate(row) if c == 1), default=0) for row in grid]
-            positions.append(float(np.median(fronts)) * 10)
-        t = np.arange(len(positions)) * 2.0
-        speeds.append(float(np.polyfit(t, positions, 1)[0]))
-    return float(np.median(speeds)), speeds
-
-
-def match_speed(front: list[int], combinations: dict, steps: int, target: float) -> dict:
-    """Bisection on a hazard factor so the median simulated speed equals the target (mm/s)."""
-    before, _ = simulated_speed(front, combinations, steps)
-    lo, hi = 0.3, 3.0
-    for _ in range(14):
-        mid = (lo * hi) ** 0.5
-        speed, _ = simulated_speed(front, scaled(combinations, mid), steps)
-        lo, hi = (mid, hi) if speed < target else (lo, mid)
-    factor = (lo * hi) ** 0.5
-    after, runs = simulated_speed(front, scaled(combinations, factor), steps)
-    return {'factor': factor, 'targetSpeedMmS': target, 'simulatedBeforeMmS': before, 'simulatedAfterMmS': after,
-            'spreadAfterMmS': [min(runs), max(runs)],
-            'combinations': {k: {**v, 'probability': None if v.get('probability') is None else 1 - (1 - v['probability']) ** factor}
-                             for k, v in combinations.items()}}
-
-
-def main() -> int:
-    items = frames()
-    if not items:
-        raise SystemExit(f'Nenhum frame em {CACHE}; baixe os ZIPs S1C1_JPEG_Mapped do PSI-100.')
-    bursts = lit_bursts(items)
-    t0 = bursts[0][0]
-    times, raw = [], []
-    for t, archive, name, _ in bursts:
-        values = measure(Image.open(BytesIO(archive.read(name))), CAMERA)
-        times.append((t - t0) / 1000)
-        raw.append([v if v is None or v <= VISIBLE_MM - 15 else None for v in values])
-    fronts = monotone_fronts([grid_front(r) for r in raw])
-    median = median_front_mm(fronts)
-
-    t = np.array([a for a, m in zip(times, median) if m is not None and 60 <= m <= VISIBLE_MM - 60])
-    x = np.array([m for m in median if m is not None and 60 <= m <= VISIBLE_MM - 60])
-    observed = fit_speed(t, x)
-
-    counts = count_neighborhoods(fronts)
-    saffire_i = json.loads(SAFFIRE_I.read_text(encoding='utf-8'))
-    observed_i = saffire_i['comparison']['observedSpeedMmS']
-
-    # Out-of-trial test: start from the first well-formed observed front inside the fit window.
-    start = next(i for i, m in enumerate(median) if m is not None and m >= 60)
-    end = max(i for i, m in enumerate(median) if m is not None and m <= VISIBLE_MM - 60)
-    steps = end - start
-    initial = [v if v is not None else 0 for v in fronts[start]]
-    unscaled, unscaled_runs = simulated_speed(initial, saffire_i['combinations'], steps)
-    linear, linear_runs = simulated_speed(initial, scaled(saffire_i['combinations'], FLOW_III / FLOW_I), steps)
-    beta = float(np.log(observed['speedMmS'] / observed_i) / np.log(FLOW_III / FLOW_I))
-
-    # Simulation-based calibration: one hazard factor per trial so that the simulated median front
-    # speed equals the measured one, keeping the neighbourhood structure fitted from the counts.
-    filled_iii = {k: (v if v['probability'] is not None else saffire_i['combinations'][k])
-                  for k, v in counts['combinations'].items()}
-    match_iii = match_speed(initial, filled_iii, steps, observed['speedMmS'])
-    initial_i = [v if v is not None else 0 for v in saffire_i['initialFront']]
-    steps_i = int(saffire_i['durationSeconds'] // 2)
-    match_i = match_speed(initial_i, saffire_i['combinations'], steps_i, observed_i)
-
-    payload = {
-        'schemaVersion': 1,
-        'experimentId': 'PSI-100:S1',
-        'sourceUrl': 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-100',
-        'material': 'SIBAL',
-        'conditions': {'flowCmS': FLOW_III, 'flowDirection': 'concurrent', 'oxygenPct': None, 'pressureKpa': None},
-        'camera': CAMERA,
-        'visibleLengthMm': round(VISIBLE_MM, 1),
-        'frames': {'total': len(items), 'illuminatedBursts': len(bursts), 'stepSeconds': 2},
-        'observedTrajectory': [{'timeS': round(a, 2), 'frontMedianMm': m} for a, m in zip(times, median)],
-        'observed': observed,
-        'neighborhood': counts,
-        'comparisonWithSaffireI': {
-            'saffireIObservedSpeedMmS': observed_i,
-            'saffireIIIObservedSpeedMmS': observed['speedMmS'],
-            'speedRatio': observed['speedMmS'] / observed_i,
-            'flowRatio': FLOW_III / FLOW_I,
-            'beta': beta,
-            'betaNote': 'v ∝ u^beta a partir de dois ensaios (20 e 30 cm/s); beta = 1 é a hipótese linear. Dois pontos não testam a forma funcional.',
-        },
-        'prediction': {
-            'description': 'Modelo de vizinhança do SAFFIRE-I aplicado sem reajuste ao SAFFIRE-III, a partir da frente observada.',
-            'startTimeS': times[start], 'steps': steps, 'seeds': len(SEEDS),
-            'unscaledSpeedMmS': unscaled, 'unscaledRuns': unscaled_runs,
-            'linearFlowSpeedMmS': linear, 'linearFlowRuns': linear_runs,
-            'observedSpeedMmS': observed['speedMmS'],
-        },
-        'speedMatch': {
-            'description': 'Fator único de intensidade (lambda) por ensaio para que a simulação reproduza a velocidade mediana medida; a estrutura de vizinhança vem das contagens.',
-            'saffireI': match_i,
-            'saffireIII': match_iii,
-        },
-        'limits': [
-            'Contagens por vizinhança reconstruídas por faixa não reproduzem sozinhas a velocidade agregada (SAFFIRE-III simula +16% sem o fator); por isso a calibração por simulação.',
-            'Só a câmera 1 (cerca de 590 mm a partir da borda de ignição); a câmera 2 não foi processada.',
-            'Registro manual em um quadro (t = 100 s), escala 2,24 px/mm pela largura de 406 mm; sem propagação de erro de registro.',
-            'O₂ e pressão não constam da tabela PSI-100; assumidos semelhantes ao SAFFIRE-I, não verificados.',
-            'Espessura tabulada como ".33 cm" (provavelmente 0,33 mm), diferente dos 0,37 mm do SAFFIRE-I.',
-        ],
-        'provenance': {
-            'zips': {p.name: p.stat().st_size for p in sorted(CACHE.glob('*S1C1_JPEG_Mapped_part*.zip'))},
-            'script': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        },
-    }
-    atomic_write(OUTPUT, json_bytes(payload))
-
-    # Diagnostic overlay for visual review (not published).
-    out = CACHE / 'analysis'
-    out.mkdir(exist_ok=True)
-    for k in (len(bursts) // 4, len(bursts) // 2, 3 * len(bursts) // 4):
-        _, archive, name, _ = bursts[k]
-        image = Image.open(BytesIO(archive.read(name))).convert('RGB')
-        draw = ImageDraw.Draw(image)
-        for row, value in enumerate(raw[k]):
-            if value is None:
+def measure(image, camera):
+    pixels = np.arange(camera['left'], camera['right']+1)
+    if camera['sign'] == 1:
+        pixels = pixels[::-1]
+    ys = camera['top'] + (camera['bottom']-camera['top']) * ROW_CENTRES / WIDTH
+    values = []
+    for y in ys:
+        # S2 starts close to the ignition edge. Pad only the already dark end
+        # so the detector can check fronts within 40 px of the registered edge.
+        profile = scan_green(image, np.full_like(pixels, y, dtype=float), pixels)
+        pad = 42 if camera['sign'] == 1 else 0
+        if pad:
+            # An unburned, shaded region at the edge can otherwise look like
+            # a char front. The pre-ignition frame has green > 100 here.
+            if np.median(profile[-23:-8]) > 50:
+                values.append(None)
                 continue
-            px = CAMERA['edgeX'] - value * CAMERA['pixelsPerMm']
-            y = CAMERA['topAtX750'] + (row + 0.5) * 20 * CAMERA['pixelsPerMm']
-            draw.ellipse([px - 6, y - 6, px + 6, y + 6], outline=(255, 0, 255), width=3)
-        image.save(out / f'front-{k:03d}.jpg', quality=80)
+            profile = np.pad(profile, (0, pad), mode='edge')
+        index = boundary(profile)
+        if index is None or index >= len(pixels) or (pad and index > len(pixels)-7):
+            values.append(None)
+        else:
+            mm = camera['edgeMm'] + camera['sign']*(int(pixels[index])-camera['edgeX'])/camera['scale']
+            values.append(mm if 0 <= mm <= LENGTH else None)
+    return values
 
-    print(f'bursts {len(bursts)}; observed {observed["speedMmS"]:.3f} ± {observed["standardErrorMmS"]:.3f} mm/s '
-          f'(SAFFIRE-I {observed_i:.3f}); beta {beta:.2f}; predicted unscaled {unscaled:.3f}, linear {linear:.3f}')
-    for key, value in counts['combinations'].items():
-        print(key, value['transitions'], '/', value['exposures'], value['probability'])
-    return 0
+
+def plot_review(image, camera, values, path):
+    draw = ImageDraw.Draw(image)
+    for row, mm in enumerate(values):
+        if mm is None:
+            continue
+        x = camera['edgeX'] + camera['sign']*(mm-camera['edgeMm'])*camera['scale']
+        y = camera['top']+(camera['bottom']-camera['top'])*ROW_CENTRES[row]/WIDTH
+        draw.ellipse((x-5, y-5, x+5, y+5), fill='magenta')
+    image.thumbnail((760, 580))
+    image.save(path)
+
+
+def collect(run, assets):
+    start, duration = WINDOWS[run]
+    folder = DIRECTORY / 'analysis'
+    folder.mkdir(exist_ok=True)
+    cams = [cam for cam in CAMERAS if cam.startswith(run)]
+    rows, overlap = [], []
+    with ExitStack() as stack:
+        files = {c: sequence(stack, assets, c) for c in cams}
+        times = {c: sorted(v) for c, v in files.items()}
+        if run == 'S2':
+            _, before = observation(files['S2C2'], times['S2C2'], 1496610675000, CAMERAS['S2C2'])
+            if before is None:
+                raise ValueError('Quadro iluminado antes da ignição indisponível.')
+            before_front = measure(before, CAMERAS['S2C2'])
+            plot_review(before, CAMERAS['S2C2'], before_front, folder / 'S2C2-before-ignition.jpg')
+            if any(x is not None for x in before_front):
+                raise ValueError('O detector apontou uma frente antes da ignição de S2.')
+        for elapsed in range(0, duration+1, STEP):
+            observed, stamps = [], {}
+            for cam in cams:
+                ts, image = observation(files[cam], times[cam], start+elapsed*1000, CAMERAS[cam])
+                # At this acquisition cadence a gap in the raw frames makes
+                # the following transition unobservable, even with lit endpoints.
+                previous = rows[-1]['timestampsMs'][cam] if rows else None
+                if previous is not None and ts is not None:
+                    lo = np.searchsorted(times[cam], previous)
+                    hi = np.searchsorted(times[cam], ts)
+                    if abs(ts-previous-STEP*1000) > 500 or any(np.diff(times[cam][lo:hi+1]) > 500):
+                        ts, image = None, None
+                stamps[cam] = ts
+                values = measure(image, CAMERAS[cam]) if image else [None]*ROWS
+                if image and elapsed % (20 if run == 'S1' else 10) == 0:
+                    plot_review(image, CAMERAS[cam], values, folder / f'{cam}-{elapsed:03d}.jpg')
+                observed.append(values)
+            if len(cams) == 2:
+                a, b = stamps.values()
+                if a is not None and b is not None and abs(a-b) > 160:
+                    # Do not merge positions from different lighting pulses.
+                    best = max(range(len(cams)), key=lambda i: sum(x is not None for x in observed[i]))
+                    observed = [observed[best]]
+                    stamps[cams[1-best]] = None
+            if len(observed) == 2:
+                front, differences = merge(*observed, 27)
+                overlap.extend(differences)
+            else:
+                front = observed[0]
+            rows.append({'timeS': elapsed, 'timestampsMs': stamps, 'frontMm': front})
+    atomic_write(folder / f'{run}-observations.json', json_bytes(rows))
+    return rows, overlap
+
+
+def fit_rows(raw, overlapping):
+    grids = [grid_front(row['frontMm']) for row in raw]
+    valid = [i for i, row in enumerate(grids) if sum(x is not None for x in row) >= ROWS//2]
+    if len(valid) < 10:
+        raise ValueError('Cobertura insuficiente para ajuste e validação temporal.')
+    first, last = valid[0], valid[-1]
+    observed = monotone_fronts(grids[first:last+1])
+    split = int((len(observed)-1)*0.7)
+    fit, holdout = observed[:split+1], observed[split:]
+    training, reserved = transition_counts(fit), transition_counts(holdout)
+    if min(training['exposures'], reserved['exposures'], training['transitions'], reserved['transitions']) == 0:
+        raise ValueError('Faltaram exposições ou avanços no ajuste ou na validação.')
+    p = training['transitions']/training['exposures']
+    validation = compare(holdout, simulate(holdout[0], p, len(holdout)-1))
+    combination = count_neighborhoods(fit)
+    seeds = range(1951, 1971)
+    results = [evaluate(holdout, simulate_grid(holdout[0], combination['combinations'],
+                        len(holdout)-1, seed)[0]) for seed in seeds]
+    baseline = [evaluate(holdout, simulate_baseline(holdout[0], p, len(holdout)-1, seed))
+                for seed in seeds]
+    metrics = ('positionMaeMm', 'shapeMaeMm', 'simulatedSpeedMmS')
+
+    def summarize(runs):
+        return {key: {'mean': float(np.mean([row[key] for row in runs])),
+                      'min': min(row[key] for row in runs), 'max': max(row[key] for row in runs)}
+                for key in metrics}
+
+    return {
+        'grid': GRID, 'durationSeconds': (last-first)*STEP, 'initialFront': observed[0],
+        'probability': p, 'train': training, 'validation': {**reserved, **validation},
+        'combinations': combination['combinations'],
+        'neighborhoodTraining': {'minimumExposures': 30, 'censoredCellSteps': combination['censored']},
+        'contiguousValidation': contiguous_validation(holdout, combination['combinations'], p),
+        'comparison': {'seedCount': len(results), 'observedSpeedMmS': results[0]['observedSpeedMmS'],
+                       'neighborhood': summarize(results), 'baseline': summarize(baseline)},
+        'diagnostics': {'coverage': sum(x is not None for row in observed for x in row)/(len(observed)*ROWS),
+                        'overlapPoints': len(overlapping),
+                        'medianOverlapErrorMm': float(np.median(overlapping)) if overlapping else None,
+                        'splitTimeS': split*STEP, 'firstObservedSecond': raw[first]['timeS']},
+    }
+
+
+def accept(product, run):
+    diagnostics = product['diagnostics']
+    if run == 'S1' and (diagnostics['overlapPoints'] < MIN_VALIDATION_POINTS
+                        or diagnostics['medianOverlapErrorMm'] > 27):
+        raise ValueError('Concordância insuficiente na região em comum das câmeras.')
+    if diagnostics['coverage'] < 0.70 or product['validation']['comparedCellTimes'] < MIN_VALIDATION_POINTS:
+        raise ValueError('Cobertura ou validação temporal insuficiente.')
+    chosen = product['contiguousValidation']
+    observed = chosen['observedSpeedMmS']
+    if (observed <= 0 or abs(chosen['simulatedSpeedMmS']-observed) > MAX_SPEED_ERROR_FRACTION*observed
+            or chosen['positionMaeMm'] > MAX_POSITION_MAE_MM):
+        raise ValueError('O modelo não reproduziu a posição e a velocidade no trecho reservado.')
+    if run == 'S2':
+        # The opposed front is comparatively flat. The lower-dimensional
+        # model pools lateral configurations and is the one validated here.
+        product['model'] = 'contiguous-with-longitudinal-fallback'
+        product['longitudinal'] = {**product['train'], 'probability': product['probability']}
+    else:
+        product['model'] = 'contiguous-with-longitudinal-fallback'
+    product['status'] = 'ready'
+
+
+def main():
+    manifest = json.loads(MANIFEST.read_bytes())
+    for run in ('S1', 'S2'):
+        product = {'schemaVersion': 2 if run == 'S1' else 1, 'sourceUrl': SOURCE, 'stepSeconds': STEP,
+                   'experimentId': manifest['experiments'][run]['id'], 'status': 'unavailable',
+                   'camera': 'S1C1 + S1C2' if run == 'S1' else 'S2C2',
+                   'material': manifest['material'], 'conditions': manifest['conditions'],
+                   'geometry': manifest['geometry'],
+                   'provenance': {'manifestSha256': sha256(MANIFEST), 'registration': CAMERAS,
+                                  'samplingWindow': WINDOWS[run],
+                                  'review': 'Visual inspection of registered overlays; no independent pixel annotations.'}}
+        try:
+            raw, overlap = collect(run, manifest['assets'])
+            product.update(fit_rows(raw, overlap))
+            accept(product, run)
+        except (ValueError, OSError, BadZipFile) as error:
+            product['reason'] = str(error)
+        atomic_write(PUBLIC / f'{SLUG}-{run.lower()}-neighbors.json', json_bytes(product))
+        print(run, {k: product.get(k) for k in ('status', 'reason', 'probability', 'contiguousValidation')}, flush=True)
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    main()
