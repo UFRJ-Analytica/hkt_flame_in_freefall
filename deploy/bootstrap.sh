@@ -2,6 +2,7 @@
 # EC2 user-data for Amazon Linux 2023: builds HabitatFire from GitHub and serves it
 # behind Caddy (automatic HTTPS). Secrets come from SSM Parameter Store /habitatfire/*.
 set -euxo pipefail
+export HOME="${HOME:-/root}"
 REPO=https://github.com/UFRJ-Analytica/hkt_flame_in_freefall.git
 BRANCH="${HABITATFIRE_BRANCH:-develop}"
 APP=/opt/habitatfire
@@ -25,8 +26,9 @@ cat > /usr/local/bin/habitatfire-deploy <<'EOS'
 # Pull the configured branch, rebuild and restart. Usage: habitatfire-deploy [branch]
 set -euxo pipefail
 APP=/opt/habitatfire
+export HOME="${HOME:-/root}"
 BRANCH="${1:-$(git -C $APP rev-parse --abbrev-ref HEAD)}"
-git config --global --add safe.directory $APP
+git config --system --add safe.directory $APP
 git -C $APP fetch origin "$BRANCH"
 git -C $APP checkout -B "$BRANCH" "origin/$BRANCH"
 cd $APP
