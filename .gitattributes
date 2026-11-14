@@ -2,3 +2,5 @@
 data/raw/psi/** -text
 data/raw/research/** -text
 public/data/*.json -text
+data/saffire/**/*.json -text
+public/data/saffire/*.json -text

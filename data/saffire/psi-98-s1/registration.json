@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "PSI-98:t0:r2",
+  "method": "Manual registration on mapped JPEGs. The mounting edges set the two longitudinal endpoints. The known 406 mm width sets the approximate in-plane scale for each camera. The join is checked on simultaneous flame-front observations.",
+  "phaseAnchorMs": 1465937148500,
+  "durationSeconds": 352,
+  "maximumTimestampErrorMs": 80,
+  "maximumCameraDifferenceMm": 27,
+  "cameras": {
+    "S1C1": {
+      "referenceMs": 1465937108513,
+      "edgeX": 1498,
+      "edgeMm": 0,
+      "pixelsPerMm": 2.21,
+      "topAtX750": 214,
+      "bottomAtX750": 1111,
+      "slopeY": -0.012,
+      "visibleX": [206, 1482]
+    },
+    "S1C2": {
+      "referenceMs": 1465937110526,
+      "edgeX": 301,
+      "edgeMm": 940,
+      "pixelsPerMm": 2.24,
+      "topAtX750": 152,
+      "bottomAtX750": 1065,
+      "slopeY": -0.008,
+      "visibleX": [320, 1590]
+    }
+  },
+  "annotations": [
+    {"camera":"S1C1","timestampMs":1465937148510,"pointsPx":[[1150,350],[1105,600],[1115,850]]},
+    {"camera":"S1C1","timestampMs":1465937258512,"pointsPx":[[699,350],[668,600],[675,850]]},
+    {"camera":"S1C1","timestampMs":1465937298513,"pointsPx":[[543,350],[514,600],[528,850]]},
+    {"camera":"S1C2","timestampMs":1465937298495,"pointsPx":[[1425,350],[1388,600],[1410,850]]},
+    {"camera":"S1C1","timestampMs":1465937338504,"pointsPx":[[361,350],[341,600],[351,850]]},
+    {"camera":"S1C2","timestampMs":1465937338508,"pointsPx":[[1255,350],[1225,600],[1237,850]]},
+    {"camera":"S1C2","timestampMs":1465937488501,"pointsPx":[[620,350],[569,600],[606,850]]}
+  ]
+}

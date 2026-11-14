@@ -4,7 +4,7 @@ Workspace de segurança contra incêndios: selecione uma estrutura na cabine 3D,
 
 ## Executar localmente
 
-Requer Node.js 22.12+ e Python 3.11+. A API local usa apenas a biblioteca padrão do Python. O catálogo e o corpus científico já estão recuperados; nenhuma chave de IA ou conexão com a NASA é necessária para a busca lexical/estruturada e a síntese extrativa locais.
+Requer Node.js 22.12+ e Python 3.11+. A API local usa a biblioteca padrão do Python; a busca local e o modelo SAFFIRE usam arquivos locais. Para reprocessar imagens SAFFIRE são necessários NumPy, Pillow, SciPy e acesso à internet para o download inicial.
 
 ```powershell
 npm install
@@ -50,6 +50,7 @@ npm run preview
 - Atmosfera, ventilação e hipóteses de materiais editáveis.
 - Camadas de materiais, representação térmica ilustrativa e representação de ventilação.
 - Ignição ilustrativa com reprodução, pausa, velocidade e linha do tempo.
+- Modo **SAFFIRE I · S1** com simulação da frente de pirólise sobre a amostra SIBAL. Consulte o [procedimento de ingestão e ajuste](docs/research/SAFFIRE_PROTOTYPE.md).
 - Catálogo real com filtros, busca, paginação, campos originais, exportação e aplicação das condições numéricas disponíveis ao cenário; verificado no navegador com BASS-II e FLEX.
 - Proveniência e limitações visíveis na aplicação.
 - Vídeos brutos da NASA por registro: 1.629 vídeos referenciados pelos metadados PSI, 790 registros ligados por regra explícita de nome de arquivo (ensaio exato no BASS-II, ACME Flame Design/CFI-G e CFI; mesmo dia de teste nos resumos diários do ACME). Os vídeos não são redistribuídos: `/api/media` aceita só arquivos do índice e redireciona para o link assinado do PSI. Reconstruir o índice: `npm run media:index`.
@@ -99,7 +100,7 @@ Ausências não viram zero, desfechos não são inventados e valores aproximados
 
 Sólidos, gotas, gases e detecção são contextos diferentes. Não há classificador treinado que misture esses rótulos. Os números apresentados no catálogo são campos de experimentos, não probabilidades de risco de uma cabine.
 
-A geometria não é CAD oficial e as atribuições de materiais são hipóteses editáveis. A animação não é CFD, não é um autômato calibrado e não prevê tempos de alarme, propagação ou eficácia de supressão. Não é destinada à certificação ou à segurança operacional.
+A cabine usa geometria aproximada e atribuições hipotéticas de materiais. O modo SAFFIRE I · S1 usa um autômato estocástico ajustado à frente de pirólise em um ensaio, com checagem temporal no mesmo experimento. Suas probabilidades são condicionadas à vizinhança e não demonstram causalidade lateral. Esse modelo não representa CFD nem uma previsão validada para outras geometrias ou condições e não se destina à certificação ou à segurança operacional.
 
 PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenários dos sketches históricos de modelos físicos. Reprodução experimental exige mídia/tempo medidos; previsão calibrada exige observações e validação independentes. Nenhum desses modos deve ser fabricado a partir de um score de busca.
 
@@ -109,6 +110,7 @@ PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenár
 src/
   App.tsx                          laboratório e integração do cenário
   components/CabinScene.tsx        cena Three.js / React Three Fiber
+  components/SaffireScene.tsx      cena da amostra SAFFIRE I · S1
   components/ExperimentExplorer.tsx catálogo e fontes
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
@@ -120,6 +122,10 @@ scripts/sync_nasa.py              importação de tabelas públicas, com modo of
 scripts/test_sync_nasa.py         verificações focadas de unidades e origem
 scripts/build_research_corpus.py  extração citável dos documentos científicos
 scripts/dev.mjs                   inicia API e frontend locais
+scripts/ingest_saffire.py         download e manifesto das imagens do ensaio
+scripts/calibrate_saffire*.py     extração da frente e ajuste das transições
+data/saffire/                     registro e proveniência do ensaio
+data/cache/saffire/               arquivos grandes locais, fora do Git
 public/data/                     snapshot e manifesto consumidos pela UI
 data/raw/psi/                    CSVs, metadados e hashes preservados
 data/raw/research/               PDFs/HTML NASA e manifesto de proveniência
