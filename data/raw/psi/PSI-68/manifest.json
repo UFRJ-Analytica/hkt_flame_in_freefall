@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-68",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-68",
+    "retrievedAt": "2026-11-14T16:34:15+00:00",
+    "sha256": "de041dc1dc8b093e8f168b36d3b06cab257b4d75ffb24ff21754b8af4256ebcf",
+    "bytes": 30456,
+    "path": "data/raw/psi/PSI-68/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-68_Experimental table_Flex2.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-68/download?file=PSI-68_Experimental+table_Flex2.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:17+00:00",
+      "sha256": "cc57ad1bd9977aa13e7ac6c3aa618303012686e232b36c052c6a9f1a74e5f528",
+      "bytes": 1029,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 8,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-68/PSI-68_Experimental table_Flex2.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

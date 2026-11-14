@@ -1,0 +1,38 @@
+{
+  "investigationId": "PSI-159",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-159",
+    "retrievedAt": "2026-11-14T16:34:07+00:00",
+    "sha256": "e01abe2caa309753a9bee1b0c3c79dec194a2a7300d0d13541e0dcf25e3b0ea5",
+    "bytes": 2796301,
+    "path": "data/raw/psi/PSI-159/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-159/download?file=PSI-159_Experimental+table_CFI-G_Normal+Flames.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:09+00:00",
+      "sha256": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+      "bytes": 22166,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 179,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-159/PSI-159_Experimental table_CFI-G_Normal Flames.csv"
+    },
+    {
+      "filename": "PSI-159_Experimental table_CFI-G_Inverse Flames.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-159/download?file=PSI-159_Experimental+table_CFI-G_Inverse+Flames.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:12+00:00",
+      "sha256": "d4d44f8b9896936728748e34d1b6ad0812032a92fa5289599b708c138e3a9b39",
+      "bytes": 39422,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 154,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-159/PSI-159_Experimental table_CFI-G_Inverse Flames.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

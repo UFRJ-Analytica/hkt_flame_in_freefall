@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-22",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-22",
+    "retrievedAt": "2026-11-14T16:34:14+00:00",
+    "sha256": "a491519f60b91c9eb2272e651846103f34006867fb74535911e8c18448e48a09",
+    "bytes": 20827,
+    "path": "data/raw/psi/PSI-22/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-22_Experimental table_ACME E-FIELD Flames.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-22/download?file=PSI-22_Experimental+table_ACME+E-FIELD+Flames.csv&version=2&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:16+00:00",
+      "sha256": "69090c357b83ae38d161d29001d1d32b40fd77b13324ca6585ee990cdceef524",
+      "bytes": 2475,
+      "version": 2,
+      "encoding": "utf-8-sig",
+      "recordsImported": 32,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-22/PSI-22_Experimental table_ACME E-FIELD Flames.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

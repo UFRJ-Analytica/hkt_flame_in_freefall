@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-20",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-20",
+    "retrievedAt": "2026-11-14T16:34:01+00:00",
+    "sha256": "ea118e19d02785f54d246406aacea93878053ff95ddd5bdca44bd29c09a753d1",
+    "bytes": 17376,
+    "path": "data/raw/psi/PSI-20/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-20_Experimental table_ACME BRE.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-20/download?file=PSI-20_Experimental+table_ACME+BRE.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:03+00:00",
+      "sha256": "4aa5d3f98708ceacced5c620d46858b9965f8d4d941b203229f46467d53e5ab7",
+      "bytes": 1113,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 18,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-20/PSI-20_Experimental table_ACME BRE.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

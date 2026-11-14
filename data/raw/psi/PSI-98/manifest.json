@@ -1,0 +1,63 @@
+{
+  "investigationId": "PSI-98",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-98",
+    "retrievedAt": "2026-11-14T16:33:57+00:00",
+    "sha256": "501b5f625733e29c0c6ff0c12b3de1a3e960a159a8c8f8a21ba5c5803afe0570",
+    "bytes": 134230,
+    "path": "data/raw/psi/PSI-98/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-98_Experimental table_SAFFIRE-1.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-98/download?file=PSI-98_Experimental+table_SAFFIRE-1.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:33:59+00:00",
+      "sha256": "c01f29c62455f0a3b512290ab85e5687ecded326733189f002f580368402308d",
+      "bytes": 469,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 2,
+      "excludedRows": [
+        {
+          "row": 4,
+          "raw": {
+            "Sample Number ": "F1C1/F1C2",
+            "Material": "Pre-test flow visulation data for sample 1",
+            "Sample Thickness (cm)": null,
+            "Sample Length (cm)": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction ": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 5,
+          "raw": {
+            "Sample Number ": "F2C1/F2C2",
+            "Material": "Pre-test flow visulation data for sample 2",
+            "Sample Thickness (cm)": null,
+            "Sample Length (cm)": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction ": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        }
+      ],
+      "path": "data/raw/psi/PSI-98/PSI-98_Experimental table_SAFFIRE-1.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

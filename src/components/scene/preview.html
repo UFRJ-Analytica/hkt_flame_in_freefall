@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+  <body style="margin: 0; background: #08131e">
+    <div id="root" style="height: 100vh"></div>
+    <script type="module">
+      import React from "react";
+      import { createRoot } from "react-dom/client";
+      import CabinScene from "../CabinScene.tsx";
+      window.sceneProps = {
+        vehicle: "orion",
+        cutaway: true,
+        overlay: "materials",
+        selectedSurface: "console_main",
+        onSelectSurface: (id) => {
+          window.lastSelected = id;
+        },
+        time: 0,
+        playing: false,
+        runId: 0,
+        ignitionSurface: null,
+        atmosphere: { oxygen: 21, pressure: 101, flow: 10 },
+        materialAssignments: {},
+        resetCameraKey: 0,
+      };
+      window.renderScene = (changes = {}) => {
+        Object.assign(window.sceneProps, changes);
+        window.sceneRoot.render(
+          React.createElement(CabinScene, window.sceneProps),
+        );
+      };
+      window.sceneRoot = createRoot(document.getElementById("root"));
+      window.renderScene();
+    </script>
+  </body>
+</html>

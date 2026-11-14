@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-25",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-25",
+    "retrievedAt": "2026-11-14T16:33:58+00:00",
+    "sha256": "b9234754db5da651ad27d888af082b889d07210b018e543369662f065b4ec2da",
+    "bytes": 680348,
+    "path": "data/raw/psi/PSI-25/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-25_Experimental table_BASS-II.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=PSI-25_Experimental+table_BASS-II.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:00+00:00",
+      "sha256": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+      "bytes": 16590,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 129,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-25/PSI-25_Experimental table_BASS-II.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

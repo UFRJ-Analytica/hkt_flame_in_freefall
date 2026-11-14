@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "id": "nasa-guide-2015",
+      "url": "https://www.nasa.gov/wp-content/uploads/2016/05/np-2015-10-034-jsc_combustion_in_reduced_gravity-iss-mini-book-011116-508.pdf",
+      "path": "data/raw/research/nasa-guide-2015.pdf",
+      "sha256": "5fe046efe4e35e506023e27a9784d041e893026f19c9987591483614aea5d6b6",
+      "retrievedAt": "2026-11-14T13:21:04.431131+00:00",
+      "bytes": 1500825
+    },
+    {
+      "id": "nasa-bass",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf",
+      "path": "data/raw/research/nasa-bass.pdf",
+      "sha256": "a6b5da803a4dfd3e9902ac2013a4495a4712831a86f434e3812e5592822446ac",
+      "retrievedAt": "2026-11-14T13:21:06.331575+00:00",
+      "bytes": 206949
+    },
+    {
+      "id": "nasa-saffire",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/spacecraft-fire-safety-demonstration-saffire.pdf",
+      "path": "data/raw/research/nasa-saffire.pdf",
+      "sha256": "4eed8a4d5bce284e8d9ec24b637b21fdbf4b1fbbaadb663da3b66ee89faecd5f",
+      "retrievedAt": "2026-11-14T13:21:06.550540+00:00",
+      "bytes": 99155
+    },
+    {
+      "id": "nasa-same",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/smoke-aerosol-measurement-experiment-same.pdf",
+      "path": "data/raw/research/nasa-same.pdf",
+      "sha256": "18fd998abc3f9f2e8942d998fbaa8207a983add97284cca3419c8b1070a4cdbb",
+      "retrievedAt": "2026-11-14T13:21:08.002191+00:00",
+      "bytes": 125215
+    },
+    {
+      "id": "nasa-sofie",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/solid-fuel-ignition-and-extinction-sofie/",
+      "path": "data/raw/research/nasa-sofie.html",
+      "sha256": "e007f2208d33e6f819f508e2af61ef4479e6cc492814363e57427a9ab25ccfff",
+      "retrievedAt": "2026-11-14T13:21:09.002865+00:00",
+      "bytes": 306750
+    },
+    {
+      "id": "nasa-flare",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-limits-at-reduced-g-experiment-flare/",
+      "path": "data/raw/research/nasa-flare.html",
+      "sha256": "1951a200a3ca97874566a6fbf452942a3df63de5f1e794a3bd1d9669d3f385ce",
+      "retrievedAt": "2026-11-14T13:21:09.837659+00:00",
+      "bytes": 275946
+    },
+    {
+      "id": "nasa-fm2",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-of-materials-on-the-moon-fm2/",
+      "path": "data/raw/research/nasa-fm2.html",
+      "sha256": "1f3a90e49ba0862229b98ce871811e2c06d72f06a0cc1a6b79938d2f74e68d84",
+      "retrievedAt": "2026-11-14T13:21:10.696825+00:00",
+      "bytes": 277900
+    },
+    {
+      "id": "nasa-spinoff-detector",
+      "url": "https://spinoff.nasa.gov/node/9407",
+      "path": "data/raw/research/nasa-spinoff-detector.html",
+      "sha256": "ae02ae678a75fec41696c3fab962b7c3b6e5ce68e1fb77ef3edf653f23a81367",
+      "retrievedAt": "2026-11-14T13:21:11.484858+00:00",
+      "bytes": 51684
+    }
+  ],
+  "terms": "Retain NASA/source attribution. Item-level source terms apply; no blanket CC0 claim."
+}

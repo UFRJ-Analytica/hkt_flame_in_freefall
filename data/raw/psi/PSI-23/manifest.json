@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-23",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-23",
+    "retrievedAt": "2026-11-14T16:34:29+00:00",
+    "sha256": "a89bd634a661e724b9bc766a8f217bc0c76c816f0db973991847bce6b53802d7",
+    "bytes": 8127138,
+    "path": "data/raw/psi/PSI-23/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-23_Experimental table_ACME s-Flame.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-23/download?file=PSI-23_Experimental+table_ACME+s-Flame.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:31+00:00",
+      "sha256": "16cd10f50bd2e962887c8eb4077e5a9b3e790c78de8e0361c0b77e19300be7cf",
+      "bytes": 2456,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 18,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-23/PSI-23_Experimental table_ACME s-Flame.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

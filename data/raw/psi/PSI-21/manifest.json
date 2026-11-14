@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-21",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-21",
+    "retrievedAt": "2026-11-14T16:34:17+00:00",
+    "sha256": "99a5e58119a9c01ec1b57dfe03d696fb8d05b494a3658338b0f2abb077a72ac5",
+    "bytes": 18065,
+    "path": "data/raw/psi/PSI-21/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-21_Experimental table_CLD Flame.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-21/download?file=PSI-21_Experimental+table_CLD+Flame.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:18+00:00",
+      "sha256": "9fafbc5b3dddaf715ce8025ed9154ce297803f7b69a935f077ec26c8249e44c0",
+      "bytes": 2454,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 32,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-21/PSI-21_Experimental table_CLD Flame.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

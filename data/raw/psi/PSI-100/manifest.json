@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-100",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-100",
+    "retrievedAt": "2026-11-14T16:34:00+00:00",
+    "sha256": "9c836955a28ff129b2f239f9499e06f4ca52ba58f7a03d384a7bd0528c8bbe10",
+    "bytes": 148767,
+    "path": "data/raw/psi/PSI-100/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-100_Experimental table_SAFFIRE-3.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-100/download?file=PSI-100_Experimental+table_SAFFIRE-3.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:03+00:00",
+      "sha256": "4d3c717ec20dd0247db670b2784a9fd7d746788bc54a936f80693e48eb8cd117",
+      "bytes": 239,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 2,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-100/PSI-100_Experimental table_SAFFIRE-3.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

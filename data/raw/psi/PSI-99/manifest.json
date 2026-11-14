@@ -1,0 +1,159 @@
+{
+  "investigationId": "PSI-99",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-99",
+    "retrievedAt": "2026-11-14T16:33:56+00:00",
+    "sha256": "2c042a6bd82fa6b437cae61490d54ea91f890a52282bc5949b4a0119bcbf6633",
+    "bytes": 10308,
+    "path": "data/raw/psi/PSI-99/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-99_Experimental table_SAFFIRE-2.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-99/download?file=PSI-99_Experimental+table_SAFFIRE-2.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:33:59+00:00",
+      "sha256": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+      "bytes": 1973,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 9,
+      "excludedRows": [
+        {
+          "row": 11,
+          "raw": {
+            "Sample Number": "F1C1/F1C2",
+            "Material": "Pre-test flow visulation data for sample 2-1",
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 12,
+          "raw": {
+            "Sample Number": "F2C1/F2C2",
+            "Material": "Pre-test flow visulation data for sample 2-2",
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 13,
+          "raw": {
+            "Sample Number": "Note 1 Derived from measured CO2 production and referenced to initial O2 concentration reported by ISS.",
+            "Material": null,
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 14,
+          "raw": {
+            "Sample Number": "Note 2 The PMMA portion was completely consumed but the Nomex was not ignited.",
+            "Material": null,
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 15,
+          "raw": {
+            "Sample Number": "Note 3 This is the length of fuel with significant visible damage.",
+            "Material": null,
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        },
+        {
+          "row": 16,
+          "raw": {
+            "Sample Number": "Note 4 The flames remain anchored at the base of the sample which has a very slow regression rate (0.01 to 0.04 mm/s)",
+            "Material": null,
+            "Samle Thickness ": null,
+            "Sample Length ": null,
+            "Sample Width (cm)": null,
+            "Air Flow (cm/s)": null,
+            "Percent O2 (Note 1)": null,
+            "Ignition Power (W)": null,
+            "Ignition Time (s)": null,
+            "Burn Time (s)": null,
+            "Flow Direction": null,
+            "?-g Burn Length": null,
+            "?-g Spread Length": null,
+            "1-g Burn Length": null,
+            "1-g Spread Rate": null,
+            "Camera 1": null,
+            "Camera 2": null
+          }
+        }
+      ],
+      "path": "data/raw/psi/PSI-99/PSI-99_Experimental table_SAFFIRE-2.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

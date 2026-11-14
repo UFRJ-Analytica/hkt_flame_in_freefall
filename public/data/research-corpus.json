@@ -1,0 +1,996 @@
+{
+  "schemaVersion": 1,
+  "corpusVersion": "edf076249d074034",
+  "extractor": {
+    "name": "pypdf",
+    "version": "6.21.4",
+    "chunker": "sentence-180-words-v1"
+  },
+  "documents": [
+    {
+      "id": "nasa-guide-2015",
+      "title": "NASA Researcher's Guide: Combustion Science in Reduced Gravity (2015)",
+      "url": "https://www.nasa.gov/wp-content/uploads/2016/05/np-2015-10-034-jsc_combustion_in_reduced_gravity-iss-mini-book-011116-508.pdf",
+      "investigationIds": [],
+      "topics": [
+        "prevention",
+        "detection",
+        "suppression",
+        "post-fire",
+        "terrestrial"
+      ],
+      "sourceHash": "5fe046efe4e35e506023e27a9784d041e893026f19c9987591483614aea5d6b6",
+      "retrievedAt": "2026-11-14T13:21:04.431131+00:00",
+      "passages": [
+        {
+          "id": "nasa-guide-2015-1",
+          "text": "2 This International Space Station (ISS) Researcher’s Guide is published by the NASA ISS Program Science Office. Authors: Suleyman A. Gokoglu, NASA Glenn Research Center Daniel L. Dietrich, NASA Glenn Research Center Dennis P. Stocker, NASA Glenn Research Center Paul V. Ferkul, Universities Space Research Association Sandy L. Olson, NASA Glenn Research Center Michael C. Hicks, NASA Glenn Research Center Executive Editor: Amelia Rai Technical Editor: Neesha Hosein Designer: Cory Duke Cover and back cover: a. S pherical flame in microgravity with ethylene flowing from a porous sphere into quiescent air. Glowing soot is trapped within the blue hydrocarbon flame, while a bright arc of large soot particles can be seen in the foreground. The test was conducted in NASA Glenn’s 2.2-Second Drop Tower as a prelude to the Flame Design experiment which is in development for conduct on the International Space Station as part of the Advanced Combustion via Microgravity Experiments (ACME) project. (Image credit: NASA, ACME project, Flame Design experiment) b. C andle flames: burning in earth gravity (left) in comparison to one burning in 0-g (right).",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-guide-2015-2",
+          "text": "(Image credit: NASA, Candle Flames experiment) c. A s napshot of 2-cm diameter acrylic sphere burning in microgravity at 17 percent oxygen and 10 cm/s flow from the Burning and Suppression of Solids (BASS) experiment conducted on the International Space Station. Occasional yellowish-red streaks appear as vapor bubbles formed in the solid are ignited as they burst through the blue flame. (Image credit: NASA, BASS experiment)",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-guide-2015-3",
+          "text": "3 Astronaut holding a sample holder with a burned and bubbled acrylic sheet from the Burning and Suppression of Solids (BASS) experiment conducted in the Microgravity Science Glovebox on the International Space Station. (Image credit: NASA, BASS experiment) Flying 250 miles above the Earth, the International Space Station (ISS) provides a platform for research to improve life on Earth, enable space exploration, and understand the universe. This Researcher’s Guide is intended to help potential ISS combustion science researchers plan experiments utilizing the microgravity environment in order to understand how heat and mass transport phenomena coupled with chemistry affect combustion behavior and fire safety. It covers the nature of the acceleration environment on ISS, available facilities for conducting combustion research, examples of previous microgravity investigations, and current combustion science and fire safety projects being developed for execution on the ISS. The Lab is Open 3",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-guide-2015-4",
+          "text": "55 1. Microgravity, or weightlessness, alters many observable phenomena within the physical and life sciences. Systems and processes affected by microgravity include surface wetting and interfacial tension, multiphase flow and heat transfer, multiphase system dynamics, solidification, and fire phenomena and combustion. Microgravity induces a vast array of changes in organisms ranging from bacteria to humans, including global alterations in gene expression and 3-D aggregation of cells into tissue-like architecture. 2. Extreme conditions in the ISS environment include exposure to extreme heat and cold cycling, ultra-vacuum, atomic oxygen, and high-energy radiation. Testing and qualification of materials exposed to these extreme conditions have provided data to enable the manufacturing of long- life, reliable components used on Earth as well as in the world’s most sophisticated satellite and spacecraft components. 3. Low-Earth orbit at 51 degrees inclination and at a 90-minute orbit affords ISS a unique vantage point with an altitude of approximately 240 miles (400 kilometers) and an orbital path over 90 percent of the Earth’s population.",
+          "location": "PDF p. 5"
+        },
+        {
+          "id": "nasa-guide-2015-5",
+          "text": "This can provide improved spatial resolution and variable lighting conditions compared to the sun-synchronous orbits of typical Earth remote-sensing satellites. Unique Features of the ISS Research Environment 1. Microgravity, or weightlessness, alters many observable phenomena within the physical and life sciences. Systems and processes affected by microgravity include surface wetting and interfacial tension, multiphase flow and heat transfer, multiphase system dynamics, solidification, and fire phenomena and combustion. Microgravity induces a vast array of changes in organisms ranging from bacteria to humans, including global alterations in gene expression and 3-D aggregation of cells into tissue-like architecture. 2. Extreme conditions in the ISS environment include exposure to extreme heat and cold cycling, ultra-vacuum, atomic oxygen, and high-energy radiation. Testing and qualification of materials exposed to these extreme conditions have provided data to enable the manufacturing of long- life, reliable components used on Earth as well as in the world’s most sophisticated satellite and spacecraft components. 3.",
+          "location": "PDF p. 5"
+        },
+        {
+          "id": "nasa-guide-2015-6",
+          "text": "Low-Earth orbit at 51 degrees inclination and at a 90-minute orbit affords ISS a unique vantage point with an altitude of approximately 240 miles (400 kilometers) and an orbital path over 90 percent of the Earth’s population. This can provide improved spatial resolution and variable lighting conditions compared to the sun-synchronous orbits of typical Earth remote-sensing satellites. Unique Features of the ISS Research Environment 5",
+          "location": "PDF p. 5"
+        },
+        {
+          "id": "nasa-guide-2015-7",
+          "text": "6 The Lab is Open 3 Unique Features of the ISS Research Environment 5 Why Conduct Combustion Research in Microgravity? 8 Results from Past and Recent Research 11 Droplet Combustion 11 Flame Extinguishment Experiment (FLEX) 12 Gaseous Diffusion Flames 13 Structure & Liftoff In Combustion Experiment (SLICE) 14 Burning Rate Emulator (BRE) 15 Coflow Laminar Diffusion Flame (CLD Flame) 16 Electric-Field Effects on Laminar Diffusion Flames (E-FIELD Flames) 16 Flame Design 16 Structure and Response of Spherical Diffusion Flames (s-Flame) 17 Solid-Fuel Combustion/Material Flammability 18 Burning and Suppression of Solids (BASS) 21 Correlation of Flammability between Normal and Microgravity 22 Fundamentals of Flame Growth and Extinction in Microgravity 23 Thermal and Species Field Effects on Material Flammability 23 External Heat Flux Effects on the Ignitability and Suppression of Materials in Microgravity 24 Narrow Channel as a 1-g Flammability Test Method 24 Premixed Flames 25 Fire Safety 26 Super-Critical Processes 27 Highlights and Lessons Learned 30 Flame Existence 3 0 Low-Stretch (Low-Velocity) Flames 3 1 Jet Flames 3 2 Flame Stability 33 Cool Flames 3 3 Ancillary Hardware Developments 3 4",
+          "location": "PDF p. 6"
+        },
+        {
+          "id": "nasa-guide-2015-8",
+          "text": "7 Opportunities for Combustion Research on the ISS 36 Droplet Combustion 3 6 Gaseous Diffusion Flames 3 7 Solid-Fuel Combustion/Material Flammability 3 8 Premixed Flames 3 9 Super-Critical Processes 4 0 New Initiatives 4 1 Facilities and How to Choose Them 43 Acceleration Measurement and Environment Characterization 4 3 Combustion Integrated Rack (CIR) 4 3 Microgravity Science Glovebox (MSG) 4 4 Expedite the Processing of Experiments to Space Station (EXPRESS) Racks 4 5 Telescience Support Center 46 Developing and Flying Research on the ISS 47 What Should Principal Investigators Know About Conducting Research on the ISS? 48 Funding Opportunities / Points of Contact 49 Citations 49 Appendix 52 Acronyms 53",
+          "location": "PDF p. 7"
+        },
+        {
+          "id": "nasa-guide-2015-9",
+          "text": "8 Combustion occurs when fuel and oxygen react to produce carbon dioxide, water and heat. For the foreseeable future, the overwhelming majority of delivered energy in terrestrial applications will be from combustion or other chemically reacting systems. These energy uses cover the range from electric power and transportation to processes directly tied to the delivered material (e.g., glass and steel manufacture). These processes produce some of the most important environmental hazards currently facing humanity (global climate change, acid gas pollution, mercury contamination from coal, and wild-land fires). Despite being the subject of active research for over 80 years, combustion processes remain one of the most poorly controlled phenomena that have a significant impact on human health, comfort and safety. This is because the simplest combustor (e.g., kitchen stove) remains beyond our detailed numerical modeling capabilities. Typically, the combustion process involves a large number of chemical species (hundreds) and reactions (even thousands). It is these species and reactions that determine flammability limits (combustor operating ranges) and pollutant emissions.",
+          "location": "PDF p. 8"
+        },
+        {
+          "id": "nasa-guide-2015-10",
+          "text": "Much of combustion research involves developing a comprehensive and predictive quantitative understanding of this complex process. This understanding usually occurs in smaller, bench-scale experiments that are amenable to detailed study and modeling. In these bench-scale experiments, however, buoyant forces, created by gravity and the large temperature differential between the flame and the ambient gas, dominate and frequently obscure the physical and chemical phenomena of interest, and hence, complicate analyses. In the absence of gravity, buoyancy can be suppressed, and the analyses can be reduced to much simpler one- dimensional systems. T o understand the strong influence of gravity on flames, one can consider the density gradients in flames. Typical flame temperatures are on the order of 2,300 degrees Kelvin, whereas ambient temperatures are approximately 300 degrees Kelvin. This produces an eight-fold density change over the scale of a centimeter. The resultant density gradient induces a strong velocity field that dominates all but the highest flow fields. This flow field causes the flame to lift and point upward. The resultant flow instabilities cause the flicker typical of flames on Earth.",
+          "location": "PDF p. 8"
+        },
+        {
+          "id": "nasa-guide-2015-11",
+          "text": "Figure 1 contains a gallery of 1-g to 0-g comparison flames. By varying or eliminating the effects of gravity, we can extract fundamental data that are important for understanding combustion systems. This approach has been implemented to some extent in existing terrestrial reduced-gravity platforms, but the experimental time scales and sizes have been limited. Long-duration Why Conduct Combustion Research in Microgravity?",
+          "location": "PDF p. 8"
+        },
+        {
+          "id": "nasa-guide-2015-12",
+          "text": "9 experiments using realistic sizes are essential for a comprehensive understanding of the combustion phenomena and are possible only in the microgravity environments offered by space facilities. Besides terrestrial applications of combustion, gravity-related combustion research issues are also of crucial importance to NASA’s manned and unmanned missions. Fire safety is an important operational element of human space exploration missions to minimize the likelihood and impact of accidental fires in spacecraft and human habitats. The effects of these environmental changes on combustion in reduced gravity are unclear and need to be better understood for all mission- relevant scenarios. Every aspect of fire prevention, detection and suppression is Figure 1. 1-g and 0-g comparison flames. Left to right, top to bottom: ethane jet flames, ethylene jet flames, candle flames, burning heptane droplets and flame spread over a butanol pool. (Image credit: NASA)",
+          "location": "PDF p. 9"
+        },
+        {
+          "id": "nasa-guide-2015-13",
+          "text": "10 fundamentally different in space than on Earth. Thus, an improved knowledge of combustion in reduced gravity is essential to adapt fire safety concepts and systems to the more stringent conditions of the space environment. Benefits of conducting combustion research in microgravity can thus be summarized as: • R emoval of the complex interaction between the buoyant flow and the energy feedback to the flame. • R ealistic simulation of the fire risk seen in manned spacecraft. • P ractical simulation of the gravitational environment seen for reacting systems in future spacecraft.",
+          "location": "PDF p. 10"
+        },
+        {
+          "id": "nasa-guide-2015-14",
+          "text": "11 Over the past two decades, microgravity combustion research has focused primarily on increasing our understanding of fundamental combustion processes (e.g., droplet combustion, soot production, flame spread, smoldering and gas jet flames). This research program has been highly successful and was aided by synergistic programs in Europe and in Japan. Overall improvements were made in the ability to model droplet combustion in spray combustors (e.g., jet engines), predict flame spread, predict soot production, and detection and prevention of spacecraft fires. Some of the findings from past microgravity combustion research are presented below. Current ongoing flight projects on the International Space Station (ISS) are given in each area. Droplet Combustion The availability of a long-duration, high-quality microgravity environment allows researchers to study the textbook problem of a spherical droplet surrounded by a spherical flame in an infinite, quiescent, ambient atmosphere. A cadre of researchers from academia, industry and federal laboratories has successfully established this simple geometry as an excellent test bed to study fundamental combustion science problems and other topics of applied combustion research.",
+          "location": "PDF p. 11"
+        },
+        {
+          "id": "nasa-guide-2015-15",
+          "text": "Through a robust program, researchers gained insight into wide-ranging problems of interest in combustion science. These programs included ground-based experimental work in drop towers and aircraft flying parabolic trajectories (and normal gravity; i.e., 1-g, test laboratories), numerical and theoretical modeling, and ultimately experiments in space-based facilities. The programs provided the opportunity to investigate phenomena such as: • D epartures from quasi-steady combustion. • T ransition from diffusive to radiative extinction. • Liquid-phase transpor t. • The influence of conv ection on flame dynamics (refer to Figure 2). • The dynamics of soot formation and destr uction (refer to Figure 3). • The behavior of multi-component fuels. • D roplet-droplet interactions and flammability limits. Results from Past and Recent Research",
+          "location": "PDF p. 11"
+        },
+        {
+          "id": "nasa-guide-2015-16",
+          "text": "12 The droplet combustion community is fortunate to currently have the Combustion Integrated Rack (CIR) and a CIR insert called Multi-user Droplet Combustion Apparatus (MDCA) available to study droplet combustion aboard the ISS. This facility is currently operational and allows the dispensing, deployment and ignition of droplets ranging in size from 1 to 5 mm (either free floating or fiber supported) in a 0-3 atm ambient environment of up to 40 percent oxygen by volume (balance of a range of inert gases and inert gas mixtures). Flame Extinguishment Experiment (FLEX) The objective of the FLEX is to study heptane and methanol droplets in ambient mixtures of oxygen and nitrogen diluted with a second inert gas (nitrogen, carbon dioxide, helium or xenon). The goal of the research is to examine how the addition of an inert gas suppressant influences the flammability limit of the two fuels. The application is an improved quantitative understanding of how flammability limits change in reduced gravity as it relates to fire safety.",
+          "location": "PDF p. 12"
+        },
+        {
+          "id": "nasa-guide-2015-17",
+          "text": "The research to date has shown that the flammability limit is lower in reduced gravity. The implication is that terrestrial standards for inert gas suppressants in low gravity do not offer the same margin of safety as in normal gravity. The FLEX is of interest for terrestrial applications as well. The physical and chemical kinetic models of heptane and methanol combustion are the building Figure 2. Flame image of n-heptane droplet burning in 70 percent carbon dioxide, 21 percent oxygen, balance nitrogen and translated to the right at 3 cm/s. (Image credit: NASA, FLEX experiment) Figure 3. Comparison of sooting propensity in different diluents with ethanol burning in 30 percent oxygen at pressure of 2.4 atm. (Image credit: NASA, FLEX-2 experiment)",
+          "location": "PDF p. 12"
+        },
+        {
+          "id": "nasa-guide-2015-18",
+          "text": "13 blocks for more complex models of practical liquid fuels such as diesel and jet fuel. The long-duration experiments on the ISS provide benchmark data that researchers can develop, improve and ultimately validate detailed theoretical and numerical models of liquid hydrocarbon fuel combustion. The FLEX experiments performed to date demonstrated radiative and diffusive extinction, combustion instabilities, lower flammability limits and recently explained cool flame phenomenon after visible flame extinction. Comparison with theoretical and numerical models validated aspects of the models while identifying areas that require improvement. FLEX-2, the follow-on experiment, builds upon FLEX. It studies a range of fuels including mixtures of pure fuels, real fuel surrogates, soot formation, slow sub- buoyant, convective flow effects and droplet-droplet interactions. International collaborations extend this to study flame propagation in droplet arrays and investigate the combustion of liquid, biologically derived fuels. Gaseous Diffusion Flames Past research involved four space experiments that focused on soot processes, flame- vortex interaction and flame stability. The Laminar Soot Processes (LSP) experiment of G. Faeth (U.",
+          "location": "PDF p. 13"
+        },
+        {
+          "id": "nasa-guide-2015-19",
+          "text": "Michigan) et al. was conducted in the Combustion Module (CM) facility in 1997 on the STS-83 and STS-94 space shuttle missions and again in 2003 on the STS-107 mission. The STS-87 mission in 1997 included both the T urbulent Gas-jet Diffusion Flame (TGDF) experiment of M. Y. Bahadori (SAIC) et al. and the Enclosed Laminar Flames (ELF) investigation of L. D. Chen (U. Iowa) et al.; TGDF was automated and conducted in a Get-Away-Special Canister (GAS Can) in the payload bay. ELF was crew operated and conducted in the Middeck Glovebox. Lastly, the Smoke Point In Coflow Experiment (SPICE) of D. L. Urban (NASA Glenn Research Center [GRC]) et al. was conducted in 2009 on the ISS in its Microgravity Science Glovebox (MSG). All four experiments were studies of laminar, axisymmetric, gas-jet diffusion flames. This is true of even the TGDF experiment, where the flame was not turbulent but where an iris mechanism around its base induced vortices in the entrained air. While TGDF and LSP flames were within sealed chambers, ELF and SPICE flames were within fan-driven flow ducts.",
+          "location": "PDF p. 13"
+        },
+        {
+          "id": "nasa-guide-2015-20",
+          "text": "The affiliated LSP and SPICE experiments studied soot processes in ambient and coflow configurations, respectively. The SPICE experiment investigated the transition from non-sooting to sooting with a major goal to provide simple predictions of soot emissions. The smoke-point is a result of the fuel chemistry and flow conditions and is an effective indicator of the propensity of",
+          "location": "PDF p. 13"
+        },
+        {
+          "id": "nasa-guide-2015-21",
+          "text": "14 a fuel to emit light and to produce soot (see Figure 4). Soot control remains one of the major unsolved problems in combustion and engine development. The current research program includes six experiments planned for the ISS. The Structure & Liftoff In Combustion Experiment (SLICE) of M.B. Long (Yale U.) et al. uses the SPICE hardware to study lifted and lifting flames in the space station glovebox. With the similarity in both research focus and hardware, SLICE is effectively a second generation of the ELF investigation. SLICE started and completed its operations in 2012. The other five planned experiments are part of the Advanced Combustion via Microgravity Experiments (ACME) project and are in joint development for the CIR, where they will each be conducted using a single modular set of hardware. The ACME are focused on soot processes, flame stability and extinction, materials flammability, and electric-field effects. In alphabetical order, the experiments include: Burning Rate Emulator (BRE) of J.G. Quintiere (U. Maryland) et al.; Coflow Laminar Diffusion Flame (CLD Flame) of M.B.",
+          "location": "PDF p. 14"
+        },
+        {
+          "id": "nasa-guide-2015-22",
+          "text": "Long (Yale U.) et al.; Electric-Field Effects on Laminar Diffusion Flames (E-FIELD Flames) of D. Dunn-Rankin (UC Irvine) et al.; Flame Design of R.L. Axelbaum (Washington U.) et al.; and Structure and Response of Spherical Diffusion Flames (s-Flame) of C.K. Law (Princeton U.) et al. The ACME are expected to begin operating in 2016. As with their predecessors, the ACME experiments are all laminar diffusion flames. T wo experiments take advantage of the microgravity environment by using a one-dimensional, spherical flame enveloping a porous spherical burner. Another experiment uses a porous plate burner, whereas the remaining two use a gas-jet flame configuration, both with and without a coaxial air flow. Structure & Liftoff in Combustion Experiment (SLICE) The SLICE investigates the structure of lifting and lifted flames where flow conditions and the combustion chemistry cause the flame to detach from the Figure 4. Flames from the 2009 Smoke Point In Coflow experiment showing the transition, with increasing fuel flow, from non-smoking (left) to a fully open and smoking flame tip (right).",
+          "location": "PDF p. 14"
+        },
+        {
+          "id": "nasa-guide-2015-23",
+          "text": "15 burner and stabilize at a downstream position. The twin purposes for the SLICE research are increased fuel efficiency and reduced pollutant emission in practical combustion devices. More explicitly, the experiment is being conducted to advance combustion modeling capability, which “allows system designers to improve efficiency and reduce harmful pollutants in ways never before possible” (as stated by an external reviewer of the SLICE). SLICE will be carried out using the SPICE hardware in the MSG and is a precursor to the CLD Flame experiment that is now in development for the ISS CIR as part of the ACME project (Figure 5). Burning Rate Emulator (BRE) Unlike the other current ACME, the BRE is focused on fire prevention, especially in spacecraft. Specifically, BRE’s objective is to improve our fundamental understanding of materials flammability, such as ignition and extinction behavior, and assess the relevance of existing flammability test methods for low- and partial- gravity environments. The burning of solid and liquid fuels will be simulated by using a flat porous burner fed with gaseous fuel.",
+          "location": "PDF p. 15"
+        },
+        {
+          "id": "nasa-guide-2015-24",
+          "text": "The fuel flow rate will be controlled based on the measured heat flux (at the burner) and surface temperature, mimicking the dependence of condensed-phase fuel vaporization on thermal feedback. A small number of gaseous fuels will be used to simulate the burning of fuels such as paper, plastic and alcohol by matching properties such as the surface temperature and smoke production. The significance of this work is that it has the potential to efficiently and completely measure burning rate over a wide range of fuel properties. Since this study controls the inherent fuel properties that affect various fire scenarios, it will ascertain the relevance of existing flammability test methods for low- and partial-gravity environments. Figure 5. Effect of increasing coflow velocity (from left to right, where the image scale is not consistent) on lifted flame behavior from exploratory tests for the Structure & Liftoff In Combustion experiment, which were conducted in 2009 on the ISS as part of the Smoke Point In Coflow experiment.",
+          "location": "PDF p. 15"
+        },
+        {
+          "id": "nasa-guide-2015-25",
+          "text": "16 Coflow Laminar Diffusion Flame (CLD Flame) Research, especially including that already conducted in microgravity, has revealed that our current predictive ability is significantly lacking for flames at the extremes of fuel dilution, namely for sooty, pure-fuel flames and dilute flames that are near extinction. The general goal of the CLD Flame experiment is to extend the range of flame conditions that can be accurately predicted by developing and experimentally verifying chemical kinetic and soot formation submodels. The dependence of normal coflow flames on injection velocity and fuel dilution will be carefully examined for flames at both very dilute and highly sooting conditions. Measurements will be made of the structure of diluted methane and ethylene flames in an air coflow. Lifted flames will be used as the basis for the research to avoid flame dependence on heat loss to the burner. The results of this experiment will be directly applicable to practical combustion issues such as turbulent combustion, ignition, flame stability and more.",
+          "location": "PDF p. 16"
+        },
+        {
+          "id": "nasa-guide-2015-26",
+          "text": "Electric-Field Effects on Laminar Diffusion Flames (E-FIELD Flames) Electric fields can strongly influence flames because of their effect on the ions present as a result of the combustion reactions. The direct ion transport and the induced ion wind can modify the flame shape, alter the soot or flammability limits, direct heat transfer, and reduce pollutant emission. The purpose of the E-FIELD Flames experiment is to gain an improved understanding of flame-ion production and investigate how the ions can be used to control non-premixed flames. Outside reviewers recently concluded that the experiment “… will contribute to our critical understanding to our knowledge of combustion processes in the presence of electric fields.” The experiment will be conducted with a normal coflow flame (as in the CLD Flame experiment) or perhaps with a simple gas-jet flame where there is no surrounding coflow. An electric field will be generated by creating a high-voltage (up to 10 kV) differential between the burner and a flat, circular mesh suspended above (i.e., downstream of) the burner.",
+          "location": "PDF p. 16"
+        },
+        {
+          "id": "nasa-guide-2015-27",
+          "text": "Measurements, as a function of field strength and fuel dilution, will be made of the ion current through the flame and the flame’s response time to electric forcing. Flame Design The primary goal of the Flame Design experiment is to improve our understanding of soot inception and control in order to enable the optimization of oxygen- enriched combustion and the “design” of non-premixed flames that are both robust",
+          "location": "PDF p. 16"
+        },
+        {
+          "id": "nasa-guide-2015-28",
+          "text": "17 and soot free. An outside review panel recently declared that Flame Design “… could lead to greatly improved burner designs that are efficient and less polluting than current designs.” Flame Design will investigate the soot inception and extinction limits of spherical microgravity flames, created in the same manner as for the s-Flame experiment. T ests will be conducted with various concentrations of both the injected fuel (i.e., ethylene or methane) and the oxygen-enriched atmosphere in order to determine the role of the flame structure on soot inception (Figure 6). The effect of the flow direction on soot formation will be assessed with an inverse, spherical flame unless such testing is not approved by the Payload Safety Review Panel. If inverse spherical flame testing is not allowed, the plan is to use a coflow burner, conducting both normal and inverse flame tests. In the case of the inverse flames, the oxygen/inert mixture is injected from a central tube while the fuel is ejected from a surrounding annulus.",
+          "location": "PDF p. 17"
+        },
+        {
+          "id": "nasa-guide-2015-29",
+          "text": "The Flame Design experiment will explore whether the stoichiometric mixture fraction can characterize soot and flammability limits for non- premixed flames like the equivalence ratio serves as an indicator of those limits for premixed flames. Structure and Response of Spherical Diffusion Flames (s-Flame) The purpose of the s-Flame experiment is to advance our ability to predict the structure and dynamics, including extinction, of both soot- free and sooty flames. The spherical flame, which is only possible in microgravity, will be created through use of a porous spherical burner from which a fuel/inert gas mixture will issue into the CIR chamber (Figure 7). Flames will be ignited at non-steady conditions and allowed to transition naturally toward extinction. T ests will be conducted with various inert diluents in both the fuel and chamber atmosphere. Figure 6. Image of a spherical diffusion flame on a porous burner (which is also visible) at the end of a test conducted in NASA’s 2.2-second Drop Tower. The gas from the burner was 1.51 mg/s of 100 percent ethylene issuing into air at atmospheric pressure.",
+          "location": "PDF p. 17"
+        },
+        {
+          "id": "nasa-guide-2015-30",
+          "text": "(Image credit: NASA, ACME project, Flame Design experiment) Figure 7 . Image of a partially premixed spherical flame on a porous burner (which is also visible). The microgravity test was conducted in a NASA’s 2.2-second Drop Tower. The gas issuing from the burner was 25 percent propane, 2 percent oxygen, 49 percent argon, and 24 percent nitrogen. (Image credit: NASA, ACME project, s-Flame experiment)",
+          "location": "PDF p. 17"
+        },
+        {
+          "id": "nasa-guide-2015-31",
+          "text": "18 The fuel gases include hydrogen and methane for soot-free flames, and ethylene for sooty flames. One experiment objective is to identify the extinction limits for both radiative and convective extinction (i.e., at high and low system Damkohler numbers, respectively). Another objective is to determine the existence, onset and nature of pulsating instabilities that have been theoretically predicted to occur in such flames with fuel/diluent mixtures that are above a critical Lewis number. Solid-Fuel Combustion/Material Flammability Space-based and ground-based, low-gravity experiments in material flammability have revealed substantial differences in the behavior of flames over solid materials in reduced gravity. Many of these observations have specific impact on the hazard of spacecraft fires in addition to being of fundamental solid fuel combustion importance. Microgravity experiments demonstrated that the assumed margin of safety of reduced flammability in microgravity, based on quiescent test results, may not be valid for most spacecraft environments where ventilation flow strongly enhances flames. In the low-flow conditions of microgravity or partial gravity, some materials are flammable at lower oxygen concentrations than in normal gravity (Figure 8).",
+          "location": "PDF p. 18"
+        },
+        {
+          "id": "nasa-guide-2015-32",
+          "text": "Materials are easier to ignite in low gravity because of reduced natural convective cooling from the fuel surface. Once established, flames in low-speed airflows may preferentially spread into the oncoming airflow (Figure 9) depending on the flow speed. This is opposite to the effect that occurs in normal gravity. Radiant heat transfer was shown to substantially affect the material’s flammability. Surface radiative heat loss reduces the flammability, but an external radiative heat flux can cause materials to ignite and spread faster. Currently, solid fuel combustion flight research is limited to the Burning and Suppression of Solids (BASS) experiment aboard the ISS. BASS is a rapid turn- Figure 8. Flammability map shows region of enhanced flammability in the low-convective flow range. Figure 9. Flame spreading preferentially upstream in slow convective flow. (Image credit: NASA, Radiative Ignition and Transition to Spread Investigation experiment)",
+          "location": "PDF p. 18"
+        },
+        {
+          "id": "nasa-guide-2015-33",
+          "text": "19 around flight experiment that started its operations in March 2012. It is a precursor for the Solid Fuel Ignition and Extinction (SoFIE) flight experiments that are currently planned for launch in 2019. The BASS approach is to use an existing flow duct, SPICE, to carry out microgravity tests in the ISS Microgravity Science Glovebox. Several types of solid materials were burned including flat samples, polymethylmethacrylate (PMMA) spheres, porous wax slabs and wax candles. The glovebox is normally limited to ISS “air,” nominally 21 percent oxygen by volume and one atmospheric pressure. However, more recently nitrogen has been used to perform tests as low as 17 percent oxygen. The tests have yielded useful results on the flow-velocity effect and flame suppression (by nitrogen), and the quick return of the test results has helped to guide the next, more complete flight experiments. The SoFIE flight hardware (Figure 10) is currently under development and includes an insert for the CIR rack.",
+          "location": "PDF p. 19"
+        },
+        {
+          "id": "nasa-guide-2015-34",
+          "text": "In addition, some of the investigations will make use of a larger and improved flow duct along the lines of the BASS concept. The considerations for the solid fuels include material, preparation and purity, geometry, external heating, pre-ignition conditions, and ignition. The most likely candidates include plastics like PMMA or Delrin. There is a tremendous advantage to be gained if the sample can be burned, extinguished and then re-ignited multiple times. This minimizes the time-consuming process of opening the chamber and replacing the fuel specimens. The chamber environment will consist of oxygen from 10 percent to 40 percent by volume at a pressure between 0.2 and 1.5 atm. Figure 10. Solid Fuel Ignition and Extinction insert concept under development. A recirculating flow provides a region of well characterized jet flow within which solid samples will be burned.",
+          "location": "PDF p. 19"
+        },
+        {
+          "id": "nasa-guide-2015-35",
+          "text": "20 Figure 12. Digital still camera images showing a flame burning a 2-cm wide cotton-fiberglass fabric in opposed flow. Images are taken every 1.25 seconds (starting at top and moving from left to right). The flow is decreased in discrete steps from 10 cm/s all the way down to less than 1 cm/s. The flame response to flow changes is very rapid, and the flow effects on the flame and its spread rate are dramatic. Total burn time is 90 seconds. Flow changes are indicated by numbers. Figure 11. Flame sequence of a burning 2-cm diameter acrylic sphere at 17 percent oxygen and 12 cm/s flow from the Burning and Suppression of Solids experiment. The images are about 1.5 sec. apart. With the reduction in oxygen from 21 percent (air) to 17 percent, the flame stays bluer much longer (soot formation is delayed) facilitating comparison with model. The high-resolution images allow model comparison of flame growth rate, flame-to-fuel distance, and the solid regression rate.",
+          "location": "PDF p. 20"
+        },
+        {
+          "id": "nasa-guide-2015-36",
+          "text": "21 Space Exploration Atmospheres (SEA) relevant to NASA can be investigated. Airflows in the spacecraft ventilation range of 0 to 30 cm/s will be supplied to the flame. The flow field must be well-characterized so the models will have accurate boundary conditions. Burning and Suppression of Solids (BASS) The BASS investigation is currently being conducted in the MSG to examine the burning and extinction characteristics of a wide variety of fuel samples in microgravity (Figures 11-13). The BASS experiment will improve 1-g material fire safety rating tests and help to guide strategies for extinguishing accidental fires in microgravity. BASS results contribute to the limited database of solid combustion in microgravity. In addition, BASS will guide combustion computational models used in the design of fire detection and suppression systems in microgravity and on Earth. Detailed combustion models are validated using the simpler flow environment afforded by tests in microgravity. Once validated, they can be used to build more complex combustion models needed to capture the important details of flames burning in normal gravity.",
+          "location": "PDF p. 21"
+        },
+        {
+          "id": "nasa-guide-2015-37",
+          "text": "These models have wide applicability to the general understanding of many terrestrial combustion problems. BASS tests the hypothesis that materials in microgravity, with adequate ventilation, burn as well if not better than the same material in normal gravity with other conditions being identical (pressure, oxygen concentration, temperature, etc.). Figure 13. Drop tower test burning PMMA sphere showing transition to 0-g and flame response to the application of a jet of nitrogen for extinguishment.",
+          "location": "PDF p. 21"
+        },
+        {
+          "id": "nasa-guide-2015-38",
+          "text": "22 The fuel is ignited and the airflow speed is the main variable. After some time, a nitrogen gas suppressant was applied to selected flames. There are important differences in the suppression of fires in space compared to on Earth. On Earth it is understood that the best results are generally obtained when the extinguisher “attacks” the base of the flame, which is both the stabilization point and the point where fresh air first enters the flame. For a fire burning in microgravity, the best point of application of suppressant may not be immediately apparent, especially for a partially obstructed flame or a wake-stabilized flame. Depending on the geometry of the flame and the characteristics of the extinguisher (distance from flame, dispersion angle), it is possible that the suppressant stream will be ineffective or might actually make the flame worse through the entrainment of oxygen. Early results have demonstrated that nitrogen applied to the flame can actually strengthen it because of this effect.",
+          "location": "PDF p. 22"
+        },
+        {
+          "id": "nasa-guide-2015-39",
+          "text": "Using nitrogen as a flame suppressant in microgravity provides a direct link to current and planned extinguishment techniques. The SoFIE project is in the Science Definition phase with the plan of developing a CIR insert and large flow duct within the MSG to serve up to five separate investigations. These investigations all support the overall objective of the SoFIE project, which is to study and characterize ignition and flammability of solid spacecraft materials in practical geometries and realistic atmospheric conditions. There are currently five investigations described on the following pages. Correlation of Flammability between Normal and Microgravity The goal is to obtain the microgravity flammability map for select materials to provide information on the sensitivity of the material’s flammability to ventilation flow, ambient oxygen concentration and possibly pressure, to find the fundamental limiting oxygen concentration in microgravity. This will be defined as the worst case in microgravity for comparison with the NASA-STD-6001 T est 1 worst case upward flame spread in normal gravity. The comparison will enable evaluation of the oxygen margins of safety associated with normal gravity testing.",
+          "location": "PDF p. 22"
+        },
+        {
+          "id": "nasa-guide-2015-40",
+          "text": "The microgravity burning behavior of some actual engineering materials planned for spacecraft can be obtained as a function of oxygen, pressure and flow speed for comparison to normal gravity results. The significance of this portion of the work is that it will provide a better understanding of how the NASA T est 1 flammability limits relate to the actual",
+          "location": "PDF p. 22"
+        },
+        {
+          "id": "nasa-guide-2015-41",
+          "text": "23 material flammability limits in microgravity. It will also provide an increased margin of safety for materials flammability based upon a slightly modified NASA T est 1 protocol, since recent drop-tower results suggest that the current T est 1 might not be conservative. Fundamentals of Flame Growth and Extinction in Microgravity The goal is to understand the fundamental processes of flame growth, spread and decay over solid materials, and their dependence on gravity, flow velocity, oxygen percentage, pressure, sample size and preheating. Solid spheres of plastic fuel will be burned in long-duration tests so that the entire flame history can be obtained. Using the experimental results, a robust numerical model will be developed to a) simulate the transient flame development in the reduced-gravity experiment; b) relate material flammability performance between normal and reduced gravity; and c) examine the relevance of NASA-STD-6001 (Flammability, Offgassing, and Compatibility Requirements and T est Procedures) T est 1. The practical limitations of ground-based microgravity facilities are well understood.",
+          "location": "PDF p. 23"
+        },
+        {
+          "id": "nasa-guide-2015-42",
+          "text": "While future ISS solid combustion experiments can be conducted for long durations, even these will have some limitations. The significance of this portion of the work is that by careful selection of ISS experiments together with the model, many of these limitations can be overcome to a degree sufficient to lead to a significant improvement in our understanding of how material flammability tests conducted on Earth apply to space environments. Thermal and Species Field Effects on Material Flammability Theory and modeling results suggest that an important difference between normal gravity and microgravity material flammability is caused by the influence of the flow field on the relative overlap of the thermal and species fields in the flame zone. The goal is to determine flame spread rate over thin fuels in quiescent microgravity and compare that with a closed-form expression including the pertinent solid properties and environmental parameters.",
+          "location": "PDF p. 23"
+        },
+        {
+          "id": "nasa-guide-2015-43",
+          "text": "Gas phase temperature and concentration fields of carbon dioxide and oxygen will be measured at certain key locations with the objective of delineating the propagation of the thermal field from the propagation of the species field; the separation between the two is postulated to be the mechanism for radiative flame extinguishment. The separation between the two fields will be controlled by changing the fuel thickness and ambient pressure.",
+          "location": "PDF p. 23"
+        },
+        {
+          "id": "nasa-guide-2015-44",
+          "text": "24 The significance of this portion of the work is that it will establish quantitative criteria, based on fundamentals, which determine the flammability of materials in microgravity where radiative heat transfer dominates because of high-residence time created by a lack of buoyancy-induced or forced flow. This can lead to the specification of a critical fuel thickness, a critical forced velocity, or a critical oxygen level that makes a material inherently fire safe. External Heat Flux Effects on the Ignitability and Suppression of Materials in Microgravity The goal is to conduct microgravity ignition and suppression experiments for materials burning in low-speed, forced flow with externally applied heat flux in SEA. Time to ignition and the time between introduction of suppression agent and extinction are measured as a function of environmental conditions. The experiment will be supported by a comprehensive model of piloted ignition and extinction of materials in SEA. Reduced-gravity aircraft tests have been conducted. However, because of the limited, reduced gravity time, ignition times could be obtained only at high, radiant heat fluxes.",
+          "location": "PDF p. 24"
+        },
+        {
+          "id": "nasa-guide-2015-45",
+          "text": "At airflow velocities below those induced by buoyancy, ignition times reach values that are significantly lower than those observed in normal-gravity buoyant flows. The reduction of the ignition times indicates that, under these low-flow conditions, the ignition process is affected more by the reduction in surface heat loss than by the corresponding oxygen transport reduction. By developing a theoretical model for the ignition time, it was also shown that the critical heat flux for ignition in microgravity can be as short as half the value measured in normal gravity. Microgravity experiments will be used to validate the model, which in turn will be used to predict the fire behavior of different combustible materials in SEA. Currently, there exists no testing methodology specifically designed to determine the fire hazard of materials under those conditions. The significance of this portion of the work is that it will fill that void with a new test methodology and provide additional information about the effect of SEA on the flammability and suppression of materials.",
+          "location": "PDF p. 24"
+        },
+        {
+          "id": "nasa-guide-2015-46",
+          "text": "It may also help to interpret and extend current NASA testing procedures to SEA. Narrow Channel as a 1-g Flammability Test Method The goal is to measure flame spread rate across a representative, thick, solid fuel as a function of forced opposed flow velocity, oxygen concentration, and pressure,",
+          "location": "PDF p. 24"
+        },
+        {
+          "id": "nasa-guide-2015-47",
+          "text": "25 corresponding in particular to NASA‘s SEA in microgravity. Opposed flow extinction limits for the thick, solid fuel will be found by lowering the velocity until the flame extinguishes at a given oxygen concentration and pressure. The data will be used to determine if an optimum gap height in the corresponding Narrow Channel device can be found to reproduce these results in normal gravity, or how the gap height needs to be changed for different conditions. The Narrow Channel is a 1-g material flammability test, which minimizes buoyant flow by constraining flame height. By restricting the buoyant plume, the flame size is controlled and in many ways mimics microgravity flames. The significance of this portion of the work is that experiments can be structured using the Narrow Channel in normal gravity to predict aspects of microgravity flammability for a wide range of candidate materials. The flight experiment will provide a direct comparison of the Narrow Channel tests and the numerical model results.",
+          "location": "PDF p. 25"
+        },
+        {
+          "id": "nasa-guide-2015-48",
+          "text": "Premixed Flames Prior work in premixed flames, flown on two separate space shuttle missions, was limited to very fuel-lean conditions in which the mass diffusivity dominated the thermal diffusivity (i.e., very low Lewis number). Under these conditions, steady flame balls were shown to be possible (Figure 14). This remarkable result validated prior theoretical predictions, improved our understanding of combustion reactions near extinction limits, and provided pure test beds for numerical modeling. The Structure of Flame Balls at Low Lewis-number (SOFBALL) experiment of P . Ronney (USC) was conducted in the CM facility in 1997 on the STS-83 and STS-94 space shuttle missions and again in 2003 on the STS-107 mission. Another noteworthy microgravity work related to premixed flames was the invention of a burner with ultra-low pollutant emissions (Figure 15). This has applications in domestic water heaters and furnaces. Figure 14. Flame balls, a classical combustion phenomenon that is unique to microgravity. (Image credit: NASA, SOFBALL experiment)",
+          "location": "PDF p. 25"
+        },
+        {
+          "id": "nasa-guide-2015-49",
+          "text": "26 Fire Safety Past research involved a space experiment that focused on measuring the extinguishing capability of water mist on a premixed flame propagating along a tube to gain a better understanding of the water mist fire suppression phenomenon and help design more effective mist fire- suppression systems to replace banned Halon systems. The Water Mist Fire Suppression experiment (Mist) of T . McKinnon (Colorado School of Mines) et al. was conducted in the CM facility in the space shuttle mission STS-107 in 2003. The purpose of the Mist experiment was to study how water droplet diameter and water concentration affect the speed, strength and shape of flames created in various fuel and oxygen mixtures. After years of research, testing, flight experiments, and advocating the benefits of water-mist technology, non-toxic water-mist portable fire extinguishers were designed, tested, fabricated and certified for spaceflight. The first two of the planned nine water-mist portable fire extinguishers were sent to the ISS in December 2015 to replace CO2 units that are currently onboard.",
+          "location": "PDF p. 26"
+        },
+        {
+          "id": "nasa-guide-2015-50",
+          "text": "The rest of the units will be sent in three more missions. Spacecraft fire detection provides significant challenges compared to terrestrial conditions because the properties of the smoke emitted from fires is affected by buoyancy. The conditions on a spacecraft require rapid detection of fires with limited false alarms. T wo recent experiments examined the issues related to spacecraft fire detection. The Dust Aerosol measurement Feasibility T est examined the background aerosol particulate levels on the ISS. The Smoke Aerosol Measurement Experiment (SAME) examined the particle-size distribution of the smoke from spacecraft materials. These instruments can provide useful guidance for the designers of future spacecraft smoke detectors. Figure 15. Low-polluting burner remains cool to touch. (Image credit: NASA-Lawrence Berkeley Lab, Ultraclean Low Swirl Combustion project)",
+          "location": "PDF p. 26"
+        },
+        {
+          "id": "nasa-guide-2015-51",
+          "text": "27 Super-Critical Processes Because of its unique and significant advantages, Super-Critical Water Oxidation (SCWO) was identified by NASA as a potential technology for use in closed-loop, life-support systems addressing waste management and resource reclamation needs. Initial efforts in applying SCWO to solid waste management were conducted at NASA’s Ames Research Center in the 1990s in ground-based laboratories. These early tests were designed to look at oxidation rates and destruction efficiencies for cellulosic material as a function of particle size, mixing, temperature and pressure. Results from these tests provided empirical correlations for use in reactor design. In 2004, an investigation to assess the impact of buoyancy on SCWO processes was initiated as part of GRC’s microgravity combustion program. The SCWO T est Facility, shown in Figure 16, with a 500-ml reactor along with all necessary supporting hardware and diagnostics was designed and built for use in the Zero Gravity Facility (ZGF , the 5.2-second drop tower).",
+          "location": "PDF p. 27"
+        },
+        {
+          "id": "nasa-guide-2015-52",
+          "text": "A limited number of ZGF tests were conducted for the oxidation of methanol in water (methanol 10 weight percent) using air, injected into the super-critical mixture, as the oxidizer. Figure 16. (a) Super-Critical Water Oxidation (SCWO) Test Facility designed for use in the Zero Gravity Facility shown loaded in the drop bus just prior to dropping; (b) 500 ml SCWO reactor vessel installed in the SCWO Test Facility; (c) schematic showing axial location of thermocouples inside the SCWO reactor. (Image credit: NASA, SCWO experiment)",
+          "location": "PDF p. 27"
+        },
+        {
+          "id": "nasa-guide-2015-53",
+          "text": "28 The first experimental objective was to determine the extent to which buoyancy affects the developing temperature profile. Buoyancy effects were expected because the reaction is exothermic; however, because of the limited microgravity time in the drop tower, it was not entirely clear these would be observable. Comparison of the temperature traces, as shown in Figure 17 for both normal gravity and microgravity, confirmed this expectation. In normal gravity, temperatures were found to be more uniform in the bulk fluid, which is due to buoyant mixing; whereas, non- uniformities resulting in thermal stratifications (evidenced by a “hot zone” between two cooler regions) were observed under microgravity conditions. A second experimental objective, to measure the reaction rate and product concentrations with Raman spectroscopy, was not met because of budgetary constraints. This earlier work, which was initiated in 2008, at GRC was instrumental in development of a collaborative effort between NASA and the French space agency, CNES.",
+          "location": "PDF p. 28"
+        },
+        {
+          "id": "nasa-guide-2015-54",
+          "text": "The objective of this ISS flight investigation, referred to as the Super- Critical Water Mixture experiment (SCWM), is to investigate the behavior of salt precipitate formation and transport in super-critical water in the presence of temperature gradients. This will provide practical insights into the mechanisms of salt agglomeration, transport and deposition that often plague SCWO reactors. Figure 17 . Comparison between 1-g and 0-g axial temperature immediately following axial injection of oxidizer; (a) in 1-g temperature profiles show high degree of buoyant-driven thermal mixing for locations above injector and (b) in 0-g temperature profiles show significant thermal stratification with a hot zone (TC-B) established between two cooler regions suggesting poor thermal mixing in 0-g. (Image credit: NASA, SCWO experiment)",
+          "location": "PDF p. 28"
+        },
+        {
+          "id": "nasa-guide-2015-55",
+          "text": "29 The investigation will utilize a refurbished High T emperature Insert (HTI-R), built by CNES, with a fluid cell (approximately 0.3 cm3) filled with a water-salt mixture using Na2SO4 (0.5 percent w/v) at its critical density. During an experiment, the salt-water mixture will be slowly raised to a temperature and pressure above its critical point enabling observation of homogenous salt precipitation, measurement of the critical end-point (i.e., the shift in critical temperature that is due to the presence of the salt), and the transport mechanisms both with and without the presence of a temperature gradient. A baseline test was conducted using pure water in the HTI during a test sequence on the ISS performed in July 2010. Images from this test showing the location of the liquid phase and meniscus geometry at sub- critical and super-critical conditions is shown in Figure 18. This test sequence was designed to investigate the formation and stability of a temperature gradient in the fluid in its super-critical state.",
+          "location": "PDF p. 29"
+        },
+        {
+          "id": "nasa-guide-2015-56",
+          "text": "The follow-on SCWM experiment will employ a similar test sequence and results from the pure-water test sequence will establish a useful baseline for comparison. Figure 18. Sub-critical and super-critical states of water mixtures imaged aboard the International Space Station showing (a) the geometry of the fluid meniscus at sub-critical conditions and the monophasic super-critical fluid with no meniscus at super-critical conditions. (Image credit: NASA-CNES, SCWM experiment)",
+          "location": "PDF p. 29"
+        },
+        {
+          "id": "nasa-guide-2015-57",
+          "text": "30 Well over 200 principal investigators have utilized reduced-gravity facilities to study fundamental combustion phenomena in the areas described above. Most of the research was conducted in drop towers and aircraft, and the most promising experiments, after a thorough scientific and engineering review process, were selected for conduct in space-based facilities. The investigations led to numerous discoveries, highlighted the importance of frequently neglected phenomena, improved our understanding and predictive capabilities for all combustion systems, and enhanced our ability to detect and prevent spacecraft fires. Some of the most pertinent highlights and lessons learned are presented below. Flame Existence One of the most seemingly simple, but long-standing, questions addressed by microgravity testing involved whether flames could even exist without buoyancy. Many researchers, including notable experts, argued openly in the scientific literature that, in the absence of convection, a steady flame could not exist; diffusive transport alone could not sustain a flame. T wo spaceflight experiments demonstrated conclusively the fallacy of such arguments. The first involved the behavior of a simple candle flame in a long-duration microgravity environment (Dietrich et al., 2000).",
+          "location": "PDF p. 30"
+        },
+        {
+          "id": "nasa-guide-2015-58",
+          "text": "The candle flames in Figure 1 show images of a familiar shape seen in normal gravity and a flame during a microgravity test aboard the Russian Mir orbiting station. Contrary to published speculation, the microgravity flame burned in some tests for over 45 minutes before extinguishing from a lack of fuel. Despite having a much lower burning rate (the microgravity flame in Figure 1 was nearly invisible to the naked eye and a very long shutter time was needed to record the image shown), the microgravity flame burned to a lower ambient oxygen mole fraction than the identical candle flame would have on Earth. The second example involves the existence of stationary, spherical premixed flames or flame balls. These flames were predicted theoretically to exist if (among other conditions) the thermal diffusivity of the bulk mixture was much lower than the mass diffusion of the limiting reactant: that is, a low Lewis number. Their existence, however, was thought to be a strictly mathematical exercise.",
+          "location": "PDF p. 30"
+        },
+        {
+          "id": "nasa-guide-2015-59",
+          "text": "The SOFBALL studied premixed fuel/oxidizer/diluent mixtures in a large combustion chamber and showed conclusively that the flames could exist (Figure 14), producing the weakest flames ever burned (approximately 1 Watt) and some burning for over 40 minutes before the experiment timed out (e.g. Ronney, et al., 1998). Highlights and Lessons Learned",
+          "location": "PDF p. 30"
+        },
+        {
+          "id": "nasa-guide-2015-60",
+          "text": "31 Low-Stretch (Low-Velocity) Flames Reduced-gravity facilities offer the opportunity to study flames where the characteristic velocities are much lower than typical buoyancy-induced gas velocities, approximately 1 m/s in the candle flame in Figure 1. These low-speed flows result in flame stretch or strain rates that are unachievable in terrestrial, bench-scale experiments. Conventional theories of flame limits all predicted that, as the flame stretch characteristic velocity decreased, the oxygen concentration that would support steady or quasi-steady-state combustion would monotonically decrease. This was not the case, however, as several classes of experiments demonstrated. At low-characteristic velocities (low-flame stretch), radiative loss begins to dominate, eventually leading to flame extinction at sufficiently low velocities or stretch rates (e.g., Olson et al., 1988). Figure 8 shows this schematically. For flame spread across solid materials, the ordinate in Figure 8 is the ambient oxygen mole fraction and the abscissa the gas velocity across the solid surface. The boundary represents limit of steady flame spread. Outside of this boundary, steady flame spread does not occur; inside, it does.",
+          "location": "PDF p. 31"
+        },
+        {
+          "id": "nasa-guide-2015-61",
+          "text": "The curve identifies a much lower flammability limit than originally predicted. For flame spread across solid materials, the characteristic gas velocity of the minimum in the curve is on the order of 10 cm/s and also corresponds to a maximum in the flame spread rate. T o give perspective, this is the velocity typical of that of spacecraft ventilation systems. This observed minimum has large implications for material flammability in reduced gravity and, thus, implications for spacecraft fire safety. Another related phenomenon with spacecraft fire safety implications is the observation of flame spread direction at low-flow velocities in the microgravity environment of spaceflight when a thin fuel is ignited at the middle of the sample. Completely contrary to normal-gravity behavior, the flame spreads upstream, into the oncoming airflow, in space when the forced-flow velocities are low (Figure 9); whereas, the flame always spreads downstream, in the buoyant flow direction, in normal gravity, even in the absence of forced flow.",
+          "location": "PDF p. 31"
+        },
+        {
+          "id": "nasa-guide-2015-62",
+          "text": "Recent results from the BASS experiment currently running on the ISS indicate that NASA-STD-6001 T est 1 is not conservative, and materials can burn at lower oxygen levels in microgravity than on Earth. Also, current findings show that local application of suppressant is not adequate for flame extinguishment. The local jet entrains air and sustains the flame even when the ambient airflow is turned off.",
+          "location": "PDF p. 31"
+        },
+        {
+          "id": "nasa-guide-2015-63",
+          "text": "32 The unique microgravity environment also allows researchers to study the classical problem of a spherical flame surrounding a spherical droplet in a quiescent ambient (e.g., Dietrich et al., 1996; Nayagam et al., 1998). Virtually every combustion textbook contains an analysis of this problem. For droplet combustion, the ordinate in Figure 8 is the ambient oxygen mole fraction and the abscissa is the droplet diameter, with the boundary defining again the flammability boundary. Note also that for droplet combustion, the curve in Figure 8 is actually reversed, with larger droplets having lower stretch rates or larger Damkohler numbers. Both space- based and, to a limited extent, drop-tower testing demonstrated the existence of this limit. Identification of this curve is important not only for identifying flammability limits for spacecraft fire safety applications but for practical reasons as well. Droplet combustion experiments involve liquid fuels, and the curve in Figure 8 is determined by the detailed interaction of the heat and mass transport and chemical kinetics.",
+          "location": "PDF p. 32"
+        },
+        {
+          "id": "nasa-guide-2015-64",
+          "text": "The chemical kinetic mechanisms responsible for the curve are the building blocks of mechanisms for practical fuels. These droplet combustion experiments, therefore, provide benchmark data for the validation of physical and chemical kinetic sub-models of practical fuels. Jet Flames Another common class of flames in combustion research is gaseous jet flames (a fuel gas issuing from a nozzle into an initially quiescent oxidizing atmosphere). In terrestrial laboratories, gas-jet diffusion flames are used to elucidate the chemical kinetic mechanisms of simple fuels, to understand flame stability, and to study the details of soot production and destruction. For bench-scale laminar gas-jet experiments in normal gravity, it is difficult to suppress the effects of buoyancy, making the problem significantly less tractable. Microgravity studies in drop towers and space-based facilities show striking differences (in comparison to normal- gravity studies) in the observed flame heights of jet flames at low and moderate jet Reynolds numbers (e.g., Hegde et al., 1994; Urban et al., 1998).",
+          "location": "PDF p. 32"
+        },
+        {
+          "id": "nasa-guide-2015-65",
+          "text": "The onset of smoke production found in low gravity is substantially different than in normal gravity and contrary to predictions in prior literature. The experiments also show significant differences in the size of the primary soot particles and in the larger fractal dimension of the soot agglomerates (e.g., Greenberg et. al., 1997). The data from these experiments serve as benchmark data for the development and validation of detailed chemical kinetic and soot formation and destruction models.",
+          "location": "PDF p. 32"
+        },
+        {
+          "id": "nasa-guide-2015-66",
+          "text": "33 Flame Stability In normal gravity, flames that approach their flammability limit are frequently “blown off” by the large buoyancy-induced flow. These same near-limit flames in microgravity exhibit very different and unique behaviors in many cases. The simple microgravity candle flame in Figure 1, as it depleted the ambient oxygen and neared extinction, exhibited flame oscillations in most tests (Dietrich et al., 2000). These oscillations increased in magnitude until the flame finally extinguished, but they could exist for prolonged periods of time (over one minute in extreme cases). Similar flame oscillations occur during spherically symmetric droplet combustion (Dietrich et al., 1996). Instabilities also occur during flame spread over solid and liquid surfaces. Over solids, a complex fingerlike smoldering front occurs during near-limit flame spread under certain conditions (Olson et al., 1998). A pulsating gas-phase flame spread occurs as a flame spreads across a liquid pool under selected ambient conditions (e.g., Miller et al., 2000). Finally, microgravity experiments involving premixed flames demonstrate instabilities in both low- and high-Lewis-number gas mixtures (e.g., Pearlman and Ronney, 1994).",
+          "location": "PDF p. 33"
+        },
+        {
+          "id": "nasa-guide-2015-67",
+          "text": "These instabilities, obscured in normal gravity by the strong buoyant flow, highlight the ability of microgravity experiments to provide insights into fundamental flame behavior. Highly exothermic reactions coupled with nonlinear heat loss through radiative and diffusive transport of both heat and mass provide combustion theoreticians and modelers a rich canvas on which to develop, test and validate simplified and detailed flame models. Cool Flames Recent spaceflight experiments (FLEX) involving single alkane droplets burning in a quiescent ambient uncovered unexplained and unexpected behavior. For the large alkane droplets, after ignition the droplet burns for a short time with a typical hot flame. As expected, the hot flame extinguished when the radiative loss reduced the flame temperature below a critical value. Inexplicably after hot flame extinction, however, the droplet continued to vaporize at the same rate for an extended period and then suddenly stopped vaporizing at a finite droplet size. The plateau in vaporization occurred coincident with the formation of a large vapor cloud. This vaporization, we now know, is supported by a lower-temperature cool flame that forms after visible flame extinction.",
+          "location": "PDF p. 33"
+        },
+        {
+          "id": "nasa-guide-2015-68",
+          "text": "34 extinguishes and the vapor cloud forms because the cool flame only burns a fraction of the fuel vaporized from the droplet surface. This cool flame supported droplet combustion was not only unexpected, but also thought to be impossible by many in the peer community (it took a year for the team to convince themselves and then another year to convince the skeptical peer community). Cool flames form as an intermediate step between unreacted fuel and oxidizer, but should not form after a hot flame extinguishes. The FLEX tests showed that the cool flame can burn for a prolonged period of time. The microgravity droplet combustion tests offer a unique platform to study these low temperature chemical reactions. Cool flame chemistry is very important in internal combustion engines and a predictive understanding of their chemistry is critical in developing the next generation engines with higher efficiency and lower emissions. Ancillary Hardware Developments Although experiments in microgravity offer enticing rewards to combustion researchers, the harsh realities of experiments in reduced-gravity facilities present significant hardware and diagnostic challenges to scientists and engineers.",
+          "location": "PDF p. 34"
+        },
+        {
+          "id": "nasa-guide-2015-69",
+          "text": "Drop tower and space-based experiments have severe space, weight, volume, safety and power limitations. These limitations have driven technology developments with applications far beyond the microgravity combustion science program. Some noteworthy accomplishments include the development of a system for measuring full-field, quantitative soot volume fraction via laser-light extinction (Greenberg et. al., 1997a). This novel system allows the precise measurement of soot volume fraction and is the enabling technology for experiments that continue to provide benchmark data on soot formation and destruction. Rainbow Schlieren Deflectometry system developed at GRC provided the first full-field quantitative measurements of gas-phase temperature in microgravity combustion experiments (Greenberg, et al., 1995). The most significant developments have been technologies to both measure and characterize small aerosol particles (e.g., Qi et. al., 2008). Spacecraft Fire Safety The 1967 tragic accident of Apollo 1, in which three NASA astronauts lost their lives when a cabin fire broke out during a launch pad test, and the near-tragedy of Apollo 13 in 1970, when an oxygen tank exploded during transit to the moon,",
+          "location": "PDF p. 34"
+        },
+        {
+          "id": "nasa-guide-2015-70",
+          "text": "35 highlight the hazard posed by accidental fires on spacecraft. A fire or explosion requires all elements of the “fire triangle” to be present: fuel, oxygen and a source of ignition. Crewed spacecraft, by necessity, contain all three. In addition, spacecraft frequently operate at an ambient oxygen mole fraction higher than that of air, have limited options for escape, and have almost no tolerance for damage to critical life support systems. As a result, NASA maintains a very disciplined safety culture with respect to fire through strict material controls, rigid design standards for electronic equipment (and all possible ignition sources), and mandatory suppression systems on all spacecraft. Although NASA has been vigilant in its approach to accidental fires, the approach to fire safety aboard spacecraft was dominated by a general lack of knowledge about how fire behaves in microgravity. This resulted in several critical misconceptions about potential fires in spacecraft: 1. A steady fire cannot exist in a quiescent microgravity environment. 2. A fire will self-extinguish if ventilation is shut off. 3.",
+          "location": "PDF p. 35"
+        },
+        {
+          "id": "nasa-guide-2015-71",
+          "text": "B ecause the reduced-gravity environment is inherently safer, terrestrial fire standards and tests represent a very conservative approach to fire safety. Research at NASA GRC in both ground-based laboratories and microgravity facilities and space-based microgravity experiments (summarized by Friedman and Ross, 2001 and Ruff et al., 2009) demonstrates the fallacy of these assumptions and demonstrates GRC’s contribution to spacecraft fire safety science with respect to fire prevention through material flammability and screening. GRC also maintains active research programs in both fire detection and suppression. Fundamental research in microgravity highlighted the vastly different particulate size associated with flames in microgravity. Since many fire detectors operate by sensing fire-generated particulates, they would need to use different signatures to detect fires in microgravity. If terrestrial fire detectors were used in space, they would be “looking” for something different than they should. One of the achievements in this area is a new device that monitors particulates and chemical species simultaneously to better detect the onset of a fire.",
+          "location": "PDF p. 35"
+        },
+        {
+          "id": "nasa-guide-2015-72",
+          "text": "In joint testing with the Federal Aviation Administration, this device outperformed current aircraft smoke detectors in false- alarm rejection and real-event detection. The new device can be “tuned” to examine particulates and species characteristics associated with fires in microgravity.",
+          "location": "PDF p. 35"
+        },
+        {
+          "id": "nasa-guide-2015-73",
+          "text": "36 Combustion research remains an active field of research with direct application to terrestrial issues, fundamental science, and NASA‘s exploration goals. The New Initiative program is based upon continued use of the in-orbit resources (CIR inserts) with the addition of another CIR insert to the on-orbit resources. These topics were selected based upon the data sources considered by the Decadal survey. All of these topics have direct application to either terrestrial or exploration issues and are among the most challenging questions faced in the discipline. Droplet Combustion Currently operating inside the CIR is the FLEX, which uses the MDCA to study droplet combustion. FLEX and the follow-on FLEX–2 experiments are exploiting the microgravity environment to study the spherically symmetric combustion of liquid droplets. FLEX is motivated by the need to better identify and predict limiting oxygen indices (LOIs) and inert-gas suppressant efficacy. The FLEX–2 experiments are motivated by the need to better understand droplet combustion as it applies to the fundamental problems of energy conversion and utilization where liquid hydrocarbon fuels are a predominant source of energy in the world.",
+          "location": "PDF p. 36"
+        },
+        {
+          "id": "nasa-guide-2015-74",
+          "text": "T o date, these experiments have identified both the radiative and diffusive extinction limits for heptane and methanol droplets and identified an LOI that is both significantly lower than in normal gravity and lower than previously predicted and anticipated. The data from these experiments are helping researchers to develop, refine and validate chemical kinetic models important to terrestrial combustion systems. The most significant observation from these experiments, however, is the identification of stable, quasi-steady cool flames that form after radiative extinction of the visible flame for heptane droplet combustion (Nayagam et al., 2012). This low-temperature chemistry is important in automobile engines because it is one of the major phenomena limiting engine efficiency. While the droplet combustion research community is fortunate to have access to the CIR and MDCA, funding limitations have severely cut down on the number of researchers, the number of research projects, and the overall extent of the program. The space-based research in the CIR/MDCA should be expanded to a wider range of fuels, specifically focusing on practical fuels and practical fuel surrogates.",
+          "location": "PDF p. 36"
+        },
+        {
+          "id": "nasa-guide-2015-75",
+          "text": "Ideally, this would be closely aligned with similar efforts funded by other federal agencies (e.g., Department of Energy and Department of Defense). Virtually absent from the current program is also critical research on high-pressure droplet combustion Opportunities for Combustion Research on the ISS",
+          "location": "PDF p. 36"
+        },
+        {
+          "id": "nasa-guide-2015-76",
+          "text": "37 and spray combustion. These programs have immense practical applications to the nation’s energy future as the vast majority of energy consumption in the transportation sector is from liquid fuels. Finally, a critical missing element in the current program is the lack of a comprehensive, ground-based research program that includes experiments in drop towers and the companion theoretical and numerical modeling efforts. These programs serve two purposes. First, they provide valuable and relevant insights into the physics of liquid fuel combustion, while providing unparalleled educational opportunities to graduate and undergraduate students. Second, they form the basis of the next generation of space-based microgravity experiments. Gaseous Diffusion Flames The gaseous diffusion flame research is generally focused on improved combustion technology for Earth applications. Practical combustion often involves turbulent flames at elevated pressures with at least partial premixing. These aspects suggest promising opportunities for future research. T urbulent combustion is exceedingly complex, but microgravity testing provides the opportunity to study momentum- dominated flames with increased scales and residence times making the research more tractable.",
+          "location": "PDF p. 37"
+        },
+        {
+          "id": "nasa-guide-2015-77",
+          "text": "Although turbulent flames can present significant challenges for microgravity research, innovative experiments studying pulsed laminar flames, and the interaction of vortices with laminar flames (e.g., TGDF) can advance fundamental understanding of turbulent combustion. As previously discussed, high-pressure combustion is strongly influenced by buoyancy and challenging to investigate in normal gravity. Partially premixed combustion is found in a wide variety of applications and has promising potential for high fuel efficiency and low pollutant emission, for example in modern gas turbine combustion. The ACME hardware that is now in development will accommodate experiments with burner-stabilized, partially premixed flames. The ACME investigations, planned to follow the FLEX experiments, examine gas-jet diffusion flames. These fundamental experiments again exploit the simplified flame geometry afforded by microgravity to develop, validate and refine chemical kinetic models relevant to nearly all terrestrial combustion systems. Simplified precursor experiments are underway in the MSG to provide interim data to the ACME investigators that complement the CIR experiments.",
+          "location": "PDF p. 37"
+        },
+        {
+          "id": "nasa-guide-2015-78",
+          "text": "38 Solid Fuel Combustion/Material Flammability New initiatives are needed to allow ongoing, long-duration, solid fuel combustion testing in microgravity. A robust, ground-based solid fuel combustion program needs to be restarted to hone and augment the flight research portfolio. Many of the prior research results were obtained in ground-based tests, so this investment is well worth the modest price. The SoFIE insert in the CIR could continue to be used by additional NASA Research Announcement-selected principal investigators who wish to study solid fuel flammability and flame spread with different geometry fuels in a variety of oxygen, pressure, flow and external heat flux conditions. T o further augment the solid fuel in-orbit test capability, a Microgravity Wind T unnel for fire research is being proposed for the ISS MSG. This facility would enable large samples to be used to study fire growth patterns, materials flammability compared to NASA’s STD-6001 T est 1, fire suppression testing, and post-fire cleanup applied research.",
+          "location": "PDF p. 38"
+        },
+        {
+          "id": "nasa-guide-2015-79",
+          "text": "These two in-orbit facilities complement each other and provide different capabilities for principal investigator use—SoFIE can accommodate testing in exploration atmospheres with reduced pressure and elevated oxygen, and the Wind T unnel can accommodate large samples and easy sample change out. This investment in future research will improve our ability to evaluate material flammability and fire risk in low gravity by increasing our understanding of the actual material flammability risk for practical materials and flow configurations expected on future spacecraft. Figure 19. A chaotic mixture of flamelets in an intense turbulent flame obtained from sophisticated 3-D computations conducted at the Naval Research Labs.",
+          "location": "PDF p. 38"
+        },
+        {
+          "id": "nasa-guide-2015-80",
+          "text": "39 Premixed Flames Combustion experts agree that understanding premixed flames, the basic unit of combustion, is absolutely key to understanding turbulent combustion in general. Burners and engines based on fuel-lean mixtures promise higher thermal efficiencies and lower pollutant emissions because of reduced fuel consumption and more complete combustion of fuel in oxygen-rich environments. Real-life accidental explosions can originate from tiny kernels of barely flammable mixtures (Figure 19). Conclusive settlements of the extinction limits, if they exist, are of paramount importance. Therefore, the resolution of issues related to the structure and behavior of premixed-gas flames has great significance for and can have a major impact on many fields ranging from automobiles to propulsion to fire safety, and even to our understanding into what might spark colossal explosions of Type Ia supernovae. Although premixed flames are in the current baseline, no funding is allocated in the ISS budget for a specific experiment or insert on the ISS.",
+          "location": "PDF p. 39"
+        },
+        {
+          "id": "nasa-guide-2015-81",
+          "text": "It is anticipated that future studies of premixed flames will allow new exploration of the true limits of reactivity under limiting conditions and have application to both terrestrial combustion systems and the astrophysical modeling of stellar ignition and explosions. Perhaps the most important parameter in fundamental and practical premixed-gas combustion is the laminar burning velocity, defined as the propagation rate of a flame relative to the background gas, as it indicates the mixture‘s burning intensity as well as its propensity to exhibit such critical responses as blowout, flashback, and combustion instability. The fidelity of computational fluid dynamics Figure 20. Hydrothermal flame existing in a super-critical core region surrounded by a sub-critical annular region (Wellig, B., Swiss Federal Institute of Technology, Zurich).",
+          "location": "PDF p. 39"
+        },
+        {
+          "id": "nasa-guide-2015-82",
+          "text": "40 (CFD) codes for combustor design and analysis is inherently tied to the reliability of laminar flame velocities, either built directly into the codes or, more frequently, used to calibrate the chemical models employed in the codes. Super-Critical Processes Hydrothermal flames (e.g., Figure 20) are defined as regions where oxidation reactions occur in a super-critical water medium with sufficient intensity and rates as to produce luminous flames. They may be utilized to solve both of the major issues impacting SCWO mentioned earlier; i.e., surface fouling and flow blockage that is due to the precipitation of salts and corrosion of internal reactor surfaces. This may be accomplished by confining the flame to the interior of the reactor within a co-flowing region of sub-critical water. Any precipitated salts formed in the super-critical flame region will dissolve in the sub-critical fluid and the acidity is diluted, thereby eliminating both precipitate build-up on and corrosion of the reactor walls. Ground-based studies of hydrothermal flames have focused primarily on laminar and turbulent diffusion flames.",
+          "location": "PDF p. 40"
+        },
+        {
+          "id": "nasa-guide-2015-83",
+          "text": "Major challenges remain in the understanding of heat and mass transport, chemical kinetics, the mixture equation-of-state and hydrodynamics associated with laminar and turbulent flows. Eliminating buoyancy will lead to an improved understanding of laminar and turbulent flames by controlling the flow rate independent of buoyant acceleration. For turbulent diffusion flames, eliminating buoyancy will eliminate its influence on the energetic large scales of turbulence allowing for the development of improved turbulent sub-models. A SCWO research facility for the ISS to investigate the effects of buoyancy in SCWO reactors and to enable the progression of SCWO technology for NASA life support application to higher technology readiness levels (TRLs) has been proposed. It will have a reactor with an internal volume of approximately one liter, two orthogonal optical views and will be designed with a removable, principal- investigator-specific reactor base to accommodate different injection and/or burner configurations.",
+          "location": "PDF p. 40"
+        },
+        {
+          "id": "nasa-guide-2015-84",
+          "text": "It is envisioned that the facility will be placed in an Express Rack and will require the build-up of new diagnostic hardware, comprising two cameras, a collimated backlight, a Raman spectrometer and an array of temperature, pressure and flow sensors. It will have a wide range of science objectives including studying the hydrodynamics of sub-critical and super-critical mixing, reaction zone characterization, heat transfer in super-critical fluids and precipitate transport in reacting super-critical water.",
+          "location": "PDF p. 40"
+        },
+        {
+          "id": "nasa-guide-2015-85",
+          "text": "41 An alternative option with considerably less flexibility and scope has been proposed. It is termed the SCWO-D (for DEvice for the study of Critical LIquids and Crystallization [DECLIC]) and envisions build-up of an insert to be installed in the DECLIC facility. This option, because of the constraints imposed by fitting into an existing facility, will be limited in capability and will only be able to accomplish a subset of the science scope described above. The primary limiting features are: (i) the reactor volume (approximately 0.5 percent of Option 1), which limits the range of hydrodynamic studies (e.g., no bulk fluid motion); (ii) the diagnostic limitations that are due to the reliance on existing DECLIC hardware (e.g., no Raman spectroscopic diagnostic will eliminate chemical kinetic studies); (iii) a single optical axis, making simultaneous reaction zone and precipitate transport observations difficult if not impossible; and (iv) experiments may be limited to “quasi-steady” processes since constant pressure conditions will be difficult to maintain for any significant time because of the volume limitations.",
+          "location": "PDF p. 41"
+        },
+        {
+          "id": "nasa-guide-2015-86",
+          "text": "New Initiatives Besides the SoFIE and ACME experiments planned to be conducted in CIR on the ISS, there are a number of new combustion initiatives that are envisioned for future ISS research. Some of these may be undertaken more readily in the near term as spin- offs of existing research since they require relatively smaller resources and hence may be faster to develop. New initiatives such as Cool Flames in CIR, NASA Flammability T est Campaign and Schlieren Diagnostic in MSG may fall into this category. Cool Flames would be an example of how one of the unprecedented findings of CIR- FLEX studies can set the stage for a new research direction on combustion utilizing existing hardware available on the ISS. Cool Flames objectives include: (i) use a range of fuel types and environmental conditions (e.g., pressure, diluent concentrations, etc.) in order to determine the necessary pre-conditions for hot-flame/cool-flame transitions, cool flame stability and spontaneous re-ignition and (ii) development of a robust numerical modeling capability with detailed chemistry to complement analytical development of Cool Flame Theory.",
+          "location": "PDF p. 41"
+        },
+        {
+          "id": "nasa-guide-2015-87",
+          "text": "The initiative has great relevance to the next-generation engine designs such as Homogeneous Charged Compression Ignition and Reactivity Controlled Compression Ignition since these engines rely on low-temperature combustion processes, such as Cool Flames, to control emissions and reduce fuel consumption. This research also has significant impact on spacecraft fire safety concerns; reduced-gravity environments have been shown to be particularly conducive to a low-temperature combustion regime marked by very weak but",
+          "location": "PDF p. 41"
+        },
+        {
+          "id": "nasa-guide-2015-88",
+          "text": "42 persistent flames, invisible to the unaided eye, that will spontaneously re-ignite long after the visible flame has been extinguished. The necessary pre-conditions, the combustion chemistry, and the mechanisms for spontaneous re-ignition are poorly understood. The Cool Flames development effort would utilize existing FLEX-2 CIR/ MDCA hardware augmented with some additional diagnostic capabilities. Other new initiatives currently envisioned include: • Clean-airLab: series of inv estigations directed toward carbon sequestration and pollution reduction. • N anopropLab: self-assembling propellants and catalysts. • CombustionLab: focusing on high pr essures as related to (i) engines and (ii) supernova formation. • C yberLab: focusing on developing a Fire Database Reference containing information on such things as transport measurements at flame conditions, flame speeds and chemical kinetics. Microgravity combustion research has had significant impact on the combustion discipline and can be expected to continue to make strong contributions. Research directions in spacecraft fire safety have promise to significantly improve vehicle safety. The microgravity environment continues to be a critical resource for improved understanding of combustion phenomena.",
+          "location": "PDF p. 42"
+        },
+        {
+          "id": "nasa-guide-2015-89",
+          "text": "The combustion discipline has been very successful in utilizing low gravity to advance the field and is anxious to seek further opportunities.",
+          "location": "PDF p. 42"
+        },
+        {
+          "id": "nasa-guide-2015-90",
+          "text": "43 Facilities and How to Choose Them Acceleration Measurement and Environment Characterization The terms microgravity, reduced gravity, low gravity, zero gravity and weightlessness are often used interchangeably to describe an environment where the gravitational body force is significantly less than that on Earth. This ambiguous description points to a question of how to measure and characterize a reduced-gravity environment and any disturbances. Disturbances in a microgravity environment are created by crew activities such as exercising, push-offs and landings, and simply opening and closing drawers and doors in addition to equipment operation, vehicle docking and undocking, thruster firings, and other movements. These disturbances must be measured to understand their impact on the data from scientific and engineering experiments. The Space Acceleration Measurement System (SAMS) and the Microgravity Acceleration Measurement System (MAMS) provide continuous measurement of the ISS vibratory and quasi-steady acceleration environment, respectively. SAMS sensors measure acceleration levels using tri-axis accelerometers. SAMS flew on Mir from 1994 to 1998, continued on 20 shuttle missions and currently flies aboard the ISS.",
+          "location": "PDF p. 43"
+        },
+        {
+          "id": "nasa-guide-2015-91",
+          "text": "T o complement SAMS, MAMS was developed to measure the very low-frequency disturbances (less than 0.01 hertz) that the SAMS sensors are unable to detect. Both SAMS and MAMS sensors have measured acceleration levels aboard the ISS since its establishment in 2001 and currently record acceleration disturbances in 21 unique locations aboard the ISS. SAMS measurement capability extends to all three laboratories, while MAMS data can be mathematically mapped to any arbitrary location using rigid-body assumptions. SAMS and MAMS support NASA‘s Physical Sciences Research Program. These instruments, along with the Principal Investigator Microgravity Services (PIMS) project, serve a critical, ongoing role in support of vehicle loads and dynamics monitoring and assist technology developers and principal investigators in various disciplines. The goal is to characterize and understand the acceleration environment as related to a wide array of disturbances and events that routinely or uniquely take place on the ISS. Combustion Integrated Rack (CIR) The CIR was designed to test experiments that focus on fire prevention, detection and suppression of fires in space.",
+          "location": "PDF p. 43"
+        },
+        {
+          "id": "nasa-guide-2015-92",
+          "text": "44 provides a 100-liter chamber with eight optical windows with easily reconfigurable diagnostics, digital cameras and lighting with large data storage capability, gas distribution/cleanup, passive vibration isolation, and vacuum resources to support a wide range of gravity-dependent gaseous, liquid and solid combustion experiments. The current research program on gaseous fuels includes five experiments planned for the CIR on the ISS. These experiments are part of the ACME project where each will be conducted using a single modular set of hardware. The ACME experiments are focused on soot processes, flame stability and extinction, materials flammability and electric-field effects. In alphabetical order, the experiments, described in more detail above, include BRE, CLD Flame, E-FIELD Flames, Flame Design and Structure and Response of Spherical Diffusion Flames (s-Flame). The ACME set of experiments are expected to begin operating in 2016. As with their predecessors, the ACME experiments are all laminar diffusion flames. T wo experiments take advantage of the microgravity environment by using a one-dimensional, spherical flame enveloping a porous spherical burner.",
+          "location": "PDF p. 44"
+        },
+        {
+          "id": "nasa-guide-2015-93",
+          "text": "Another experiment uses a porous plate burner, while the remaining two use a gas-jet flame configuration, both with and without a coaxial air flow. The SoFIE flight hardware (Figure 10), involving combustion research on solid fuels, is currently under development as a CIR insert and planned for launch in 2019. The SoFIE project is in the Science Definition phase to serve up to five separate investigations. These investigations all support the overall objective of the SoFIE project, which is to study and characterize ignition and flammability of solid spacecraft materials in practical geometries and realistic atmospheric conditions. The SoFIE insert in the CIR could continue to be used by additional NRA-selected private investigators who wish to study solid fuel flammability and flame spread with different geometry fuels in a variety of oxygen, pressure, flow and external heat flux conditions. A brief summary of available mini-facilities/CIR inserts is tabulated in the Appendix. Microgravity Science Glovebox (MSG) The MSG is a rack facility aboard the ISS in which fundamental and applied scientific research is conducted.",
+          "location": "PDF p. 44"
+        },
+        {
+          "id": "nasa-guide-2015-94",
+          "text": "The MSG has been operating on the ISS since July 2002 and is located in the U.S. Laboratory. The unique design of the facility allows it to accommodate science and technology investigations in a workbench-type environment. The facility has an enclosed working volume that is held at a negative",
+          "location": "PDF p. 44"
+        },
+        {
+          "id": "nasa-guide-2015-95",
+          "text": "45 pressure with respect to the ISS pressurized volume. This allows the facility to provide two levels of containment for small parts, particulates, fluids and gases. This containment approach protects the crew from possible hazardous operations that take place inside the MSG work volume. Research investigations operating inside the MSG are provided a large, 255-liter, enclosed work space, 1,000 watts of dc power via a versatile supply interface (120, 28, + 12, and 5 Vdc), 1,000 watts of cooling capability, video and data recording and real-time downlink, ground commanding capabilities, access to ISS Vacuum Exhaust and Vacuum Resource Systems, and gaseous nitrogen supply. These capabilities make the MSG one of the most utilized science facilities on ISS. In fact, the MSG has been used for over 10,000 hours of scientific payload operations. MSG investigations involve research in cryogenic fluid management, fluid physics, spacecraft fire safety, materials science, combustion, plant growth, human health and life support technologies.",
+          "location": "PDF p. 45"
+        },
+        {
+          "id": "nasa-guide-2015-96",
+          "text": "The MSG facility is ideal for advancing our understanding of the role of gravity upon science investigations and research and to utilize the ISS as a technology platform for space exploration. The microgravity combustion research program has conducted the SAME project in 2007 and 2010, SPICE project in 2009, SLICE project in 2012, and has been running the BASS experiments since 2012 in the MSG facility. T o further augment the solid-fuel, in-orbit test capabilities, a Microgravity Wind T unnel for fire research is being proposed for the MSG in conjunction with the SoFIE project planned to be conducted in the CIR. EXpedite the PRocessing of Experiments to Space Station (EXPRESS) Racks The eight EXPRESS racks are multi-use facilities, which provide standard interfaces and resources for Middeck Locker and International Subrack Interface Standard Drawer Payloads. Payloads using single-, double-, or quad-locker configurations can be accommodated by these racks. The racks provide a number of services for payloads including nitrogen, vacuum, RS422, ethernet, video, and air- and water-cooling.",
+          "location": "PDF p. 45"
+        },
+        {
+          "id": "nasa-guide-2015-97",
+          "text": "The proposed SCWO research facility to investigate the effects of buoyancy in SCWO reactors and to enable the progression of SCWO technology for NASA life support applications is envisioned to be placed in an EXPRESS Rack.",
+          "location": "PDF p. 45"
+        },
+        {
+          "id": "nasa-guide-2015-98",
+          "text": "46 Telescience Support Center The T elescience Support Center (TSC) was established in 1993 to provide ground support for shuttle experiments. With the development of the ISS in 2001, additional capabilities were needed to support new ISS experiments. During this time, the TSC was reconstructed and doubled in size. Currently, the TSC consists of 33 workstations that provide real-time audio and video downlinks allowing researchers to observe and control experimental operations aboard the ISS from the ground. The ISS video downlink provides a real-time view of the astronauts aboard the ISS interacting with the experiment. The TSC also allows researchers to operate and control experiments remotely with little astronaut interaction after the installation and setup of experimental hardware. The TSC supports projects 24 hours a day, seven days a week; and since 2001, the TSC has logged over 26,000 hours of continuous support of microgravity experiments aboard the ISS. The TSC continues to provide ground support to the ISS experiments today.",
+          "location": "PDF p. 46"
+        },
+        {
+          "id": "nasa-guide-2015-99",
+          "text": "47 Complexity of the experiment should be minimized if at all possible. Science requirements that add complexity not only add additional cost to the development, but often lengthen the development time, making turnover an issue for both the project team and, in particular, for the principal investigator and his/her science team when the experiment timeline extends beyond the typical tenure of a Ph.D. student. It is strongly recommended to design the experiment to be flexible and repairable. Unlike the space shuttle experiment days, the International Space Station is very much like a laboratory on Earth and crew members gain good experimental skills while operating a particular experiment over months rather than just a week or so, and they can become quite adept at experiment repair if this capability is designed into the experiment and clear straightforward procedures are provided. Although experiments in microgravity offer enticing rewards to combustion researchers, the harsh realities of experiments in reduced-gravity facilities present significant hardware and diagnostic challenges to scientists and engineers.",
+          "location": "PDF p. 47"
+        },
+        {
+          "id": "nasa-guide-2015-100",
+          "text": "Drop tower and space-based experiments have severe space, weight, volume, safety, and power limitations. The hidden benefit of these limitations have been the developments of technology with applications far beyond the microgravity combustion science program. Future capability needs for conducting combustion science in space certainly include advanced diagnostics, and supporting such needs requires more space and power. One of the most severe limitations of future space-based combustion science experiments is crew time. Astronaut availability is prioritized on the basis of many factors and the realistic assumption should be that it will remain as limited as it has been in the past. It is therefore extremely important that the space experiments be built with a capability for autonomous start, operation, and finish, and with as little maintenance as possible. The test matrices should be designed such that minimal crew interaction is necessary for fuel and oxygen supplies, sample and holder change-out, diagnostic adjustments, etc.",
+          "location": "PDF p. 47"
+        },
+        {
+          "id": "nasa-guide-2015-101",
+          "text": "Given these additional limitations beyond the challenges of the past, it is anticipated that upcoming, near-term NRA soliciting proposals for space experiments will be based on using existing hardware. NRA soliciting proposals to use larger, new hardware builds to enhance capability will be part of a long-term plan to follow in the future. Developing and Flying Research on the ISS",
+          "location": "PDF p. 47"
+        },
+        {
+          "id": "nasa-guide-2015-102",
+          "text": "48 Supporting research in science and technology is an important part of NASA’s overall mission. NASA solicits research through the release of NASA Research Announcements (NRA), which cover a wide range of scientific disciplines. All NRA solicitations are facilitated through the web-based NASA Solicitation and Proposal Integrated Review and Evaluation System (NSPIRES) http://nspires.nasaprs.com/ external/. Registering with NSPIRES allows investigators to stay informed of newly released NRAs and enables submission of proposals. NSPIRES supports the entire lifecycle of NASA research solicitations and awards, from the release of new research calls through the peer review and selection process. In planning the scope of their proposal, investigators should be aware of available resources and the general direction guiding NASA research selection. NASA places high priority on recommendations from the 2011 National Research Council’s NRC Decadal Survey, which placed emphasis on hypothesis-driven spaceflight research. In addition, principal investigators (PI) should be aware that spaceflight experiments may be limited by a combination of power, crew time, or volume constraints.",
+          "location": "PDF p. 48"
+        },
+        {
+          "id": "nasa-guide-2015-103",
+          "text": "Launch and/or landing scrubs are not uncommon, and alternative implementation scenarios should be considered in order to reduce the risk from these scrubs. Preliminary investigations using ground-based simulators may be necessary to optimize procedures before spaceflight. Also, many experiments require unique hardware to meet the needs of the spaceflight experiment. T o understand previous spaceflight studies, prospective PIs should familiarize themselves with the NASA ISS Program Science Office database, which discusses research previously conducted on the ISS, including that of the International Partners. A detailed catalog of previous, current, and proposed experiments, facilities, and results, including investigator information, research summaries, operations, hardware information, and related publications is available at www.nasa.gov/iss-science through the NASA ISS Program Office. Additionally, details pertaining to research previously supported by the Space Life and Physical Sciences Research and Applications Division of NASA’s Human Exploration and Operations Mission Directorate can be located in the Space Life & Physical Sciences Research and Applications Division Task Book in a searchable online database format at: https:// taskbook.nasaprs.com/Publication/welcome.cfm. What Should Principal Investigators Know About Conducting Research on the ISS?",
+          "location": "PDF p. 48"
+        },
+        {
+          "id": "nasa-guide-2015-104",
+          "text": "49 There are various avenues that can result in funding for research to be conducted on the ISS, and the source of funding often dictates the availability of launch opportunities. Generally, funding for microbiology-related research is awarded through NASA-sponsored research announcements (NRA’s), ISS National Laboratory awards through other government agencies, private commercial enterprise, nonprofit organizations, and research awards sponsored by the ISS International Partners. It is not the responsibility of a researcher awarded an ISS flight experiment to fund costs associated with launch or the ISS laboratory facilities. Greater detail concerning current funding opportunities for ISS research can be found through the NASA ISS research website http://www.nasa.gov/ mission_pages/station/research/ops/research_information.html. The NASA Solicitation and Proposed Integrated Review and Evaluation System (NSPIRES) can be accessed via http://nspires.nasaprs.com/external/. Funding Opportunities/ Points of Contact Dietrich, D. L., Ross, H. D., Shu, Y., Chang, P ., and T’ien, J. S. (2000), “Candle flames in non-buoyant atmospheres,” Combustion Science and T echnology, 156:1-24. Dietrich, D. L., Haggard, J. B., Dryer, F . L., Nayagam, V ., Shaw, B. D., and Williams, F . A.",
+          "location": "PDF p. 49"
+        },
+        {
+          "id": "nasa-guide-2015-105",
+          "text": "(1996), “Droplet combustion experiments in spacelab,” Proceedings of the Combustion Institute, 26:1201-1207. Dotson, K. T ., P . B. Sunderland, Z. G. Yuan, D. L. Urban, “Laminar Smoke Points of Coflowing Flames in Microgravity,” Fire Safety Journal 46, 2011, pp. 550-555. Friedman, R. and Ross, H. D. (2001), “Microgravity Combustion: Fire in Free Fall,” Chapter 8: Combustion T echnology and Fire Safety for Human-crew Space Missions, pages 525-562, Academic Press. Greenberg, P .S., Klimek, R.B., and Buchele, D.R. (1995), “Quantitative Rainbow Schlieren Deflectometry,” Applied Optics 34(19), 3810-3822. Greenberg, P .S., Ku, J.C., (1997) “Soot Volume Fraction Maps for Normal and Reduced Gravity Laminar Acetylene Jet Diffusion Flames,” Combustion and Flame 108, 227-230. Citations",
+          "location": "PDF p. 49"
+        },
+        {
+          "id": "nasa-guide-2015-106",
+          "text": "50 Greenberg, P .S., Ku, J.C. (1997a) “Soot Volume Fraction Imaging,” Applied Optics 36(22), 5514-5522. Hegde, U., Zhou, L., and Bahadori, M.Y. (1994) “The T ransition to T urbulence of Microgravity Gas Jet Diffusion Flames,” Combustion Science and T echnology 102, 95-113. Law, C. K., Faeth, G. M., “Opportunities and Challenges of Combustion in Microgravity,” Progress in Energy and Combustion Science, Volume 20, Issue 1, 1994, pp. 65-113. Miller, F .J., Ross, H.D., Kim, I., and Sirignano, W .A. (2000) “Parametric Investigations of Pulsating Flame Spread Across 1-Butanol Pools,” Proceedings of the Combustion Institute 28, 2827-2834. Musgrave, Gary E., Axel Larsen, T ommaso Sgobba, Safety Design for Space Systems, Butterworth-Heinemann, 2009. Nayagam, V ., Haggard, J. B., Colantonio, R. O., Marchese, A. J., Dryer, F . L., Zhang, B. L., and Williams, F . A. (1998). Microgravity n-heptane droplet combustion in oxygen-helium mixtures at atmospheric pressure. AIAA Journal, 36(8):1369-1378. Nayagam, V ., Dietrich, D.L., Ferkul, P .V ., Hicks, M.C., and Williams, F .A. (2012) “Can cool flames support quasi-steady alkane droplet burning?” Combustion and Flame, Vol. 159, 3583-3588.",
+          "location": "PDF p. 50"
+        },
+        {
+          "id": "nasa-guide-2015-107",
+          "text": "Olson, S.L., Baum, H.R., and Kashiwagi, T . (1998) “Finger-like Smoldering over Thin Cellulosic Sheets in Microgravity,” Proceedings of the Combustion Institute 27, 2525-2533. Olson, S. L., Ferkul, P . V ., and T’ien, J. S. (1988). Near-limit flame spread over a thin solid fuel in microgravity. Proceedings of the Combustion Institute, 22:1213-1222. Olson, S.L., Hegde, U., Bhattacharjee, S., Deering, J.L., Tang, L., and Altenkirch, R.A. (2004) “Sounding rocket microgravity experiments elucidating diffusive and radiative transport effects on flame spread over thermally thick solids,” Combustion Science and T echnology176(4), 557-584.",
+          "location": "PDF p. 50"
+        },
+        {
+          "id": "nasa-guide-2015-108",
+          "text": "51 Pearlman, H.G., and Ronney, P .D. (2994) “Near-limit Behavior of High Lewis- number Premixed Flames in T ubes at normal and Low Gravity,” Physics of Fluids 6, 4009-4018. Qi, C., Chen, D., and Greenberg, P .S. (2008) “Fundamental Study of a Miniaturized Mini-disk Electrostatic Aerosol Precipitator for a Personal Nanoparticle Sizer,” Aerosol Science and T echnology 42(7), 505-512. Ronney, P .D., Wu, M.S., Pearlman, H.G. and Weiland, K.J. (1998) “Experimental Study of Flame Balls in Space: Preliminary Results from STS-83,” AIAA Journal 36(8), 1361-1368. Ross, H.D. and Miller, F .J. (1996) “Detailed Experiments of Flame Spread Across Deep Butanol Pools,” Proceedings of the Combustion Institute 26, 1327-1334. Ross, H. D. (2001), Microgravity Combustion: Fire in Free Fall, Academic Press, London, England. Ruff, G. A., Urban, D. L., Pedley, M. D., and Johnson, P . T . (2009), Safety Design for Space Systems, Chapter 27, Fire Safety, pages 829-883. Elsevier. Urban, D.L., Yuan, Z.-G., Sunderland, P .B., Linteris, G.T ., Voss, J.E., Lin, K.- C., Dai, Z., Sun, K., and Faeth, G.M.",
+          "location": "PDF p. 51"
+        },
+        {
+          "id": "nasa-guide-2015-109",
+          "text": "52 A summary of available hardware and mini-facilities relevant for combustion research is given in the table below with some details as to the descriptive specs and operational parameters. * MDCA mini-facility suppor ts the following experiments: FLEX, FLEX-2, FLEX-ICE-GA, FLEX-2J (future) ** A CME mini-facility is planned to support the following experiments: BRE, CLD Flame, E-FIELD Flames, Flame Design, s-Flame *** S oFIE mini-facility is planned to support the following experiments: Flame Spread, GEL, Narrow Channel, SMμRF , MIST # MSG mini-facility supports the following experiments: SPICE, SLICE, BASS Appendix MDCA* ACME** SoFIE*** MSG# Up Mass (kg) 254 250 250 40 Volume (m3) 0.48 0.5 0.5 0.1 Power (kW) 0.73 0.75 0.75 0.05 Data Volume (GB) 72 72 72 10 Diagnostics analog color camera, radiometer, low light level UV camera, two HiBMs cameras radiometers, two color cameras, low light level UV camera, two HiBMs cameras, photomultiplier tubes, ion current measurement, gas chromatograph same as ACME digital still camera, video camera, air flow, fuel flow, radiometer TSC capable yes yes yes yes On-orbit yes no no yes POC Name Mark",
+          "location": "PDF p. 52"
+        },
+        {
+          "id": "nasa-guide-2015-110",
+          "text": "53 ACME Advanced Combustion via Microgravity Experiments BASS Burning and Suppression of Solids BRE Burning Rate Emulator CIR Combustion Integrated Rack CFD Computational fluid dynamics CLD Coflow Laminar Diffusion CM Combustion Module CNES French Space Agency DECLIC DEvice for the study of Critical LIquids and Cr ystallization E-FIELD Electric-Field Effects on Laminar Diffusion ELF Enclosed Laminar Flames EXPRESS EXpedite the Processing of Experiments to Space Station FLEX Flame Extinguishment Experiment GRC Glenn Research Center HTI High T emperature Insert HTI-R High T emperature Insert (refurbished) ISS International Space Station LOI Limiting Oxygen Index LSP Laminar Soot Processes MAMS Microgravity Acceleration Measurement System MDCA Multi-user Droplet Combustion Apparatus MSG Microgravity Science Glovebox PIMS Principal Investigator Microgravity Ser vices PMMA Polymethylmethacrylate POC Point of Contact SAME Smoke Aerosol Measurement Experiment SAMS Space Acceleration Measurement System SCWM Super -Critical Water Mixture SCWO Super -Critical Water Oxidation SEA Space Exploration Atmospheres SLICE Structure & Liftoff In Combustion Experiment SOFBALL Structure of Flame Balls at Low Lewis-number SoFIE Solid Fuel Ignition and Extinction SPICE Smoke Point In Coflow Experiment TGDF T urbulent Gas-jet Diffusion Flame",
+          "location": "PDF p. 53"
+        },
+        {
+          "id": "nasa-guide-2015-111",
+          "text": "54 54 The Complete ISS Researcher’s Guide Series 1. A cceleration Environment 2. C ellular Biology 3. C ombustion Science 4. E arth Observations 5. Fl uid Physics 6. F ruit Fly Research 7 . F undamental Physics 8. Hu man Research 9. M acromolecular Crystal Growth 10. Mi crobial Research 11. M icrogravity Materials Research 12. P lant Science 13. R odent Research 14. S pace Environmental Effects 15. T echnology Demonstration",
+          "location": "PDF p. 54"
+        },
+        {
+          "id": "nasa-guide-2015-112",
+          "text": "55 55 For more information... Space Station Science http://www.nasa.gov/iss-science Facilities http://www.nasa.gov/mission_pages/station/research/ facilities_category.html ISS Interactive Reference Guide http://www.nasa.gov/externalflash/ISSRG/index.htm Researchers/Opportunities http://www.nasa.gov/mission_pages/station/research/ ops/research_information.html",
+          "location": "PDF p. 55"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-bass",
+      "title": "NASA: Burning and Suppression of Solids — BASS / BASS-II / BASS-M",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf",
+      "investigationIds": [
+        "PSI-25",
+        "PSI-26"
+      ],
+      "topics": [
+        "prevention",
+        "suppression",
+        "terrestrial"
+      ],
+      "sourceHash": "a6b5da803a4dfd3e9902ac2013a4495a4712831a86f434e3812e5592822446ac",
+      "retrievedAt": "2026-11-14T13:21:06.331575+00:00",
+      "passages": [
+        {
+          "id": "nasa-bass-1",
+          "text": "Burning and Suppression of Solids (BASS) The Burning and Suppression of Solids (BASS) investigation examines the burning and extinction characteristics of a wide variety of fuel samples in microgravity. The BASS experiment will guide strategies for extinguishing accidental ﬁres in microgravity. BASS results contribute to the combustion computational models used in the design of ﬁre detection and suppression systems in microgravity and on Earth Research Summary • Burning and Suppression of Solids (BASS) tests the hypothesis that materials in microgravity, with adequate ventilation, burn as well if not better than the same material in normal gravity with other conditions being identical (pressure, oxygen concentration, temperature, etc.). • There are important differences in the suppression of ﬁres in space compared to on Earth.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-bass-2",
+          "text": "On Earth it is understood that the best results are generally obtained when the extinguisher “attacks” the base of the ﬂame, which is both the stabilization point and the point where fresh air ﬁrst enters the ﬂame. • For a ﬁre burning in microgravity, the best point of application of suppressant may not be immediately apparent, especially for a partially obstructed ﬂame or a wake-stabilized ﬂame. Depending on the geometry of the ﬂame and the characteristics of the extinguisher (distance from ﬂame, dispersion angle) it is possible that the suppressant stream will be ineffective or might actually make the ﬂame worse through the entrainment of oxygen. Using nitrogen as a ﬂame suppressant in microgravity provides a direct link to current and planned extinguishment techniques. Detailed Research Description Burning and Suppression of Solids (BASS) utilizes slightly modiﬁed Smoke Point In Co-ﬂow Experiment (SPICE) hardware within the Microgravity Science Glovebox (MSG) for observations of burning solid materials on board the ISS. BASS consists of 41 fuel samples. There are three categories of samples: ﬂat, solid spheres, and candles within tubes.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-bass-3",
+          "text": "Thin ﬂat samples (12 cm long by 1 and 2 cm wide) yield concurrent-ﬂow spread rate and limiting ﬂame length. The cotton-ﬁberglass fabric blend Solid Inﬂammability Boundary at Low-Speeds (SIBAL) fuel is our principal thin material, and it was specially developed just for this purpose. Other thin materials are burned including Nomex and Ultem. Thick ﬂat samples (5 cm long by 1 cm wide by 1 and 2 mm thick) of Polymethylmethacrylate (PMMA) and wax-saturated ﬁberglass fabric yield thickness effects on ﬂame spread and extinguishment. Solid spheres of PMMA (1 and 2 cm in diameter) have the advantage of an axisymmetric geometry and permit multiple tests as the ﬂame is extinguished and reignited. Ignition of either the front or back portion of the spheres is achieved. Finally, candles within a thin ceramic tube (6 mm in diameter by 25 mm long) are examined. Two types of wax are used, common paraffin and “Japan wax” , which",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-bass-4",
+          "text": "has a very low soot point. For many of these tests, the nitrogen suppressant system is engaged at a gradually increasing level until extinction is reached. The important experimental observations from BASS with respect to the burning process include ﬂame shape and appearance as a function of ﬂow speed, ﬂame spread rate (how fast the ﬂame develops), and ﬂame dynamics (pulsations, oscillations, etc.). With respect to extinction, the critical observations and data are the time to extinction as a function of fuel geometry, the nitrogen ﬂow rate, and the ﬂame distance from the nozzle. The dynamics of the ﬂame before extinction are also important for comparison to the modeling work. The modeling effort includes: • Modeling ﬂame spread over ﬂat samples: For ﬂat samples, the steady spread characteristics can be examined using the three-dimensional model currently available. Alterations are the new tunnel and sample geometry and the upstream boundary condition.",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-bass-5",
+          "text": "For the ﬂame growing phase, a transient model is currently being developed. • Suppression by nitrogen injection: This can also be modeled readily using the current model. • Modeling burning and extinction of PMMA spheres: Similar problem on modeling two- dimensional circular PMMA cylinder in cross ﬂow has been performed. Some changes are needed for the sphere and the duct ﬂow. Zero-g facility test burning 2-cm-diameter PMMA sphere in 30 cm/s airﬂow. Left: 1 g; Middle: 0 g, 1 s after drop; right: 0 g, 4 s after application of nitrogen extinguishing agent. PMMA Sphere Drop tower results and modeling of a 2-cm-diameter PMMA sphere burning in 17% oxygen, 1 atm. pressure, at 2 cm/s forced convective ﬂow. Experiment images are overlaid with computer simulations, which can capture the ﬂame response as it transitions from 1-g to 0-g. Left-side contours show reaction rate (kgmol/m3/s); right side contours show temperature (K).",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-bass-6",
+          "text": "Brief Research Operations • The crewmember unstows and assembles the BASS hardware on the base plate within the MSG working volume and connects electrical and data harnesses. • Before each test point, the crew installs and positions fuel samples and igniters. Tunnel ﬂow speed, nitrogen ﬂow rate, and ﬂame ignition are controlled. • After ignition and some period of burning, the crew turns on the nitrogen suppressant at an increasing level until the ﬂame goes out. • The crew controls video and still camera functions. Some photos are downlinked for near- real time coordination with the investigator. The crewmember uninstalls experiment from the MSG and stows the hardware once BASS is completed. Operational Requirements: BASS is conducted inside the sealed MSG work volume. The crewmember is involved throughout the experiment to load fuel samples, initiate tests, ignite the fuel, adjust suppression, monitor and",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-bass-7",
+          "text": "record data, exchange fuel samples, and replace the igniter. Forty-one test samples will be burned in a variety of ﬂow conditions for a total of 89 test points. Data is downlinked via video during or immediately after each ﬂame test. Digital photos are downlinked after selected ﬂame tests for ground conﬁrmation before proceeding. BASS testing session must be conducted during periods when no major reboost or docking procedures are underway on the International Space Station (ISS). Operational Protocols: The crewmember installs the BASS hardware in the MSG work volume. The BASS hardware consists of a small ﬂow duct with an igniter and a small nozzle along with exchangeable fuel samples. During BASS operations a fan produces a co-ﬂow of air through the duct. An anemometer is used to measure the actual ﬂow rate. The crewmember adjusts the airﬂow from 5 to 50 cm/s. The ﬂame is ignited and allowed to burn for about a minute. A nitrogen suppressant is then supplied via a mass ﬂow controller, from 0 to 500 cc/min. A radiometer measures ﬂame output.",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-bass-8",
+          "text": "The crewmember conducts each test. They install the correct fuel assembly and set the air ﬂow rate through the duct before igniting the ﬂame. When the ﬂame is ignited, the crewmember allows some time for the ﬂame to stabilize then adjusts the ﬂow of nitrogen suppressant through the nozzle until the ﬂame goes out. After the test, the crewmember turns off the nitrogen ﬂow and prepares for the next test. The science team on the ground monitors the video downlink to assist the crewmember in determining any peculiar ﬂame behaviors and reviews the sensor data overlaid on the video image. Upon completion of the tests the crewmember stows the hardware, and the stored images and data are returned to Earth for analysis. Space Applications: The current NASA spacecraft materials selection is based on a standard test method (NASA–STD– 6001 Test 1) that segregates material based on 1-g behavior without consideration of low gravity effects. A critical element of this understanding is the radiative heat emission from the ﬂame.",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-bass-9",
+          "text": "These results are used in ﬁrst order models and predictions of heat release in spacecraft ﬁres and to extend heat release data from tests like the NASA cone calorimeter test (NASA–STD–6001 Test 2) to a performance-based material selection process. Using nitrogen as a ﬂame suppressant in microgravity provides a direct link to current and planned extinguishment techniques. Earth Applications: BASS results provide essential guidance to ground-based microgravity combustion research efforts. Detailed combustion models are validated using the simpler ﬂow environment afforded by tests in microgravity. Once validated, they can be used to build more complex combustion models needed to capture the important details of ﬂames burning in normal gravity. These models have wide applicability to the general understanding of many terrestrial combustion problems. Related Publications • Armstrong JB, Olson SL, T’ien JS. Transient Model and Experimental Validation of Low Stretch",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-bass-10",
+          "text": "Solid--Fuel Flame Extinction and Stabilization in Response to a Step Change in Gravity. Combustion and Flame. Vol. 147. pp. 262--277 (2006). • Ferkul PV, T’ien JS. A Model of Low--Speed Concurrent Flow Flame Spread over a Thin Fuel. Combustion Science and Technology. Vol. 99. pp. 345--370 (1994). • Ferkul P, Kleinhenz J, Shih H--Y, Pettegrew R, Sacksteder K, T’ien J. Solid Combustion Experiments Using a Continuous Fuel Dispenser for Use in Microgravity. Microgravity Science and Technology. Vol. XV/2 (2004). • Foutch DW. Size and Shape of Solid Fuel Diffusion Flames in Very Low Speed Flows. NASA CR-- 179576 (1987). • Friedman R. Fire Safety in the Low--Gravity Spacecraft Environment. NASA TM--209285 (1999). • Goldmeer JS. Extinguishment of a Diffusion Flame Over a PMMA Cylinder by Depressurization in Reduced--Gravity. NASA CR--198550 (CWRU PhD Dissertation) (1996). • Hsu S--Y. Flame Spread and Extinction over Solids in Buoyant and Forced Concurrent Flows: Model Computations and Comparisons with Experiments. Ph.D. Dissertation, CWRU (2009). • Ivanov AV, Balashov Y V, Andreeva T V, Melikhov AS. Experimental Veriﬁcation of Material Flammability in Space.",
+          "location": "PDF p. 4"
+        },
+        {
+          "id": "nasa-bass-11",
+          "text": "NASA CR--209405 (1999). • Jiang C--B. A Model of Flame Spread Over a Thin Solid in Concurrent Flow with Flame Radiation. Ph.D. Dissertation. CWRU (1995). • Kimzey JH. Skylab Experiment M479 Zero Gravity Flammability. Skylab Results, Proceedings of the Third Space Processing Symposium. Vol. 1. pp. 115--130 (1974) and NASA TMX-- 70252 (1974). • Olson SL, Ferkul PV , T’ien JS. Near--Limit Flame Spread Over a Thin Solid Fuel in Microgravity. Twenty--Second Symposium (International) on Combustion. The Combustion Institute. pp. 1213--1222 (1998). • Olson SL, T’ien JS. Buoyant Low Stretch Diffusion Flames Beneath Cylindrical PMMA Samples. Combustion and Flame. Vol. 121. pp. 439--452 (2000). • Shih H--Y, T’ien JS. A Three--Dimensional Model of Steady Flame Spread over a Thin Solid in Low-- Speed Concurrent Flows. Combustion Theory and Modeling. Vol. 7 (2003).",
+          "location": "PDF p. 4"
+        },
+        {
+          "id": "nasa-bass-12",
+          "text": "• Takahashi F , Linteris G, Katta VR. Extinguishment Mechanisms of Co--ﬂow Diffusion Flames in a Cup--Burner Apparatus. Proceedings of The Combustion Institute. Vol. 31 (2007). • Takahashi F, Linteris G, Katta VR. Extinguishment of Methane Diffusion Flames by Carbon Dioxide in Co--ﬂow Air and Oxygen- Enriched Microgravity Environments. Combustion and Flame. Vol. 155, pp. 37--53 (2008). • Tseng Y--T. Ignition and Flame Growth in Concurrent Forced Flow Over Thick Solids. M.S. Thesis, CWRU (2007). Contact Information PI: Dr. Paul Ferkul, NCSER GRC PS/Co-I: Dr. Sandra Olson, NASA GRC Co-I: Prof. James T’ien, CWRU Co-I: Dr. Fumiaki Takahashi, NCSER PM: Robert Hawersaat, NASA GRC Engineering Team: ZIN Technologies, Inc. Burning and Suppression of Solids – II (BASS-II) Burning and Suppression of Solids – II (BASS-II) utilizes slightly modiﬁed Smoke Point In Co-ﬂow Experiment (SPICE) hardware within the Microgravity Science Glovebox (MSG) for observations of burning solid materials on board the ISS. BASS-II consists of 100 fuel samples and associated igniter wires. There are three categories of samples: ﬂat samples, rod samples, and a section of a large solid sphere.",
+          "location": "PDF p. 5"
+        },
+        {
+          "id": "nasa-bass-13",
+          "text": "Thin ﬂat samples (10 cm long by 1 and 2 cm wide) yield concurrent or opposed-ﬂow spread rates, limiting ﬂame lengths, and extinction limits. The ﬂat sample materials will include acrylic ﬁlms and sheets of different thicknesses, and a cotton-ﬁberglass fabric blend Solid Inﬂammability Boundary at Low- Speeds (SIBAL) fuel which was previously tested in BASS. The rod samples are made of black or clear acrylic and will provide solid fuel regression rates and extinction limits for both opposed and concurrent ﬂow. The large solid spherical section, also made of acrylic, will be used to study ignition of thick materials and ﬂame growth over the thick material. The important experimental observations from BASS-II with respect to the burning process include ﬂame shape and appearance as a function of ambient oxygen concentration, ﬂow speed, ﬂame spread rate (how fast the ﬂame develops), and ﬂame dynamics (pulsations, oscillations, etc.). With respect to extinction, the critical observations and data are the time to extinction as a function of fuel geometry, ﬂow, and ambient oxygen concentration.",
+          "location": "PDF p. 5"
+        },
+        {
+          "id": "nasa-bass-14",
+          "text": "The modeling effort includes: • Modeling ﬂame spread over ﬂat samples: For ﬂat samples, the steady spread characteristics can be examined using the three-dimensional model currently available. Alterations are the new tunnel and sample geometry and the upstream boundary condition. For the ﬂame growing phase, a transient model is currently being developed. • Modeling burning and extinction of PMMA spheres: Similar problem on modeling two- dimensional circular PMMA cylinder in cross ﬂow has been performed. Some changes are needed for the sphere and the duct ﬂow. Science Objectives The Burning and Suppression of Solids –II (BASS-II) investigation examines the burning and extinction characteristics of a wide variety of fuel samples in microgravity. The BASS-II experiment will guide strategies for materials ﬂammability screening for use in spacecraft as well as provide valuable data on solid fuel burning behavior in microgravity. BASS-II results contribute to the combustion computational models used in the design of ﬁre detection and suppression systems in microgravity and on Earth. Science Results BASS-II tests produced data on how ambient oxygen, ventilation, and fuel affect combustion and burning.",
+          "location": "PDF p. 6"
+        },
+        {
+          "id": "nasa-bass-15",
+          "text": "Theoretical formulas and data on ﬂame spread do not always match in normal gravity. With data from microgravity, scientists determined thin and thick fuel spread rates and a formula for transition from thin to thick fuels. Models predict higher spread rates than observed, so need improvement. Data also allowed calculation of combustion completeness, heat release rates, and fuel-to-oxygen global equivalence ratios and supported theoretical models for quenching boundaries. Results will guide choice of materials for future spacecraft and advance ﬁre detection and suppression in space and on Earth. Research Overview • Burning and Suppression of Solids – II (BASS-II) tests the hypothesis that materials in microgravity, with adequate ventilation, burn as well if not better than the same material in normal gravity with other conditions being identical (pressure, oxygen concentration, temperature, etc.).NASA tests materials for ﬂammability using an upward burning test, which is considered to be the worst-case geometry for ﬂammability of the material on Earth.",
+          "location": "PDF p. 6"
+        },
+        {
+          "id": "nasa-bass-16",
+          "text": "One objective of the BASS-II tests is to identify what is the worst case for material ﬂammability in spacecraft environments, and how does that compare to the terrestrial upward burning used to screen the materials for safe use aboard spacecraft. • The main variables to be tested are the effects of ambient oxygen concentration, ventilation ﬂow velocity, and fuel type, thickness, and geometry. Many of the tests will focus on ﬁnding a minimum oxygen concentration or ﬂow velocity where a material will burn in space, to compare with Earth-based limits. Flame growth rates are also of interest, to determine how quickly a ﬁre in space can grow and if the ﬂames reach a ﬁnite size or continue to grow. This has implications for ﬁreﬁghting strategies in spacecraft.",
+          "location": "PDF p. 6"
+        },
+        {
+          "id": "nasa-bass-17",
+          "text": "• Detailed combustion models can be validated by data obtained in the simpler ﬂow environment in microgravity. Once validated, they can be used to build more complex combustion models needed to capture the important details of ﬂames burning in normal gravity. These models have wide applicability to the general understanding of many terrestrial combustion problems. Space Applications A primary goal of BASS-II is improved spacecraft ﬁre safety, improved understanding of combustion in space and how to avoid it. If you’re on a mission far from Earth, a ﬁre can be catastrophic. BASS-II helps engineers select the safest materials and improve ﬁreﬁghting methods on future space missions. Earth Applications In outer space, fuels burn as oval balls rather than with an upward pointed cone ﬂame as they do on Earth. This simpler combustion process enables researchers to evaluate computer models of fuel burning. These models can then be used to more accurately study ﬂames on Earth, such as in wildﬁres, building ﬁres, energy recapture from waste recycling, and other combustion problems.",
+          "location": "PDF p. 7"
+        },
+        {
+          "id": "nasa-bass-18",
+          "text": "Operational Requirements and Protocols BASS-II is conducted inside the sealed MSG work volume. The crewmember is involved throughout the experiment to load fuel samples, adjust nitrogen gas (GN2) concentration in the working volume vitiation of the working volume, initiate tests, ignite the fuel, monitor and record data, exchange fuel samples, and replace the igniter. Forty-one test samples will be burned in a variety of ﬂow conditions for a total of 89 test points. Data is downlinked via video during or immediately after each ﬂame test. Digital photos are downlinked after selected ﬂame tests for ground conﬁrmation before proceeding. BASS-II testing session must be conducted during periods when no major reboost or docking procedures are underway on the International Space Station (ISS). The crewmember installs the BASS-II hardware in the MSG work volume. The BASS-II hardware consists of a small ﬂow duct with an igniter and a small nozzle along with exchangeable fuel samples. During BASS-II operations a fan produces a co-ﬂow of air through the duct. An anemometer is used to measure the actual ﬂow rate.",
+          "location": "PDF p. 7"
+        },
+        {
+          "id": "nasa-bass-19",
+          "text": "The crewmember adjusts the airﬂow from 5 to 50 cm/s. Nitrogen vitiation of the working volume is then initiated using station GN2 at a ﬂow rate of up to 500 cc/min for a prescribed time. The ﬂame is ignited and allowed to burn for about a minute. A radiometer measures ﬂame output. The crewmember conducts each test. They install the correct fuel assembly and set the air ﬂow rate through the duct before igniting the ﬂame. When the ﬂame is ignited, the crewmember allows some time for the ﬂame to stabilize then adjusts the ﬂow of nitrogen suppressant through the nozzle until the ﬂame goes out. After the test, the crewmember turns off the nitrogen ﬂow and prepares for the next test. The science team on the ground monitors the video downlink to assist the crewmember in determining any peculiar ﬂame behaviors and reviews the sensor data overlaid on the video image. Upon completion of the tests the crewmember stows the hardware, and the stored images and data are returned to Earth for analysis.",
+          "location": "PDF p. 7"
+        },
+        {
+          "id": "nasa-bass-20",
+          "text": "Contact Information Principal Investigators: Dr. Sandra Olson, NASA Glenn Research Center, Cleveland, Ohio, United States Co-Investigators/Collaborators: Dr. Paul Ferkul, National Center for Space Exploration Research, Cleveland, Ohio, United States Prof. Carlos Fernandez-Pello, , University of California at Berkeley, Berkeley, California, US Prof. Fletcher Miller, San Diego State University, San Diego, California United States Prof. Indrek Wichman, Michigan State University, East Lansing, Michigan, United States Prof. James Tien, Case Western Reserve University, Cleveland, Ohio, United States Prof. Subrata Bhattachjee, San Diego State University,San Diego, California, United States Project Manager: Robert Hawersaat, Glenn Research Center, Cleveland, Ohio, United States Engineering Team: ZIN Technologies, Inc. Burning and Suppression of Solids-Milliken (BASS-M) The Burning and Suppression of Solids-Milliken (BASS-M) investigation utilizes slightly modiﬁed Smoke Point In Co-ﬂow Experiment (SPICE) hardware within the Microgravity Science Glovebox (MSG) for observations of burning solid materials on board the International Space Station (ISS). BASS-M consists of 44 textile samples with integrated igniter wires. There are four samples of each textile type, of which there are eleven. A set of control samples are included which provide untreated textile samples.",
+          "location": "PDF p. 8"
+        },
+        {
+          "id": "nasa-bass-21",
+          "text": "The other ten sets of textile samples share a similar conﬁguration. Each has a small piece untreated textile which is ignited by an integrated hot wire igniter. The ﬂame from the untreated textile impinges on the treated textile which is immediately adjacent to the untreated sample. The important experimental observations from BASS-M, with respect to the burning process, include ﬂame shape and appearance as a function of ﬂow speed, ﬂame spread rate (how fast the ﬂame develops), and ﬂame dynamics (pulsations, oscillations, etc.). With respect to extinction, the critical observations and data to be collected are the time to extinction as a function of textile material and air ﬂow. The dynamics of the ﬂame before extinction are also important for comparison to the modeling work. Research Overview • The Burning and Suppression of Solids-Milliken (BASS-M) investigation tests the hypothesis that materials in microgravity, with adequate ventilation, burn as well, if not better than, the",
+          "location": "PDF p. 8"
+        },
+        {
+          "id": "nasa-bass-22",
+          "text": "same material in normal gravity with other conditions being identical (pressure, oxygen concentration, temperature, etc.). • BASS-M tests ten different treated textiles at various air ﬂow rates found in forced convection in microgravity environments, or in a free fall environment. Each textile’s ability to self-extinguish is evaluated and compared against normal terrestrial behavior. • NASA tests materials for ﬂammability using an upward burning test, which is considered to be the worst-case geometry for ﬂammability of the material on Earth. One objective of the BASS-M tests is to compare the microgravity results to the terrestrial upward burning used to screen the materials for safe use. Space Applications NASA selects materials for use in space based on ground tests of their ﬂammability. But these tests do not consider the effects of microgravity, which changes how materials burn. This investigation conducts space-based burning and ﬂame extinguishment tests on cotton textiles that have been treated with ﬂame retardants. Results provide new knowledge of how low gravity affects a material’s ﬂame-retardant behavior, improving procedures for testing new materials.",
+          "location": "PDF p. 9"
+        },
+        {
+          "id": "nasa-bass-23",
+          "text": "Earth Applications Flame-retardant materials are designed to stop ﬂames from spreading and consuming more material. This investigation provides new information on how low gravity affects a material’s ﬂame- retardant material behavior, which beneﬁts materials science research on Earth. Operational Requirements and Protocols BASS-M is conducted inside the sealed MSG work volume. The crew member is involved throughout the experiment to load ﬂame retardant textile samples, initiate tests, ignite the untreated textile sample, monitor and record data, exchange textile samples, and replace the memory card in the still camera. Forty-four test samples are burned in a variety of ﬂow conditions for a total of 44 test points. Data is downlinked via video during, or immediately after, each ﬂame test. Digital photos are downlinked after selected ﬂame tests for ground conﬁrmation before proceeding. BASS-M testing session must be conducted during periods when no major re-boost or docking procedures are underway on the International Space Station. The crew member installs the SPICE and BASS hardware in the MSG work volume.",
+          "location": "PDF p. 9"
+        },
+        {
+          "id": "nasa-bass-24",
+          "text": "The SPICE and BASS hardware consists of a small ﬂow duct with an igniter and a small nozzle, along with exchangeable textile samples. During BASS operations, a fan produces a co-ﬂow of air through the duct. An anemometer is used to measure the actual ﬂow rate. The crew member adjusts the airﬂow from 5 to 50 cm/s. The untreated textile is ignited and allowed to impinge on the treated textile until both extinguish, which takes about a minute. A radiometer measures ﬂame output. The crew member conducts each test by installing the correct textile assembly and setting the correct air ﬂow rate through the duct before igniting the ﬂame. After the test, the crew member prepares for the next test. The science team on the ground monitors the video downlink to assist the crew member in determining any peculiar ﬂame behaviors and reviews the sensor data overlaid on the",
+          "location": "PDF p. 9"
+        },
+        {
+          "id": "nasa-bass-25",
+          "text": "video image. Upon completion of the tests, the crew member stows the hardware, and the stored images and data are returned to Earth for analysis.",
+          "location": "PDF p. 10"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-saffire",
+      "title": "NASA: Spacecraft Fire Safety Demonstration — Saffire",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/spacecraft-fire-safety-demonstration-saffire.pdf",
+      "investigationIds": [
+        "PSI-98",
+        "PSI-99",
+        "PSI-100"
+      ],
+      "topics": [
+        "prevention",
+        "detection",
+        "suppression",
+        "post-fire"
+      ],
+      "sourceHash": "4eed8a4d5bce284e8d9ec24b637b21fdbf4b1fbbaadb663da3b66ee89faecd5f",
+      "retrievedAt": "2026-11-14T13:21:06.550540+00:00",
+      "passages": [
+        {
+          "id": "nasa-saffire-1",
+          "text": "Spacecraft Fire Safety Demonstration (Saffire) Creating a safe environment for astronauts is the number one priority for all crew missions. Aboard the space station, astronauts have been able to conduct small-scale ﬁre experiments, most recently during the BASS- M experiment. The series of three Spacecraft Fire Safety Experiments (Saffire)was established to investigate large-scale ﬂame growth and material ﬂammability limits in space. The experiments are ignited in a Cygnus cargo vehicle after it has completed its primary International Space Station supply mission, departed the station, and before its planned destructive reentry to Earth. Spacecraft Fire Safety Understanding how ﬁre behaves in microgravity, and how different materials propagate ﬂames in space is immensely important for the development of future crew spacecraft. It also will help inform operational protocols for dealing with ﬁre emergencies, particularly when astronauts do not have the ability to exit a spacecraft or quickly return to Earth.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-saffire-2",
+          "text": "Saffire is managed by NASA’s Advanced Exploration Systems Division, which pioneers innovative approaches and public-private partnerships to rapidly develop prototype systems, advance key capabilities, and validate operational concepts for future human missions beyond Earth orbit. Saffire-I Mission Completed July 2016 The Saffire-I experiment enclosure was approximately half a meter wide by 1 meter deep by 1.3 meter long and consisted of a ﬂow duct and avionics bay. Inside the ﬂow duct, the cotton-ﬁberglass blend burn sample measured 0.4 m wide by 1 meter long. When commanded by Orbital ATK and Saffire ground controllers operating from Dulles, Virginia, it was ignited by a hot wire. Previous to this experiment, the largest ﬁre experiment that had been conducted in space is about the size of an index card. Saffire-II Mission completed Nov. 27, 2016 Saffire-II launched inside Orbital ATK’s Cygnus spacecraft during its sixth contracted cargo resupply mission with NASA to the International Space Station in October 2016. This second experiment in the Spacecraft Fire Safety series builds on the data captured during Saffire-I and expands the test portfolio with new materials.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-saffire-3",
+          "text": "The nine samples in the experiment kit include a cotton-ﬁberglass blend, Nomex, and the same acrylic glass that is used for spacecraft windows. After Cygnus departs the station, and before its destructive reentry to Earth, mission controllers on the ground will remotely ignite the samples. Saffire-III",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-saffire-4",
+          "text": "Launched April 18, 2017 aboard Orbital ATK’s seventh contracted commercial resupply services mission for NASA. The third in the Saffire series, Saffire-III will test the same cotton-ﬁberglass blend that was burned in Saffire-I, but at a higher ﬂow velocity. Saffire-III will be ignited after the Cygnus module departs the space station in early June, before its destructive entry through Earth’s atmosphere. Saffire-IV Launched February 15, 2020 aboard Northrop Grumman CRS-15 to the International Space Station Saffire-IV was ignited May 11, 2020, when Cygnus departed the International Space Station, before its destructive re-entry through Earth’s atmosphere. This large-scale ﬁre experiment was remotely activated by Northrop Grumman operators and NASA/GRC Saffire staff helped monitor the experiment as it burned in four installments. Data returns will continue through May 28. Saffire IV burned the same materials were burned in Saffire II, but at different pressures and oxygen saturation for comparison.",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-saffire-5",
+          "text": "NASA’s Spacecraft Fire Safety Demonstration Project, Saffire IV NASA ignited another set of space ﬁre experiments last week when Saffire IV lit a number of longer, stronger ﬂames inside Northrop Grumman’s Cygnus cargo spacecraft. Saffire, NASA’s Spacecraft Fire Safety Demonstration Project, is a series of six experiments that investigate how ﬁres grow and spread in space, especially aboard future spacecraft bound for the Moon and Mars. During the Saffire IV experiment, researchers burned a sample of SIBAL cloth, a composite of 75% cotton and 25% ﬁberglass. As the ﬂame spreads shortly after ignition, you can see bright speckles behind, which are glowing char on the cloth. Saffire-V Ensuring the reliability of ﬁre safety measures for future spacecraft requires experiments that provide a realistic examination of the risks, but it is difficult to study ﬁres of practical size in an occupied spacecraft.The Spacecraft Fire Experiment-V (Saffire-V) investigation builds on the previous Saffire experiment using the Northrop Grumman Cygnus cargo resupply vehicle after it leaves the International Space Station (ISS).",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-saffire-6",
+          "text": "Saffire-V examines ﬁre growth in the range of pressures and oxygen concentrations expected in future exploration spacecraft. Saffire-VI Understanding how ﬁres spread in space is vital for developing ﬁre prevention measures and ﬁre suppression protocols, but it is difficult to perform ﬂame-related experiments aboard a spacecraft. The Spacecraft Fire Experiments (Saffire) use the Cygnus resupply vehicle after it leaves the space station to reduce risk to crew and spacecraft. Saffire-VI, the last of the series, builds on previous results from Saffire-I through V to test ﬂammability at different oxygen levels and to demonstrate ﬁre detection, combustion product monitoring, and post-ﬁre cleanup capabilities.",
+          "location": "PDF p. 2"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-same",
+      "title": "NASA: Smoke Aerosol Measurement Experiment — SAME / SAME-R",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/07/smoke-aerosol-measurement-experiment-same.pdf",
+      "investigationIds": [
+        "PSI-101",
+        "PSI-102"
+      ],
+      "topics": [
+        "detection",
+        "terrestrial"
+      ],
+      "sourceHash": "18fd998abc3f9f2e8942d998fbaa8207a983add97284cca3419c8b1070a4cdbb",
+      "retrievedAt": "2026-11-14T13:21:08.002191+00:00",
+      "passages": [
+        {
+          "id": "nasa-same-1",
+          "text": "Smoke Aerosol Measurement Experiment (SAME) Spacecraft smoke detectors must detect different types of smoke. For example, hydrocarbon fuels typically produce soot, and plastics produce droplets of recondensed polymer fragments. While paper and silicone rubber produce smoke comprised of liquid droplets of recondensed pyrolysis products. Each of these materials produces a different type of smoke, with particles of various sizes and properties. Smoke and Aerosol Measurement Experiment (SAME) will assess the size and distribution of smoke particles produced by different types of material found on spacecraft such as, Teﬂon, Kapton, cellulose and silicone rubber. SAME will evaluate the performance of the ionization smoke detectors (used on Space Shuttles), evaluate the performance of the photoelectric smoke detectors (used on the ISS) and collect data for which a numerical formula can be developed and used to predict smoke droplet growth and to evaluate alternative smoke detection devices on future spacecraft.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-same-2",
+          "text": "The experimental design and practical application of the data will be complemented by the development of a numerical code to predict the smoke droplet growth as a function of the fuel pyrolysis rate, the thermodynamic properties of pyrolysis vapor, and the ﬂow environment. SAME also has the capability to evaluate other ﬁre detection/particulate sensing devices for the test materials. The results will provide statistics of the smoke particulate size distribution for a range of smoke generation conditions and measurement of a readily modeled reference for validation of smoke growth models. Research Overview • Fire is commonly detected by measuring changes in the amount of airborne microscopic particles (one of the components of smoke). • Smoke detectors currently in use on ISS and Space Shuttle are based on detectors used on Earth that detect different sizes of smoke particles. • SAME will measure the distribution of particle sizes in smoke from on-orbit combustion of several materials found in the spacecraft.",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-same-3",
+          "text": "Testing will also examine the effects of sample temperature, air ﬂow and smoke residence time (near the source) on the particle size distribution of the smoke. • Results will allow an evaluation of the performance in microgravity of the two existing U.S. spacecraft smoke detector designs, in use on the Shuttle and ISS, and evaluate other ﬁre detection devices. • Information from this experiment will improve the design requirements for and reliability of smoke detectors on future spacecraft. Space Applications The SAME experiment will provide technology for an advanced ﬁre detector for future spacecraft that will be used for long duration missions. SAME will provide quantitative data on the sensitivity of",
+          "location": "PDF p. 1"
+        },
+        {
+          "id": "nasa-same-4",
+          "text": "these detectors to reduced gravity smokes that will allow evaluation of the adequacy of these existing technologies using relevant data. The current Fire Prevention, Detection, and Suppression (FPDS) program plan allows for the re-evaluation of future sensor technology, to allow new technology and capability to be utilized. The results from SAME are needed to provide the reduced gravity baseline data against which future detection technology developments can be evaluated. Earth Applications The smoke detectors developed from the results of SAME can also be useful in other extreme environments on Earth, such as submarines or underwater laboratories. Accurate detection of smoke in these environments can save lives. Publications The Smoke and Aerosol Measurement Experiment (SAME) was conducted in the Microgravity Science Glovebox (MSG) on the International Space Station (ISS) during Expedition 15. Overall, 30 samples were tested comprising of six samples each of ﬁve different materials: TeﬂonTM, KaptonTM, silicone rubber, cellulose, and dibutyl-phthalate (a chemical used to make ﬂexible plastic) deposited on a porous wick. These were tested at different airﬂow rates, heating temperatures, and smoke aging durations.",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-same-5",
+          "text": "Smoke properties from different materials were determined using detectors to measure different particulate sizes and their relative abundances to describe the overall smoke distribution. A substantial portion of the aerosol mass is in particles that are larger than 1 micron. Teﬂon smoke comprised primarily of particles having diameters less than 1 um. The effect of aging is consistent with particle coagulation with limited wall loss, the overall number count decreases substantially while the mass concentrations remain relatively steady. This is reasonable given the broader size distribution for silicone smoke containing signiﬁcant numbers of both large and small particles. Although the arithmetic mean diameters are all in the 100 to 200 nanometer (nm) range, interpreting particle sizes by only one statistic can be deceptive due to the nature of the particle size distribution. In general, since the mass increases with the cube of the diameter, the larger particles do not affect the arithmetic mean diameter (AMD) as much as they affect the light scattering signal which corresponds with the particle mass.",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-same-6",
+          "text": "Consequently, although the AMD for silicone rubber is 227 nm, almost half the particle mass is larger than 1000 nm. The lamp wick showed similar behavior in the experiment. All samples produced signiﬁcant numbers of sub-micron particulate that are better detected using an ionization smoke detector, however a light scattering detector would perform very well for most of the cases. Depending on the conditions, results suggest broader smoke particulate size distributions can be produced from preﬁre overheat events, thus detection methods which can measure a wider spectrum of particulate size may show more successful and reliable detection. Spacecraft and associated missions outside of low Earth orbit will require increased reliability of ﬁre detection systems in addition to robust false alarm resistance. Given the constrained space on any spacecraft, the target for the ﬁre detection system is necessarily the early phase and not established ﬂaming ﬁres; consequently, the primary target for detection is the pre-ﬁre heating products and not the soot and ash. This research will help to improve design of future detectors (Urban et al. 2009).",
+          "location": "PDF p. 2"
+        },
+        {
+          "id": "nasa-same-7",
+          "text": "Results Publications • Meyer ME, Mulholland G, Bryg V , Urban DL, Yuan Z, Ruff GA, Cleary T, Yang J. Smoke characterization and feasibility of the moment method for spacecraft ﬁre detection. Aerosol Science and Technology. 2015 May 4; 49(5): 299-309. DOI: 10.1080/02786826.2015.1025124. DOI: 10.1080/02786826.2015.1025124 • Urban DL, Ruff GA, Brooker JE, Cleary T, Yang J, Mulholland G, Yuan Z. Spacecraft Fire Detection: Smoke Properties and Transport in Low-Gravity. 46th Aerospace Sciences Meeting and Exhibit, Reno, NV . 2008 AIAA 2008-806 • Urban DL, Ruff GA, Sheredy WA, Cleary T, Yang J, Mulholland G, Yuan Z. Properties of Smoke from Overheated Spacecraft Materials in Low-Gravity. 47th Aerospace Sciences Meeting and Exhibit, Orlando, FL. 2009 January 5-8; AIAA-2009-0956 • Mulholland G, Meyer ME, Urban DL, Ruff GA, Yuan Z, Bryg V , Cleary T, Yang J. Pyrolysis smoke generated under low-gravity conditions. Aerosol Science and Technology. 2015 March 6; 49(5): 310-321. DOI: 10.1080/02786826.2015.1025125. DOI: 10.1080/02786826.2015.1025125 • Urban DL, Ruff GA, Mulholland G, Cleary T, Yang J, Yuan Z. Measurement of Smoke Particle Size under Low-Gravity Conditions.",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-same-8",
+          "text": "SAE International Journal of Aerospace. 2008 June 29; 1(1): 317-324. DOI: 10.4271/2008-01-2089.report number 2008-01-2089. DOI: 10.4271/2008-01-2089 • Meyer ME, Urban DL, Mulholland G, Bryg V , Yuan Z, Ruff GA, Cleary T, Yang J. Evaluation of spacecraft smoke detector performance in the low-gravity environment. Fire Safety Journal. 2018 June 1; 9874-81. DOI: 10.1016/j.ﬁresaf.2018.04.004. DOI: 10.1016/j.ﬁresaf.2018.04.004 Contact Information Principal Investigator(s) David L Urban, Ph.D., Glenn Research Center, Cleveland, Ohio, United States Co-Investigator(s)/Collaborator(s) Zeng-guang Yuan, Glenn Research Center, Cleveland, Ohio, United States Jiann Yang, National Institute for Standards and Technology, Gaithersburg, Maryland, United States Thomas Cleary, National Institute of Standards and Technology, Gaithersburg, Maryland, United States George Mulholland, University of Maryland, College Park, Maryland, United States",
+          "location": "PDF p. 3"
+        },
+        {
+          "id": "nasa-same-9",
+          "text": "Smoke Aerosol Measurement Experiment-Reﬂight (SAME-R) The Re-ﬂight of the Smoke Aerosol Measurement Experiment (SAME-2) was conducted during Expedition 24 (July – September 2010) and ﬂight experiment results have been analyzed with respect to comparable ground-based experiment results. The ground tests included a reference instrument for measuring particle size distributions of the smoke from SAME-2 materials (Teﬂon, Kapton, cotton, silicone rubber and Pyrell ). Repeatable sample surface temperatures were obtained with SAME engineering hardware and measurements were taken with returned ﬂight diagnostic equipment consisting of a thermal precipitator for collecting smoke particles for Transmission Electron Microscopy (TEM), several aerosol instruments, and a commercial smoke detector. These ﬂight units measured moments of the particle size distribution: particle number concentration (zeroth moment), the diameter concentration (ﬁrst moment), and the mass concentration (third moment). The count mean diameter of the smoke particles and the diameter of average mass can be calculated from moment averages. Furthermore, the geometric mean diameter and geometric standard deviations can be calculated if the particle size distribution is assumed to be lognormal.",
+          "location": "PDF p. 4"
+        },
+        {
+          "id": "nasa-same-10",
+          "text": "The ﬂight system also included International Space Station and Space Shuttle smoke detectors and the results from these devices are presented. A Scanning Mobility Particle Sizer Spectrometer (SMPS) is too large and complex to include in a ﬂight experiment, but its use in ground-based testing determined whether the lognormal assumptions were valid and provided high-resolution particle size distributions of the smoke from each material. SMPS particle size distributions from ground experiments were compared to particle statistics generated by moment calculations and particle size distributions from microscopic analysis of TEM images of particles from both ground and ﬂight experiment results for both un-aged and aged smoke. Background/Overview Smoke is a general term that encompasses aerosol materials produced by several processes. It can include unburned, re-condensed, original polymer or pyrolysis products that can be either liquid or solid, hydrocarbon soot, condensed water vapor, and ash particles. Soot particles dominate the smoke particulate in established ﬂaming ﬁres while unburned pyrolysis products and re- condensed polymer fragments are produced by smoldering and pyrolysis in the early stage of ﬁre growth.",
+          "location": "PDF p. 4"
+        },
+        {
+          "id": "nasa-same-11",
+          "text": "Given the constrained space on any spacecraft, the target for the ﬁre detection system is necessarily the early phase and not established ﬂaming ﬁres; consequently, the primary target for detection is pyrolysis products rather than soot. Prior spacecraft systems are summarized in more detail in papers by Friedman and Urban. In the Mercury, Gemini and Apollo missions, the crew quarters were limited, and mission durations were short; consequently, it was considered reasonable that the astronauts would rapidly detect any ﬁre. The Skylab module, however, included approximately 30 UV-sensing ﬁre detectors. These devices were limited to line-of-sight and were reported to have difficulties with false alarms. The Space Shuttle Detectors were based upon ionization ﬁre detector technology, the most advanced technology available at the time and used an inertial separator designed to eliminate particles larger than 1-2 µm. The International Space Station (ISS) smoke detectors use near-IR forward scattering, rendering them most sensitive to particles larger than 1 µm, outside of the range of",
+          "location": "PDF p. 4"
+        },
+        {
+          "id": "nasa-same-12",
+          "text": "sensitivity of the shuttle detector. As described by Friedman, there have been six component failures by overheating or other causes in the NASA Orbiter ﬂeet in addition to several similar incidents that have occurred on the ISS. None of these events spread into a real ﬁre but as mission durations increase, the likelihood of failures increases. The experience on Mir in 1997 has shown that failure of oxygen generation systems can have signiﬁcant consequences. As a result, improved understanding of spacecraft ﬁre detection is critically needed. Contact Information Principal Investigator(s) David L Urban, Ph.D., Glenn Research Center, Cleveland, Ohio, United States Co-Investigator(s)/Collaborator(s) Zeng-guang Yuan, Glenn Research Center, Cleveland, Ohio, United States Jiann Yang, National Institute for Standards and Technology, Gaithersburg, Maryland, United States Thomas Cleary, National Institute of Standards and Technology, Gaithersburg, Maryland, United States George Mulholland, University of Maryland, College Park, Maryland, United States",
+          "location": "PDF p. 5"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-sofie",
+      "title": "NASA: Solid Fuel Ignition and Extinction — SoFIE",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/solid-fuel-ignition-and-extinction-sofie/",
+      "investigationIds": [],
+      "topics": [
+        "prevention",
+        "suppression"
+      ],
+      "sourceHash": "e007f2208d33e6f819f508e2af61ef4479e6cc492814363e57427a9ab25ccfff",
+      "retrievedAt": "2026-11-14T13:21:09.002865+00:00",
+      "passages": [
+        {
+          "id": "nasa-sofie-1",
+          "text": "Physical Sciences Solid Fuel Ignition and Extinction (SoFIE) Fire can be a catastrophic hazard for manned spacecraft. NASA mitigates the risk of fire with the implementation of NASA-STD-6001, which establishes program requirements for evaluation, testing, and selection of materials to preclude unsafe conditions related to flammability, odor, offgassing, and fluid compatibility. NASA-STD-6001 impelements a 1-g flame propagation test for proposed space flight materials which some researchers believe is not conservative in low-g. In 2009, NASA selected 5 investigations that would help further our understanding of solid surface combustion and material flammability. Each investigation addresses different elements fo material flammability. Residence Time Driven Flame Spread (RTDFS) Primary Investigator: Prof. Subrata Bhattacharjee, San Diego State Univ Description The RTDFS experiment will investigate steady and unsteady flame propagation over solid fuels in a microgravity environment. Theoretical modeling predicts that steady flame spread over solid fuels cannot be sustained, even in a high oxygen environment if the fuel exceeds a critical thickness.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-sofie-2",
+          "text": "Flame spread rate over thin fuels in a quiescent microgravity environment decreases with fuel thickness not only because of increased thermal mass but also because the relative importance of radiative losses, as quantified by a non-dimensional radiation number, increases in direct proportion of fuel thickness. Narrow Channel Apparatus (NCA) Primary Investigator: Prof. Fletcher Miller, San Diego State University Description The experimental approach is to measure flame spread across planar samples of PMMA in a forced opposed flow configuration. The atmosphere will be a mix of oxygen and nitrogen, with the oxygen percentage ranging from atmospheric up to 85%. The pressure will be varied accordingly to stay on or near the normoxic curve. Samples will be tested at variety of flow velocities to obtain spread rate and extinction limits. Growth and Extinction Limit (GEL) Primary Investigator: Prof. James T’ien, CWRU Description This proposed experiment will concentrate on the flame growth, decay and extinction over the surface of a non-flat thick solid in microgravity.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-sofie-3",
+          "text": "In particular, a solid sphere of substantial size (i.e. 4 to 5 cm diameter) is chosen as a representative of non-flat samples. In addition to the parameters influencing the flammability in thin solids, the degree of interior heat-up is an important parameter on the solid burning characteristics of thick specimen. In spherical samples, the degree of interior heating is always changing. The problem is therefore unsteady in nature. In addition, flow around a sphere is different from that around a flat surface. The existence of a forward stagnation point, shoulder and wake regions result in different local flow pattern, hence a different flame-solid interaction. These can affect the burning and extinction characteristics. Material Ignition and Suppression Test (MIST) Primary Investigator: Prof. Carlos Fernandez-Pello, UC Berkeley Description The MIST experimental apparatus would consist of a small-scale combustion wind tunnel, a cylindrical fuel sample, radiant heaters, an igniter, and supporting instrumentation. The flow duct will provide a consistent and uniform flow of the oxidizer gas to the test section where the fuel sample will be located.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-sofie-4",
+          "text": "The test section will have most of the area of its sidewalls available for optical access. Each cylindrical fuel sample will be supported in a holder and placed along the central axis of the flow duct, such that the oxidizer will flow smoothly over the sample surface. An electrical igniter consisting of coiled Kanthal wire will be located around the fuel sample on the downstream end. All tests will be conducted in an opposed-flow configuration. Spacecraft Materials Microgravity Research on Flammability (SMuRF) Primary Investigator: Dr. Sandra Olson, GRC Description The SMµRF experiment will correlate normal gravity flammability test data with data under ventilated microgravity conditions. Rigorous correlations between ground test flammability data in ventilated spacecraft environment would allow selection of materials with increased fire resistance, and thus decrease the fire risk in space systems. The operational flexibility will also increase because the safety factors will be assessable. Media 10 Images Latest Content Stay up-to-date with the latest content from NASA as we explore the universe and discover more about our home planet.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-sofie-5",
+          "text": "SoFIE Stories 1 min read Mission SoFIE 1 min read SoFIE Solid Fuel Ignition and Extinction Active Mission SoFIE is a facility on the International Space Station (ISS) for studying… Mission Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-flare",
+      "title": "NASA: Flammability Limits at Reduced-g Experiment — FLARE",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-limits-at-reduced-g-experiment-flare/",
+      "investigationIds": [],
+      "topics": [
+        "prevention"
+      ],
+      "sourceHash": "1951a200a3ca97874566a6fbf452942a3df63de5f1e794a3bd1d9669d3f385ce",
+      "retrievedAt": "2026-11-14T13:21:09.837659+00:00",
+      "passages": [
+        {
+          "id": "nasa-flare-1",
+          "text": "Physical Sciences Flammability Limits At Reduced-g Experiment (FLARE) To develop a methodology to correlate material flammability limits in normal gravity and microgravity, which allows quantitative estimation of material flammability limit in microgravity based on the flammability data obtained on the ground. The project involves an international team including JAXA, NASA, ESA and universities in Japan, USA and France. Experimental Approach • Perform extensive research via ground-based experiments, including 1g and parabolic flight tests, and via theoretical formulations. • Flight experiments on orbit in ISS/KIBO will be performed to verify the correlation. The flight experiments on orbit are expected in 2017 or later. • By the end of the project, a new fire safety standard test method for screening spacecraft materials will be proposed that addresses the shortcomings of existing standard test method such as NASA STD 6001B.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-flare-2",
+          "text": "Relevance/Impact • Fundamental Science – studying materials flammability in space allows us to accurately control the flow field and thus elucidate the importance of a critical Damkohler number (flow time /reaction time) on flame extinction. • Efficiency – The anticipated improved methodology should reduce time and cost for the spacecraft material screening. • Safety – Terrestrial fire safety; spacecraft fire safety Development Approach • Experiment uses same hardware as JAXA’s “Solid Combustion” • International research team Contact Information Project Manager: Shigeki Kamigaichi, JAXA Project Scientist: Masao Kikuchi, JAXA JAXA PI: Prof. Osamu Fujita, Hokkaido Univ. US Co-Is: Dr. Sandra Olson, NASA GRC Dr. Harold Beeson, NASA Prof. Carlos Fernandez-Pello, U. C. Berkeley International Co-Is: Many Japanese Co-Is, Guillaume Legros, U. Pierre Marie Curie, Thomas Rohr, ESA, Marika Orlandi, ESA Customers/Adopters (Push): HEOMD/Space Life and Physical Sciences Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-fm2",
+      "title": "NASA: Flammability of Materials on the Moon — FM2",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-of-materials-on-the-moon-fm2/",
+      "investigationIds": [],
+      "topics": [
+        "prevention"
+      ],
+      "sourceHash": "1f3a90e49ba0862229b98ce871811e2c06d72f06a0cc1a6b79938d2f74e68d84",
+      "retrievedAt": "2026-11-14T13:21:10.696825+00:00",
+      "passages": [
+        {
+          "id": "nasa-fm2-1",
+          "text": "Physical Sciences Flammability of Materials on the Moon (FM 2 ) Background FM 2 is the first-ever combustion experiment to be performed on another planetary body. Building on the success of the decades-long combustion science ground (1g) program and International Space Station (ISS) microgravity (~0g) combustion experiment campaigns, FM 2 investigates burning materials on the Moon at its 1/6 reduced gravity level. Previous computational modeling, bolstered by experiments aboard parabolicflight aircraft and the ISS, suggest that materials may burn at lower oxygen concentrations in lunar gravity compared to Earth. This means that some things that are not flammable on Earth, may be flammable in potential habitats on the Moon and other places with reduced gravity. Since fire can be a catastrophic hazard for spaceflight and extreme human exploration, FM 2 is a critical step in determining material flammability and safety for future missions. Objectives Edge view of Solid Inflammability Boundary at Low-Speed (SIBAL) fabric, a cotton-fiberglass blend, burning in air in lunar gravity (simulated in drop tower centrifuge). Left: downward burning, right: upward burning.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-fm2-2",
+          "text": "Conduct the first-ever observations and measurements of flame spread on the Moon. Verify whether some materials burning in partial-gravity environments may be more flammable compared to 1g. Provide a bridge between the standard 1g material screening method and actual behavior in reduced gravity. Candle flame in microgravity, 1/6 gravity, and Earth gravity (left to right). Approach and Hardware External view of FM2 engineering hardware. The experiment burns four fuel samples individually in atmospheric conditions planned for future lunar habitats or vehicles. The experiment is housed inside a sealed chamber and operates autonomously through software. Cameras record flame characteristics including size, intensity, color, and spread rate. Onboard sensors measure flame and fuel temperatures, oxygen concentration, and carbon-dioxide concentrations. Images of FM2 engineering hardware that is 28.5 by 28.5 by 38.5 cm tall. Weight is 25 kg. Internal view of FM2 engineering hardware. Contact Information Principal Investigator…..Dr. Paul Ferkul, Universities Space Research Association Co-Investigator ………….Prof. Ya-Ting Liao, Case Western Reserve University Co-Investigator ………….Dr.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-fm2-3",
+          "text": "Michael Johnston, Glenn Research Center Project Manager………..Amber Krauss, Glenn Research Center Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-spinoff-detector",
+      "title": "NASA Spinoff: smoke detector terrestrial technology transfer (historical)",
+      "url": "https://spinoff.nasa.gov/node/9407",
+      "investigationIds": [],
+      "topics": [
+        "detection",
+        "terrestrial"
+      ],
+      "sourceHash": "ae02ae678a75fec41696c3fab962b7c3b6e5ce68e1fb77ef3edf653f23a81367",
+      "retrievedAt": "2026-11-14T13:21:11.484858+00:00",
+      "passages": [
+        {
+          "id": "nasa-spinoff-detector-1",
+          "text": "menu Search search Advanced Search Fire Detector Originally published in 1978 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms. For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Full article: http://hdl.handle.net/hdl:2060/20070018916 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms.",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        },
+        {
+          "id": "nasa-spinoff-detector-2",
+          "text": "For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Fire Detector Fire Detector Related Stories Saving Lives at Sea and on Land For Battery Safety, KULR Heads Prevail Feeding People Through Disasters Giving Sensors Good Optics Where the Wildfires Are Spherical Robots to the Rescue FINDER Finds Its Way into Rescuers’ Toolkits Stay Safe with Battery Testing for Space Answering the Call of Distress Space-Grade Safety Checks for Poultry",
+          "location": "Texto da página oficial (contexto histórico quando indicado)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    }
+  ]
+}

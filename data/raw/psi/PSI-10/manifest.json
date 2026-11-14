@@ -1,0 +1,38 @@
+{
+  "investigationId": "PSI-10",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-10",
+    "retrievedAt": "2026-11-14T16:34:12+00:00",
+    "sha256": "a20756e7acf67f0046a21a3bce9bfca7f142cd5350350c0dad29997cf8fe28db",
+    "bytes": 2867657,
+    "path": "data/raw/psi/PSI-10/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-10_Experimental table_Flame Design_Normal Flame.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-10/download?file=PSI-10_Experimental+table_Flame+Design_Normal+Flame.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:14+00:00",
+      "sha256": "4a663292bd3f65201943cc71bd661a70383639276a9176f64105b285bf0b6deb",
+      "bytes": 26933,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 207,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-10/PSI-10_Experimental table_Flame Design_Normal Flame.csv"
+    },
+    {
+      "filename": "PSI-10_Experimental table_Flame Design_Inverse Flame.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-10/download?file=PSI-10_Experimental+table_Flame+Design_Inverse+Flame.csv&version=1&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:16+00:00",
+      "sha256": "97933ee9ae0b9ebc6b948a67485a0fe2f8218f753253a4f2be93c40d374c44e4",
+      "bytes": 17314,
+      "version": 1,
+      "encoding": "utf-8-sig",
+      "recordsImported": 120,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-10/PSI-10_Experimental table_Flame Design_Inverse Flame.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

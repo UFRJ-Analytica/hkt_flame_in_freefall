@@ -1,0 +1,26 @@
+{
+  "investigationId": "PSI-47",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-47",
+    "retrievedAt": "2026-11-14T16:34:24+00:00",
+    "sha256": "60ff7a7d0ef34c3043dda4133f277045ba72addb1fb2fc2e9f02e0550d0eb389",
+    "bytes": 174029,
+    "path": "data/raw/psi/PSI-47/metadata.json"
+  },
+  "tables": [
+    {
+      "filename": "PSI-47_Experimental table_DAFT.csv",
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-47/download?file=PSI-47_Experimental+table_DAFT.csv&version=2&redirect=false",
+      "retrievedAt": "2026-11-14T16:34:25+00:00",
+      "sha256": "d9d1a436c6e7bbc410b433e04575fe7dedaff763b5237d688089929b7393b5c0",
+      "bytes": 518,
+      "version": 2,
+      "encoding": "utf-8-sig",
+      "recordsImported": 2,
+      "excludedRows": [],
+      "path": "data/raw/psi/PSI-47/PSI-47_Experimental table_DAFT.csv"
+    }
+  ],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}

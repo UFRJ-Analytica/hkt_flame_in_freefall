@@ -1,0 +1,3 @@
+# AI runtime (only used when HABITATFIRE_ENABLE_AI=1). The lexical path is stdlib-only.
+anthropic==2.8.0
+pymongo==4.20.0

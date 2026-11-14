@@ -1,0 +1,4 @@
+# Preserve exact source bytes and provenance hashes on every platform.
+data/raw/psi/** -text
+data/raw/research/** -text
+public/data/*.json -text

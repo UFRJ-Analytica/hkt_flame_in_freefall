@@ -1,0 +1,13 @@
+{
+  "investigationId": "PSI-115",
+  "metadata": {
+    "sourceUrl": "https://psi.nasa.gov/geode-py/ws/repo/investigations/PSI-115",
+    "retrievedAt": "2026-11-14T16:34:04+00:00",
+    "sha256": "9c5b463fbe8fe8ed034229cbabd6c498f48ca9bb636196084ed2046eb2e41484",
+    "bytes": 66623,
+    "path": "data/raw/psi/PSI-115/metadata.json"
+  },
+  "tables": [],
+  "normalization": "raw preserva chaves/valores; apenas escalares explícitos, com conversão de unidade documentada",
+  "errors": []
+}
