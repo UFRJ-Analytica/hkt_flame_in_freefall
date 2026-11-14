@@ -52,7 +52,15 @@ import { frontEnsemble, frontMedianMm, readSaffireModel, simulateSaffire, type S
 import { SaffireEvidence } from "./model/SaffireEvidence";
 import { ModelApplicability } from "./model/ModelApplicability";
 import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from "./model/domain";
+import { HabitatLab } from "./habitat/HabitatLab";
+import "./habitat/habitat.css";
 const ENSEMBLE_SEEDS = Array.from({ length: 20 }, (_, i) => 1951 + i);
+type LabMode = "habitat" | "cabin" | "saffire";
+const LAB_MODES: { id: LabMode; label: string; hint: string }[] = [
+  { id: "habitat", label: "Habitat lunar · simulação 3D", hint: "propagação calibrada nas superfícies" },
+  { id: "saffire", label: "Ensaio SAFFIRE I · S1", hint: "calibração e validação do modelo" },
+  { id: "cabin", label: "Cabine e evidências", hint: "busca, catálogo e aplicabilidade" },
+];
 import {
   INITIAL_MATERIALS,
   MATERIALS,
@@ -78,7 +86,7 @@ const OVERLAYS = [
 export default function App() {
   const { data, error, loading, reload } = useNasaData();
   const [page, setPage] = useState<Page>("lab");
-  const [labMode, setLabMode] = useState<"cabin" | "saffire">("cabin");
+  const [labMode, setLabMode] = useState<LabMode>("habitat");
   const [saffire, setSaffire] = useState<SaffireModel | null>(null);
   const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
   const isSaffire = labMode === "saffire";
@@ -216,7 +224,16 @@ export default function App() {
     setPlaying(true);
     if (!isSaffire) setOverlay("thermal");
   }
-  function changeLabMode(mode: "cabin" | "saffire") {
+  const modeSwitch = (
+    <div className="lab-mode-tabs" role="group" aria-label="Modo do laboratório">
+      {LAB_MODES.map((mode) => (
+        <button key={mode.id} type="button" aria-pressed={labMode === mode.id} onClick={() => changeLabMode(mode.id)}>
+          {mode.label}<small>{mode.hint}</small>
+        </button>
+      ))}
+    </div>
+  );
+  function changeLabMode(mode: LabMode) {
     setLabMode(mode);
     setPlaying(false);
     setTime(0);
@@ -418,37 +435,32 @@ export default function App() {
               </div>
               <h1>O fogo muda. A sua perspectiva também.</h1>
               <p>
-                {isSaffire
+                {labMode === "habitat"
+                  ? "Simule a propagação de um incêndio nas superfícies de um habitat lunar, com o modelo calibrado em imagens da NASA."
+                  : isSaffire
                   ? "Explore a propagação medida em uma amostra do SAFFIRE I."
                   : "Explore uma cabine em microgravidade e conecte suas perguntas à ciência da NASA."}
               </p>
             </div>
-            <button
+            {labMode !== "habitat" && <button
               className="button secondary export-button"
               onClick={exportScenario}
               disabled={isSaffire && !saffire}
             >
               <ArrowDownToLine size={15} />
               Exportar cenário
-            </button>
+            </button>}
           </div>
-          <main className="workbench">
+          {labMode === "habitat" ? (
+            <HabitatLab modeSwitch={modeSwitch} onOpenCalibration={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+          ) : <main className="workbench">
             <aside className="scenario-panel" aria-label="Configurar cenário">
               <div className="panel-title">
                 <Settings2 size={15} />
                 <h2>Seu cenário</h2>
                 <span className="tiny-tag">{isSaffire ? "µg" : gravityEnv.short}</span>
               </div>
-              <section className="control-section">
-                <label className="preset-select">
-                  <select aria-label="Modo do laboratório" value={labMode}
-                    onChange={(event) => changeLabMode(event.target.value === "saffire" ? "saffire" : "cabin")}>
-                    <option value="cabin">Cabine ilustrativa</option>
-                    <option value="saffire">SAFFIRE I · S1</option>
-                  </select>
-                  <ChevronDown size={14} />
-                </label>
-              </section>
+              <section className="control-section">{modeSwitch}</section>
               {isSaffire ? (
                 <section className="control-section">
                   <h3>Amostra SIBAL</h3>
@@ -928,7 +940,7 @@ export default function App() {
               onExplore={() => setPage("experiments")}
               onSources={() => setPage("sources")}
             />}
-          </main>
+          </main>}
           <footer className="app-footer">
             <span>
               HABITATFIRE <span className="footer-divider">/</span> UFRJ
