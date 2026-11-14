@@ -44,6 +44,10 @@ ALIASES = [
     ("limpeza contaminacao toxico pos incendio", "cleanup filtration toxic combustion products"),
     ("terrestre terra bombeiro protecao", "terrestrial earth firefighter protective"),
     ("lua lunar moon gravidade", "lunar gravity moon"),
+    ("goticula goticulas gota gotas liquido liquidos", "droplet droplets liquid fuel"),
+    ("chama fria chamas frias", "cool flame flames"),
+    ("gas gasoso gasosa queimador difusao", "gaseous burner diffusion flame"),
+    ("campo eletrico eletrica eletricos", "electric field"),
 ]
 MATERIALS = {
     "pmma": ["pmma", "polymethyl methacrylate", "acrilico", "acrylic"],
@@ -70,10 +74,14 @@ def canonical_material(text):
     return value.strip()
 
 
-def expanded_query(question, intent, material):
+def question_query(question):
     value = fold(question)
     extra = [replacement for trigger, replacement in ALIASES if set(tokens(trigger)) & set(tokens(value))]
-    return " ".join([question, INTENT_WORDS[intent], material, *extra])
+    return " ".join([question, *extra])
+
+
+def expanded_query(question, intent, material):
+    return " ".join([question_query(question), INTENT_WORDS[intent], material])
 
 
 def validate_request(value):
@@ -166,7 +174,7 @@ class ResearchService:
         self._hybrid_ready = False
 
     def status(self):
-        return {"status": "ready", "corpusVersion": self.corpus_version, "investigationCount": len(self.investigations), "recordCount": sum(len(rows) for rows in self.records.values()), "documentCount": len(self.documents), "passageCount": sum(row["kind"] == "document" for row in self.entries), "generationConfigured": bool(self.provider.generation_configured), "embeddingsConfigured": bool(self.provider.embeddings_configured), "generationModel": getattr(self.provider, "generation_model", None) if self.provider.generation_configured else None, "embeddingModel": getattr(self.provider, "embedding_model", None) if self.provider.embeddings_configured else None, "vectorStore": ("mongodb-atlas" if self.store.search_ready else "mongodb-atlas (índice em preparo)") if self.store else ("memory" if self.provider.embeddings_configured else None), "retrievalMode": "hybrid" if self._hybrid_ready else "lexical-structured"}
+        return {"status": "ready", "corpusVersion": self.corpus_version, "investigationCount": len(self.investigations), "recordCount": sum(len(rows) for rows in self.records.values()), "documentCount": len(self.documents), "passageCount": sum(row["kind"] == "document" for row in self.entries), "generationConfigured": bool(self.provider.generation_configured), "embeddingsConfigured": bool(self.provider.embeddings_configured), "generationModel": getattr(self.provider, "generation_model", None) if self.provider.generation_configured else None, "embeddingModel": getattr(self.provider, "embedding_model", None) if self.provider.embeddings_configured else None, "vectorStore": ("mongodb-atlas" if self.store.search_ready else "mongodb-atlas (índice em preparo)") if self.store else ("memory" if self.provider.embeddings_configured else None), "retrievalMode": "hybrid" if self._hybrid_ready or self._vectors is not None else "lexical-structured"}
 
     def _ensure_vectors(self):
         """Load corpus vectors from MongoDB when present; otherwise embed once and persist."""
@@ -258,7 +266,10 @@ class ResearchService:
             if material != canonical_material(context["material"]):
                 warnings.append("A pergunta menciona outro material; a atribuição da cena foi preservada.")
         query = expanded_query(question, intent, material)
-        lexical = self.index.scores(query)
+        # The user's own words outweigh the intent vocabulary and the scene material.
+        asked = self.index.scores(question_query(question))
+        background = self.index.scores(" ".join([INTENT_WORDS[intent], material]))
+        lexical = [2 * a + 0.5 * b for a, b in zip(asked, background)]
         lexical_order = sorted(range(len(lexical)), key=lambda index: (-lexical[index], self.entries[index]["id"]))
         fused = {index: 1 / (61 + rank) for rank, index in enumerate(lexical_order) if lexical[index] > 0}
         mode = "lexical-structured"
@@ -306,7 +317,7 @@ class ResearchService:
             category = investigation["category"]
             record_list = sorted(self.records[identity], key=lambda row: (-self._record_rank(row, material, context), row["id"]))
             matched = [record for record in record_list if canonical_material(record.get("material") or "") == material]
-            score = lexical[metadata_index] + CATEGORY_INTENT[intent].get(category, 0) + (10 if matched else 0)
+            score = lexical[metadata_index] + CATEGORY_INTENT[intent].get(category, 0) + ((10 if named_materials else 4) if matched else 0)
             if mode == "hybrid":
                 score += fused.get(metadata_index, 0) * 100
             if requested_ids:
