@@ -63,23 +63,21 @@ export function assessSaffireS1(s: Scenario): Assessment {
   const o2Gap = s.oxygen < o2Low ? o2Low - s.oxygen : s.oxygen > o2High ? s.oxygen - o2High : 0;
   criteria.push({
     id: "oxygen", label: "Oxigênio", scenario: `${fmt(s.oxygen)}%`, domain: "21,5–21,7%",
-    status: o2Gap === 0 ? "ok" : o2Gap <= 1 ? "warn" : "out",
+    status: o2Gap === 0 ? "ok" : "out",
     note: o2Gap === 0 ? "Dentro da faixa medida."
       : "Um único ensaio não identifica o efeito do O₂; a taxa de propagação cresce com O₂ e não pode ser reescalada daqui.",
   });
   criteria.push({
     id: "pressure", label: "Pressão", scenario: `${fmt(s.pressure)} kPa`, domain: "não tabulada",
-    status: s.pressure >= 95 && s.pressure <= 105 ? "warn" : "out",
-    note: s.pressure >= 95 && s.pressure <= 105
-      ? "A pressão não consta da tabela do ensaio; compatibilidade com cabine próxima de 1 atm não verificada."
-      : "Pressão reduzida altera a propagação; nenhum ensaio SAFFIRE I–III tabula pressão diferente.",
+    status: "warn",
+    note: "A pressão não consta da tabela do ensaio: permanece desconhecida, e nenhuma faixa em torno de 1 atm é aprovada automaticamente.",
   });
-  const flowGap = Math.min(Math.abs(s.flow - 20), Math.abs(s.flow - 25));
+  const flowGap = Math.min(Math.abs(s.flow - 20), Math.abs(s.flow - 25)) < 1e-6 ? 0 : Infinity;
   const between = s.flow > 20 && s.flow < 25;
   criteria.push({
     id: "flow", label: "Escoamento", scenario: `${fmt(s.flow)} cm/s`, domain: "20 e 25 cm/s, concorrente",
-    status: flowGap <= 1.5 ? "ok" : between || flowGap <= 5 ? "warn" : "out",
-    note: flowGap <= 1.5
+    status: flowGap === 0 ? "ok" : between ? "warn" : "out",
+    note: flowGap === 0
       ? "Velocidade de um dos ensaios (SAFFIRE I ou III); a direção do escoamento em relação à superfície do cenário não é modelada."
       : "Velocidade medida em dois ensaios (20 e 25 cm/s). Fora desse intervalo a dependência é extrapolada com o expoente medido.",
   });

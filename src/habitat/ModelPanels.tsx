@@ -1,6 +1,6 @@
 import { AlertTriangle, ArrowUpRight, CheckCircle2, Crosshair, HelpCircle } from "lucide-react";
 import {
-  compareToTrial, LEVEL_LABEL, OBSERVABLE_LABEL, rankTrials, TOLERANCE,
+  compareToTrial, LEVEL_LABEL, OBSERVABLE_LABEL, rankTrials,
   type AnchorKernel, type RunLevel, type Trial,
 } from "./trials";
 
@@ -46,21 +46,22 @@ export function ModelInUse({ anchor, level, diffs, kernel, flowRule, scenarioSpe
         <li className="lvl conditioned">
           <span className="lvl-n">2</span>
           <div>
-            <strong>Simulado nas condições do ensaio</strong>
+            <strong>Simulado na placa do ensaio · condicionado ao ensaio</strong>
             {kernel
               ? <p><b>{num(kernel.simulatedAtTrialMmS, 2)} mm/s</b> na placa do ensaio · alvo {num(kernel.target.speedMmS, 2)} mm/s ({OBSERVABLE_LABEL[kernel.target.kind].toLowerCase()})</p>
               : <p>Calibrando o núcleo…</p>}
             {kernel?.target.kind === "flame-base" && <p className="lvl-note">O núcleo propaga células alcançadas; ajustá-lo à taxa da base da chama assume regime estacionário (base e frente de pirólise avançando juntas). Não é a mesma observação que a frente carbonizada dos ensaios I e III.</p>}
             {kernel && kernel.borrowed.length > 0 && <p className="lvl-note">Informação emprestada de outro ensaio: {kernel.borrowed.join(", ")}.</p>}
+            {kernel && <p className="lvl-note">O fator de intensidade foi ajustado a esta velocidade; essa informação foi usada na calibração e não é teste intocado.</p>}
           </div>
         </li>
         <li className={`lvl scenario ${level}`}>
           <span className="lvl-n">3</span>
           <div>
-            <strong>Seu cenário · {LEVEL_LABEL[level]}{level !== "extrapolation" && assumed.length > 0 ? " com premissa" : ""}</strong>
+            <strong>Seu cenário · {LEVEL_LABEL[level]}</strong>
             <p><b>{scenarioSpeed !== null ? `${num(scenarioSpeed, 2)} mm/s` : "—"}</b> na parede do habitat</p>
             <p className="lvl-note">{flowRule}</p>
-            {assumed.length > 0 && <p className="lvl-note">Não tabulado no ensaio e assumido no cenário: {assumed.join(", ").toLowerCase()}.</p>}
+            {assumed.length > 0 && <p className="lvl-note">Não tabulado no ensaio (permanece desconhecido, não é atribuído ao ensaio): {assumed.join(", ").toLowerCase()}.</p>}
           </div>
         </li>
       </ol>
@@ -80,8 +81,8 @@ export function ModelInUse({ anchor, level, diffs, kernel, flowRule, scenarioSpe
           })}
         </tbody>
       </table>
-      <p className="model-caption">Tolerâncias provisórias: O₂ ±{num(TOLERANCE.oxygenPp)} p.p., pressão ±{num(TOLERANCE.pressureKpa)} kPa, escoamento ±{num(TOLERANCE.flowCmS)} cm/s. Condição não tabulada no ensaio fica sinalizada como premissa, nunca como igual.</p>
-      {level !== "conditioned" && (
+      <p className="model-caption">Uma condição só corresponde ao valor nominal ou à faixa documentada do ensaio, sem tolerância inventada; condição não tabulada permanece desconhecida. A parede do habitat nunca é a placa do ensaio, por isso o cenário é no máximo exploratório (critérios de aceitação, seção C).</p>
+      {level !== "trial-conditions" && (
         <button className="button secondary trial-run" onClick={onRunTrial}><Crosshair size={13} /> Rodar nas condições do ensaio</button>
       )}
     </section>

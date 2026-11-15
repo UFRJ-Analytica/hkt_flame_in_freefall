@@ -133,3 +133,6 @@
 .tl-diff.ok { color: var(--ok); }
 .tl-diff.warn { color: var(--warn); }
 .tier-pill.warn, .model-badge.warn { color: var(--warn); border-color: #e6b38c40; }
+
+.model-badge.neutral, .tier-pill.neutral { color: #a9c2dd; border-color: #a9c2dd40; }
+.lvl.scenario.trial-conditions, .lvl.scenario.interpolated { border-color: #a9c2dd40; }

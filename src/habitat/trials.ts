@@ -136,8 +136,10 @@ export interface Diff { field: string; label: string; scenario: string; trial: s
 
 const f = (n: number, d = 1) => n.toLocaleString("pt-BR", { maximumFractionDigits: d });
 
-/** Provisional tolerances (to be replaced by docs/research/ACCEPTANCE_CRITERIA.md). */
-export const TOLERANCE = { oxygenPp: 0.5, pressureKpa: 5, flowCmS: 1 };
+/** ACCEPTANCE_CRITERIA §C: a condition matches only its documented nominal value or documented
+ *  range; no tolerance is invented around it. EPS only absorbs floating-point noise. */
+const EPS = 1e-6;
+export const HABITAT_GEOMETRY = "parede curva do habitat, 4,0 × 5,0 m";
 
 export function compareToTrial(t: Trial, s: Scenario): Diff[] {
   const c = t.conditions;
@@ -146,19 +148,25 @@ export function compareToTrial(t: Trial, s: Scenario): Diff[] {
   const [lo, hi] = c.oxygenRangePct ?? (c.oxygenPct !== null ? [c.oxygenPct, c.oxygenPct] : [NaN, NaN]);
   diffs.push({
     field: "oxygen", label: "O₂", scenario: `${f(s.oxygen)}%`, trial: Number.isFinite(lo) ? (lo === hi ? `${f(lo)}%` : `${f(lo)}–${f(hi)}%`) : "não tabulado",
-    status: !Number.isFinite(lo) ? "untabulated" : s.oxygen >= lo - TOLERANCE.oxygenPp && s.oxygen <= hi + TOLERANCE.oxygenPp ? "match" : "differs",
+    status: !Number.isFinite(lo) ? "untabulated" : s.oxygen >= lo - EPS && s.oxygen <= hi + EPS ? "match" : "differs",
   });
   diffs.push({
     field: "pressure", label: "Pressão", scenario: `${f(s.pressure)} kPa`, trial: c.pressureKpa === null ? "não tabulada" : `${f(c.pressureKpa)} kPa`,
-    status: c.pressureKpa === null ? "untabulated" : Math.abs(s.pressure - c.pressureKpa) <= TOLERANCE.pressureKpa ? "match" : "differs",
+    status: c.pressureKpa === null ? "untabulated" : Math.abs(s.pressure - c.pressureKpa) <= EPS ? "match" : "differs",
   });
   diffs.push({
     field: "flow", label: "Escoamento", scenario: `${f(s.flow)} cm/s`, trial: c.flowCmS === null ? "não tabulado" : `${f(c.flowCmS)} cm/s`,
-    status: c.flowCmS === null ? "untabulated" : Math.abs(s.flow - c.flowCmS) <= TOLERANCE.flowCmS ? "match" : "differs",
+    status: c.flowCmS === null ? "untabulated" : Math.abs(s.flow - c.flowCmS) <= EPS ? "match" : "differs",
   });
   diffs.push({
     field: "gravity", label: "Gravidade", scenario: s.gravityG < 0.01 ? "microgravidade" : `${f(s.gravityG, 2)} g`, trial: "microgravidade",
     status: s.gravityG < 0.01 ? "match" : "differs",
+  });
+  const g = t.geometry;
+  diffs.push({
+    field: "geometry", label: "Geometria", scenario: HABITAT_GEOMETRY,
+    trial: g.lengthMm && g.widthMm ? `placa ${f(g.lengthMm / 10, 1)} × ${f(g.widthMm / 10, 1)} cm` : "placa do ensaio",
+    status: "differs",
   });
   return diffs;
 }
@@ -178,8 +186,6 @@ export function rankTrials(registry: TrialRegistry, s: Scenario) {
     .sort((a, b) => a.distance - b.distance);
 }
 
-export type Level = "conditioned" | "extrapolation";
-export const levelOf = (diffs: Diff[]): Level => diffs.some((d) => d.status === "differs") ? "extrapolation" : "conditioned";
 
 /** Speed the kernel is fitted to: the trial's own char-front rate when it exists, otherwise its
  *  published flame-base/published rate. Never an average of different observables. */
@@ -295,10 +301,12 @@ export function buildAnchorKernels(model: SaffireModel, cross: CrossTrial | null
   return out;
 }
 
-export type RunLevel = "conditioned" | "interpolated" | "extrapolation";
+/** The habitat wall is never the trial's plate (ACCEPTANCE_CRITERIA §C), so a habitat run is at most
+ *  exploratory at the trial's conditions; only the plate simulation is conditioned on the trial. */
+export type RunLevel = "trial-conditions" | "interpolated" | "extrapolation";
 export const LEVEL_LABEL: Record<RunLevel, string> = {
-  conditioned: "Condicionado ao ensaio",
-  interpolated: "Interpolado entre ensaios",
+  "trial-conditions": "Exploratório · condições do ensaio",
+  interpolated: "Exploratório · interpolado entre ensaios",
   extrapolation: "Extrapolação",
 };
 
@@ -315,7 +323,8 @@ export interface ScenarioKernel {
  *  corrected: a difference in any of them makes the run an extrapolation. */
 export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKernel>, cross: CrossTrial | null, s: Scenario, diffs: Diff[]): ScenarioKernel {
   const base = kernels[anchor.id]?.base ?? [];
-  const nonFlowDiffers = diffs.some((d) => d.field !== "flow" && d.status === "differs");
+  // Geometry always differs in the habitat and is stated by the label; the level ranks the rest.
+  const nonFlowDiffers = diffs.some((d) => d.field !== "flow" && d.field !== "geometry" && d.status === "differs");
   const flowDiffers = diffs.some((d) => d.field === "flow" && d.status === "differs");
   if (s.flow < 2) {
     return { p: base.map((v) => v === null ? null : 0), level: "extrapolation", quench: true,
@@ -332,8 +341,8 @@ export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKern
       if (la === 0 || lb === 0) return 1 - Math.exp(-((1 - w) * la + w * lb));
       return 1 - Math.exp(-Math.exp((1 - w) * Math.log(la) + w * Math.log(lb)));
     });
-    const atEnd = Math.abs(s.flow - 20) <= TOLERANCE.flowCmS || Math.abs(s.flow - 25) <= TOLERANCE.flowCmS;
-    return { p, quench: false, level: nonFlowDiffers ? "extrapolation" : atEnd ? "conditioned" : "interpolated",
+    const atEnd = Math.abs(s.flow - (anchor.conditions.flowCmS ?? 20)) <= EPS;
+    return { p, quench: false, level: nonFlowDiffers ? "extrapolation" : atEnd ? "trial-conditions" : "interpolated",
       flowRule: `Hazard interpolado em escala log entre SAFFIRE I (20 cm/s) e III (25 cm/s), peso ${f(w, 2)} para III.` };
   }
   const beta = cross?.comparisonWithSaffireI.beta ?? 1;
@@ -341,7 +350,7 @@ export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKern
   const factor = Math.pow(Math.min(40, s.flow) / u0, beta);
   return {
     p: scaleKernel(base, factor), quench: false,
-    level: nonFlowDiffers || flowDiffers ? "extrapolation" : "conditioned",
+    level: nonFlowDiffers || flowDiffers ? "extrapolation" : "trial-conditions",
     flowRule: flowDiffers
       ? `Hazard × ${f(factor, 2)} = (u/${f(u0)})^${f(beta, 2)}; expoente ${cross ? "medido entre SAFFIRE I e III" : "linear (ensaio III indisponível)"}. Fator limitado em 40 cm/s; blowoff não modelado.`
       : "Escoamento do próprio ensaio: sem escalonamento.",

@@ -13,7 +13,7 @@ import {
 } from "./habitatModel";
 import {
   buildAnchorKernels, compareToTrial, FALLBACK_REGISTRY, LEVEL_LABEL, rankTrials, readCrossTrial, readRegistry,
-  scenarioKernel, TOLERANCE, type CrossTrial, type RunLevel, type Trial, type TrialRegistry,
+  scenarioKernel, type CrossTrial, type RunLevel, type Trial, type TrialRegistry,
 } from "./trials";
 import type { ViewMode } from "./HabitatScene";
 import { ModelInUse, TrialList } from "./ModelPanels";
@@ -44,37 +44,48 @@ const num = (n: number | null | undefined, digits = 1) =>
   n == null || !Number.isFinite(n) ? "—" : n.toLocaleString("pt-BR", { maximumFractionDigits: digits });
 const fmtTime = (s: number) => s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s`;
 
-const LEVEL_STYLE: Record<RunLevel, string> = { conditioned: "ok", interpolated: "ok", extrapolation: "warn" };
+const LEVEL_STYLE: Record<RunLevel, string> = { "trial-conditions": "neutral", interpolated: "neutral", extrapolation: "warn" };
+
+/** SHA-256 of the exact bytes served, so an export can be tied to the artefacts it used. */
+async function sha256(text: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+type Loaded = { path: string; role: string; sha256: string };
 
 function useSaffire() {
   const [model, setModel] = useState<SaffireModel | null>(null);
   const [second, setSecond] = useState<CrossTrial | null>(null);
   const [registry, setRegistry] = useState<TrialRegistry>(FALLBACK_REGISTRY);
+  const [loaded, setLoaded] = useState<Loaded[]>([]);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const request = new AbortController();
     const base = import.meta.env.BASE_URL;
-    fetch(`${base}data/saffire/psi-98-s1-neighbors.json`, { signal: request.signal })
-      .then((r) => { if (!r.ok) throw new Error("Modelo SAFFIRE indisponível."); return r.json(); })
-      .then((v) => setModel(readSaffireModel(v)))
+    const load = (path: string, role: string) => fetch(`${base}${path}`, { signal: request.signal })
+      .then(async (r) => {
+        if (!r.ok || !r.headers.get("content-type")?.includes("json")) return null;
+        const text = await r.text();
+        const digest = await sha256(text);
+        setLoaded((current) => [...current.filter((x) => x.path !== path), { path: `public/${path}`, role, sha256: digest }]);
+        return JSON.parse(text) as unknown;
+      });
+    load("data/saffire/psi-98-s1-neighbors.json", "núcleo de vizinhança SAFFIRE I")
+      .then((v) => { if (!v) throw new Error("Modelo SAFFIRE indisponível."); setModel(readSaffireModel(v)); })
       .catch((e: unknown) => { if (!request.signal.aborted) setError(e instanceof Error ? e.message : "Erro ao carregar o modelo."); });
-    // Second trial is optional: without it the flow scaling falls back to the linear hypothesis.
-    fetch(`${base}data/saffire/crosstrial-i-iii.json`, { signal: request.signal })
-      .then((r) => r.ok ? r.json() : null)
-      .then((v) => setSecond(readCrossTrial(v)))
-      .catch(() => undefined);
+    // Optional: without it, flow scaling falls back to the linear hypothesis and III is never labelled.
+    load("data/saffire/crosstrial-i-iii.json", "núcleo SAFFIRE III e expoente de escoamento")
+      .then((v) => setSecond(readCrossTrial(v))).catch(() => undefined);
     // Trial registry from scripts/build_trial_registry.py; the embedded fallback is used until it exists.
-    fetch(`${base}data/saffire/trial-registry.json`, { signal: request.signal })
-      .then((r) => r.ok && r.headers.get("content-type")?.includes("json") ? r.json() : null)
-      .then((v) => { const parsed = readRegistry(v); if (parsed) setRegistry(parsed); })
-      .catch(() => undefined);
+    load("data/saffire/trial-registry.json", "registro de ensaios")
+      .then((v) => { const parsed = readRegistry(v); if (parsed) setRegistry(parsed); }).catch(() => undefined);
     return () => request.abort();
   }, []);
-  return { model, second, registry, error };
+  return { model, second, registry, loaded, error };
 }
 
 export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: ReactNode; onOpenCalibration: () => void }) {
-  const { model, second, registry, error } = useSaffire();
+  const { model, second, registry, loaded, error } = useSaffire();
   const [anchorChoice, setAnchorChoice] = useState<string>("auto");
   const [preset, setPreset] = useState("lunar");
   const [oxygen, setOxygen] = useState(34);
@@ -189,28 +200,46 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
     if (!anchor) return;
     const c = anchor.conditions;
     setOxygen(c.oxygenPct ?? (c.oxygenRangePct ? (c.oxygenRangePct[0] + c.oxygenRangePct[1]) / 2 : 21.5));
-    setPressure(c.pressureKpa ?? 101.3);
+    if (c.pressureKpa !== null) setPressure(c.pressureKpa);
     setFlow(c.flowCmS ?? 20);
     setGravity("orbit");
     setPreset("custom");
     setAnchorChoice(anchor.id);
     restart();
-    setNotice(`Condições de ${anchor.campaign} ${anchor.sample}${c.pressureKpa === null ? " (pressão não tabulada; 101,3 kPa assumidos)" : ""}.`);
+    setNotice(`Condições de ${anchor.campaign} ${anchor.sample}.${c.pressureKpa === null ? " Pressão não tabulada no ensaio: o controle de pressão não é usado pelo modelo nem atribuído ao ensaio." : ""}`);
   }
-  function exportScenario() {
+  async function exportScenario() {
+    const inputs = { conditions: { oxygenPct: oxygen, pressureKpa: pressure, flowCmS: flow, gravity, gravityG: conditions.gravityG },
+      zones: zones.map((z) => ({ id: z.id, material: z.material, cols: z.cols, rows: z.rows })), ignition, anchorTrialId: anchor?.id ?? null, seeds: SEEDS };
     const payload = {
-      product: "HabitatFire", mode: "lunar-habitat-surface-spread", version: 1,
-      level, levelLabel: LEVEL_LABEL[level],
-      conditions: { oxygenPct: oxygen, pressureKpa: pressure, flowCmS: flow, gravity, gravityG: conditions.gravityG },
+      exportSchemaVersion: 1,
+      scenarioId: (await sha256(JSON.stringify(inputs))).slice(0, 16),
+      product: "HabitatFire", mode: "lunar-habitat-surface-spread", codeVersion: __APP_COMMIT__, exportedAt: new Date().toISOString(),
+      scientificMode: { level, label: LEVEL_LABEL[level],
+        meaning: "Resultado na parede do habitat: no máximo exploratório (geometria diferente da placa do ensaio). Só a simulação na placa do ensaio é condicionada ao ensaio." },
+      gate: { anchorTrialId: anchor?.id ?? null, conditionDiffs: diffs,
+        rule: "Correspondência apenas no valor nominal ou faixa documentada; não tabulado permanece desconhecido (ACCEPTANCE_CRITERIA §C)." },
+      requestedConditions: inputs.conditions,
+      trialConditions: anchor?.conditions ?? null, trialConditionSources: anchor?.conditionSources ?? [], trialConflicts: anchor?.conflicts ?? [],
+      observed: anchor?.observables ?? [],
+      geometry: { liner: { lengthM: 4.0, arcM: 5.02, cols: GRID.cols, rows: GRID.rows, cellMm: [CELL.alongMm, CELL.acrossMm] },
+        connectivity: "montante + faixas laterais; sem radiação entre superfícies separadas", thicknessMm: null },
       zones: zones.map((z) => ({ ...z, rule: materialRule(z.material, conditions) })),
-      ignition: { ...ignition, widthMm: 400, note: "Foco imposto; a ignição não é prevista." },
-      anchorTrial: anchor ?? null, diffsToAnchor: diffs, tolerances: TOLERANCE,
-      kernel: kernel && anchor ? { probabilities2s: kernel.p, flowRule: kernel.flowRule, quench: kernel.quench, anchor: anchorKernels[anchor.id] } : null,
+      ignition: { ...ignition, widthMm: 400, note: "Foco imposto; a ignição não é prevista. Só acende células de material que propaga." },
+      algorithm: { engine: "autômato estocástico por fronteira (src/habitat/engine.ts)", stepSeconds: CELL.stepSeconds, horizonSteps: STEPS,
+        rng: "LCG 32 bits (a=1664525, c=1013904223), uma semente por realização", seeds: SEEDS },
+      kernel: kernel && anchor ? { scenarioProbabilities2s: kernel.p, flowRule: kernel.flowRule, quench: kernel.quench,
+        anchor: anchorKernels[anchor.id], fallbacks: anchorKernels[anchor.id]?.borrowed ?? [] } : null,
       crossTrial: second ? { beta: second.comparisonWithSaffireI.beta, prediction: second.prediction } : null,
-      registrySource: registry.generatedBy,
-      ensemble: { seeds: SEEDS, steps: STEPS, stepSeconds: CELL.stepSeconds, cellMm: [CELL.alongMm, CELL.acrossMm],
-        spreadMeaning: "Variabilidade do próprio modelo com parâmetros fixos, não incerteza experimental." },
+      artifacts: loaded, registry: { generatedBy: registry.generatedBy, sha256: loaded.find((x) => x.path.endsWith("trial-registry.json"))?.sha256 ?? null },
+      uncertainty: {
+        observational: "não quantificada no app (registro, segmentação, câmeras)",
+        parameters: "não propagada (fator de intensidade e expoente fixos)",
+        betweenTrials: "dois ensaios a favor do fluxo para o escoamento; um ponto por atmosfera",
+        seedSpread: "variabilidade do próprio modelo com parâmetros fixos, não incerteza experimental",
+      },
       results: metrics ? { frontSpeedMmS: metrics.speedMmS, areaAtEndM2: quantiles(metrics.area.map((c) => c[STEPS])) } : null,
+      reproduction: "Mesmo commit, mesmos bytes dos artefatos (sha256) e mesmas sementes reproduzem o campo de chegada. Reimportação ainda não implementada.",
       limitations: [
         "Propagação superficial; não é CFD nem combustão volumétrica.",
         "Sem correção de O₂, pressão ou gravidade além do ensaio de referência.",
