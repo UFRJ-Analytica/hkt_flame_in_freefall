@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { GRID, LINER, MATERIAL_IDS, MATERIAL_INFO, MODULE } from "./habitatModel";
 import type { EnsembleResult } from "./engine";
+import { createSeeds, FireEffects, MAX_FRONT_SEEDS, MAX_SMOKE_SEEDS, type FireSeeds } from "./FireEffects";
+import { InteriorProps, LunarSite } from "./LunarSite";
 
 export type ViewMode = "run" | "probability";
-const MAX_FLAMES = 1400;
 
 export interface HabitatSceneProps {
   material: Uint8Array;
@@ -17,6 +18,7 @@ export interface HabitatSceneProps {
   view: ViewMode;
   ignition: { col: number; row: number };
   flow: number;
+  gravityG: number;
   onIgnite: (col: number, row: number) => void;
   resetCameraKey: number;
 }
@@ -61,8 +63,8 @@ const hash = (i: number) => {
   return ((Math.imul(h, 0xc2b2ae35) >>> 0) % 1000) / 1000;
 };
 
-function Liner(props: HabitatSceneProps) {
-  const { material, behavior, ensemble, step, run, view, onIgnite } = props;
+function Liner(props: HabitatSceneProps & { seeds: MutableRefObject<FireSeeds> }) {
+  const { material, behavior, ensemble, step, run, view, onIgnite, seeds } = props;
   const n = GRID.cols * GRID.rows;
   const [colorTex, glowTex] = useMemo(() => {
     const make = () => {
@@ -79,25 +81,6 @@ function Liner(props: HabitatSceneProps) {
   const geometry = useMemo(() => bentPlane(MODULE.linerX0, MODULE.linerX1, LINER.phi0, LINER.phi1, MODULE.linerRadius, 80, 120), []);
   const glowLight = useRef<THREE.PointLight>(null);
   const glow = useRef({ x: 0, y: 0, z: 0, power: 0 });
-  const flameMaterial = useRef<THREE.PointsMaterial>(null);
-  const flameGeometry = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(MAX_FLAMES * 3), 3));
-    geometry.setDrawRange(0, 0);
-    return geometry;
-  }, []);
-  const flameSprite = useMemo(() => {
-    const size = 64, data = new Uint8Array(size * size * 4);
-    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
-      const d = Math.hypot(x - size / 2 + 0.5, y - size / 2 + 0.5) / (size / 2);
-      const a = Math.max(0, 1 - d) ** 2.2;
-      data.set([255, 200 + 55 * a, 120 + 100 * a, 255 * a], (y * size + x) * 4);
-    }
-    const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
-    texture.needsUpdate = true;
-    return texture;
-  }, []);
-
   useEffect(() => {
     const color = colorTex.image.data as Uint8Array;
     const emit = glowTex.image.data as Uint8Array;
@@ -105,8 +88,8 @@ function Liner(props: HabitatSceneProps) {
     const contacts = ensemble?.contacts ?? [];
     const arrival = arrivals[Math.min(run, arrivals.length - 1)];
     const contact = contacts[Math.min(run, contacts.length - 1)];
-    let sx = 0, sy = 0, front = 0, flameCount = 0;
-    const flamePositions = flameGeometry.attributes.position.array as Float32Array;
+    let sx = 0, sy = 0, front = 0, frontSeeds = 0, smokeSeeds = 0;
+    const fs = seeds.current;
     for (let i = 0; i < n; i++) {
       const base = MATERIAL_INFO[MATERIAL_IDS[material[i]]].color;
       const grain = 0.9 + hash(i) * 0.14;
@@ -121,17 +104,26 @@ function Liner(props: HabitatSceneProps) {
             r = 255; g = 214 - 110 * t; b = 120 - 90 * t;
             er = 255; eg = 170 - 110 * t; eb = 60 - 50 * t;
             front++; sx += i % GRID.cols; sy += (i / GRID.cols) | 0;
-            if (age <= 1 && flameCount < MAX_FLAMES && hash(i + step) < 0.5) {
-              const [fx, fy, fz] = cellToWorld(i % GRID.cols, (i / GRID.cols) | 0, 0.02 + hash(i * 3) * 0.05);
-              flamePositions[flameCount * 3] = fx; flamePositions[flameCount * 3 + 1] = fy; flamePositions[flameCount * 3 + 2] = fz;
-              flameCount++;
+            if (age <= 1 && frontSeeds < MAX_FRONT_SEEDS && hash(i + step) < 0.6) {
+              const col = i % GRID.cols, row = (i / GRID.cols) | 0;
+              const [fx, fy, fz] = cellToWorld(col, row, 0.01);
+              const phi = LINER.phi0 + ((row + 0.5) / GRID.rows) * (LINER.phi1 - LINER.phi0);
+              fs.front.set([fx, fy, fz, 0, -Math.cos(phi), -Math.sin(phi)], frontSeeds * 6);
+              frontSeeds++;
             }
           } else {
-            const ember = Math.max(0, 1 - (age - 3) / 25);
-            const char = 0.8 + hash(i + 7) * 0.45;
-            const soot = Math.min(1, (age - 3) / 60);
-            r = (138 - 40 * soot) * char + 110 * ember; g = (108 - 34 * soot) * char + 34 * ember; b = (92 - 28 * soot) * char;
-            er = 170 * ember * ember; eg = 46 * ember * ember;
+            // pyrolysis band → glowing char → cooled soot-covered char (visual ageing, not a burnout model)
+            const ember = Math.max(0, 1 - (age - 3) / 22);
+            const char = 0.78 + hash(i + 7) * 0.5;
+            const soot = Math.min(1, (age - 3) / 70);
+            const crack = hash(i * 13 + 5) > 0.93 ? 0.55 : 1;
+            r = ((196 - 78 * soot) * char + 90 * ember) * crack; g = ((168 - 72 * soot) * char + 30 * ember) * crack; b = ((150 - 66 * soot) * char) * crack;
+            er = 200 * ember ** 2 * (0.6 + 0.4 * hash(i + step)); eg = 52 * ember ** 2; eb = 0;
+            if (age >= 4 && age <= 80 && smokeSeeds < MAX_SMOKE_SEEDS && hash(i * 7 + step) < 0.02) {
+              const [px, py, pz] = cellToWorld(i % GRID.cols, (i / GRID.cols) | 0, 0.05);
+              fs.smoke.set([px, py, pz], smokeSeeds * 3);
+              smokeSeeds++;
+            }
           }
         } else if (contact && contact[i] >= 0 && contact[i] <= step) {
           if (behavior[i] === 3) { r = 170; g = 130; b = 255; er = 120; eg = 80; eb = 255; }
@@ -164,20 +156,16 @@ function Liner(props: HabitatSceneProps) {
     }
     colorTex.needsUpdate = true;
     glowTex.needsUpdate = true;
-    flameGeometry.setDrawRange(0, view === "run" ? flameCount : 0);
-    flameGeometry.attributes.position.needsUpdate = true;
-    flameGeometry.computeBoundingSphere();
+    fs.frontCount = view === "run" ? frontSeeds : 0;
+    fs.smokeCount = view === "run" ? smokeSeeds : 0;
+    fs.version++;
     if (front) {
       const [x, y, z] = cellToWorld(sx / front, sy / front, 0.5);
       glow.current = { x, y, z, power: Math.min(9, 1.5 + front / 60) };
     } else glow.current.power = 0;
-  }, [colorTex, glowTex, flameGeometry, ensemble, step, run, view, material, behavior, n]);
+  }, [colorTex, glowTex, seeds, ensemble, step, run, view, material, behavior, n]);
 
   useFrame(({ clock }) => {
-    if (flameMaterial.current) {
-      flameMaterial.current.opacity = 0.75 + 0.25 * Math.sin(clock.elapsedTime * 17);
-      flameMaterial.current.size = 0.13 + 0.03 * Math.sin(clock.elapsedTime * 11);
-    }
     const light = glowLight.current;
     if (!light) return;
     const flicker = 1 + 0.18 * Math.sin(clock.elapsedTime * 13) + 0.08 * Math.sin(clock.elapsedTime * 31);
@@ -197,10 +185,6 @@ function Liner(props: HabitatSceneProps) {
         <meshStandardMaterial map={colorTex} emissiveMap={glowTex} emissive="#ffffff" emissiveIntensity={1.4} roughness={0.92} side={THREE.DoubleSide} />
       </mesh>
       <pointLight ref={glowLight} color="#ff8a3d" distance={3.2} decay={1.6} intensity={0} />
-      <points geometry={flameGeometry} frustumCulled={false}>
-        <pointsMaterial ref={flameMaterial} map={flameSprite} color="#ff9a45" size={0.08} sizeAttenuation transparent
-          depthWrite={false} blending={THREE.AdditiveBlending} />
-      </points>
     </>
   );
 }
@@ -296,49 +280,29 @@ function IgnitionMarker({ col, row }: { col: number; row: number }) {
   );
 }
 
-function Ground() {
-  const texture = useMemo(() => {
-    const size = 256;
-    const data = new Uint8Array(size * size * 4);
-    for (let i = 0; i < size * size; i++) {
-      const v = 70 + hash(i) * 30 + 12 * Math.sin((i % size) / 9) * Math.cos(i / size / 7);
-      data.set([v, v, v + 3, 255], i * 4);
-    }
-    const t = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
-    t.wrapS = t.wrapT = THREE.RepeatWrapping;
-    t.repeat.set(10, 10);
-    t.magFilter = THREE.LinearFilter;
-    t.needsUpdate = true;
-    return t;
-  }, []);
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.8, 0]}>
-      <circleGeometry args={[40, 64]} />
-      <meshStandardMaterial map={texture} roughness={1} color="#9a9a9e" />
-    </mesh>
-  );
-}
-
 export default function HabitatScene(props: HabitatSceneProps) {
+  const seeds = useRef<FireSeeds>(createSeeds());
   return (
     <Canvas camera={{ position: [3.6, 1.5, 6.4], fov: 42 }} dpr={[1, 2]}>
       <color attach="background" args={["#05070b"]} />
-      <fog attach="fog" args={["#05070b", 18, 46]} />
+      <fog attach="fog" args={["#05070b", 45, 100]} />
       <Stars radius={60} depth={30} count={2500} factor={3} fade speed={0.3} />
       <mesh position={[-14, 11, -30]}>
         <sphereGeometry args={[2.2, 48, 48]} />
         <meshStandardMaterial color="#3d6fb6" emissive="#1c3f7a" emissiveIntensity={0.7} roughness={0.8} />
       </mesh>
-      <ambientLight intensity={0.55} />
+      <ambientLight intensity={0.38} />
       <hemisphereLight args={["#cfd8e6", "#2a2a2e", 0.6]} />
-      <directionalLight position={[8, 10, 6]} intensity={1.8} color="#fff6e8" />
+      <directionalLight position={[-22, 9, 14]} intensity={2.6} color="#fff4e2" />
       <pointLight position={[0, 1.2, 0.6]} intensity={2.2} distance={6} color="#e8eef8" />
-      <Ground />
+      <LunarSite />
+      <InteriorProps />
       <Shell />
-      <Liner {...props} />
+      <Liner {...props} seeds={seeds} />
+      <FireEffects seeds={seeds} gravityG={props.gravityG} flow={props.flow} active={props.view === "run" && !!props.ensemble} />
       <IgnitionMarker col={props.ignition.col} row={props.ignition.row} />
       <Airflow flow={props.flow} />
-      <OrbitControls key={props.resetCameraKey} makeDefault target={[0, -0.1, -0.4]} maxDistance={16} minDistance={1.5} maxPolarAngle={Math.PI * 0.62} />
+      <OrbitControls key={props.resetCameraKey} makeDefault target={[0, -0.1, -0.4]} maxDistance={34} minDistance={1.5} maxPolarAngle={Math.PI * 0.62} />
     </Canvas>
   );
 }

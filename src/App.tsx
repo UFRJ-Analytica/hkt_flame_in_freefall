@@ -1359,6 +1359,7 @@ function SaffireEvidence({ model, opposed, accession }: {
       </section>
       <section className="evidence-card">
         <h3>Contra a ventilação · S2</h3>
+        <p className="s2-review-note">Revisão S2: quantização da grade e ausência de pixels do ignitor impedem aprovar estas taxas fisicamente; use como registro exploratório. <a href="https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/develop/docs/research/S2_REVIEW.md" target="_blank" rel="noreferrer">S2_REVIEW.md</a></p>
         <p>{opposed.status === "ready" ? `Calibração pela câmera ${opposed.camera ?? "S2"}.`
           : opposed.reason ?? "Avanço contra a ventilação indisponível."}</p>
         {opposed.status === "ready" && opposed.longitudinal && <>

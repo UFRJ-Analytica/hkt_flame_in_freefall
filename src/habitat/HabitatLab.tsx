@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  AlertTriangle, ArrowDownToLine, ArrowRight, BookOpen, CheckCircle2, CircleSlash, Flame, HelpCircle, Info, LoaderCircle,
+  AlertTriangle, ArrowDownToLine, ArrowRight, ArrowUpFromLine, BookOpen, CheckCircle2, CircleSlash, Flame, HelpCircle, Info, LoaderCircle,
   MousePointer2, Pause, Play, RotateCcw, Settings2, Wind,
 } from "lucide-react";
 import { SceneBoundary } from "../components/SceneBoundary";
@@ -103,6 +103,10 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
   const [view, setView] = useState<ViewMode>("run");
   const [resetCameraKey, setResetCameraKey] = useState(0);
   const [notice, setNotice] = useState<string | null>(null);
+  const [replay, setReplay] = useState<null | { expected: { frontSpeedMmS: number; areaAtEndM2: { min: number; median: number; max: number } } | null;
+    issues: string[]; status: "pending" | "identical" | "different" | "not-exact"; scenarioId: string }>(null);
+  const importRef = useRef<HTMLInputElement>(null);
+  const [rerunKey, setRerunKey] = useState(0);
   const conditions = useMemo(() => ({ oxygen, pressure, flow, gravityG: gravityOf(gravity).g }), [oxygen, pressure, flow, gravity]);
   const grid = useMemo(() => buildGrid(zones, conditions), [zones, conditions]);
   // The propagating material of the liner is SIBAL; the anchor is the trial the run is conditioned on.
@@ -140,7 +144,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
       workerRef.current?.postMessage({ id: jobRef.current, input, seeds: SEEDS });
     }, 180);
     return () => window.clearTimeout(timer);
-  }, [kernel, grid, ignition]);
+  }, [kernel, grid, ignition, rerunKey]);
 
   // Playback in physical time.
   useEffect(() => {
@@ -172,6 +176,14 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
 
   const metrics = useMemo(() => ensemble ? computeMetrics(ensemble, grid.zoneIndex, grid.behavior, zones.length, ignition.row) : null, [ensemble, grid, zones.length, ignition.row]);
   const areaNow = metrics ? quantiles(metrics.area.map((curve) => curve[step])) : null;
+  useEffect(() => {
+    if (!replay || replay.status !== "pending" || !metrics || computing) return;
+    const exp = replay.expected;
+    const area = quantiles(metrics.area.map((c) => c[STEPS]));
+    const same = !!exp && Math.abs(exp.frontSpeedMmS - metrics.speedMmS) < 1e-9 &&
+      (["min", "median", "max"] as const).every((k) => Math.abs(exp.areaAtEndM2[k] - area[k]) < 1e-9);
+    setReplay({ ...replay, status: replay.issues.length ? "not-exact" : same ? "identical" : "different" });
+  }, [replay, metrics, computing]);
 
   function applyPreset(id: string) {
     const p = PRESETS.find((x) => x.id === id);
@@ -208,6 +220,33 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
     restart();
     setNotice(`Condições de ${anchor.campaign} ${anchor.sample}.${c.pressureKpa === null ? " Pressão não tabulada no ensaio: o controle de pressão não é usado pelo modelo nem atribuído ao ensaio." : ""}`);
   }
+  async function importScenario(file: File) {
+    let data: Record<string, unknown>;
+    try { data = JSON.parse(await file.text()); } catch { setNotice("Arquivo inválido: não é JSON."); return; }
+    if (data.exportSchemaVersion !== 1 || data.mode !== "lunar-habitat-surface-spread") {
+      setNotice("Arquivo não é uma exportação do habitat lunar (exportSchemaVersion 1)."); return;
+    }
+    const issues: string[] = [];
+    if (data.codeVersion !== __APP_COMMIT__) issues.push(`código ${String(data.codeVersion)} ≠ ${__APP_COMMIT__}`);
+    for (const art of (data.artifacts as Loaded[] | undefined) ?? []) {
+      const now = loaded.find((x) => x.path === art.path);
+      if (!now) issues.push(`${art.path} não carregado`);
+      else if (now.sha256 !== art.sha256) issues.push(`${art.path}: bytes diferentes (sha256)`);
+    }
+    const c = data.requestedConditions as { oxygenPct: number; pressureKpa: number; flowCmS: number; gravity: GravityId };
+    const savedZones = data.zones as { id: string; material: MaterialId }[];
+    const anchorId = (data.gate as { anchorTrialId: string | null }).anchorTrialId;
+    if (anchorId && !registry.trials.some((t) => t.id === anchorId)) issues.push(`ensaio ${anchorId} ausente do registro`);
+    setOxygen(c.oxygenPct); setPressure(c.pressureKpa); setFlow(c.flowCmS); setGravity(c.gravity); setPreset("custom");
+    setZones(DEFAULT_ZONES.map((z) => ({ ...z, material: savedZones.find((x) => x.id === z.id)?.material ?? z.material })));
+    const ign = data.ignition as { col: number; row: number };
+    setIgnition({ col: ign.col, row: ign.row });
+    setAnchorChoice(anchorId ?? "auto");
+    setRun(0); setView("run"); restart();
+    setEnsemble(null); setRerunKey((k) => k + 1);
+    setReplay({ expected: (data.results as never) ?? null, issues, status: "pending", scenarioId: String(data.scenarioId) });
+  }
+
   async function exportScenario() {
     const inputs = { conditions: { oxygenPct: oxygen, pressureKpa: pressure, flowCmS: flow, gravity, gravityG: conditions.gravityG },
       zones: zones.map((z) => ({ id: z.id, material: z.material, cols: z.cols, rows: z.rows })), ignition, anchorTrialId: anchor?.id ?? null, seeds: SEEDS };
@@ -323,7 +362,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
               <Suspense fallback={<div className="scene-loading"><LoaderCircle size={24} className="spin" /><span>Montando o módulo…</span></div>}>
                 {model ? (
                   <HabitatScene material={grid.material} behavior={grid.behavior} ensemble={ensemble} step={step} run={run}
-                    view={view} ignition={ignition} flow={flow} onIgnite={ignite} resetCameraKey={resetCameraKey} />
+                    view={view} ignition={ignition} flow={flow} gravityG={conditions.gravityG} onIgnite={ignite} resetCameraKey={resetCameraKey} />
                 ) : <div className="scene-fallback" role="status"><p>{error ?? "Carregando o modelo calibrado…"}</p></div>}
               </Suspense>
             </SceneBoundary>
@@ -379,6 +418,11 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
             <button className="button secondary" onClick={exportScenario} disabled={!ensemble} title="Condições, zonas, foco, ensaio de referência, núcleo e resultados">
               <ArrowDownToLine size={14} />Exportar
             </button>
+            <button className="button secondary" onClick={() => importRef.current?.click()} title="Reimporta uma exportação e verifica se o resultado se reproduz">
+              <ArrowUpFromLine size={14} />Importar
+            </button>
+            <input ref={importRef} type="file" accept="application/json,.json" hidden
+              onChange={(e) => { const f = e.target.files?.[0]; if (f) void importScenario(f); e.target.value = ""; }} />
             <button className="button primary" disabled={!ensemble} onClick={() => { setRun((r) => (r + 1) % SEED_COUNT); setView("run"); setStep(0); setPlaying(true); }}>
               <Flame size={15} />Outra realização<ArrowRight size={15} />
             </button>
@@ -390,6 +434,22 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
         <div className="panel-title"><BookOpen size={15} /><h2>Leitura do cenário</h2>
           <span className={`model-badge ${LEVEL_STYLE[level]}`}>{LEVEL_LABEL[level]}</span></div>
         <div className="model-panel-body">
+          {replay && (
+            <section className={`replay-card ${replay.status}`} role="status">
+              <strong>
+                {replay.status === "pending" ? "Reproduzindo o cenário importado…"
+                  : replay.status === "identical" ? "Reprodução idêntica"
+                  : replay.status === "different" ? "Resultado diferente do exportado"
+                  : "Reprodução não exata"}
+              </strong>
+              <p>Cenário {replay.scenarioId}. {replay.status === "identical" ? "Mesmo código, mesmos bytes dos artefatos e mesmas sementes: velocidade e área final iguais às exportadas."
+                : replay.status === "different" ? "Mesmas dependências, mas velocidade ou área final diferem do arquivo."
+                : replay.status === "not-exact" ? "Estado restaurado, mas as dependências não são as mesmas; o resultado não é comparado como reprodução exata."
+                : "Aguardando o cálculo das realizações."}</p>
+              {replay.issues.length > 0 && <ul>{replay.issues.map((i) => <li key={i}>{i}</li>)}</ul>}
+              <button className="text-link subtle" onClick={() => setReplay(null)}>Fechar</button>
+            </section>
+          )}
           {anchor && <ModelInUse anchor={anchor} level={level} diffs={diffs} kernel={anchorKernels[anchor.id]}
             flowRule={kernel?.flowRule ?? ""} scenarioSpeed={metrics?.speedMmS ?? null} onRunTrial={runAtTrialConditions} />}
           <TrialList ranked={ranked} selected={anchor?.id ?? null} auto={anchorChoice === "auto"}

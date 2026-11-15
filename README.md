@@ -35,6 +35,7 @@ npm run data:sync       # atualiza pela NASA, sem baixar vídeos ou grandes arqu
 npm run data:offline    # reconstrói usando os CSVs já recuperados
 npm run data:check      # verificações focadas de unidades, origem e falhas de atualização
 npm run research:check  # verificações focadas do backend, sem rede/modelos pagos
+npm run sim:check       # motor do habitat e simulações SAFFIRE (Node)
 ```
 
 ```powershell
@@ -54,7 +55,12 @@ npm run preview
 - **SAFFIRE II** com nove amostras. II-5 e II-6 têm avanço estocástico calibrado pelas imagens. As demais exibem a atividade observada na borda. Consulte os [dados e a metodologia de II](docs/research/SAFFIRE_II.md).
 - **SAFFIRE IV-1, V-2 e VI-2** com avanço estocástico a favor do fluxo, calibrado por velocidade publicada. Consulte os [dados e checagens de IV a VI](docs/research/SAFFIRE_IV_V_VI.md).
 - [Relatório SAFFIRE I a VI em PDF](docs/research/relatorio_saffire_i_a_vi.pdf) com metodologia, probabilidades, validação e desfechos dos 25 casos.
-- **Habitat lunar · simulação 3D** (modo inicial): módulo de superfície em corte; o foco de ignição é clicado na parede e o fogo se propaga pelo revestimento com o modelo de vizinhança do SAFFIRE, na grade original (10 × 20 mm, 2 s). Entradas: O₂, pressão, ventilação, gravidade e material por zona; cada material recebe um nível de evidência (calibrado, exploratório, sem propagação medida, sem evidência, inerte). Ensemble de 20 realizações em Web Worker com mapa de probabilidade. Núcleos calibrados por simulação em SAFFIRE I (20 cm/s) e III (25 cm/s); validação entre ensaios em `scripts/crosstrial_saffire.py`.
+- **Habitat lunar · simulação 3D** (modo inicial). O vídeo oficial (0:53–1:24) motiva o desafio com habitats na superfície lunar: **gravidade parcial (1/6 g)** e **atmosfera enriquecida em O₂**. Os dados da NASA são de microgravidade (ISS/Cygnus); o habitat mostra exatamente essa lacuna. Módulo em corte numa base lunar (segundo módulo, rover pressurizado, painéis, lander); o foco de ignição é clicado na parede e o fogo se propaga pelo revestimento com o modelo de vizinhança do SAFFIRE (grade 10 × 20 mm, 2 s), ensemble de 20 realizações e mapa de probabilidade.
+  - **Ensaio de referência**: o cenário é comparado aos ensaios compatíveis do registro (`public/data/saffire/trial-registry.json`, nove ensaios com fontes, conflitos e hashes); no preset lunar o mais próximo é o SAFFIRE VI-2 (31% O₂, 54,1 kPa).
+  - **Três níveis separados**: observado no ensaio; simulado na placa do ensaio (o único condicionado ao ensaio); seu cenário, no máximo *exploratório nas condições do ensaio* ou *interpolado entre ensaios* (I a 20 cm/s, III a 25 cm/s), e *extrapolação* quando O₂, pressão, escoamento ou gravidade diferem. Correspondência só no valor nominal ou faixa documentada (`docs/research/ACCEPTANCE_CRITERIA.md`).
+  - Base da chama e frente carbonizada nunca são misturadas; o núcleo de cada ensaio é ajustado a um único observável.
+  - Chama e fumaça em partículas são **efeito visual qualitativo** dependente da gravidade (em µg, sem empuxo: chama azulada colada à superfície e fumaça seguindo a ventilação; em 1/6 g: chama e fumaça sobem). Não são calibradas.
+  - **Exportar/Importar**: o JSON carrega commit, SHA-256 de cada artefato, sementes, núcleo e motivos do gate; a importação restaura o cenário e diz se a reprodução é idêntica ou por que não é exata.
 - Aplicabilidade de modelos calibrados no modo cabine: compara material, O₂, pressão, escoamento e gravidade com o domínio medido, critério a critério; fora do domínio mostra os ensaios medidos mais próximos. Em gravidade parcial, cita LUCI/FM².
 - Alvos de modelagem curados (`npm run targets:build` → `public/data/modeling-targets.json`, exportáveis em JSON/CSV) com a célula original de cada valor interpretado.
 - Catálogo real com filtros, busca, paginação, campos originais, exportação e aplicação das condições numéricas disponíveis ao cenário; verificado no navegador com BASS-II e FLEX.
