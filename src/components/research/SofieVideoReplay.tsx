@@ -195,14 +195,17 @@ function Replay({ v }: { v: Video1410C }) {
           ) : (
             <p className="rp-note">No analysed window contains this time.</p>
           )}
-          <p className="rp-note">
-            H1 assumes {v.timeBase.H1_realTime.assumes}; H2 assumes {v.timeBase.H2_slowMotion.assumes}. Both are hypotheses. {v.timeBase.note}
-          </p>
-          <p className="rp-note">
-            <strong>Published spin range (physical):</strong> {fmt(v.publishedReference.value[0])}–{fmt(v.publishedReference.value[1])} {v.publishedReference.unit}, kept beside the
-            analysis and never drawn on the video-time axis. {v.publishedReference.source}.
-          </p>
-          <p className="rp-note">{v.aliasing.value}</p>
+          <details className="rp-details">
+            <summary tabIndex={0}>Time-base hypotheses and interpretation</summary>
+            <p className="rp-note">
+              H1 assumes {v.timeBase.H1_realTime.assumes}; H2 assumes {v.timeBase.H2_slowMotion.assumes}. Both are hypotheses. {v.timeBase.note}
+            </p>
+            <p className="rp-note">
+              <strong>Published spin range (physical):</strong> {fmt(v.publishedReference.value[0])}–{fmt(v.publishedReference.value[1])} {v.publishedReference.unit}, kept beside the
+              analysis and never drawn on the video-time axis. {v.publishedReference.source}.
+            </p>
+            <p className="rp-note">{v.aliasing.value}</p>
+          </details>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { ArrowRight, BookOpen, Film, Flame, Grid3x3, Images, Table2, Wind } from
 import { NatureBadge } from "../replay/NatureBadge";
 import type { ReplayNature } from "../replay/replayCore";
 import { REPLAY_CATALOG, type ReplayId } from "../replay/replayCatalog";
+import "../replay/replay.css";
 
 // Every module and its JSON load only when opened. Each replay keeps its own renderer and data;
 // the shared controls never imply a shared physical model.
@@ -36,9 +37,7 @@ export function ExperimentReplays({ modeSwitch }: { modeSwitch: ReactNode }) {
     <main className="replays">
       {modeSwitch}
       <p className="replays-intro">
-        NASA and JAXA experiments shown from their own data. Each card says what you will see: original images, data measured from video, a recorded
-        measurement sequence, or a computational simulation. They share the same playback controls, not the same physics, and none of them predicts
-        your scenario.
+        Explore NASA and JAXA evidence with shared playback controls; each view identifies its data and units.
       </p>
       <div className="replay-grid">
         {REPLAY_CATALOG.map((entry) => {
@@ -68,16 +67,21 @@ export function ExperimentReplays({ modeSwitch }: { modeSwitch: ReactNode }) {
                   <dt>Time</dt>
                   <dd>{entry.timeReference}</dd>
                 </div>
-                <div>
-                  <dt>Data</dt>
-                  <dd>{entry.basis}</dd>
-                </div>
-                <div>
-                  <dt>Limits</dt>
-                  <dd>{entry.limits}</dd>
-                </div>
               </dl>
-              {card.extra && <p className="replay-extra">{card.extra}</p>}
+              <details className="rp-details">
+                <summary>Data and limitations</summary>
+                <dl>
+                  <div>
+                    <dt>Data</dt>
+                    <dd>{entry.basis}</dd>
+                  </div>
+                  <div>
+                    <dt>Limits</dt>
+                    <dd>{entry.limits}</dd>
+                  </div>
+                </dl>
+                {card.extra && <p className="replay-extra">{card.extra}</p>}
+              </details>
               <div className="replay-actions">
                 {entry.animated && (
                   <button className="button primary" onClick={() => setOpen({ kind: "replay", id: entry.id })}>
@@ -95,6 +99,14 @@ export function ExperimentReplays({ modeSwitch }: { modeSwitch: ReactNode }) {
           );
         })}
       </div>
+      <details className="rp-details">
+        <summary>About these evidence views</summary>
+        <p className="replays-intro">
+          NASA and JAXA experiments shown from their own data. Each card says what you will see: original images, data measured from video, a recorded
+          measurement sequence, or a computational simulation. They share the same playback controls, not the same physics, and none of them predicts
+          your scenario.
+        </p>
+      </details>
       {open && (
         <Suspense fallback={<div className="modal-backdrop"><p className="evidence-loading">Loading experiment…</p></div>}>
           {open.kind === "replay" && open.id === "bass2-b1" && <BassB1Replay onClose={close} />}

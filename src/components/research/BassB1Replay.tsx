@@ -240,8 +240,11 @@ function Replay({ data, plane }: { data: B1Series; plane: SamplePlane }) {
             FAN/AIR show the last value read on the video overlay (only changes were transcribed).{" "}
             {telemetry ? `Last change at ${signed(telemetry.t_s)} s.` : "No reading before this time."}
           </p>
-          <p className="rp-note">{data.telemetry.fanNote}</p>
-          <p className="rp-note">{data.telemetry.airNote}</p>
+          <details className="rp-details">
+            <summary tabIndex={0}>Telemetry interpretation</summary>
+            <p className="rp-note">{data.telemetry.fanNote}</p>
+            <p className="rp-note">{data.telemetry.airNote}</p>
+          </details>
         </div>
       </div>
     </div>
