@@ -27,17 +27,17 @@
       "conditionSources": [
         {
           "field": "oxygenRangePct",
-          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/oxygenRangePct; curadoria da tabela PSI-98",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/oxygenPct",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
         },
         {
           "field": "flowCmS",
-          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-98",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowCmS",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
         },
         {
           "field": "flowDirection",
-          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowDirection; curadoria da tabela PSI-98",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowDirection",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
         },
         {
@@ -86,11 +86,8 @@
         "widthMm": 406
       },
       "conditions": {
-        "oxygenPct": null,
-        "oxygenRangePct": [
-          21.5,
-          21.5
-        ],
+        "oxygenPct": 21.5,
+        "oxygenRangePct": null,
         "pressureKpa": null,
         "flowCmS": 20,
         "flowDirection": "opposed",
@@ -98,13 +95,13 @@
       },
       "conditionSources": [
         {
-          "field": "oxygenRangePct",
-          "label": "modeling-targets.json, PSI-98:S2, oxygenRangePct",
+          "field": "oxygenPct",
+          "label": "modeling-targets.json, PSI-98:S2/oxygenPct",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
         },
         {
           "field": "flowCmS",
-          "label": "modeling-targets.json, PSI-98:S2, flowCmS",
+          "label": "modeling-targets.json, PSI-98:S2/flowCmS",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
         },
         {
@@ -142,10 +139,11 @@
         "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
         "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
         "Desfecho não tabulado; a tabela registra 70 s de queima. Frames públicos ainda não processados.",
-        "oxygenPct: não disponível; nenhum valor presumido.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
         "pressureKpa: não disponível; nenhum valor presumido.",
         "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
-        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar.",
+        "Geometria nominal da folha, não extensão disponível de combustível: S2 reutiliza o remanescente após S1; consultar S2_REVIEW.md e NTRS 20170008805, Tabela I."
       ]
     },
     {
@@ -170,17 +168,17 @@
       "conditionSources": [
         {
           "field": "oxygenPct",
-          "label": "public/data/saffire/psi-99-ii5.json, conditions/oxygenPct; curadoria da tabela PSI-99",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/oxygenPctApprox",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
         },
         {
           "field": "flowCmS",
-          "label": "public/data/saffire/psi-99-ii5.json, conditions/flowCmS; curadoria da tabela PSI-99",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/flowCmS",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
         },
         {
           "field": "flowDirection",
-          "label": "modeling-targets.json, PSI-99:2-5, flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-5/flowDirection",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
         },
         {
@@ -241,17 +239,17 @@
       "conditionSources": [
         {
           "field": "oxygenPct",
-          "label": "public/data/saffire/psi-99-ii6.json, conditions/oxygenPct; curadoria da tabela PSI-99",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/oxygenPctApprox",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
         },
         {
           "field": "flowCmS",
-          "label": "public/data/saffire/psi-99-ii6.json, conditions/flowCmS; curadoria da tabela PSI-99",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/flowCmS",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
         },
         {
           "field": "flowDirection",
-          "label": "modeling-targets.json, PSI-99:2-6, flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-6/flowDirection",
           "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
         },
         {
@@ -315,13 +313,13 @@
       "conditionSources": [
         {
           "field": "oxygenPct",
-          "label": "public/data/saffire/psi-100-s1-neighbors.json, conditions/oxygenPct; curadoria da tabela PSI-100",
-          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s1-neighbors.json"
+          "label": "Condição adotada em public/data/saffire/psi-100-s1-neighbors.json, conditions/oxygenPct, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
         },
         {
           "field": "flowCmS",
-          "label": "public/data/saffire/psi-100-s1-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-100",
-          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s1-neighbors.json"
+          "label": "Condição adotada em public/data/saffire/psi-100-s1-neighbors.json, conditions/flowCmS, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
         },
         {
           "field": "flowDirection",
@@ -406,13 +404,13 @@
       "conditionSources": [
         {
           "field": "oxygenPct",
-          "label": "public/data/saffire/psi-100-s2-neighbors.json, conditions/oxygenPct; curadoria da tabela PSI-100",
-          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s2-neighbors.json"
+          "label": "Condição adotada em public/data/saffire/psi-100-s2-neighbors.json, conditions/oxygenPct, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
         },
         {
           "field": "flowCmS",
-          "label": "public/data/saffire/psi-100-s2-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-100",
-          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s2-neighbors.json"
+          "label": "Condição adotada em public/data/saffire/psi-100-s2-neighbors.json, conditions/flowCmS, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
         },
         {
           "field": "flowDirection",

@@ -1,12 +1,12 @@
-"""Cross-trial check: SAFFIRE-III S1 (PSI-100, 25 cm/s) measured independently and predicted by the SAFFIRE-I model.
+"""Retrospective cross-trial check of SAFFIRE-III S1 and provenance of its observations.
 
 Complements scripts/calibrate_saffire_iii.py (the lab calibration with both cameras): this script
 uses camera 1 only, an independent manual registration, and produces the simulation-calibrated
 kernels and the flow exponent used by the 3D habitat.
 
-Same observable and estimator as the SAFFIRE-I S1 pipeline (green-channel contrast boundary,
-2 s illumination bursts, 10 x 20 mm cells, neighbourhood counts), so the two trials differ in
-the flow speed (20 vs 25 cm/s, both concurrent, same SIBAL fabric) and not in the method.
+Reuses the green-channel contrast detector and nominal grid, but camera, registration,
+window and experimental conditions differ. The fitted flow exponent is not a controlled
+causal effect; matching both observed speeds is calibration, not external validation.
 
 Outputs public/data/saffire/crosstrial-i-iii.json with:
   - the observed median front and its speed (camera 1 field of view, ~590 mm);
@@ -50,15 +50,158 @@ OXYGEN_III = 21.2
 SEEDS = list(range(1951, 1971))
 
 
-def frames() -> list[tuple[int, ZipFile, str]]:
-    found: dict[int, tuple[ZipFile, str]] = {}
-    for path in sorted(CACHE.glob('*S1C1_JPEG_Mapped_part*.zip')):
-        archive = ZipFile(path)
-        for name in archive.namelist():
-            match = FRAME.search(name)
-            if match and not name.startswith('__MACOSX'):
-                found.setdefault(int(match[1]), (archive, name))
-    return [(t, *found[t]) for t in sorted(found)]
+def script_digest(path: Path = Path(__file__)) -> str:
+    """Portable fingerprint of source text; ZIP fingerprints remain exact byte SHA256."""
+    return hashlib.sha256(path.read_bytes().replace(bytes((13, 10)), bytes((10,)))).hexdigest()
+
+
+def frame_lineage(archive: ZipFile, name: str) -> dict:
+    info = archive.getinfo(name)
+    return {'zip': Path(archive.filename).name, 'member': name,
+            'crc32': f'{info.CRC:08x}', 'uncompressedBytes': info.file_size,
+            'compressedBytes': info.compress_size}
+
+
+def index_frames(cache: Path) -> tuple[list, dict]:
+    """Validate actual member CRCs before accepting timestamp/CRC deduplication."""
+    found, assets, duplicates, archives = {}, [], [], []
+    try:
+        for path in sorted(cache.glob('*S1C1_JPEG_Mapped_part*.zip')):
+            digest = hashlib.sha256()
+            with path.open('rb') as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b''):
+                    digest.update(block)
+            archive = ZipFile(path)
+            archives.append(archive)
+            entries = archive.infolist()
+            if len({entry.filename for entry in entries}) != len(entries):
+                raise ValueError(f'Membros ambíguos com nomes repetidos: {path.name}')
+            bad = archive.testzip()  # Reads every member, not just the central-directory CRC.
+            if bad is not None:
+                raise ValueError(f'CRC inválido: {path.name}:{bad}')
+            stamps = []
+            for entry in entries:
+                match = FRAME.search(entry.filename)
+                if not match or entry.filename.startswith('__MACOSX'):
+                    continue
+                stamp = int(match[1])
+                stamps.append(stamp)
+                previous = found.setdefault(stamp, (archive, entry.filename))
+                if previous != (archive, entry.filename):
+                    prior = previous[0].getinfo(previous[1])
+                    if (prior.CRC, prior.file_size) != (entry.CRC, entry.file_size):
+                        raise ValueError(f'CRC/tamanho conflitante no timestamp {stamp}')
+                    duplicates.append({'timestampMs': stamp, 'kept': frame_lineage(*previous),
+                                       'duplicate': frame_lineage(archive, entry.filename)})
+            assets.append({'name': path.name, 'bytes': path.stat().st_size, 'sha256': digest.hexdigest(),
+                           'crcValidatedMembers': len(entries),
+                           'crcValidatedUncompressedBytes': sum(e.file_size for e in entries),
+                           'frameEntries': len(stamps), 'memberTimestampsOrdered': stamps == sorted(stamps)})
+        items = [(t, *found[t]) for t in sorted(found)]
+        used = {id(a) for _, a, _ in items}
+        for archive in archives:
+            if id(archive) not in used:
+                archive.close()
+        audit = {'zipAssets': assets, 'zipBytesObserved': sum(a['bytes'] for a in assets),
+                 'crcValidatedUncompressedBytes': sum(a['crcValidatedUncompressedBytes'] for a in assets),
+                 'uniqueFrames': len(items), 'frameEntries': sum(a['frameEntries'] for a in assets),
+                 'duplicateEntries': len(duplicates),
+                 'duplicateTimestamps': len({d['timestampMs'] for d in duplicates}),
+                 'duplicateLineage': duplicates,
+                 'deduplication': 'Timestamp da câmera; CRC32 e tamanho iguais após leitura/CRC de todos os membros. Não é prova criptográfica de igualdade dos JPEGs.',
+                 'ordering': 'Partes por nome; primeira ocorrência mantida; timestamps únicos ordenados numericamente antes da seleção.'}
+        return items, audit
+    except Exception:
+        for archive in archives:
+            archive.close()
+        raise
+
+
+def frames(cache: Path = CACHE) -> list[tuple[int, ZipFile, str]]:
+    return index_frames(cache)[0]
+
+
+def fit_interval_hazard(durations: list[float], events: list[int]) -> dict:
+    """Grouped/interval-censored Bernoulli likelihood, NOT exact event-time MLE."""
+    from scipy.optimize import brentq
+    dt, y = np.asarray(durations, dtype=float), np.asarray(events, dtype=float)
+    if (dt.ndim != 1 or y.shape != dt.shape or not np.all(np.isfinite(dt))
+            or not np.all(dt > 0) or not np.all(np.isin(y, [0, 1]))):
+        raise ValueError('Intervalos finitos positivos e eventos binários pareados são obrigatórios.')
+    if not len(dt):
+        rate, status = None, 'no-exposures'
+    elif not y.sum():
+        rate, status = 0., 'no-events-boundary'
+    elif y.sum() == len(y):
+        rate, status = None, 'all-events-unbounded'
+    else:
+        event_dt = dt[y == 1]
+        survival_time = float(dt[y == 0].sum())
+        def score(rate):
+            z = rate * event_dt
+            # exp(-z) form avoids overflow at large z.
+            return float(np.sum(event_dt * np.exp(-z) / (-np.expm1(-z))) - survival_time)
+        hi = 1. / float(dt.min())
+        while score(hi) > 0:
+            hi *= 2
+        rate = float(brentq(score, np.finfo(float).eps / float(dt.sum()), hi, xtol=1e-14))
+        status = 'finite-grouped-interval-mle'
+    return {'ratePerSecond': rate, 'probabilityAt2Seconds': None if rate is None else float(-np.expm1(-2 * rate)),
+            'status': status}
+
+
+def interval_sensitivity(fronts: list, times: list[float], columns: int = COLUMNS) -> dict:
+    from calibrate_saffire_neighbors import make_grid, neighbors
+    t = np.asarray(times, dtype=float)
+    if t.ndim != 1 or len(t) != len(fronts) or len(t) < 2 or not np.all(np.isfinite(t)) or not np.all(np.diff(t) > 0):
+        raise ValueError('Tempos finitos estritamente crescentes pareados às frentes são obrigatórios.')
+    width = len(fronts[0])
+    for row in fronts:
+        if len(row) != width or any(v is not None and (not np.isfinite(v) or int(v) != v or not 0 <= v <= columns) for v in row):
+            raise ValueError('Frentes discretas inválidas.')
+    groups = {f'{n:03b}': ([], []) for n in range(8)}
+    censored = excluded = unknown = 0
+    for old, new, dt in zip(fronts, fronts[1:], np.diff(t)):
+        if any(a is not None and b is not None and b < a for a, b in zip(old, new)):
+            raise ValueError('Frentes devem ser monotônicas.')
+        before, after = make_grid(old, columns), make_grid(new, columns)
+        for r, row in enumerate(before):
+            for c, cell in enumerate(row):
+                if cell is None:
+                    unknown += 1
+                    continue
+                if cell != 0:
+                    continue
+                key = neighbors(before, r, c)
+                if key is None or after[r][c] is None:
+                    censored += 1
+                elif key == '000':
+                    excluded += 1
+                else:
+                    groups[key][0].append(float(dt))
+                    groups[key][1].append(int(after[r][c] == 1))
+    combinations = {}
+    for key, (dt, events) in groups.items():
+        actual = fit_interval_hazard(dt, events)
+        fixed = fit_interval_hazard([2.] * len(dt), events)
+        a, b = actual['ratePerSecond'], fixed['ratePerSecond']
+        combinations[key] = {'exposures': len(dt), 'transitions': sum(events),
+                             'observedCellSeconds': sum(dt), 'fixedCellSeconds': 2 * len(dt),
+                             'variableInterval': actual, 'fixed2Seconds': fixed,
+                             'rateDifferencePct': None if a is None or b in (None, 0) else 100 * (a / b - 1),
+                             'probabilityAt2SecondsDifference': None if a is None or b is None else actual['probabilityAt2Seconds'] - fixed['probabilityAt2Seconds']}
+    delta = np.diff(t)
+    return {'deltaSeconds': delta.tolist(),
+            'deltaSummary': {'min': float(delta.min()), 'max': float(delta.max()), 'mean': float(delta.mean()),
+                             'median': float(np.median(delta)), 'total': float(delta.sum()),
+                             'fixedTotal': 2. * len(delta), 'maxAbsoluteDeviationFrom2Seconds': float(np.max(abs(delta - 2)))},
+            'censoredCellIntervals': censored, 'unknownAtStartCellIntervals': unknown,
+            'excludedNoActiveNeighborCellIntervals': excluded, 'combinations': combinations,
+            'riskDefinition': 'Mesmo conjunto do count_neighborhoods legado: célula intacta no início, vizinhos esquerda/acima/abaixo conhecidos e pelo menos um ativo (000 excluído), estado final conhecido. Classe congelada no início de cada intervalo; célula pode retornar em intervalos posteriores se observada. Nenhuma exposição além do último quadro.',
+            'censoring': 'Estado final ou vizinhança desconhecidos: intervalo excluído integralmente, sem imputar sobrevivência nem tempo parcial; início desconhecido fora da população de risco. Evento observado apenas em (t_i,t_i+1], não no instante exato; sem evento contribui sobrevivência por Δt. Perda de observação não é tratada como censura independente demonstrada.',
+            'likelihood': 'sum_event log(1-exp(-lambda*dt)) - sum_no_event lambda*dt; hazard constante por classe congelada. MLE agrupado/intervalar condicional ao conjunto observado; NÃO events/sum(dt), que exigiria tempos exatos de evento/exposição apropriados.',
+            'fixedEquivalence': 'Com dt=2 uniforme, p=events/exposures e lambda=-log(1-p)/2 são equivalentes no modelo Bernoulli agrupado, não ao MLE de tempos exatos. Classes com menos de 30 exposições são apenas descritivas; regra operacional de mínimo 30 permanece intacta.',
+            'interpretation': 'Sensibilidade descritiva da hipótese temporal, sem reajuste operacional e sem validação física. Dependência espacial/temporal, ativações dentro dos intervalos, monotonicização e censura podem enviesar a hipótese de hazard constante.'}
 
 
 def green_mean(archive: ZipFile, name: str) -> float:
@@ -69,6 +212,8 @@ def green_mean(archive: ZipFile, name: str) -> float:
 
 def lit_bursts(items: list[tuple[int, ZipFile, str]]) -> list[tuple[int, ZipFile, str, float]]:
     """Brightest frame of each 2 s illumination burst."""
+    if any(not np.isfinite(t) for t, _, _ in items) or any(b[0] <= a[0] for a, b in zip(items, items[1:])):
+        raise ValueError('Timestamps finitos únicos e estritamente crescentes são obrigatórios.')
     chosen, burst = [], []
     for t, archive, name in items[::2]:
         g = green_mean(archive, name)
@@ -136,8 +281,58 @@ def match_speed(front: list[int], combinations: dict, steps: int, target: float)
                              for k, v in combinations.items()}}
 
 
+def enrich_payload(payload: dict, items: list, audit: dict, bursts: list,
+                   times: list, raw: list, fronts: list) -> None:
+    from datetime import datetime, timezone
+    from calibrate_saffire import ROW_CENTRES
+    median = median_front_mm(fronts)
+    trajectory = [{'timeS': round(t, 2), 'frontMedianMm': m} for t, m in zip(times, median)]
+    # Fail closed instead of silently attaching new observations to stale science.
+    if (trajectory != payload['observedTrajectory'] or len(items) != payload['frames']['total']
+            or len(bursts) != payload['frames']['illuminatedBursts']
+            or count_neighborhoods(fronts) != payload['neighborhood']):
+        raise ValueError('Observações reais divergem do artefato legado; publicação aditiva interrompida.')
+    sensitivity = interval_sensitivity(fronts, times)
+    window = [i for i, m in enumerate(median) if m is not None and 60 <= m <= VISIBLE_MM - 60]
+    positions = np.array([median[i] for i in window])
+    actual = fit_speed(np.array([times[i] for i in window]), positions)
+    fixed = fit_speed(np.array([2. * i for i in window]), positions)
+    sensitivity['frontSpeedOLS'] = {'actualTimestamps': actual, 'fixed2Seconds': fixed,
+                                    'differencePct': 100 * (actual['speedMmS'] / fixed['speedMmS'] - 1),
+                                    'selection': 'Mesmas medianas e índices da janela legada 60 <= frente <= visibleLength-60; só o eixo temporal muda.'}
+    if not np.isclose(actual['speedMmS'], payload['observed']['speedMmS'], rtol=1e-12, atol=1e-12):
+        raise ValueError('Velocidade observada diverge do legado.')
+    payload['observations'] = {
+        'rowCentersMm': ROW_CENTRES.tolist(), 'gridCellLengthMm': 10,
+        'epochInitialMs': bursts[0][0],
+        'epochInitialUtc': datetime.fromtimestamp(bursts[0][0] / 1000, timezone.utc).isoformat(),
+        'epochDefinition': 'Timestamp do primeiro quadro iluminado selecionado; não identifica ignição nem sincronização externa. Interpretação Unix ms do nome do arquivo, não verificada contra relógio independente.',
+        'selection': 'Estimador legado inalterado: frames únicos ordenados [::2], média verde >=8, rajada separada por lacuna >600ms, maior média verde (primeiro em empate).',
+        'frontDefinition': 'frontMm: fronteira verde medida, censurada acima de visibleLength-15mm; frontGridCells: arredondamento 10mm e monotonicização legados. Índice da faixa 0..20, centros conforme calibrate_saffire. Valores null não imputados.',
+        'selectedJpegBytes': sum(a.getinfo(n).file_size for _, a, n, _ in bursts),
+        'selectedFrames': [
+            {'timestampMs': stamp, 'timeS': round(t, 2), 'greenMean': green,
+             'lineage': frame_lineage(archive, name), 'frontMm': row, 'frontGridCells': front}
+            for (stamp, archive, name, green), t, row, front in zip(bursts, times, raw, fronts, strict=True)],
+        'notMeasured': ['Instante exato de ignição/transição de cada célula e ativação dos vizinhos dentro do intervalo.',
+                        'Calibração absoluta do relógio, sincronização independente e duração real de iluminação.',
+                        'Temperatura, fluxo térmico, taxa de liberação de calor, pressão e incerteza de registro.',
+                        'Câmera 2, frente fora do campo visível, cinética física e validação independente de hazard.']}
+    payload['timeSensitivity'] = sensitivity
+    payload['provenance']['frameAudit'] = audit
+    payload['provenance']['script'] = script_digest()
+    payload['provenance']['scriptHashConvention'] = 'SHA-256 of source bytes with CRLF normalized to LF; ZIP hashes use exact bytes.'
+    # Reject all non-standard JSON floats before the atomic publication.
+    json.dumps(payload, allow_nan=False)
+
+
 def main() -> int:
-    items = frames()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--cache-dir', type=Path, default=CACHE)
+    parser.add_argument('--provenance-only', action='store_true', help='Re-extrai observações reais e preserva todos os resultados científicos já publicados; não recalibra simulações.')
+    args = parser.parse_args()
+    items, audit = index_frames(args.cache_dir)
     if not items:
         raise SystemExit(f'Nenhum frame em {CACHE}; baixe os ZIPs S1C1_JPEG_Mapped do PSI-100.')
     bursts = lit_bursts(items)
@@ -153,6 +348,19 @@ def main() -> int:
     t = np.array([a for a, m in zip(times, median) if m is not None and 60 <= m <= VISIBLE_MM - 60])
     x = np.array([m for m in median if m is not None and 60 <= m <= VISIBLE_MM - 60])
     observed = fit_speed(t, x)
+
+    if args.provenance_only:
+        payload = json.loads(OUTPUT.read_text(encoding='utf-8'))
+        enrich_payload(payload, items, audit, bursts, times, raw, fronts)
+        atomic_write(OUTPUT, json_bytes(payload))
+        for archive in {a for _, a, _ in items}:
+            archive.close()
+        print(json.dumps({'mode': 'provenance-only', 'zipBytesObserved': audit['zipBytesObserved'],
+                          'uniqueFrames': len(items), 'duplicateEntries': audit['duplicateEntries'],
+                          'selectedFrames': len(bursts), 'epochInitialMs': bursts[0][0],
+                          'deltaSummary': payload['timeSensitivity']['deltaSummary'],
+                          'frontSpeedOLS': payload['timeSensitivity']['frontSpeedOLS']}, ensure_ascii=False))
+        return 0
 
     counts = count_neighborhoods(fronts)
     saffire_i = json.loads(SAFFIRE_I.read_text(encoding='utf-8'))
@@ -218,14 +426,15 @@ def main() -> int:
             'Espessura tabulada como ".33 cm" (provavelmente 0,33 mm), diferente dos 0,37 mm do SAFFIRE-I.',
         ],
         'provenance': {
-            'zips': {p.name: p.stat().st_size for p in sorted(CACHE.glob('*S1C1_JPEG_Mapped_part*.zip'))},
-            'script': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            'zips': {p.name: p.stat().st_size for p in sorted(args.cache_dir.glob('*S1C1_JPEG_Mapped_part*.zip'))},
+            'script': script_digest(),
         },
     }
+    enrich_payload(payload, items, audit, bursts, times, raw, fronts)
     atomic_write(OUTPUT, json_bytes(payload))
 
     # Diagnostic overlay for visual review (not published).
-    out = CACHE / 'analysis'
+    out = args.cache_dir / 'analysis'
     out.mkdir(exist_ok=True)
     for k in (len(bursts) // 4, len(bursts) // 2, 3 * len(bursts) // 4):
         _, archive, name, _ = bursts[k]

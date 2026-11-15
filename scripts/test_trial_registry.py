@@ -75,6 +75,52 @@ class TrialRegistryTests(unittest.TestCase):
         saved = json.loads((ROOT / 'public/data/saffire/trial-registry.json').read_text(encoding='utf-8'))
         self.assertEqual(saved, registry.build_registry(ROOT))
 
+    def test_invalid_dimensions_material_and_oxygen_are_rejected(self):
+        for field, value in [('lengthMm', 'unknown'), ('widthMm', -1), ('widthMm', None), ('thicknessMm', True), ('thicknessMm', -1), ('oxygenPct', 101), ('material', None)]:
+            data = registry.build_registry(ROOT)
+            trial = data['trials'][0]
+            if field in {'lengthMm', 'widthMm'}:
+                if value is None:
+                    del trial['geometry'][field]
+                else:
+                    trial['geometry'][field] = value
+            elif field == 'oxygenPct':
+                trial['conditions'][field] = value
+                trial['conditionSources'].append({'field': field, 'label': 'synthetic negative test', 'url': 'https://example.test/'})
+            else:
+                trial[field] = value
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                registry.validate_registry(data, ROOT)
+
+    def test_missing_observable_backing_and_swapped_models_are_rejected(self):
+        for case in ('missing-file', 'outside-root', 'missing-url-key', 'swapped-model'):
+            data = registry.build_registry(ROOT)
+            trial = data['trials'][0]
+            if case == 'missing-file':
+                trial['observables'][0]['artifact'] = 'nonexistent.json'
+                trial['observables'][0]['source']['url'] = None
+            elif case == 'outside-root':
+                trial['observables'][0]['artifact'] = '../outside.json'
+            elif case == 'missing-url-key':
+                del trial['observables'][0]['source']['url']
+            else:
+                trial['model'] = copy.deepcopy(data['trials'][1]['model'])
+            with self.subTest(case=case), self.assertRaises(ValueError):
+                registry.validate_registry(data, ROOT)
+
+    def test_approximation_and_source_field_paths_remain_honest(self):
+        trials = {t['id']: t for t in registry.build_registry(ROOT)['trials']}
+        opposed = trials['SAFFIRE-I-S2']
+        self.assertEqual(opposed['conditions']['oxygenPct'], 21.5)
+        self.assertIsNone(opposed['conditions']['oxygenRangePct'])
+        self.assertTrue(any('aproximado' in note for note in opposed['notes']))
+        s1_range = next(s for s in trials['SAFFIRE-I-S1']['conditionSources'] if s['field'] == 'oxygenRangePct')
+        self.assertIn('conditions/oxygenPct', s1_range['label'])
+        self.assertNotIn('conditions/oxygenRangePct', s1_range['label'])
+        for key in ('oxygenPct', 'flowCmS'):
+            ref = next(s for s in trials['SAFFIRE-III-S1']['conditionSources'] if s['field'] == key)
+            self.assertIn('10.1016/j.combustflame.2018.10.012', ref['url'])
+
 
 if __name__ == '__main__':
     unittest.main()

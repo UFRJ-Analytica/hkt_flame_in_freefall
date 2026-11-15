@@ -67,6 +67,8 @@ def build_registry(root: Path = ROOT) -> dict:
         conflicts = []
         # Prefer explicit conditions of the actual model, with a source for each.
         oxygen = raw_conditions.get('oxygenPct', raw_conditions.get('oxygenPctApprox', record.get('oxygenPct')))
+        if record.get('oxygenApproximate') and isinstance(oxygen, list) and len(oxygen) == 2 and oxygen[0] == oxygen[1]:
+            oxygen = oxygen[0]  # Approximate point, not a zero-width measured interval.
         conditions['oxygenPct'] = oxygen if not isinstance(oxygen, list) else None
         conditions['oxygenRangePct'] = oxygen if isinstance(oxygen, list) else None
         conditions['pressureKpa'] = raw_conditions.get('pressureKpa', record.get('pressureKpa'))
@@ -86,10 +88,15 @@ def build_registry(root: Path = ROOT) -> dict:
                 if field == 'gravity':
                     label, url = 'ICES-2024-365, p1: ensaios na Cygnus em órbita', ICES
             else:
-                label, url = f'{path}, conditions/{field}; curadoria da tabela {investigation}', BASE + path
                 raw_field = 'oxygenPct' if field == 'oxygenRangePct' else field
-                if raw_field not in raw_conditions and not (field == 'oxygenPct' and 'oxygenPctApprox' in raw_conditions):
-                    label, url = f'modeling-targets.json, {investigation}:{sample}, {field}', BASE + 'public/data/modeling-targets.json'
+                if field == 'oxygenPct' and 'oxygenPctApprox' in raw_conditions:
+                    raw_field = 'oxygenPctApprox'
+                label, url = f'{path}, conditions/{raw_field}', BASE + path
+                if raw_field not in raw_conditions:
+                    label, url = f'modeling-targets.json, {investigation}:{sample}/{raw_field}', BASE + 'public/data/modeling-targets.json'
+                if investigation == 'PSI-100' and field in {'oxygenPct', 'flowCmS'}:
+                    label, url = (f'Condição adotada em {path}, conditions/{raw_field}, atribuída ao artigo da equipe; conflito PSI preservado',
+                                  'https://doi.org/10.1016/j.combustflame.2018.10.012')
                 if field == 'gravity':
                     label, url = 'modeling-targets.json, gravity e platform do ensaio', BASE + 'public/data/modeling-targets.json'
                 if field == 'flowDirection' and 'flowDirection' not in raw_conditions and 'direction' not in data:
@@ -145,6 +152,8 @@ def build_registry(root: Path = ROOT) -> dict:
             conflicts.append('Espessura literal .33 cm não confirmada: thicknessMm permanece null.')
         if trial_id == 'SAFFIRE-II-6':
             conflicts.append('Artefato II-6 registra 25 cm/s; curadoria PSI-99 registra 20 cm/s. Preservado o valor do modelo, sem resolver a divergência.')
+        if trial_id == 'SAFFIRE-I-S2':
+            notes.append('Geometria nominal da folha, não extensão disponível de combustível: S2 reutiliza o remanescente após S1; consultar S2_REVIEW.md e NTRS 20170008805, Tabela I.')
         if trial_id == 'SAFFIRE-III-S1':
             obs = cross['observed']
             observations.append(observable('char-front', obs['speedMmS'],
@@ -171,6 +180,21 @@ def finite_number(value) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
+def require_keys(value, keys: set[str], label: str) -> None:
+    if not isinstance(value, dict) or set(value) != keys:
+        raise ValueError(f'Invalid {label} schema')
+
+
+def checked_artifact(root: Path, value: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError('Invalid artifact path')
+    target = (Path(root) / value).resolve()
+    target.relative_to(Path(root).resolve())
+    if not target.is_file():
+        raise ValueError('Missing artifact file')
+    return target
+
+
 def validate_registry(data: dict, root: Path = ROOT) -> None:
     if set(data) != {'schemaVersion', 'generatedBy', 'trials'} or data['schemaVersion'] != 1 or data['generatedBy'] != 'scripts/build_trial_registry.py':
         raise ValueError('Invalid trial registry header')
@@ -180,9 +204,26 @@ def validate_registry(data: dict, root: Path = ROOT) -> None:
     for trial in data['trials']:
         if set(trial) != {'id', 'campaign', 'sample', 'investigation', 'material', 'thicknessMm', 'geometry', 'conditions', 'conditionSources', 'observables', 'model', 'conflicts', 'notes'}:
             raise ValueError('Unexpected trial schema fields')
+        spec = next(s for s in SPECS if s[0] == trial['id'])
+        if (trial['campaign'], trial['sample'], trial['investigation']) != spec[1:4]:
+            raise ValueError('Trial identity mismatch')
+        if not isinstance(trial['material'], str) or not trial['material'].strip():
+            raise ValueError('Invalid material')
+        require_keys(trial['geometry'], {'lengthMm', 'widthMm'}, 'geometry')
+        for value in [trial['thicknessMm'], *trial['geometry'].values()]:
+            if value is not None and (not finite_number(value) or value <= 0):
+                raise ValueError('Invalid dimension or thickness')
+        if any(not isinstance(trial[k], list) or not all(isinstance(v, str) for v in trial[k]) for k in ('notes', 'conflicts')):
+            raise ValueError('Invalid notes/conflicts')
         conditions = trial['conditions']
         if set(conditions) != {'oxygenPct', 'oxygenRangePct', 'pressureKpa', 'flowCmS', 'flowDirection', 'gravity'}:
             raise ValueError('Invalid condition schema')
+        if not isinstance(trial['conditionSources'], list):
+            raise ValueError('Invalid condition sources')
+        for ref in trial['conditionSources']:
+            require_keys(ref, {'field', 'label', 'url'}, 'condition source')
+            if not all(isinstance(ref[k], str) and ref[k].strip() for k in ref) or not ref['url'].startswith('https://'):
+                raise ValueError('Invalid condition reference')
         sourced = {s['field'] for s in trial['conditionSources'] if s.get('label') and isinstance(s.get('url'), str) and s['url'].startswith('https://')}
         if any(value is not None and field not in sourced for field, value in conditions.items()):
             raise ValueError('Missing source for non-null condition')
@@ -190,16 +231,28 @@ def validate_registry(data: dict, root: Path = ROOT) -> None:
             raise ValueError('Unsupported direction or gravity')
         for field in ('oxygenPct', 'pressureKpa', 'flowCmS'):
             value = conditions[field]
-            if value is not None and (not finite_number(value) or value < 0):
+            if value is not None and (not finite_number(value) or value < 0 or field == 'oxygenPct' and value > 100):
                 raise ValueError('Invalid numeric condition')
         interval = conditions['oxygenRangePct']
         if interval is not None and (not isinstance(interval, list) or len(interval) != 2 or not all(finite_number(v) for v in interval) or not 0 <= interval[0] <= interval[1] <= 100):
             raise ValueError('Invalid oxygen interval')
+        if not isinstance(trial['observables'], list):
+            raise ValueError('Invalid observables')
         for obs in trial['observables']:
             if set(obs) != {'kind', 'speedMmS', 'window', 'uncertainty', 'source', 'artifact'} or obs['kind'] not in KINDS or not finite_number(obs['speedMmS']) or obs['speedMmS'] < 0:
                 raise ValueError('Invalid observable kind or speed')
             if not obs['window'] or not obs['source'].get('label'):
                 raise ValueError('Missing observable source/window')
+            require_keys(obs['source'], {'label', 'url'}, 'observable source')
+            if not isinstance(obs['source']['label'], str) or not isinstance(obs['window'], str):
+                raise ValueError('Invalid observable reference')
+            url = obs['source']['url']
+            if url is not None and (not isinstance(url, str) or not url.startswith('https://')):
+                raise ValueError('Invalid observable URL')
+            if obs['artifact'] is not None:
+                checked_artifact(root, obs['artifact'])
+            elif url is None:
+                raise ValueError('Observable has no usable reference')
             u = obs['uncertainty']
             if u is not None and (set(u) != {'kind', 'value', 'note'} or u['kind'] not in {'ols-se-iid', 'seed-spread', 'none'} or not finite_number(u['value']) or u['value'] < 0 or not u['note']):
                 raise ValueError('Invalid uncertainty')
@@ -207,8 +260,9 @@ def validate_registry(data: dict, root: Path = ROOT) -> None:
         if set(model) != {'artifact', 'kind', 'validation', 'artifactSha256'} or model['kind'] not in MODEL_KINDS or model['validation'] not in VALIDATIONS:
             raise ValueError('Invalid model schema')
         if model['artifact'] is not None:
-            target = (Path(root) / model['artifact']).resolve()
-            target.relative_to(Path(root).resolve())
+            if model['artifact'] != 'public/data/saffire/' + spec[4]:
+                raise ValueError('Model belongs to another trial')
+            target = checked_artifact(root, model['artifact'])
             if model['artifactSha256'] != hashlib.sha256(target.read_bytes()).hexdigest():
                 raise ValueError('Model artifact hash mismatch')
         elif model['artifactSha256'] is not None:

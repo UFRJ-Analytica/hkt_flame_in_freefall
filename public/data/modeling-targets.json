@@ -882,7 +882,7 @@
       "unit": "mm/s",
       "method": "Mesmo observável e estimador do SAFFIRE I · S1 (scripts/calibrate_saffire_iii.py); OLS da mediana entre faixas.",
       "artifact": "public/data/saffire/crosstrial-i-iii.json",
-      "artifactSha256": "484beddb8edd5f8940ffc9392badfbdef90bbb3bb5d52768b2817898cf101c48",
+      "artifactSha256": "eeae838323cb8731218351ac072a1bbc230e873d1b9e161f8dbd7dcf60d94bdc",
       "limits": "Só câmera 1 (~590 mm); registro manual em um quadro. A calibração do laboratório com as duas câmeras mede 2,43 mm/s no trecho reservado."
     }
   ],

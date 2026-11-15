@@ -86,6 +86,6 @@ O worktree isolado reutiliza o interpretador absoluto da pasta original; não in
 
 Tarefa 1: registro publicado; frontend consome public/data/saffire/trial-registry.json, preservando fontes, conflitos e nulls.
 Tarefa 2: S2_REVIEW.md publicado; quantização e ausência de pixels/ignitor impedem aprovação física das taxas S2.
-Tarefa 3: proveniência cross-trial em execução; os novos campos ainda não foram publicados nesta etapa.
+Tarefa 3: execução real e JSON aditivo concluídos; campos observations, timeSensitivity e provenance.frameAudit documentados em CROSSTRIAL_PROVENANCE.md.
 Tarefa 4: critérios e testes de dados entregues; gate/exportação do frontend ainda exigem integração e teste ponta a ponta.
 Não verificado: transferência lunar, incerteza total, teste externo congelado, segurança de interfaces ou certificação.
