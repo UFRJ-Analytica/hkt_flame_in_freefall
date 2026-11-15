@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "corpusVersion": "edf076249d074034",
+  "corpusVersion": "179fe4d13469db3b",
   "extractor": {
     "name": "pypdf",
     "version": "6.21.4",
@@ -585,7 +585,8 @@
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-bass",
@@ -731,7 +732,8 @@
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-saffire",
@@ -784,7 +786,8 @@
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-same",
@@ -864,7 +867,8 @@
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-sofie",
@@ -881,32 +885,33 @@
         {
           "id": "nasa-sofie-1",
           "text": "Physical Sciences Solid Fuel Ignition and Extinction (SoFIE) Fire can be a catastrophic hazard for manned spacecraft. NASA mitigates the risk of fire with the implementation of NASA-STD-6001, which establishes program requirements for evaluation, testing, and selection of materials to preclude unsafe conditions related to flammability, odor, offgassing, and fluid compatibility. NASA-STD-6001 impelements a 1-g flame propagation test for proposed space flight materials which some researchers believe is not conservative in low-g. In 2009, NASA selected 5 investigations that would help further our understanding of solid surface combustion and material flammability. Each investigation addresses different elements fo material flammability. Residence Time Driven Flame Spread (RTDFS) Primary Investigator: Prof. Subrata Bhattacharjee, San Diego State Univ Description The RTDFS experiment will investigate steady and unsteady flame propagation over solid fuels in a microgravity environment. Theoretical modeling predicts that steady flame spread over solid fuels cannot be sustained, even in a high oxygen environment if the fuel exceeds a critical thickness.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-sofie-2",
           "text": "Flame spread rate over thin fuels in a quiescent microgravity environment decreases with fuel thickness not only because of increased thermal mass but also because the relative importance of radiative losses, as quantified by a non-dimensional radiation number, increases in direct proportion of fuel thickness. Narrow Channel Apparatus (NCA) Primary Investigator: Prof. Fletcher Miller, San Diego State University Description The experimental approach is to measure flame spread across planar samples of PMMA in a forced opposed flow configuration. The atmosphere will be a mix of oxygen and nitrogen, with the oxygen percentage ranging from atmospheric up to 85%. The pressure will be varied accordingly to stay on or near the normoxic curve. Samples will be tested at variety of flow velocities to obtain spread rate and extinction limits. Growth and Extinction Limit (GEL) Primary Investigator: Prof. James T’ien, CWRU Description This proposed experiment will concentrate on the flame growth, decay and extinction over the surface of a non-flat thick solid in microgravity.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-sofie-3",
           "text": "In particular, a solid sphere of substantial size (i.e. 4 to 5 cm diameter) is chosen as a representative of non-flat samples. In addition to the parameters influencing the flammability in thin solids, the degree of interior heat-up is an important parameter on the solid burning characteristics of thick specimen. In spherical samples, the degree of interior heating is always changing. The problem is therefore unsteady in nature. In addition, flow around a sphere is different from that around a flat surface. The existence of a forward stagnation point, shoulder and wake regions result in different local flow pattern, hence a different flame-solid interaction. These can affect the burning and extinction characteristics. Material Ignition and Suppression Test (MIST) Primary Investigator: Prof. Carlos Fernandez-Pello, UC Berkeley Description The MIST experimental apparatus would consist of a small-scale combustion wind tunnel, a cylindrical fuel sample, radiant heaters, an igniter, and supporting instrumentation. The flow duct will provide a consistent and uniform flow of the oxidizer gas to the test section where the fuel sample will be located.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-sofie-4",
           "text": "The test section will have most of the area of its sidewalls available for optical access. Each cylindrical fuel sample will be supported in a holder and placed along the central axis of the flow duct, such that the oxidizer will flow smoothly over the sample surface. An electrical igniter consisting of coiled Kanthal wire will be located around the fuel sample on the downstream end. All tests will be conducted in an opposed-flow configuration. Spacecraft Materials Microgravity Research on Flammability (SMuRF) Primary Investigator: Dr. Sandra Olson, GRC Description The SMµRF experiment will correlate normal gravity flammability test data with data under ventilated microgravity conditions. Rigorous correlations between ground test flammability data in ventilated spacecraft environment would allow selection of materials with increased fire resistance, and thus decrease the fire risk in space systems. The operational flexibility will also increase because the safety factors will be assessable. Media 10 Images Latest Content Stay up-to-date with the latest content from NASA as we explore the universe and discover more about our home planet.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-sofie-5",
           "text": "SoFIE Stories 1 min read Mission SoFIE 1 min read SoFIE Solid Fuel Ignition and Extinction Active Mission SoFIE is a facility on the International Space Station (ISS) for studying… Mission Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         }
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-flare",
@@ -922,17 +927,18 @@
         {
           "id": "nasa-flare-1",
           "text": "Physical Sciences Flammability Limits At Reduced-g Experiment (FLARE) To develop a methodology to correlate material flammability limits in normal gravity and microgravity, which allows quantitative estimation of material flammability limit in microgravity based on the flammability data obtained on the ground. The project involves an international team including JAXA, NASA, ESA and universities in Japan, USA and France. Experimental Approach • Perform extensive research via ground-based experiments, including 1g and parabolic flight tests, and via theoretical formulations. • Flight experiments on orbit in ISS/KIBO will be performed to verify the correlation. The flight experiments on orbit are expected in 2017 or later. • By the end of the project, a new fire safety standard test method for screening spacecraft materials will be proposed that addresses the shortcomings of existing standard test method such as NASA STD 6001B.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-flare-2",
           "text": "Relevance/Impact • Fundamental Science – studying materials flammability in space allows us to accurately control the flow field and thus elucidate the importance of a critical Damkohler number (flow time /reaction time) on flame extinction. • Efficiency – The anticipated improved methodology should reduce time and cost for the spacecraft material screening. • Safety – Terrestrial fire safety; spacecraft fire safety Development Approach • Experiment uses same hardware as JAXA’s “Solid Combustion” • International research team Contact Information Project Manager: Shigeki Kamigaichi, JAXA Project Scientist: Masao Kikuchi, JAXA JAXA PI: Prof. Osamu Fujita, Hokkaido Univ. US Co-Is: Dr. Sandra Olson, NASA GRC Dr. Harold Beeson, NASA Prof. Carlos Fernandez-Pello, U. C. Berkeley International Co-Is: Many Japanese Co-Is, Guillaume Legros, U. Pierre Marie Curie, Thomas Rohr, ESA, Marika Orlandi, ESA Customers/Adopters (Push): HEOMD/Space Life and Physical Sciences Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         }
       ],
       "limitations": [
         "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
-      ]
+      ],
+      "role": "investigation"
     },
     {
       "id": "nasa-fm2",
@@ -948,17 +954,46 @@
         {
           "id": "nasa-fm2-1",
           "text": "Physical Sciences Flammability of Materials on the Moon (FM 2 ) Background FM 2 is the first-ever combustion experiment to be performed on another planetary body. Building on the success of the decades-long combustion science ground (1g) program and International Space Station (ISS) microgravity (~0g) combustion experiment campaigns, FM 2 investigates burning materials on the Moon at its 1/6 reduced gravity level. Previous computational modeling, bolstered by experiments aboard parabolicflight aircraft and the ISS, suggest that materials may burn at lower oxygen concentrations in lunar gravity compared to Earth. This means that some things that are not flammable on Earth, may be flammable in potential habitats on the Moon and other places with reduced gravity. Since fire can be a catastrophic hazard for spaceflight and extreme human exploration, FM 2 is a critical step in determining material flammability and safety for future missions. Objectives Edge view of Solid Inflammability Boundary at Low-Speed (SIBAL) fabric, a cotton-fiberglass blend, burning in air in lunar gravity (simulated in drop tower centrifuge). Left: downward burning, right: upward burning.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-fm2-2",
           "text": "Conduct the first-ever observations and measurements of flame spread on the Moon. Verify whether some materials burning in partial-gravity environments may be more flammable compared to 1g. Provide a bridge between the standard 1g material screening method and actual behavior in reduced gravity. Candle flame in microgravity, 1/6 gravity, and Earth gravity (left to right). Approach and Hardware External view of FM2 engineering hardware. The experiment burns four fuel samples individually in atmospheric conditions planned for future lunar habitats or vehicles. The experiment is housed inside a sealed chamber and operates autonomously through software. Cameras record flame characteristics including size, intensity, color, and spread rate. Onboard sensors measure flame and fuel temperatures, oxygen concentration, and carbon-dioxide concentrations. Images of FM2 engineering hardware that is 28.5 by 28.5 by 38.5 cm tall. Weight is 25 kg. Internal view of FM2 engineering hardware. Contact Information Principal Investigator…..Dr. Paul Ferkul, Universities Space Research Association Co-Investigator ………….Prof. Ya-Ting Liao, Case Western Reserve University Co-Investigator ………….Dr.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
         },
         {
           "id": "nasa-fm2-3",
           "text": "Michael Johnston, Glenn Research Center Project Manager………..Amber Krauss, Glenn Research Center Keep Exploring Discover More Topics From NASA Missions Humans in Space Climate Change Solar System",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "location": "Official page text"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ],
+      "role": "investigation"
+    },
+    {
+      "id": "nasa-spinoff-detector",
+      "title": "NASA Spinoff: Fire Detector (Shuttle smoke detector, historical)",
+      "url": "https://spinoff.nasa.gov/node/9407",
+      "investigationIds": [],
+      "topics": [
+        "detection",
+        "terrestrial"
+      ],
+      "role": "spinoff",
+      "sourceHash": "ae02ae678a75fec41696c3fab962b7c3b6e5ce68e1fb77ef3edf653f23a81367",
+      "retrievedAt": "2026-11-14T13:21:11.484858+00:00",
+      "passages": [
+        {
+          "id": "nasa-spinoff-detector-1",
+          "text": "Fire Detector Originally published in 1978 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms. For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Full article: http://hdl.handle.net/hdl:2060/20070018916 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-spinoff-detector-2",
+          "text": "For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Fire Detector Fire Detector",
+          "location": "Official page text (historical context)"
         }
       ],
       "limitations": [
@@ -966,26 +1001,264 @@
       ]
     },
     {
-      "id": "nasa-spinoff-detector",
-      "title": "NASA Spinoff: smoke detector terrestrial technology transfer (historical)",
-      "url": "https://spinoff.nasa.gov/node/9407",
+      "id": "nasa-combustion-science",
+      "title": "NASA Glenn: Combustion Science program overview",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/",
       "investigationIds": [],
       "topics": [
+        "prevention",
         "detection",
+        "suppression",
+        "post-fire",
         "terrestrial"
       ],
-      "sourceHash": "ae02ae678a75fec41696c3fab962b7c3b6e5ce68e1fb77ef3edf653f23a81367",
-      "retrievedAt": "2026-11-14T13:21:11.484858+00:00",
+      "role": "program",
+      "sourceHash": "d810530201a1bf65b1f07f7848fb2cc6ff98a2a01756ccfe31190ae7945fe822",
+      "retrievedAt": "2026-11-15T11:33:55.875079+00:00",
       "passages": [
         {
-          "id": "nasa-spinoff-detector-1",
-          "text": "menu Search search Advanced Search Fire Detector Originally published in 1978 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms. For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Full article: http://hdl.handle.net/hdl:2060/20070018916 Sensor operates by sampling air to determine the presence of combustion particles, but unlike earlier equipment the Brunswick Incipient Fire Detector, originally used in space shuttle orbiters, can discriminate between combustion particles and extraneous matters such as dust. This gives an important advantage; it is less susceptible to false alarms.",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "id": "nasa-combustion-science-1",
+          "text": "Physical Sciences Combustion Science Explore Combustion Science being performed at Glenn Research Center in Cleveland, Ohio. Overview In the United States, combustion processes contribute to about 85% of delivered energy and are an integral part in many industrial fabrication processes. Combustion produces greenhouse gases and soot, which contributes to global warming and causes significant health concerns. The Combustion Science Discipline conducts idealized experiments on the International Space Station where the removal of gravity enables researchers to study details of the combustion processes that cannot be readily studied on the ground. The Space Station environment also provides an important test-bed for studying spacecraft fire risk. Combustion occurs when fuel and oxygen react to produce carbon dioxide, water and heat. For the foreseeable future, the overwhelming majority of delivered energy in terrestrial applications will be from combustion or other chemically reacting systems. These energy uses cover the range from electric power and transportation to processes directly tied to the delivered material (e.g., glass and steel manufacture).",
+          "location": "Official page text"
         },
         {
-          "id": "nasa-spinoff-detector-2",
-          "text": "For large area applications such as mines, any number of sensors can be linked to a central processor/display unit to provide a central fire watch system that would instantly warn of incipient fire and pinpoint the location. Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke. Fire Detector Fire Detector Related Stories Saving Lives at Sea and on Land For Battery Safety, KULR Heads Prevail Feeding People Through Disasters Giving Sensors Good Optics Where the Wildfires Are Spherical Robots to the Rescue FINDER Finds Its Way into Rescuers’ Toolkits Stay Safe with Battery Testing for Space Answering the Call of Distress Space-Grade Safety Checks for Poultry",
-          "location": "Texto da página oficial (contexto histórico quando indicado)"
+          "id": "nasa-combustion-science-2",
+          "text": "These processes produce some of the most important environmental hazards currently facing humanity (global climate change, acid gas pollution, mercury contamination from coal, and wild-land fires). Despite being the subject of active research for over 80 years, combustion processes remain one of the most poorly controlled phenomena that have a significant impact on human health, comfort and safety. This is because the simplest combustor (e.g., kitchen stove) remains beyond our detailed numerical modeling capabilities. Typically, the combustion process involves a large number of chemical species (hundreds) and reactions (even thousands). It is these species and reactions that determine flammability limits (combustor operating ranges) and pollutant emissions. Much of combustion research involves developing a comprehensive and predictive quantitative understanding of this complex process. This understanding usually occurs in smaller, bench-scale experiments that are amenable to detailed study and modeling. In these bench-scale experiments, however, buoyant forces, created by gravity and the large temperature differential between the flame and the ambient gas, dominate and frequently obscure the physical and chemical phenomena of interest, and hence, complicate analyses.",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-3",
+          "text": "In the absence of gravity, buoyancy can be suppressed, and the analyses can be reduced to much simpler one-dimensional systems. To understand the strong influence of gravity on flames, one can consider the density gradients in flames. Typical flame temperatures are on the order of 2,300 degrees Kelvin, whereas ambient temperatures are approximately 300 degrees Kelvin. This produces an eight-fold density change over the scale of a centimeter. The resultant density gradient induces a strong velocity field that dominates all but the highest flow fields. This flow field causes the flame to lift and point upward. The resultant flow instabilities cause the flicker typical of flames on Earth. Figure 1 contains a gallery of 1-g to 0-g comparison flames. By varying or eliminating the effects of gravity, we can extract fundamental data that are important for understanding combustion systems. This approach has been implemented to some extent in existing terrestrial reduced-gravity platforms, but the experimental time scales and sizes have been limited.",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-4",
+          "text": "Long-duration Current Combustion Experiments combustion experiments Flammability of Materials on the Moon (FM2) FM2 is the first-ever combustion experiment to be performed on another planetary body. Building on the success of the decades-long combustion science ground (1g) program and International Space Station (ISS) microgravity (~0g) combustion experiment campaigns, FM2 investigates burning materials on the Moon at its 1/6 reduced gravity level. Learn More Edge view of Solid Inflammability Boundary at Low-Speed (SIBAL) fabric, a cotton-fiberglass blend, burning in air in lunar gravity (simulated in drop tower centrifuge). Combustion experiments Solid Fuel Ignition and Extinction investigation (SoFIE) Fire can be a catastrophic hazard for manned spacecraft. NASA mitigates the risk of fire with the implementation of NASA-STD-6001, which establishes program requirements for evaluation, testing, and selection of materials to preclude unsafe conditions related to flammability, odor, offgassing, and fluid compatibility. NASA-STD-6001 impelements a 1-g flame propagation test for proposed space flight materials which some researchers believe is not conservative in low-g.",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-5",
+          "text": "Learn More ESA (European Space Agency) astronaut and Expedition 67 Flight Engineer Samantha Cristoforetti works inside the International Space Station’s Unity module reconfiguring components for the Solid Fuel Ignition and Extinction investigation that explores fire growth and fire safety techniques in space. NASA Combustion experiment Flammability Limits At Reduced-g Experiment (FLARE) To develop a methodology to correlate material flammability limits in normal gravity and microgravity, which allows quantitative estimation of material flammability limit in microgravity based on the flammability data obtained on the ground. FLARE involves an international team including JAXA, NASA, ESA, CNES, DLR and universities in Japan, France, Germany and USA. Learn More This work is a part of “Flammability Limits at Reduced-g Experiment” (FLARE) project which aims to (1) develop a methodology to correlate material flammability limits in normal and microgravity, and (2) allow quantitative estimation of material flammability limit in microgravity based on the flammability data obtained on the ground. Archived Combustion Experiments Advanced Combustion via Microgravity Experiments (ACME) ACME is focused on advanced combustion technology via fundamental microgravity research.",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-6",
+          "text": "The primary goal is to improve efficiency and reduce pollutant emission in practical terrestrial combustion. Burning and Suppression of Solids (BASS) The Burning and Suppression of Solids (BASS) investigation examines the burning and extinction characteristics of a wide variety of fuel samples in microgravity. Dust and Aerosol Measurement Feasibility Test (DAFT) The Dust and Aerosol Measurement Feasibility Test (DAFT) was designed to ensure that a modified P-Trak—a key component of the forthcoming NASA Smoke Aerosol Measurement Experiment (SAME)—will perform properly in the unique environment of microgravity. Flame Extinguishment Experiment (FLEX) The Flame Extinguishment Experiment (FLEX) experiment was designed to assess and quantify the effectiveness of inert-gas suppressants in microgravity and obtain the most conservative estimate of the limiting oxygen index for steady combustion. Spacecraft Fire Safety Demonstration (Saffire) Creating a safe environment for astronauts is the number one priority for all crew missions. Smoke Aerosol Measurement Experiment (SAME) Spacecraft smoke detectors must detect different types of smoke. For example, hydrocarbon fuels typically produce soot and plastics produce droplets of recondensed polymer fragments.",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-7",
+          "text": "Structure & Liftoff in Combustion Experiment (SLICE) Coflow laminar diffusion flames are especially valuable for studies of combustion because of the availability of accurate numerical modeling with that flame configuration. Smoke Point in Co-flow Experiment (SPICE) The Smoke Point In Co-flow Experiment will continue the study of fundamental phenomena related to understanding the mechanisms controlling the stability and extinction of jet diffusion flames begun with the Laminar Soot Processes (LSP) on STS-94. Combustion Science Facilities/Areas on the ISS Combustion Integrated Rack The Combustion Integrated Rack (CIR), located in the U.S. Laboratory Module (Destiny), enables investigators to perform combustion research to understand the fundamentals of the combustion process, understand fire safety, and methods for suppression of fires in space. The CIR’s main feature is a 100-liter combustion chamber to provide the necessary safety features necessary for the various combustion investigations and is the only rack on ISS dedicated to combustion experimentation. Developed by NASA’s Glenn Research Center, the CIR was launched to the International Space Station (ISS) in November 2008 by the Space Shuttle (STS-126).",
+          "location": "Official page text"
+        },
+        {
+          "id": "nasa-combustion-science-8",
+          "text": "Learn More about Combustion Integrated Rack Developed Glenn Research Center Launched to ISS November 2008 Multi-user Droplet Combustion Apparatus (MDCA) The Multi-user Droplet Combustion Apparatus (MDCA) is a multi-user facility designed to accommodate different droplet combustion science experiments. The MDCA will conduct experiments using the Combustion Integrated Rack (CIR) of the NASA Glenn Research Center’s Fluids and Combustion Facility (FCF). The payload is planned for the International Space Station. The MDCA, in conjunction with the CIR, will allow for cost effective extended access to the microgravity environment, not possible on previous space flights. Learn More about Multi-user Droplet Combustion Apparatus (MDCA) developed Glenn Research Center Launched to ISS November 2008 Keep Exploring Discover More Topics From NASA Combustion Science Spacecraft Fire Safety | Droplets | Gaseous – Premixed and Non-Premixed | Solid Fuels | Supercritical Reacting Fluids In the… Fluids & Combustion Facility NASA Glenn Combustion Experiment Arrives at Space Station NASA Glenn Holds Public Meeting on Combustion Research Lab Demolition",
+          "location": "Official page text"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-apollo-1",
+      "title": "NASA: Apollo 1 — cabin fire, investigation and lessons learned (historical)",
+      "url": "https://www.nasa.gov/mission/apollo-1/",
+      "investigationIds": [],
+      "topics": [
+        "prevention",
+        "detection",
+        "suppression",
+        "post-fire"
+      ],
+      "role": "mishap",
+      "sourceHash": "12fcd87cdf2219d14e9ecdaa59310088f6156d540427f24924e2f031850aa9f4",
+      "retrievedAt": "2026-11-15T11:33:56.031975+00:00",
+      "passages": [
+        {
+          "id": "nasa-apollo-1-1",
+          "text": "Apollo Program Apollo 1 On Jan. 27, 1967, tragedy struck on the launch pad at Cape Kennedy during a preflight test for Apollo 204 (AS-204). The mission was to be the first crewed flight of Apollo, and was scheduled to launch Feb. 21, 1967. Astronauts Virgil Grissom, Edward White and Roger Chaffee lost their lives when a fire swept through the command module. Mission Type Human Space Flight SCHEDULED TO LAUNCH Feb. 21, 1967 The Apollo 1 crew of Virgil I. “Gus” Grissom, left, Edward H. White, and Roger B. Chaffee NASA Portrait of astronaut Virgil I. (Gus) Grissom (1964) NASA Portrait of astronaut Edward H. White II. (10 Sept. 1964) NASA Portrait of astronaut Roger B. Chaffee. (10 Sept. 1964) NASA Apollo 1 Tragedy Jan. 27, 1967, tragedy struck on the launch pad at Cape Kennedy during a preflight test for Apollo 204 (AS-204). The mission was to be the first crewed flight of Apollo, and was scheduled to launch Feb. 21, 1967.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-1-2",
+          "text": "Astronauts Virgil Grissom, Edward White and Roger Chaffee lost their lives when a fire swept through the command module, or CM. The exhaustive investigation of the fire and extensive reworking of the Apollo command modules postponed crewed launches until NASA officials cleared them for flight. Saturn IB schedules were suspended for nearly a year, and the launch vehicle that finally bore the designation AS-204 carried a lunar module, or LM, as the payload, instead of a CM. The missions of AS-201 and AS-202 with Apollo spacecraft aboard had been unofficially known as Apollo 1 and Apollo 2 missions. AS-203 carried only the aerodynamic nose cone. In the spring of 1967, NASA’s Associate Administrator for Manned Space Flight, Dr. George E. Mueller, announced that the mission originally scheduled for Grissom, White and Chaffee would be known as Apollo 1, and said that the first Saturn V launch, scheduled for November 1967, would be known as Apollo 4. The eventual launch of AS-204 became known as the Apollo 5 mission. No missions or flights were ever designated Apollo 2 or 3.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-1-3",
+          "text": "The second launch of a Saturn V took place on schedule in the early morning of April 4, 1968. Known as AS-502, or Apollo 6, the flight was a success, though two first-stage engines shut down prematurely, and the third-stage engine failed to reignite after reaching orbit. NASA History Remembering Apollo 1 Read detailed biographies, reports, bibliographies, and other resources relating to the Apollo 1 tragedy that took the lives of Gus Grissom, Ed White, and Roger Chaffee. Learn More Manned Spacecraft Center Director Robert R. Gilruth (far right) introduces the Apollo 1 crew during press conference in Houston. Sitting next to Gilruth are (from left) astronauts Roger Chaffee, Edward H. White II, and Gus Grissom. (1966) NASA Insignia for the NASA Apollo 1 mission, the first manned Apollo flight. Crew members were astronauts Virgil I. u0022Gusu0022 Grissom, Edward H. White II, and Roger B. Chaffee. (1966) NASA Crew Virgil I. Grissom Edward H. White Roger B. Chaffee Backup Crew Walter M. Schirra Jr. Donn F.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-1-4",
+          "text": "Eisele Walter Cunningham Payload Spacecraft-012 Apollo Pad Fire Emergency Transmission: Jan. 27, 1967; 6:31:05 p.m. EST Launch Complex 34 Saturn-IB AS-204 CSM-012 Houston We Have a Podcast: Apollo 1 Fire Expert guests from the Apollo program reveal more behind the challenges faced to successfully land humans on the Moon in less than three years after the tragic Apollo 1 fire. The panel was recorded on January 24, 2017. Apollo 1 Content 55 Years Ago: The Apollo 1 Fire and its Aftermath 14 min read “Three valiant young men have given their lives in the nation’s service. We mourn this great loss and our hearts… February 3, 2022 Article 55 Years Ago: Tragedy on the Launch Pad 10 min read On Jan. 27, 1967, with the planned launch of the first Apollo mission to carry a crew just 25 days… January 27, 2022 Article 55 Years Ago: Final Preparations for the Planned Launch of Apollo 1 15 min read With President John F.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-1-5",
+          "text": "Kennedy’s end-of-the-decade target of landing a man on the Moon approaching, NASA set ambitious goals for… January 19, 2022 Article 55 Years Ago: Two Months Until Apollo 1 6 min read In December 1966, preparations continued for the first crewed Apollo mission, officially designated as AS-204 but better known as Apollo… December 20, 2021 Article 55 Years Ago: Three Months Until Apollo 1 9 min read In November 1966, with the Gemini program successfully completed, NASA set its sights on the first Apollo mission to carry… November 22, 2021 Article Kennedy Space Center Honors Fallen Heroes of Human Spaceflight 2 min read Leerlo en español aquí. The crews of Apollo 1 and space shuttles Challenger and Columbia, as well as other fallen… January 21, 2021 Article Detailed Historical Resources Apollo 204 Biographies, History, and Reports Read detailed biographies of the crew, learn more about the accident and the investigation that followed, and explore an annotated bibliography for further reading. This site includes the final report of the Investigation Board and the report to the Senate.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-1-6",
+          "text": "Apollo 1 30 Images Go To Gallery Go To Gallery Keep Exploring Discover More Topics From NASA Explore NASA’s History Humans In Space The Apollo Program Astronauts",
+          "location": "Official page text (historical context)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-apollo-13",
+      "title": "NASA: Apollo 13 — oxygen tank explosion, investigation and lessons learned (historical)",
+      "url": "https://www.nasa.gov/mission/apollo-13/",
+      "investigationIds": [],
+      "topics": [
+        "prevention",
+        "post-fire"
+      ],
+      "role": "mishap",
+      "sourceHash": "eba280fb6f4dca477cf2c6767b603db7bfb8bc896cdf8b421c4e6a64a02d4161",
+      "retrievedAt": "2026-11-15T11:33:56.250543+00:00",
+      "passages": [
+        {
+          "id": "nasa-apollo-13-1",
+          "text": "Apollo Program Apollo 13 \"Houston, we've had a problem…\" Mission Type Lunar Landing crew James Lovell, John \"Jack\" Swigert, Fred Haise Launch April 11, 1970 SPLASHDOWN April 17, 1970 Apollo 13 Apollo 13 was supposed to land in the Fra Mauro area of the Moon. But at 5 1/2 minutes after liftoff, the crew felt a little vibration… Learn More about Apollo 13 James A. Lovell, Jr. John “Jack” Swigert Fred Haise James A. Lovell, Jr. Commander Captain Lovell was selected as an astronaut by NASA in September 1962. He has since served as backup pilot for the Gemini 4 flight and backup commander for the Gemini 9 flight, as well as backup commander to Neil Armstrong for the Apollo 11 lunar landing mission. On March 1, 1973, Captain Lovell retired from the Navy and from the space program. More About James A. Lovell Astronaut James A. Lovell. NASA John “Jack” Swigert Command Module Pilot Mr. Swigert was one of the 19 astronauts selected by NASA in April 1966.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-13-2",
+          "text": "He served as a member of the astronaut support crew for the Apollo 7 mission. Mr. Swigert was next assigned to the Apollo 13 backup crew and subsequently called upon to replace prime crewman Thomas K. Mattingly as command module pilot. In completing his first space flight, Mr. Swigert logged a total of 142 hours, 54 minutes in space. More About John Swigert Astronaut John L. Swigert Jr. NASA Fred Haise Lunar Module Pilot Mr. Haise was one of the 19 astronauts selected by NASA in April 1966. He served as backup lunar module pilot for the Apollo 8 and 11 missions, and backup spacecraft commander for the Apollo 16 mission. Haise was the lunar module pilot on Apollo 13 and has logged 142 hours and 54 minutes in space. More About Fred Haise Astronaut Fred W. Haise Jr.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-13-3",
+          "text": "NASA Apollo 13: The Successful Failure On April 11, 1970, the powerful Saturn V rocket carrying the Apollo 13 mission launched from Kennedy Space Center propelling astronauts Jim Lovell, Fred Haise, and Jack Swigert on what was intended to be humanity’s third lunar landing. Unfortunately, the mission to explore the Fra Mauro region of the Moon did not go as planned. What many viewed as a now “routine” mission soon had millions around the globe glued to television sets watching and hoping for a positive outcome for one of the most intense episodes in the history of space exploration. Learn More Featured Story 50 Years Ago: “Houston, We’ve Had a Problem” During their third day in space, the crew of Apollo 13, Commander James A.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-13-4",
+          "text": "Lovell, Command Module Pilot John L.… Read the Story Apollo 13 Articles The Hard-won Triumph of the Apollo 13 Mission – 45 Years Later 5 min read When their spaceship was severely damaged 200,000 miles from Earth – 45 years ago this week, it was like a… May 3, 2023 Article Arturo Campos: A Key Player in Bringing Apollo 13 Home 5 min read Leerlo en español aquí. Editor’s Note: A previous version of this article incorrectly listed the year Campos died. He passed away… June 15, 2021 Article 50 Years Ago: Apollo 13 Aquarius European Goodwill Tour 7 min read Six months after their return from the harrowing Apollo 13 mission, astronauts James A. Lovell, John L. Swigert, and Fred… October 1, 2020 Article 50 Years Ago: Apollo 13 Review Board Report 8 min read During a press conference on June 15, 1970, at NASA Headquarters in Washington, DC, Apollo 13 Review Board Chair Edgar… June 15, 2020 Article Apollo 13 Crew Returns to Houston 7 min read On April 17, 1970, Apollo 13 astronauts James A.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-13-5",
+          "text": "Lovell, John L. “Jack” Swigert and Fred W. Haise splashed down… April 20, 2020 Article Apollo 13 Crew Returns Safely to Earth 11 min read The crew of Apollo 13, Commander James A. Lovell, Command Module Pilot (CMP) John L. “Jack” Swigert and Lunar Module… April 17, 2020 Article More Resources NASA’s Apollo 13 Mission Challenged Crew, Launch Team NASA’s Apollo 13 mission would have been the agency’s third Moon landing and lunar exploration mission. A movie and several books relate the story of this challenging mission which has been described as a “successful failure.” The Hard-won Triumph of the Apollo 13 Mission When their spaceship was severely damaged 200,000 miles from Earth – 45 years ago this week, it was like a bad dream from which the Apollo 13 crew could not wake.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-apollo-13-6",
+          "text": "Apollo 13 Mission Report Read the Apollo 13 Mission Report prepared by the Mission Evaluation Team The Apollo 13 Flight Journal Air-to-ground transcripts for NASA’s Apollo missions are supplemented with commentaries, photos, videos, audio clips, diagrams, maps, and other documents, to delve deep into the details of Apollo 13. Apollo 13 22 Images Go To Gallery Go To Gallery Keep Exploring Discover More Topics From NASA Overview of NASA’s Missions Humans In Space Project Gemini The Apollo Program",
+          "location": "Official page text (historical context)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-mir-fire",
+      "title": "NASA History: 25 Years Ago, Fire Aboard Space Station Mir (1997)",
+      "url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+      "investigationIds": [],
+      "topics": [
+        "prevention",
+        "detection",
+        "suppression",
+        "post-fire"
+      ],
+      "role": "mishap",
+      "sourceHash": "d2d3a8d7180bffe760b09c9e398d59715d3929cf250ed3fc1f9c4aa35525b664",
+      "retrievedAt": "2026-11-15T11:33:56.408184+00:00",
+      "passages": [
+        {
+          "id": "nasa-mir-fire-1",
+          "text": "5 min read 25 Years Ago: Fire Aboard Space Station Mir John Uri Johnson Space Center Feb 23, 2022 Article On Feb. 24, 1997, the six crew members aboard the Russian space station Mir faced significant danger when a fire ignited in an oxygen generating system. The searing flame, lasting several minutes, not only cut off access to one of the two Soyuz escape vehicles but also filled the station’s modules with smoke. Although the narrow confines where the fire occurred made fighting it difficult, through teamwork and composure the crew prevailed and extinguished the flames, with no damage to the station’s structure. The station’s life support systems cleared its atmosphere of the toxic smoke over several hours, with no lasting harm to the crew members. The lessons learned from the incident were passed on in the design and operations of the International Space Station. Left: The Russian space station Mir, as seen by the crew of the departing space shuttle Atlantis during the January 1997 STS-81 mission.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-mir-fire-2",
+          "text": "Right: The six crew members aboard Mir during the February 1997 fire – (front) Aleksandr Y. Kaleri, left, Jerry M. Linenger, and Valeri G. Korzun; (back) Vasili V. Tsibliyev, left, Reinhold Ewald, and Aleksandr I. Lazutkin. The space station Mir normally housed a resident crew of three, but during handovers from one long-duration crew to another, crew size grew to six for short periods. Such was the case between Feb. 12 and March 3, 1997, when Russian cosmonauts Valeri G. Korzun and Aleksandr Y. Kaleri , on board since the previous August and nearing the end of their long-duration mission, and NASA astronaut Jerry M. Linenger , who arrived aboard space shuttle Atlantis in January, were joined by the newly-arrived trio of Vasili V. Tsibliyev and Aleksandr I. Lazutkin of Roscosmos and Reinhold Ewald of the German space agency DLR, the latter on a short-duration visiting flight.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-mir-fire-3",
+          "text": "Shortly after dinner on Feb. 24, as Lazutkin activated a solid-fuel oxygen generator in Mir’s Kvant-1 module, the canister ignited, shooting a three-foot flame with sparks and bits of molten metal across the module and generating a large quantity of dense smoke. The flame blocked the evacuation route to the Soyuz spacecraft docked at the aft end of Kvant-1, the vehicle Korzun, Kaleri, and Ewald would use in an emergency evacuation. The crew quickly donned oxygen masks, and Korzun began dousing the flame with foam from a fire extinguisher, as Linenger held him in place and the other crew members handed him two more extinguishers. The flame finally extinguished itself, with Korzun’s efforts preventing significant damage – although some of Kvant-1’s panels were charred. Over the next several hours, the station’s life support system cleared the smoke and life returned to normal aboard Mir following the worst in-orbit fire incident in the history of spaceflight. Left: Before the fire, view inside the Kvant-1 module of the Mir space station, with the solid fuel oxygen generator (SFOG) visible at lower left.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-mir-fire-4",
+          "text": "Right: Close-up of the undamaged SFOG apparatus in Kvant-1. During normal Mir operations, the three resident crew members’ oxygen needs were met by two Elektron oxygen generating units. The units, also now used aboard the International Space Station, generated oxygen through the electrolytic splitting of water, primarily reclaimed from sources aboard the station. When a larger crew inhabited Mir, solid fuel oxygen generators (SFOG), also known as Vika or by the Russian acronym TGK, supplemented the Elektrons. Utilized for decades aboard Soviet and Russian submarines, and for years aboard their space stations, SFOGs burned canisters of solid lithium perchlorate that chemically generated oxygen. Each canister provided enough oxygen to support one crew member per day. Although used without incident more than 2,500 times aboard Mir, on this day the canister burst into flames. Astronauts returned the damaged generator on the next space shuttle mission for evaluation, but the extensive damage made analysis of the fire’s cause difficult. After two years of study, investigators determined that hydrocarbons introduced into the canister increased the risk of problems.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-mir-fire-5",
+          "text": "They identified the most likely culprit as latex working glove material inadvertently introduced into the canister. Left: NASA astronaut Jerry Linenger wearing a respirator following the fire aboard the Mir space station. Right: A charred wall panel in the Kvant-1 module following the fire. Two images of the charred remains of the solid fuel oxygen generator returned from space station Mir. Following the fire, based on lessons learned during the incident, Russian space officials instituted changes in how crew members trained for similar emergencies, and how ground controllers responded to aid the onboard crew. Eventual knowledge of the cause of the fire enabled them to implement changes in the ground preparation of the SFOG canisters. Today, the International Space Station has a robust oxygen generation system with dissimilar redundancies that include three improved Elektron units in the Russian segment and the Oxygen Generation System that, like its Russian counterpart, uses electrolytic splitting of regenerated water in the American segment.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-mir-fire-6",
+          "text": "An SFOG system, with additional safety measures, is available in the Russian segment as needed when a larger crew is aboard or as a backup to the Elektron. Left: Cosmonaut Gennadi I. Padalka ignites solid fuel oxygen generator canisters during Expedition 20 in the Zvezda module of the International Space Station. Right: Cosmonauts Andei I. Borisenko, Aleksandr M. Samokutyayev, and Sergei A. Volkov during maintenance operations with the three Elektron units in the Zvezda module.",
+          "location": "Official page text (historical context)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-spinoff-air-tanks",
+      "title": "NASA Spinoff: Fireman's Air Tanks (historical)",
+      "url": "https://spinoff.nasa.gov/node/9582",
+      "investigationIds": [],
+      "topics": [
+        "post-fire",
+        "terrestrial"
+      ],
+      "role": "spinoff",
+      "sourceHash": "dd5b1203292e60120004a61ecd89f426c8e50d2bdfa75fcc560cf8e88f6d8764",
+      "retrievedAt": "2026-11-15T11:33:57.233477+00:00",
+      "passages": [
+        {
+          "id": "nasa-spinoff-air-tanks-1",
+          "text": "Fireman's Air Tanks Originally published in 1976 Together with NASA's Johnson Space Center, A-T-O Inc.'s Scott Aviation has developed light-weight firefighter's air tanks. New backpack system weighs only 20 pounds for 30 minute air supply, 13 pounds less than conventional firefighting tanks. They are pressurized at 4,500 psi, (twice current tanks). Made of aluminum liner wrapped by resin-impregnated glass fibers, eliminating corrosion as well as lightening the load. Redesigned face mask permits better vision. Warning device to tell fireman he is running out of air is personalized so it can't be heard by others reducing confusion in an already hectic environment. Structural Composites Inc., The Boeing Co., and Martin-Marietta Corp. have developed uses for this technology. Full article: http://hdl.handle.net/hdl:2060/20030005480 Together with NASA's Johnson Space Center, A-T-O Inc.'s Scott Aviation has developed light-weight firefighter's air tanks. New backpack system weighs only 20 pounds for 30 minute air supply, 13 pounds less than conventional firefighting tanks. They are pressurized at 4,500 psi, (twice current tanks). Made of aluminum liner wrapped by resin-impregnated glass fibers, eliminating corrosion as well as lightening the load.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-spinoff-air-tanks-2",
+          "text": "Redesigned face mask permits better vision. Warning device to tell fireman he is running out of air is personalized so it can't be heard by others reducing confusion in an already hectic environment. Structural Composites Inc., The Boeing Co., and Martin-Marietta Corp. have developed uses for this technology. Fireman's Air Tanks Fireman's Air Tanks",
+          "location": "Official page text (historical context)"
+        }
+      ],
+      "limitations": [
+        "Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."
+      ]
+    },
+    {
+      "id": "nasa-spinoff-fire-attire",
+      "title": "NASA Spinoff: New Technology for the Fire Attire (historical)",
+      "url": "https://spinoff.nasa.gov/node/9918",
+      "investigationIds": [],
+      "topics": [
+        "post-fire",
+        "terrestrial"
+      ],
+      "role": "spinoff",
+      "sourceHash": "fa5bbda2a2d09c46a14b27098677e5fd71c3f019c5eb6031fc5f71603fc52115",
+      "retrievedAt": "2026-11-15T11:33:57.841635+00:00",
+      "passages": [
+        {
+          "id": "nasa-spinoff-fire-attire-1",
+          "text": "New Technology for the Fire Attire Originally published in 1982 Although little can be done to reduce the risks of firefighting, something can be done to curb the injuries and fatalities. This is the goal of Project FIRES, a program jointly sponsored by NASA and the Federal Emergency Management Agency's U.S. Fire Administration with technical management provided by Marshall Space Flight Center. Project FIRES (Firefighter's Integrated Response Equipment System) involves applications of advanced materials and design concepts, derived from Apollo to update existing gear which does not adequately protect against many of the hazards encountered in fire suppression activities. A major focus of the effort involves application to the FIRES ensemble of lightweight, fire-resistant, heat-protective materials originally developed for use in astronauts' space suits or in spacecraft components which require thermal protection. Data from the fourteen municipal fire departments participating in the field evaluation will form a basis for development of new nationwide protective ensemble students. Full article: http://hdl.handle.net/hdl:2060/20030002834 Although little can be done to reduce the risks of firefighting, something can be done to curb the injuries and fatalities.",
+          "location": "Official page text (historical context)"
+        },
+        {
+          "id": "nasa-spinoff-fire-attire-2",
+          "text": "This is the goal of Project FIRES, a program jointly sponsored by NASA and the Federal Emergency Management Agency's U.S. Fire Administration with technical management provided by Marshall Space Flight Center. Project FIRES (Firefighter's Integrated Response Equipment System) involves applications of advanced materials and design concepts, derived from Apollo to update existing gear which does not adequately protect against many of the hazards encountered in fire suppression activities. A major focus of the effort involves application to the FIRES ensemble of lightweight, fire-resistant, heat-protective materials originally developed for use in astronauts' space suits or in spacecraft components which require thermal protection. Data from the fourteen municipal fire departments participating in the field evaluation will form a basis for development of new nationwide protective ensemble students. New Technology for the Fire Attire New Technology for the Fire Attire",
+          "location": "Official page text (historical context)"
         }
       ],
       "limitations": [

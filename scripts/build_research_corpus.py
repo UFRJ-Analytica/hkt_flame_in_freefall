@@ -30,7 +30,14 @@ SOURCES = [
     {"id": "nasa-sofie", "title": "NASA: Solid Fuel Ignition and Extinction — SoFIE", "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/solid-fuel-ignition-and-extinction-sofie/", "format": "html", "investigationIds": [], "topics": ["prevention", "suppression"]},
     {"id": "nasa-flare", "title": "NASA: Flammability Limits at Reduced-g Experiment — FLARE", "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-limits-at-reduced-g-experiment-flare/", "format": "html", "investigationIds": [], "topics": ["prevention"]},
     {"id": "nasa-fm2", "title": "NASA: Flammability of Materials on the Moon — FM2", "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-of-materials-on-the-moon-fm2/", "format": "html", "investigationIds": [], "topics": ["prevention"]},
-    {"id": "nasa-spinoff-detector", "title": "NASA Spinoff: smoke detector terrestrial technology transfer (historical)", "url": "https://spinoff.nasa.gov/node/9407", "format": "html", "investigationIds": [], "topics": ["detection", "terrestrial"]},
+    {"id": "nasa-spinoff-detector", "title": "NASA Spinoff: Fire Detector (Shuttle smoke detector, historical)", "url": "https://spinoff.nasa.gov/node/9407", "format": "html", "investigationIds": [], "topics": ["detection", "terrestrial"], "role": "spinoff"},
+    # Challenge resources added 2026-11-15: program overview, mishap lessons and spinoffs.
+    {"id": "nasa-combustion-science", "title": "NASA Glenn: Combustion Science program overview", "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/", "format": "html", "investigationIds": [], "topics": ["prevention", "detection", "suppression", "post-fire", "terrestrial"], "role": "program"},
+    {"id": "nasa-apollo-1", "title": "NASA: Apollo 1 — cabin fire, investigation and lessons learned (historical)", "url": "https://www.nasa.gov/mission/apollo-1/", "format": "html", "investigationIds": [], "topics": ["prevention", "detection", "suppression", "post-fire"], "role": "mishap"},
+    {"id": "nasa-apollo-13", "title": "NASA: Apollo 13 — oxygen tank explosion, investigation and lessons learned (historical)", "url": "https://www.nasa.gov/mission/apollo-13/", "format": "html", "investigationIds": [], "topics": ["prevention", "post-fire"], "role": "mishap"},
+    {"id": "nasa-mir-fire", "title": "NASA History: 25 Years Ago, Fire Aboard Space Station Mir (1997)", "url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/", "format": "html", "investigationIds": [], "topics": ["prevention", "detection", "suppression", "post-fire"], "role": "mishap"},
+    {"id": "nasa-spinoff-air-tanks", "title": "NASA Spinoff: Fireman's Air Tanks (historical)", "url": "https://spinoff.nasa.gov/node/9582", "format": "html", "investigationIds": [], "topics": ["post-fire", "terrestrial"], "role": "spinoff"},
+    {"id": "nasa-spinoff-fire-attire", "title": "NASA Spinoff: New Technology for the Fire Attire (historical)", "url": "https://spinoff.nasa.gov/node/9918", "format": "html", "investigationIds": [], "topics": ["post-fire", "terrestrial"], "role": "spinoff"},
 ]
 
 
@@ -106,7 +113,7 @@ def write_json_atomic(path: Path, value):
     staged.replace(path)
 
 
-def build(offline=False):
+def build(offline=False, refresh=False):
     try:
         from pypdf import PdfReader
     except ImportError as exc:
@@ -119,7 +126,9 @@ def build(offline=False):
     for source in SOURCES:
         path = RAW / (source["id"] + "." + source["format"])
         try:
-            if not offline:
+            previous = old_by_id.get(source["id"])
+            reuse = not refresh and previous and path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() == previous.get("sha256")
+            if not offline and not reuse:
                 request = urllib.request.Request(source["url"], headers={"User-Agent": "HabitatFire research corpus/1.0 (NASA Space Apps)"})
                 with urllib.request.urlopen(request, timeout=35) as response:
                     data = response.read(12_000_001)
@@ -130,7 +139,6 @@ def build(offline=False):
                 path.write_bytes(data)
             else:
                 data = path.read_bytes()
-                previous = old_by_id.get(source["id"])
                 if not previous or hashlib.sha256(data).hexdigest() != previous.get("sha256"):
                     raise ValueError("Offline artifact has no matching provenance hash")
             pages = []
@@ -140,17 +148,20 @@ def build(offline=False):
             else:
                 parser = ArticleText()
                 parser.feed(data.decode("utf-8", errors="replace"))
-                pages = [("Texto da página oficial (contexto histórico quando indicado)", parser.text())]
+                pages = [("Official page text" + (" (historical context)" if source.get("role") in {"mishap", "spinoff"} else ""), parser.text())]
             chunks = []
             for location, text in pages:
+                # Site chrome on Spinoff pages: search menu prefix and the related-stories rail.
+                text = re.sub(r"^\s*menu Search search Advanced Search\s*", "", normalize(text))
+                text = text.split(" Related Stories ")[0]
                 for part in passages(text):
                     chunks.append({"id": f"{source['id']}-{len(chunks) + 1}", "text": part, "location": location})
             if not chunks:
                 raise ValueError("Source has no usable extracted text; not replacing it with invented content")
             digest = hashlib.sha256(data).hexdigest()
-            artifact = {"id": source["id"], "url": source["url"], "path": path.relative_to(ROOT).as_posix(), "sha256": digest, "retrievedAt": old_by_id[source["id"]]["retrievedAt"] if offline else datetime.now(timezone.utc).isoformat(), "bytes": len(data)}
+            artifact = {"id": source["id"], "url": source["url"], "path": path.relative_to(ROOT).as_posix(), "sha256": digest, "retrievedAt": previous["retrievedAt"] if (offline or reuse) else datetime.now(timezone.utc).isoformat(), "bytes": len(data)}
             manifest.append(artifact)
-            documents.append({key: value for key, value in source.items() if key != "format"} | {"sourceHash": digest, "retrievedAt": artifact["retrievedAt"], "passages": chunks, "limitations": ["Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."]})
+            documents.append({key: value for key, value in source.items() if key != "format"} | {"sourceHash": digest, "retrievedAt": artifact["retrievedAt"], "passages": chunks, "limitations": ["Extracted source text; not a per-test measurement. Historical sources are not current operational requirements."], "role": source.get("role", "investigation")})
             print(f"{source['id']}: {len(chunks)} passages", flush=True)
         except Exception as exc:
             errors.append({"id": source["id"], "error": str(exc)})
@@ -171,9 +182,10 @@ def build(offline=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--offline", action="store_true")
+    parser.add_argument("--refresh", action="store_true", help="re-download sources that are already stored")
     args = parser.parse_args()
     try:
-        build(args.offline)
+        build(args.offline, args.refresh)
     except Exception as exc:
         print(str(exc), file=sys.stderr)
         sys.exit(1)

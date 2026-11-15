@@ -64,6 +64,54 @@
       "sha256": "ae02ae678a75fec41696c3fab962b7c3b6e5ce68e1fb77ef3edf653f23a81367",
       "retrievedAt": "2026-11-14T13:21:11.484858+00:00",
       "bytes": 51684
+    },
+    {
+      "id": "nasa-combustion-science",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/",
+      "path": "data/raw/research/nasa-combustion-science.html",
+      "sha256": "d810530201a1bf65b1f07f7848fb2cc6ff98a2a01756ccfe31190ae7945fe822",
+      "retrievedAt": "2026-11-15T11:33:55.875079+00:00",
+      "bytes": 334311
+    },
+    {
+      "id": "nasa-apollo-1",
+      "url": "https://www.nasa.gov/mission/apollo-1/",
+      "path": "data/raw/research/nasa-apollo-1.html",
+      "sha256": "12fcd87cdf2219d14e9ecdaa59310088f6156d540427f24924e2f031850aa9f4",
+      "retrievedAt": "2026-11-15T11:33:56.031975+00:00",
+      "bytes": 356177
+    },
+    {
+      "id": "nasa-apollo-13",
+      "url": "https://www.nasa.gov/mission/apollo-13/",
+      "path": "data/raw/research/nasa-apollo-13.html",
+      "sha256": "eba280fb6f4dca477cf2c6767b603db7bfb8bc896cdf8b421c4e6a64a02d4161",
+      "retrievedAt": "2026-11-15T11:33:56.250543+00:00",
+      "bytes": 361302
+    },
+    {
+      "id": "nasa-mir-fire",
+      "url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+      "path": "data/raw/research/nasa-mir-fire.html",
+      "sha256": "d2d3a8d7180bffe760b09c9e398d59715d3929cf250ed3fc1f9c4aa35525b664",
+      "retrievedAt": "2026-11-15T11:33:56.408184+00:00",
+      "bytes": 271848
+    },
+    {
+      "id": "nasa-spinoff-air-tanks",
+      "url": "https://spinoff.nasa.gov/node/9582",
+      "path": "data/raw/research/nasa-spinoff-air-tanks.html",
+      "sha256": "dd5b1203292e60120004a61ecd89f426c8e50d2bdfa75fcc560cf8e88f6d8764",
+      "retrievedAt": "2026-11-15T11:33:57.233477+00:00",
+      "bytes": 51727
+    },
+    {
+      "id": "nasa-spinoff-fire-attire",
+      "url": "https://spinoff.nasa.gov/node/9918",
+      "path": "data/raw/research/nasa-spinoff-fire-attire.html",
+      "sha256": "fa5bbda2a2d09c46a14b27098677e5fd71c3f019c5eb6031fc5f71603fc52115",
+      "retrievedAt": "2026-11-15T11:33:57.841635+00:00",
+      "bytes": 52388
     }
   ],
   "terms": "Retain NASA/source attribution. Item-level source terms apply; no blanket CC0 claim."
