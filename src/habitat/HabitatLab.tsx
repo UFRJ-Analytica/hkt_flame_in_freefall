@@ -8,7 +8,7 @@ import { readSaffireModel, type SaffireModel } from "../saffire";
 import { GRAVITY_ENVIRONMENTS, gravityOf, PARTIAL_GRAVITY_SOURCES, type GravityId } from "../model/domain";
 import type { EnsembleResult, EngineInput } from "./engine";
 import {
-  buildGrid, CELL, CELL_AREA_M2, DEFAULT_ZONES, GRID, ignitionMask, MATERIAL_IDS, MATERIAL_INFO,
+  buildGrid, CELL, DEFAULT_ZONES, GRID, ignitionMask, MATERIAL_IDS, MATERIAL_INFO,
   materialRule, type MaterialId, type Tier, type Zone,
 } from "./habitatModel";
 import {
@@ -17,13 +17,11 @@ import {
 } from "./trials";
 import type { ViewMode } from "./HabitatScene";
 import { ModelInUse, TrialList } from "./ModelPanels";
+import { Alternatives } from "./Alternatives";
+import { computeMetrics, DURATION_S, fieldFingerprint, quantiles, SEED_COUNT, SEEDS, STEPS, validateInputs, type ScenarioInputs } from "./scenarioRun";
 import "./habitat.css";
 
 const HabitatScene = lazy(() => import("./HabitatScene"));
-const DURATION_S = 1200;
-const STEPS = DURATION_S / CELL.stepSeconds;
-const SEED_COUNT = 20;
-const SEEDS = Array.from({ length: SEED_COUNT }, (_, i) => 1951 + i);
 const SPEEDS = [15, 30, 60];
 
 const PRESETS: { id: string; label: string; note: string; oxygen: number; pressure: number; flow: number; gravity: GravityId }[] = [
@@ -84,7 +82,9 @@ function useSaffire() {
   return { model, second, registry, loaded, error };
 }
 
-export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: ReactNode; onOpenCalibration: () => void }) {
+export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = null }: {
+  modeSwitch: ReactNode; onOpenCalibration: () => void; requestedAnchor?: { id: string; nonce: number } | null;
+}) {
   const { model, second, registry, loaded, error } = useSaffire();
   const [anchorChoice, setAnchorChoice] = useState<string>("auto");
   const [preset, setPreset] = useState("lunar");
@@ -103,10 +103,17 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
   const [view, setView] = useState<ViewMode>("run");
   const [resetCameraKey, setResetCameraKey] = useState(0);
   const [notice, setNotice] = useState<string | null>(null);
-  const [replay, setReplay] = useState<null | { expected: { frontSpeedMmS: number; areaAtEndM2: { min: number; median: number; max: number } } | null;
-    issues: string[]; status: "pending" | "identical" | "different" | "not-exact"; scenarioId: string }>(null);
+  const [replay, setReplay] = useState<null | { expectedField: string | null;
+    issues: string[]; status: "pending" | "identical" | "different" | "not-exact" | "rejected"; scenarioId: string }>(null);
   const importRef = useRef<HTMLInputElement>(null);
   const [rerunKey, setRerunKey] = useState(0);
+  const [fieldHash, setFieldHash] = useState<string | null>(null);
+  const [scenarioName, setScenarioName] = useState<string | null>(null);
+  useEffect(() => {
+    if (!requestedAnchor) return;
+    setAnchorChoice(requestedAnchor.id);
+    setNotice(`Ensaio de referência escolhido na bancada: ${requestedAnchor.id}. Use “Rodar nas condições do ensaio” para reproduzir suas condições.`);
+  }, [requestedAnchor]);
   const conditions = useMemo(() => ({ oxygen, pressure, flow, gravityG: gravityOf(gravity).g }), [oxygen, pressure, flow, gravity]);
   const grid = useMemo(() => buildGrid(zones, conditions), [zones, conditions]);
   // The propagating material of the liner is SIBAL; the anchor is the trial the run is conditioned on.
@@ -177,13 +184,29 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
   const metrics = useMemo(() => ensemble ? computeMetrics(ensemble, grid.zoneIndex, grid.behavior, zones.length, ignition.row) : null, [ensemble, grid, zones.length, ignition.row]);
   const areaNow = metrics ? quantiles(metrics.area.map((curve) => curve[step])) : null;
   useEffect(() => {
-    if (!replay || replay.status !== "pending" || !metrics || computing) return;
-    const exp = replay.expected;
-    const area = quantiles(metrics.area.map((c) => c[STEPS]));
-    const same = !!exp && Math.abs(exp.frontSpeedMmS - metrics.speedMmS) < 1e-9 &&
-      (["min", "median", "max"] as const).every((k) => Math.abs(exp.areaAtEndM2[k] - area[k]) < 1e-9);
+    let cancelled = false;
+    setFieldHash(null);
+    if (ensemble) void fieldFingerprint(ensemble).then((h) => { if (!cancelled) setFieldHash(h); });
+    return () => { cancelled = true; };
+  }, [ensemble]);
+  useEffect(() => {
+    if (!replay || replay.status !== "pending" || !fieldHash || computing) return;
+    // Identical only when the SHA-256 of every realisation's arrival and contact field matches.
+    const same = replay.expectedField !== null && replay.expectedField === fieldHash;
     setReplay({ ...replay, status: replay.issues.length ? "not-exact" : same ? "identical" : "different" });
-  }, [replay, metrics, computing]);
+  }, [replay, fieldHash, computing]);
+
+  const currentInputs: ScenarioInputs = useMemo(() => ({
+    oxygen, pressure, flow, gravity, zones: zones.map((z) => ({ id: z.id, material: z.material })), ignition, anchorChoice,
+  }), [oxygen, pressure, flow, gravity, zones, ignition, anchorChoice]);
+  function loadInputs(i: ScenarioInputs, name: string | null) {
+    setOxygen(i.oxygen); setPressure(i.pressure); setFlow(i.flow); setGravity(i.gravity); setPreset("custom");
+    setZones(DEFAULT_ZONES.map((z) => ({ ...z, material: i.zones.find((x) => x.id === z.id)?.material ?? z.material })));
+    setIgnition({ ...i.ignition });
+    setAnchorChoice(i.anchorChoice);
+    setScenarioName(name);
+    setRun(0); setView("run"); restart();
+  }
 
   function applyPreset(id: string) {
     const p = PRESETS.find((x) => x.id === id);
@@ -233,21 +256,22 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
       if (!now) issues.push(`${art.path} não carregado`);
       else if (now.sha256 !== art.sha256) issues.push(`${art.path}: bytes diferentes (sha256)`);
     }
-    const c = data.requestedConditions as { oxygenPct: number; pressureKpa: number; flowCmS: number; gravity: GravityId };
-    const savedZones = data.zones as { id: string; material: MaterialId }[];
-    const anchorId = (data.gate as { anchorTrialId: string | null }).anchorTrialId;
-    if (anchorId && !registry.trials.some((t) => t.id === anchorId)) issues.push(`ensaio ${anchorId} ausente do registro`);
-    setOxygen(c.oxygenPct); setPressure(c.pressureKpa); setFlow(c.flowCmS); setGravity(c.gravity); setPreset("custom");
-    setZones(DEFAULT_ZONES.map((z) => ({ ...z, material: savedZones.find((x) => x.id === z.id)?.material ?? z.material })));
-    const ign = data.ignition as { col: number; row: number };
-    setIgnition({ col: ign.col, row: ign.row });
-    setAnchorChoice(anchorId ?? "auto");
-    setRun(0); setView("run"); restart();
+    const inputs = data.scenarioInputs as ScenarioInputs | undefined;
+    const problems = validateInputs(inputs);
+    const expectedField = (data.results as { arrivalFieldSha256?: unknown } | null)?.arrivalFieldSha256;
+    if (problems.length || typeof expectedField !== "string" || !/^[0-9a-f]{64}$/.test(expectedField)) {
+      setReplay({ expectedField: null, status: "rejected", scenarioId: String(data.scenarioId ?? "?"),
+        issues: [...problems, ...(typeof expectedField === "string" ? [] : ["impressão do campo de chegada ausente"])] });
+      return;
+    }
+    if (inputs!.anchorChoice !== "auto" && !registry.trials.some((t) => t.id === inputs!.anchorChoice)) issues.push(`ensaio ${inputs!.anchorChoice} ausente do registro`);
+    loadInputs(inputs!, null);
     setEnsemble(null); setRerunKey((k) => k + 1);
-    setReplay({ expected: (data.results as never) ?? null, issues, status: "pending", scenarioId: String(data.scenarioId) });
+    setReplay({ expectedField, issues, status: "pending", scenarioId: String(data.scenarioId) });
   }
 
   async function exportScenario() {
+    if (!fieldHash) { setNotice("Aguarde o cálculo terminar para exportar."); return; }
     const inputs = { conditions: { oxygenPct: oxygen, pressureKpa: pressure, flowCmS: flow, gravity, gravityG: conditions.gravityG },
       zones: zones.map((z) => ({ id: z.id, material: z.material, cols: z.cols, rows: z.rows })), ignition, anchorTrialId: anchor?.id ?? null, seeds: SEEDS };
     const payload = {
@@ -259,6 +283,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
       gate: { anchorTrialId: anchor?.id ?? null, conditionDiffs: diffs,
         rule: "Correspondência apenas no valor nominal ou faixa documentada; não tabulado permanece desconhecido (ACCEPTANCE_CRITERIA §C)." },
       requestedConditions: inputs.conditions,
+      scenarioInputs: currentInputs,
       trialConditions: anchor?.conditions ?? null, trialConditionSources: anchor?.conditionSources ?? [], trialConflicts: anchor?.conflicts ?? [],
       observed: anchor?.observables ?? [],
       geometry: { liner: { lengthM: 4.0, arcM: 5.02, cols: GRID.cols, rows: GRID.rows, cellMm: [CELL.alongMm, CELL.acrossMm] },
@@ -277,8 +302,9 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
         betweenTrials: "dois ensaios a favor do fluxo para o escoamento; um ponto por atmosfera",
         seedSpread: "variabilidade do próprio modelo com parâmetros fixos, não incerteza experimental",
       },
-      results: metrics ? { frontSpeedMmS: metrics.speedMmS, areaAtEndM2: quantiles(metrics.area.map((c) => c[STEPS])) } : null,
-      reproduction: "Mesmo commit, mesmos bytes dos artefatos (sha256) e mesmas sementes reproduzem o campo de chegada. Reimportação ainda não implementada.",
+      results: metrics ? { frontSpeedMmS: metrics.speedMmS, areaAtEndM2: quantiles(metrics.area.map((c) => c[STEPS])),
+        arrivalFieldSha256: fieldHash, fieldHashCovers: "chegada e contato de todas as realizações (Int16, ordem das sementes)" } : null,
+      reproduction: "Importar este arquivo restaura scenarioInputs, confere commit e sha256 dos artefatos, recalcula e compara o sha256 do campo de chegada inteiro.",
       limitations: [
         "Propagação superficial; não é CFD nem combustão volumétrica.",
         "Sem correção de O₂, pressão ou gravidade além do ensaio de referência.",
@@ -325,6 +351,12 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
           <Range label="Pressão" unit="kPa" value={pressure} min={35} max={110} step={0.1} onChange={(v) => { setPressure(v); setPreset("custom"); restart(); }} />
           <Range label="Ventilação ao longo do módulo" unit="cm/s" value={flow} min={0} max={40} step={0.5} onChange={(v) => { setFlow(v); setPreset("custom"); restart(); }} />
           <div className="partial-pressure"><span>Pressão parcial de O₂</span><strong>{num((pressure * oxygen) / 100)} <small>kPa</small></strong></div>
+          <div className="control-physics" role="note">
+            <p><b>O₂, pressão e gravidade</b> escolhem o ensaio de referência e classificam a extrapolação; o motor não tem correção física validada para eles.</p>
+            <p><b>Ventilação</b> tem resposta modelada: interpolação entre SAFFIRE I e III e expoente medido fora disso.</p>
+            <p><b>Materiais</b> seguem regras por evidência; material sem dados para a frente, mas não é barreira comprovada.</p>
+            <p><b>Chama e fumaça</b> na cena são ilustrativas; a aparência muda com a gravidade sem mudar o cálculo.</p>
+          </div>
         </section>
         <section className="control-section">
           <div className="step-label"><span>02</span><h3>Materiais por zona</h3></div>
@@ -394,7 +426,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
         <section className="playback-panel">
           <div className="playback-header">
             <div>
-              <span className="eyebrow">PROPAGAÇÃO NA SUPERFÍCIE · TEMPO FÍSICO</span>
+              <span className="eyebrow">PROPAGAÇÃO NA SUPERFÍCIE · TEMPO FÍSICO{scenarioName ? ` · ${scenarioName.toUpperCase()}` : ""}</span>
               <h2>{view === "run" ? `Realização ${run + 1} de ${SEED_COUNT}` : `Probabilidade sobre ${SEED_COUNT} realizações`}</h2>
             </div>
             <span className={`illustrative-pill tier-pill ${LEVEL_STYLE[level]}`}><Info size={12} />{LEVEL_LABEL[level]}</span>
@@ -428,6 +460,8 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
             </button>
           </div>
         </section>
+        {model && <Alternatives current={currentInputs} onLoad={(i, name) => { loadInputs(i, name); setNotice(`${name} aberta para edição. Use “Atualizar” na lista para salvar mudanças.`); }}
+          registry={registry} anchorKernels={anchorKernels} second={second} ready={!!kernel} />}
       </div>
 
       <aside className="evidence-panel model-panel habitat-panel" aria-label="Leitura científica">
@@ -440,11 +474,13 @@ export function HabitatLab({ modeSwitch, onOpenCalibration }: { modeSwitch: Reac
                 {replay.status === "pending" ? "Reproduzindo o cenário importado…"
                   : replay.status === "identical" ? "Reprodução idêntica"
                   : replay.status === "different" ? "Resultado diferente do exportado"
+                  : replay.status === "rejected" ? "Arquivo rejeitado"
                   : "Reprodução não exata"}
               </strong>
-              <p>Cenário {replay.scenarioId}. {replay.status === "identical" ? "Mesmo código, mesmos bytes dos artefatos e mesmas sementes: velocidade e área final iguais às exportadas."
-                : replay.status === "different" ? "Mesmas dependências, mas velocidade ou área final diferem do arquivo."
+              <p>Cenário {replay.scenarioId}. {replay.status === "identical" ? "Mesmo código, mesmos bytes dos artefatos e mesmas sementes: o campo de chegada e contato de todas as realizações é idêntico (sha256)."
+                : replay.status === "different" ? "Mesmas dependências, mas o campo de chegada recalculado difere do exportado."
                 : replay.status === "not-exact" ? "Estado restaurado, mas as dependências não são as mesmas; o resultado não é comparado como reprodução exata."
+                : replay.status === "rejected" ? "Entradas inválidas ou incompletas: nada foi alterado no cenário atual."
                 : "Aguardando o cálculo das realizações."}</p>
               {replay.issues.length > 0 && <ul>{replay.issues.map((i) => <li key={i}>{i}</li>)}</ul>}
               <button className="text-link subtle" onClick={() => setReplay(null)}>Fechar</button>
@@ -594,67 +630,6 @@ function CrossTrial({ second }: { second: CrossTrial }) {
       </p>
     </section>
   );
-}
-
-function quantiles(values: number[]) {
-  const sorted = [...values].sort((a, b) => a - b);
-  return { min: sorted[0], median: sorted[sorted.length >> 1], max: sorted[sorted.length - 1] };
-}
-
-/** Front speed with the same statistic as the SAFFIRE trials: median over the strips of the
- *  40 cm ignition line of the furthest reached cell, OLS against time while inside the liner. */
-function bandSpeed(arrival: Int16Array, steps: number, row0: number): number | null {
-  const rows: Int16Array[] = [];
-  for (let y = Math.max(0, row0 - 10); y < Math.min(GRID.rows, row0 + 10); y++) {
-    const front = new Int16Array(steps + 1);
-    for (let x = 0; x < GRID.cols; x++) {
-      const a = arrival[y * GRID.cols + x];
-      if (a >= 0 && x + 1 > front[a]) front[a] = x + 1;
-    }
-    for (let t = 1; t <= steps; t++) if (front[t - 1] > front[t]) front[t] = front[t - 1];
-    rows.push(front);
-  }
-  const ts: number[] = [], xs: number[] = [];
-  const start = [...rows.map((r) => r[0])].sort((a, b) => a - b)[rows.length >> 1];
-  for (let t = 0; t <= steps; t += 5) {
-    const median = rows.map((r) => r[t]).sort((a, b) => a - b)[rows.length >> 1];
-    if (median >= GRID.cols - 5) break;
-    if (median > start + 3) { ts.push(t * CELL.stepSeconds); xs.push(median * CELL.alongMm); }
-  }
-  if (ts.length < 4) return null;
-  const mt = ts.reduce((a, b) => a + b) / ts.length, mx = xs.reduce((a, b) => a + b) / xs.length;
-  let num = 0, den = 0;
-  ts.forEach((t, i) => { num += (t - mt) * (xs[i] - mx); den += (t - mt) ** 2; });
-  return num / den;
-}
-
-function computeMetrics(ensemble: EnsembleResult, zoneIndex: Uint8Array, behavior: Uint8Array, zoneCount: number, ignitionRow: number) {
-  const steps = ensemble.steps;
-  const area: Float32Array[] = [];
-  const zoneEvents: number[][] = Array.from({ length: zoneCount }, () => []);
-  const speeds: number[] = [];
-  ensemble.arrivals.forEach((arrival, s) => {
-    const histogram = new Float32Array(steps + 1);
-    const first = new Array(zoneCount).fill(-1);
-    for (let i = 0; i < arrival.length; i++) {
-      const a = arrival[i];
-      const z = zoneIndex[i];
-      if (a >= 0) {
-        histogram[a] += CELL_AREA_M2;
-        if (first[z] < 0 || a < first[z]) first[z] = a;
-      } else if (behavior[i] >= 2) {
-        const c = ensemble.contacts[s][i];
-        if (c >= 0 && (first[z] < 0 || c < first[z])) first[z] = c;
-      }
-    }
-    for (let t = 1; t <= steps; t++) histogram[t] += histogram[t - 1];
-    area.push(histogram);
-    first.forEach((value, z) => zoneEvents[z].push(value));
-    const speed = bandSpeed(arrival, steps, ignitionRow);
-    if (speed !== null) speeds.push(speed);
-  });
-  speeds.sort((a, b) => a - b);
-  return { area, zoneEvents, speedMmS: speeds.length ? speeds[speeds.length >> 1] : 0 };
 }
 
 function AreaChart({ curves, step }: { curves: Float32Array[]; step: number }) {

@@ -53,10 +53,12 @@ import { publishedCaseForMode, readPublishedModel, SAFFIRE_PUBLISHED_CASES, type
 import { ModelApplicability } from "./model/ModelApplicability";
 import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from "./model/domain";
 import { HabitatLab } from "./habitat/HabitatLab";
+import { SpecialistWorkspace } from "./specialist/SpecialistWorkspace";
 import "./habitat/habitat.css";
-type LabMode = "habitat" | "cabin" | SaffireMission;
-const LAB_TABS: { id: "habitat" | "saffire" | "cabin"; label: string; hint: string }[] = [
-  { id: "habitat", label: "Habitat lunar · simulação 3D", hint: "propagação calibrada nas superfícies" },
+type LabMode = "habitat" | "workspace" | "cabin" | SaffireMission;
+const LAB_TABS: { id: "habitat" | "workspace" | "saffire" | "cabin"; label: string; hint: string }[] = [
+  { id: "habitat", label: "Habitat lunar · simulação 3D", hint: "cenários exploratórios e alternativas A/B" },
+  { id: "workspace", label: "Bancada do especialista", hint: "galeria, comparação e dossiê dos 9 ensaios" },
   { id: "saffire", label: "Ensaios SAFFIRE I a VI", hint: "calibração e validação por ensaio" },
   { id: "cabin", label: "Cabine e evidências", hint: "busca, catálogo e aplicabilidade" },
 ];
@@ -91,7 +93,8 @@ export default function App() {
   const [sample, setSample] = useState<SaffireIICase>(SAFFIRE_II_CASES[4]);
   const [opposed, setOpposed] = useState<OpposedModel>({ status: "unavailable" });
   const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
-  const mission = labMode === "cabin" || labMode === "habitat" ? null : SAFFIRE_MISSIONS[labMode];
+  const mission = labMode === "cabin" || labMode === "habitat" || labMode === "workspace" ? null : SAFFIRE_MISSIONS[labMode];
+  const [habitatAnchor, setHabitatAnchor] = useState<{ id: string; nonce: number } | null>(null);
   const isSaffire = mission !== null;
   const iiCase = labMode === "saffire-ii" ? sample : null;
   const publishedCase = publishedCaseForMode(labMode);
@@ -473,14 +476,16 @@ export default function App() {
               </div>
               <h1>O fogo muda. A sua perspectiva também.</h1>
               <p>
-                {labMode === "habitat"
+                {labMode === "workspace"
+                  ? "Compare os ensaios SAFFIRE da NASA: condições, fontes, modelo, velocidades e curvas, com exportação de dossiê."
+                  : labMode === "habitat"
                   ? "Simule a propagação de um incêndio nas superfícies de um habitat lunar, com o modelo calibrado em imagens da NASA."
                   : isSaffire
                   ? `Explore as medições e o modelo de propagação do ${mission.label}.`
                   : "Explore uma cabine em microgravidade e conecte suas perguntas à ciência da NASA."}
               </p>
             </div>
-            {labMode !== "habitat" && <button
+            {labMode !== "habitat" && labMode !== "workspace" && <button
               className="button secondary export-button"
               onClick={exportScenario}
               disabled={unavailable}
@@ -489,8 +494,11 @@ export default function App() {
               Exportar cenário
             </button>}
           </div>
-          {labMode === "habitat" ? (
-            <HabitatLab modeSwitch={modeSwitch} onOpenCalibration={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+          {labMode === "workspace" ? (
+            <SpecialistWorkspace modeSwitch={modeSwitch}
+              onUseInHabitat={(id) => { setHabitatAnchor({ id, nonce: Date.now() }); changeLabMode("habitat"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+          ) : labMode === "habitat" ? (
+            <HabitatLab modeSwitch={modeSwitch} requestedAnchor={habitatAnchor} onOpenCalibration={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
           ) : <main className="workbench">
             <aside className="scenario-panel" aria-label="Configurar cenário">
               <div className="panel-title">
