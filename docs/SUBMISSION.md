@@ -18,9 +18,7 @@ We address the three Flame in Freefall objectives through a connected workflow:
 2. **Extract data for predictive modeling.** An interactive table brings together source-linked quantities and experimental conditions. Users filter and select rows, then export CSV or JSON with units and provenance. Measured char fronts, published flame-base rates, flammability outcomes, extinction observations, smoke sizes and raw test conditions retain their distinct identities.
 3. **Connect research to fire-safety design.** Evidence briefs organize findings around materials and layout, atmosphere and oxygen systems, smoke detection, suppression, and post-fire recovery. They link measured findings to design implications and the next evidence needed for a lunar environment.
 
-The Simulation lab makes those connections tangible. Its existing habitat experience applies SAFFIRE-derived stochastic surface-propagation rules to configurable material zones and imposed ignition, with repeatable realizations and A/B comparisons. The new Model & evidence panel connects the selected NASA trial, an unchanged SAFFIRE I model replay on its original sample, and the dimensions of the user's piece.
-
-**Release integration note — remove after verification:** the new length/width-configurable SIBAL piece is being implemented on the parallel simulator branch. This origin-panel branch deliberately does not change or mount into `HabitatLab`. Confirm the combined feature before describing configurable piece dimensions as shipped. The draft demonstration sequence below includes that planned integration.
+The Simulation lab makes those connections tangible. Users choose a lunar surface habitat (1/6 g) or a spacecraft module in lunar orbit (microgravity), pick a NASA atmosphere (for example 34% O₂ at 56.5 kPa for surface habitats, or 26.5% O₂ at 70.3 kPa for exploration vehicles), place up to four fabric items (curtains, stowage bags, liner panels, partitions) with their own size and position, and click an item to start a fire. A SAFFIRE-derived stochastic surface-propagation rule, at the experiment's 10 × 20 mm cell scale, spreads the fire across 20 repeatable realizations: larger items add fuel, fire crosses between items only where they touch, and the results show burned area, front speed and which items catch fire and when. A/B comparisons rerun alternative layouts with the same seeds. The Model & evidence panel traces each run from the selected NASA trial, through the unchanged SAFFIRE I model replay on its original sample, to the user's configured item.
 
 Experimental replays share playback controls while preserving their original data: BASS-II B1 tracked optical fronts in pixels; SAFFIRE II camera images; the SAFFIRE I stochastic model; SoFIE-GEL public-video analysis; and SAME measurement windows. FLARE's published flammability-limit evidence remains an interactive static view rather than an invented flame animation.
 
@@ -31,8 +29,8 @@ The product is an exploratory research and design workbench, not spacecraft fire
 1. Select a lunar habitat and ask SI which investigations inform oxygen-enriched cabin fabrics.
 2. Inspect the ranked investigations and supporting source passages.
 3. Ask SI to select modeling data; filter and export the source-linked rows.
-4. Open the Simulation lab, configure a SIBAL piece's length, width and ignition, then compare two designs using the same seeds. **Requires final integration verification.**
-5. Open Model & evidence: NASA trial → original-sample model replay → configured piece.
+4. Open the Simulation lab, choose the lunar habitat or the spacecraft in lunar orbit, resize and move the fabric items, click one to start a fire, then save and compare two layouts using the same seeds.
+5. Open Model & evidence: NASA trial → original-sample model replay → configured item.
 6. Explore the BASS-II, SAFFIRE, SoFIE-GEL and SAME replays, then the FLARE evidence view.
 7. Return to fire-safety controls to discuss what the research informs and what should be tested next.
 
@@ -67,21 +65,19 @@ Additional investigation pages, published SAFFIRE and SoFIE papers, and JAXA FLA
 - **Research/data backend:** Python, reproducible source ingestion and scientific-data reduction scripts.
 - **SI:** Claude with read-only scientific retrieval tools and validated page-selection actions.
 - **Search adapters:** Voyage embeddings and MongoDB Atlas hybrid semantic/keyword retrieval, with a lexical/structured fallback.
-- **Deployment target:** AWS EC2, Caddy HTTPS and a Python application service; deployment scripts are included in `deploy/`.
-
-The repository implements these adapters and deployment scripts. This submission draft does not establish that external providers, Atlas indexes or an EC2 deployment are currently configured or healthy; verify the final demo environment separately. No paid provider or deployment was invoked to prepare this draft.
+- **Deployment:** AWS EC2, Caddy HTTPS and a Python application service, live at https://habitatfire.us; deployment scripts are included in `deploy/`.
 
 ## AI-use disclosure draft
 
 AI assistants supported implementation, documentation and scientific-evidence extraction. SI is also a product feature: it retrieves sources before producing cited explanations. Preliminary AI-assisted visual annotations in experimental analyses retain their review status in the scientific documentation; they are not represented as independent human-reviewed measurements. The team should confirm the final tool/model list and contributions before submitting.
 
-## Repository
+## Links
 
-https://github.com/UFRJ-Analytica/hkt_flame_in_freefall
+- Live demo: https://habitatfire.us
+- Repository: https://github.com/UFRJ-Analytica/hkt_flame_in_freefall
 
 ## Team-only release checklist (not submission copy)
 
-- Verify the integrated configurable SIBAL piece and mount `OriginPanel`; remove the integration notes above only after that flow works.
 - Verify SI, provider/index status and the public demo URL without exposing credentials. Do not infer live readiness from the frontend build.
 - Attach the final demonstration video and list all sources, tools, code and media used.
 - Check that claims match the actual release commit, especially indexing coverage and exploratory modeling.

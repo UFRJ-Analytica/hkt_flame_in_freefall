@@ -18,6 +18,7 @@ import {
 import type { ViewMode } from "./HabitatScene";
 import { ModelInUse, TrialList } from "./ModelPanels";
 import { Alternatives } from "./Alternatives";
+import { OriginPanel } from "./OriginPanel";
 import { computeMetrics, DURATION_S, fieldFingerprint, quantiles, SEED_COUNT, SEEDS, STEPS, validateInputs, type ScenarioInputs } from "./scenarioRun";
 import { englishText } from "../i18n/english";
 import "./habitat.css";
@@ -94,7 +95,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
   const [pieces, setPieces] = useState<Piece[]>(DEFAULT_PIECES);
   const [selectedPiece, setSelectedPiece] = useState(0);
   const [ignition, setIgnition] = useState(DEFAULT_IGNITION);
-  const [showModel, setShowModel] = useState(false);
+  const [panel, setPanel] = useState<null | "origin" | "details">(null);
   const zones = useMemo(() => piecesToZones(pieces), [pieces]);
   const [ensemble, setEnsemble] = useState<EnsembleResult | null>(null);
   const [computing, setComputing] = useState(false);
@@ -346,8 +347,6 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
   const fabricLabel = englishText(anchor?.material ?? REFERENCE_FABRIC.material);
   const fabricName = MATERIAL_INFO[fabricLabel as keyof typeof MATERIAL_INFO]?.label ?? fabricLabel;
   const fabricThickness = anchor ? anchor.thicknessMm : REFERENCE_FABRIC.thicknessMm;
-  const sample = anchor?.geometry.lengthMm && anchor.geometry.widthMm ? `${anchor.geometry.lengthMm / 1000} × ${anchor.geometry.widthMm / 1000} m` : null;
-  const anchorO2 = anchor ? anchor.conditions.oxygenPct ?? (anchor.conditions.oxygenRangePct ? (anchor.conditions.oxygenRangePct[0] + anchor.conditions.oxygenRangePct[1]) / 2 : null) : null;
 
   return (
     <main className="workbench habitat-workbench">
@@ -415,7 +414,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
         <div className="scene-container habitat-scene">
           <div className="scene-topbar">
             <div className="scene-title"><i className="dot amber" /><span>{siteInfo.title} · 6.4 × Ø4 M MODULE</span></div>
-            <button className="scene-scale model-chip" onClick={() => setShowModel(true)} title="Model & evidence">
+            <button className="scene-scale model-chip" onClick={() => setPanel("origin")} title="Model & evidence">
               EXPLORATORY · NASA {reference.toUpperCase()} <BookOpen size={11} />
             </button>
           </div>
@@ -459,7 +458,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
               <span className="eyebrow">FIRE SPREAD · PHYSICAL TIME{scenarioName ? ` · ${scenarioName.toUpperCase()}` : ""}</span>
               <h2>{view === "run" ? `Realization ${run + 1} of ${SEED_COUNT}` : `Probability over ${SEED_COUNT} realizations`}</h2>
             </div>
-            <button className="button secondary model-open" onClick={() => setShowModel(true)}><BookOpen size={13} />Model & evidence</button>
+            <button className="button secondary model-open" onClick={() => setPanel("origin")}><BookOpen size={13} />Model & evidence</button>
           </div>
           <div className="timeline">
             <button className="play-button" aria-label={playing ? "Pause" : "Play"} disabled={!ensemble}
@@ -496,7 +495,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
 
       <aside className="evidence-panel model-panel habitat-panel" aria-label="Results">
         <div className="panel-title"><Flame size={15} /><h2>Results</h2>
-          <button className="text-link subtle model-link" onClick={() => setShowModel(true)}>Model & evidence</button></div>
+          <button className="text-link subtle model-link" onClick={() => setPanel("details")}>Model details</button></div>
         <div className="model-panel-body">
           {replay && (
             <section className={`replay-card ${replay.status}`} role="status">
@@ -551,30 +550,32 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
             <p className="model-caption">Share of the {SEED_COUNT} realizations in which the item is burning at the current time.</p>
           </section>
 
-          <button className="button secondary calibration-link" onClick={() => setShowModel(true)}>
+          <button className="button secondary calibration-link" onClick={() => setPanel("origin")}>
             Where this comes from: NASA {reference} <ArrowRight size={14} />
           </button>
         </div>
       </aside>
 
-      {showModel && (
-        <div className="modal-backdrop" role="presentation" onClick={() => setShowModel(false)}>
+      {panel === "origin" && (
+        <OriginPanel anchorTrialId={anchor?.id ?? "SAFFIRE-I-S1"} onClose={() => setPanel(null)}
+          piece={{ lengthMm: pieces[Math.min(selectedPiece, pieces.length - 1)].lengthMm, widthMm: pieces[Math.min(selectedPiece, pieces.length - 1)].widthMm }} />
+      )}
+      {panel === "details" && (
+        <div className="modal-backdrop" role="presentation" onClick={() => setPanel(null)}>
           <div className="modal model-evidence" role="dialog" aria-modal="true" aria-label="Model and evidence" onClick={(e) => e.stopPropagation()}>
             <div className="modal-heading">
               <div>
-                <span className="eyebrow">MODEL & EVIDENCE</span>
-                <h2>From the NASA experiment to your module</h2>
+                <span className="eyebrow">MODEL DETAILS</span>
+                <h2>Reference experiment and model</h2>
               </div>
-              <button className="icon-button" aria-label="Close" onClick={() => setShowModel(false)}><X size={16} /></button>
+              <button className="icon-button" aria-label="Close" onClick={() => setPanel(null)}><X size={16} /></button>
             </div>
-            <ol className="origin-steps">
-              <li><b>Observed</b><span>NASA {reference}: a {sample ? `${sample} ` : ""}sample of {fabricName}{fabricThickness ? ` (${fabricThickness} mm)` : ""} burned in orbit{anchorO2 ? ` at ${num(anchorO2)}% O₂` : ""}{anchor?.conditions.pressureKpa ? ` and ${num(anchor.conditions.pressureKpa)} kPa` : ""}{anchor?.conditions.flowCmS ? `, ${num(anchor.conditions.flowCmS)} cm/s flow` : ""}.</span></li>
-              <li><b>Model on the sample</b><span>A stochastic neighbourhood rule from the SAFFIRE flight images, tuned to this trial's measured spread rate, reproduces the front on the original sample.</span>
-                <button className="text-link" onClick={() => { setShowModel(false); onOpenCalibration(); }}>Open the NASA trial replays <ArrowRight size={12} /></button></li>
-              <li><b>Applied to your layout</b><span>The same rule runs on your {pieces.length} fabric item{pieces.length === 1 ? "" : "s"} ({pieces.map((q) => `${(q.lengthMm / 1000).toFixed(1)} × ${(q.widthMm / 1000).toFixed(1)} m`).join(", ")}) on the module wall.</span></li>
-            </ol>
+            <div className="origin-links">
+              <button className="text-link" onClick={() => setPanel("origin")}>From the NASA experiment to your layout <ArrowRight size={12} /></button>
+              <button className="text-link" onClick={() => { setPanel(null); onOpenCalibration(); }}>SAFFIRE I–VI trial replays <ArrowRight size={12} /></button>
+            </div>
             {anchor && <ModelInUse anchor={anchor} level={level} diffs={diffs} kernel={anchorKernels[anchor.id]}
-              flowRule={kernel?.flowRule ?? ""} scenarioSpeed={metrics?.speedMmS ?? null} onRunTrial={() => { runAtTrialConditions(); setShowModel(false); }} />}
+              flowRule={kernel?.flowRule ?? ""} scenarioSpeed={metrics?.speedMmS ?? null} onRunTrial={() => { runAtTrialConditions(); setPanel(null); }} />}
             <TrialList ranked={ranked} selected={anchor?.id ?? null} auto={anchorChoice === "auto"}
               onSelect={(id: string) => { setAnchorChoice(id); restart(); }} registrySource={registry.generatedBy} />
             {second && <CrossTrial second={second} />}

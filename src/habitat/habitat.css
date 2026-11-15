@@ -248,3 +248,4 @@
 .site-select { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
 .site-select button { font-size: 11.5px; padding: 8px 6px; border-radius: 7px; border: 1px solid var(--line); background: #ffffff03; color: var(--muted); cursor: pointer; }
 .site-select button[aria-pressed="true"] { border-color: #f4a46788; background: var(--accent-soft); color: var(--text); }
+.origin-links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; } .origin-links .text-link { display: inline-flex; gap: 4px; align-items: center; }
