@@ -61,7 +61,7 @@ import { englishText } from "./i18n/english";
 import { Dashboard } from "./dashboard/Dashboard";
 type LabMode = "habitat" | "workspace" | "replays" | "cabin" | SaffireMission;
 const LAB_TABS: { id: "habitat" | "workspace" | "replays" | "saffire" | "cabin"; label: string; hint: string }[] = [
-  { id: "habitat", label: "Lunar habitat · 3D simulation", hint: "exploratory scenarios and A/B alternatives" },
+  { id: "habitat", label: "Lunar habitat & spacecraft · 3D", hint: "place fabric items, start a fire, compare layouts" },
   { id: "workspace", label: "Specialist workspace", hint: "gallery, comparison and dossier for 9 trials" },
   { id: "replays", label: "NASA experiment replays", hint: "BASS-II, SAFFIRE, SoFIE-GEL, SAME replays · FLARE evidence" },
   { id: "saffire", label: "SAFFIRE I–VI trials", hint: "calibration and validation by trial" },
@@ -504,7 +504,7 @@ export default function App() {
                   : labMode === "replays"
                   ? "Replay NASA experiments from their own data: BASS-II tracked fronts, SAFFIRE images and model, SoFIE-GEL video analysis, SAME measurement windows; FLARE stays static."
                   : labMode === "habitat"
-                  ? "Simulate fire spread across lunar habitat surfaces with a model calibrated using NASA images."
+                  ? "Place fabric items in a lunar habitat or spacecraft, start a fire and watch it spread with a model built from NASA SAFFIRE flight images."
                   : isSaffire
                   ? `Explore measurements and the spread model for ${mission.label}.`
                   : "Explore a microgravity cabin and connect your questions to NASA science."}

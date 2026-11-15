@@ -25,11 +25,17 @@ import "./habitat.css";
 const HabitatScene = lazy(() => import("./HabitatScene"));
 const SPEEDS = [15, 30, 60];
 
-const PRESETS: { id: string; label: string; note: string; oxygen: number; pressure: number; flow: number; gravity: GravityId }[] = [
-  { id: "lunar", label: "Lunar habitat · exploration atmosphere", note: "34% O₂ at 56.5 kPa (8.2 psia), the atmosphere NASA studies for lunar surface habitats · 1/6 g · 10 cm/s ventilation.", oxygen: 34, pressure: 56.5, flow: 10, gravity: "moon" },
-  { id: "lunar-air", label: "Lunar habitat · sea-level air", note: "21% O₂ at 101.3 kPa · 1/6 g · 10 cm/s ventilation.", oxygen: 21, pressure: 101.3, flow: 10, gravity: "moon" },
-  { id: "station", label: "Orbital station · nominal air", note: "21% O₂ at 101.3 kPa · microgravity · 10 cm/s ventilation.", oxygen: 21, pressure: 101.3, flow: 10, gravity: "orbit" },
-  { id: "saffire", label: "NASA SAFFIRE I test conditions", note: "21.6% O₂ at ~1 atm · microgravity · 20 cm/s: the conditions of the reference experiment.", oxygen: 21.6, pressure: 101.3, flow: 20, gravity: "orbit" },
+type Site = "surface" | "orbit";
+const SITES: { id: Site; label: string; title: string }[] = [
+  { id: "surface", label: "Lunar surface habitat", title: "LUNAR SURFACE HABITAT" },
+  { id: "orbit", label: "Spacecraft in lunar orbit", title: "LUNAR ORBIT SPACECRAFT" },
+];
+const PRESETS: { id: string; site: Site; label: string; note: string; oxygen: number; pressure: number; flow: number; gravity: GravityId }[] = [
+  { id: "lunar", site: "surface", label: "Exploration atmosphere", note: "34% O₂ at 56.5 kPa (8.2 psia), the atmosphere NASA studies for lunar surface habitats · 1/6 g · 10 cm/s ventilation.", oxygen: 34, pressure: 56.5, flow: 10, gravity: "moon" },
+  { id: "lunar-air", site: "surface", label: "Sea-level air", note: "21% O₂ at 101.3 kPa · 1/6 g · 10 cm/s ventilation.", oxygen: 21, pressure: 101.3, flow: 10, gravity: "moon" },
+  { id: "vehicle", site: "orbit", label: "Exploration vehicle atmosphere", note: "26.5% O₂ at 70.3 kPa (10.2 psia), the atmosphere NASA defined for exploration vehicles · microgravity · 10 cm/s ventilation.", oxygen: 26.5, pressure: 70.3, flow: 10, gravity: "orbit" },
+  { id: "station", site: "orbit", label: "Cabin air", note: "21% O₂ at 101.3 kPa, as on the ISS · microgravity · 10 cm/s ventilation.", oxygen: 21, pressure: 101.3, flow: 10, gravity: "orbit" },
+  { id: "saffire", site: "orbit", label: "NASA SAFFIRE I test conditions", note: "21.6% O₂ at ~1 atm · microgravity · 20 cm/s: the conditions of the reference experiment.", oxygen: 21.6, pressure: 101.3, flow: 20, gravity: "orbit" },
 ];
 
 const num = (n: number | null | undefined, digits = 1) =>
@@ -334,6 +340,8 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
   const time = step * CELL.stepSeconds;
   const gravityEnv = gravityOf(gravity);
   const activePreset = PRESETS.find((p) => p.id === preset);
+  const site: Site = gravity === "orbit" ? "orbit" : "surface";
+  const siteInfo = SITES.find((x) => x.id === site)!;
   const reference = anchor ? `${anchor.campaign} ${anchor.sample}` : "SAFFIRE";
   const fabricLabel = englishText(anchor?.material ?? REFERENCE_FABRIC.material);
   const fabricName = MATERIAL_INFO[fabricLabel as keyof typeof MATERIAL_INFO]?.label ?? fabricLabel;
@@ -346,16 +354,22 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
       <aside className="scenario-panel" aria-label="Configure habitat">
         <div className="panel-title">
           <Settings2 size={15} />
-          <h2>Your habitat</h2>
+          <h2>Your module</h2>
           <span className="tiny-tag">{gravityEnv.short}</span>
         </div>
         <section className="control-section">{modeSwitch}</section>
         <section className="control-section">
           <div className="step-label"><span>01</span><h3>Environment</h3><Wind size={14} /></div>
+          <div className="site-select" role="group" aria-label="Where">
+            {SITES.map((x) => (
+              <button key={x.id} type="button" aria-pressed={site === x.id}
+                onClick={() => { if (site !== x.id) applyPreset(PRESETS.find((p) => p.site === x.id)!.id); }}>{x.label}</button>
+            ))}
+          </div>
           <label className="preset-select">
-            <select aria-label="Environment preset" value={preset} onChange={(e) => applyPreset(e.target.value)}>
+            <select aria-label="Atmosphere preset" value={preset} onChange={(e) => applyPreset(e.target.value)}>
               <option value="custom" disabled>Custom conditions</option>
-              {PRESETS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+              {PRESETS.filter((p) => p.site === site).map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
             </select>
           </label>
           <p className="preset-note">{activePreset ? activePreset.note : `${num(oxygen)}% O₂ at ${num(pressure)} kPa · ${gravityEnv.label} · ${num(flow)} cm/s ventilation.`}</p>
@@ -400,9 +414,9 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
       <div className="visualization-column">
         <div className="scene-container habitat-scene">
           <div className="scene-topbar">
-            <div className="scene-title"><i className="dot amber" /><span>LUNAR SURFACE HABITAT · 6.4 × Ø4 M MODULE</span></div>
+            <div className="scene-title"><i className="dot amber" /><span>{siteInfo.title} · 6.4 × Ø4 M MODULE</span></div>
             <button className="scene-scale model-chip" onClick={() => setShowModel(true)} title="Model & evidence">
-              EXPLORATORY SIMULATION · BASED ON NASA {reference.toUpperCase()} <BookOpen size={11} />
+              EXPLORATORY · NASA {reference.toUpperCase()} <BookOpen size={11} />
             </button>
           </div>
           <div className="scene-canvas">
@@ -410,7 +424,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
               <Suspense fallback={<div className="scene-loading"><LoaderCircle size={24} className="spin" /><span>Assembling the module…</span></div>}>
                 {model ? (
                   <HabitatScene material={grid.material} behavior={grid.behavior} ensemble={ensemble} step={step} run={run}
-                    view={view} ignition={ignition} flow={flow} gravityG={conditions.gravityG} onIgnite={ignite} resetCameraKey={resetCameraKey} />
+                    view={view} ignition={ignition} flow={flow} gravityG={conditions.gravityG} onIgnite={ignite} resetCameraKey={resetCameraKey} site={site} />
                 ) : <div className="scene-fallback" role="status"><p>{error ?? "Loading the model…"}</p></div>}
               </Suspense>
             </SceneBoundary>
@@ -549,15 +563,15 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
             <div className="modal-heading">
               <div>
                 <span className="eyebrow">MODEL & EVIDENCE</span>
-                <h2>From the NASA experiment to your habitat</h2>
+                <h2>From the NASA experiment to your module</h2>
               </div>
               <button className="icon-button" aria-label="Close" onClick={() => setShowModel(false)}><X size={16} /></button>
             </div>
             <ol className="origin-steps">
               <li><b>Observed</b><span>NASA {reference}: a {sample ? `${sample} ` : ""}sample of {fabricName}{fabricThickness ? ` (${fabricThickness} mm)` : ""} burned in orbit{anchorO2 ? ` at ${num(anchorO2)}% O₂` : ""}{anchor?.conditions.pressureKpa ? ` and ${num(anchor.conditions.pressureKpa)} kPa` : ""}{anchor?.conditions.flowCmS ? `, ${num(anchor.conditions.flowCmS)} cm/s flow` : ""}.</span></li>
-              <li><b>Model on the sample</b><span>A stochastic neighbourhood rule fitted to the flight images reproduces the front on the original sample.</span>
+              <li><b>Model on the sample</b><span>A stochastic neighbourhood rule from the SAFFIRE flight images, tuned to this trial's measured spread rate, reproduces the front on the original sample.</span>
                 <button className="text-link" onClick={() => { setShowModel(false); onOpenCalibration(); }}>Open the NASA trial replays <ArrowRight size={12} /></button></li>
-              <li><b>Applied to your layout</b><span>The same rule runs on your {pieces.length} fabric item{pieces.length === 1 ? "" : "s"} ({pieces.map((q) => `${(q.lengthMm / 1000).toFixed(1)} × ${(q.widthMm / 1000).toFixed(1)} m`).join(", ")}) on the habitat wall.</span></li>
+              <li><b>Applied to your layout</b><span>The same rule runs on your {pieces.length} fabric item{pieces.length === 1 ? "" : "s"} ({pieces.map((q) => `${(q.lengthMm / 1000).toFixed(1)} × ${(q.widthMm / 1000).toFixed(1)} m`).join(", ")}) on the module wall.</span></li>
             </ol>
             {anchor && <ModelInUse anchor={anchor} level={level} diffs={diffs} kernel={anchorKernels[anchor.id]}
               flowRule={kernel?.flowRule ?? ""} scenarioSpeed={metrics?.speedMmS ?? null} onRunTrial={() => { runAtTrialConditions(); setShowModel(false); }} />}

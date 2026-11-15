@@ -21,6 +21,8 @@ export interface HabitatSceneProps {
   gravityG: number;
   onIgnite: (col: number, row: number) => void;
   resetCameraKey: number;
+  /** Where the module is: on the lunar surface, or a spacecraft module in lunar orbit. */
+  site?: "surface" | "orbit";
 }
 
 /** Cylinder-wall patch around the module axis (x). u runs along x, v along the arc. */
@@ -295,7 +297,12 @@ export default function HabitatScene(props: HabitatSceneProps) {
       <hemisphereLight args={["#cfd8e6", "#2a2a2e", 0.6]} />
       <directionalLight position={[-22, 9, 14]} intensity={2.6} color="#fff4e2" />
       <pointLight position={[0, 1.2, 0.6]} intensity={2.2} distance={6} color="#e8eef8" />
-      <LunarSite />
+      {props.site === "orbit" ? (
+        <mesh position={[10, -34, -46]}>
+          <sphereGeometry args={[26, 96, 96]} />
+          <meshStandardMaterial color="#9a9a96" emissive="#2a2a28" emissiveIntensity={0.5} roughness={1} />
+        </mesh>
+      ) : <LunarSite />}
       <InteriorProps />
       <Shell />
       <Liner {...props} seeds={seeds} />
