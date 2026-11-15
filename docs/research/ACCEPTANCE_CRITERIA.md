@@ -15,8 +15,8 @@ Esta é a entrega incremental da tarefa 1; as regras de elegibilidade e de expor
 
 ## Estado
 
-Tarefa 1: registro dos nove ensaios e validação de fontes, tipos e hashes prontos.
-Verificação: testes locais do registro e regressões Python/Node exigidos antes do push desta etapa.
-Não verificado: transferência lunar, independência de ensaios, erros totais de medição ou certificação.
-Frontend deve consumir public/data/saffire/trial-registry.json; null significa desconhecido, não zero ou compatível.
-Próximas entregas: revisão S2, proveniência cross-trial e critérios completos; sem merge em develop/main.
+Tarefa 1: registro dos nove ensaios publicado; frontend consome public/data/saffire/trial-registry.json sem tratar null como compatível.
+Tarefa 2: S2_REVIEW.md concluído; a velocidade curta de I S2 é sensível à quantização e não é aprovada como física validada.
+Verificação: cálculos da revisão reproduzíveis; regressões Python/Node exigidas antes do push, sem recalibrar scripts protegidos.
+Não verificado: pixels/sensores S2 ausentes, regime pós-ignitor, validação externa e transferência lunar.
+Próximas entregas: proveniência cross-trial e critérios completos; sem merge em develop/main.
