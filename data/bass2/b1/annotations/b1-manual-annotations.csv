@@ -1,0 +1,33 @@
+ts_frame,clock_display_raw,upper_front_px,upper_visible,lower_front_px,lower_visible,annotator,method,note
+332,10:09:47,241,1,240,1,claude-assistente,visual-pranchas-3x-grade-10px,chama ainda na forma em C ligada ao brilho da ignição; frente difusa
+359,10:09:48,237,1,242,1,claude-assistente,visual-pranchas-3x-grade-10px,frente difusa; brilho saturado próximo do ignitor
+385,10:09:48,242,1,250,1,claude-assistente,visual-pranchas-3x-grade-10px,ponta azulada tênue incluída
+412,10:09:49,245,1,255,1,claude-assistente,visual-pranchas-3x-grade-10px,
+438,10:09:50,260,1,258,1,claude-assistente,visual-pranchas-3x-grade-10px,
+465,10:09:51,268,1,266,1,claude-assistente,visual-pranchas-3x-grade-10px,
+491,10:09:52,278,1,274,1,claude-assistente,visual-pranchas-3x-grade-10px,
+518,10:09:53,285,1,281,1,claude-assistente,visual-pranchas-3x-grade-10px,
+544,10:09:54,290,1,287,1,claude-assistente,visual-pranchas-3x-grade-10px,
+571,10:09:55,300,1,297,1,claude-assistente,visual-pranchas-3x-grade-10px,
+597,10:09:56,308,1,305,1,claude-assistente,visual-pranchas-3x-grade-10px,
+624,10:09:56,318,1,316,1,claude-assistente,visual-pranchas-3x-grade-10px,
+650,10:09:57,330,1,326,1,claude-assistente,visual-pranchas-3x-grade-10px,
+677,10:09:58,335,1,334,1,claude-assistente,visual-pranchas-3x-grade-10px,
+703,10:09:59,346,1,343,1,claude-assistente,visual-pranchas-3x-grade-10px,
+730,10:10:00,357,1,351,1,claude-assistente,visual-pranchas-3x-grade-10px,
+756,10:10:01,367,1,360,1,claude-assistente,visual-pranchas-3x-grade-10px,
+783,10:10:02,375,1,368,1,claude-assistente,visual-pranchas-3x-grade-10px,
+809,10:10:03,386,1,377,1,claude-assistente,visual-pranchas-3x-grade-10px,
+836,10:10:03,393,1,385,1,claude-assistente,visual-pranchas-3x-grade-10px,
+862,10:10:04,403,1,394,1,claude-assistente,visual-pranchas-3x-grade-10px,
+889,10:10:05,412,1,403,1,claude-assistente,visual-pranchas-3x-grade-10px,
+915,10:10:06,420,1,411,1,claude-assistente,visual-pranchas-3x-grade-10px,
+942,10:10:07,428,1,420,1,claude-assistente,visual-pranchas-3x-grade-10px,
+968,10:10:08,436,1,428,1,claude-assistente,visual-pranchas-3x-grade-10px,
+995,10:10:09,444,1,436,1,claude-assistente,visual-pranchas-3x-grade-10px,
+1021,10:10:10,452,1,444,1,claude-assistente,visual-pranchas-3x-grade-10px,
+1048,10:10:11,462,1,453,1,claude-assistente,visual-pranchas-3x-grade-10px,
+1070,10:10:11,466,1,458,1,claude-assistente,visual-pranchas-3x-grade-10px,FAN em redução
+1090,10:10:12,460,1,457,1,claude-assistente,visual-pranchas-3x-grade-10px,chama enfraquecendo; ponta incerta
+1105,10:10:12,430,1,433,1,claude-assistente,visual-pranchas-3x-grade-10px,emissão muito fraca; extremidade incerta
+1120,10:10:13,,0,,0,claude-assistente,visual-pranchas-3x-grade-10px,nenhuma emissão visível sem realce

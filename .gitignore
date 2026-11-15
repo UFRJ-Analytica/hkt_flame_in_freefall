@@ -9,6 +9,7 @@ __pycache__/
 .venv/
 .scratch/
 data/cache/saffire/
+data/cache/bass2/
 .DS_Store
 data/cache/same/
 data/cache/sofie/

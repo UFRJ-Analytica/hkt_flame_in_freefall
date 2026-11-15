@@ -6,6 +6,7 @@ import {
   BookOpen,
   ChevronRight,
   Database,
+  Film,
   Search,
   SlidersHorizontal,
   Wind,
@@ -23,6 +24,10 @@ import { SOFIE_GEL_TITLE } from "./research/sofieGel";
 
 // Published evidence outside the PSI catalogue: module and JSON load only when opened.
 const SofieGelObservation = lazy(() => import("./research/SofieGelObservation"));
+import { BASS_B1_RECORD_ID } from "./research/bassB1";
+
+// Measured video analysis of BASS-II test B1, loaded only when opened.
+const BassB1Observation = lazy(() => import("./research/BassB1Observation"));
 
 export function ExperimentExplorer({
   data,
@@ -40,6 +45,7 @@ export function ExperimentExplorer({
   const [page, setPage] = useState(0);
   const [smokeOpen, setSmokeOpen] = useState(false);
   const [sofieOpen, setSofieOpen] = useState(false);
+  const [observationOpen, setObservationOpen] = useState(false);
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -302,6 +308,11 @@ export function ExperimentExplorer({
                                 >
                                   {test.label || test.id}
                                 </button>
+                                {test.id === BASS_B1_RECORD_ID && (
+                                  <span className="tiny-tag b1-row-tag" title="Frente de chama medida no vídeo deste teste">
+                                    vídeo analisado
+                                  </span>
+                                )}
                               </td>
                               <td>{test.material || "Não informado"}</td>
                               <td className="mono">
@@ -431,6 +442,25 @@ export function ExperimentExplorer({
                   </div>
                 ))}
             </div>
+            {detail.id === BASS_B1_RECORD_ID && (
+              <div className="b1-entry">
+                <span>
+                  <strong>Observação experimental disponível.</strong> Frentes
+                  de chama medidas no vídeo deste teste (em pixels, sem escala
+                  física), com reprodução temporal, eventos e limitações.
+                </span>
+                <button
+                  className="button secondary"
+                  onClick={() => {
+                    setDetail(null);
+                    setObservationOpen(true);
+                  }}
+                >
+                  <Film size={15} />
+                  Abrir observação B1 (vídeo medido)
+                </button>
+              </div>
+            )}
             <div className="data-notice">
               Aplicar copia apenas condições numéricas disponíveis. O
               experimento não é uma validação da cabine nem da animação.
@@ -471,6 +501,19 @@ export function ExperimentExplorer({
           }
         >
           <SofieGelObservation onClose={() => setSofieOpen(false)} />
+        </Suspense>
+      )}
+      {observationOpen && (
+        <Suspense
+          fallback={
+            <div className="modal-backdrop">
+              <div className="modal" role="status">
+                Carregando a observação B1…
+              </div>
+            </div>
+          }
+        >
+          <BassB1Observation onClose={() => setObservationOpen(false)} />
         </Suspense>
       )}
     </div>

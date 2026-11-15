@@ -1,0 +1,11 @@
+event,frame_first,frame_last,method,note
+video_start,0,0,telemetria,primeiro quadro decodificável do TS original
+light_first_visible,276,280,visual,"primeira luz abaixo da sobreposição: traço quase imperceptível em #276, ponto nítido em #280 (prancha events-ignition.png, quadros de 4 em 4)"
+ignitor_and_flame_overlap,280,331,visual,"brilho do ignitor e da chama sobrepostos e saturados; não é possível separar ignitor de chama nem ver o desligamento do ignitor"
+flame_two_sheets_visible,324,332,visual,"forma de duas lâminas luminosas (chama dos dois lados do filme) evidente a partir de #332; já sugerida em #324"
+fan_drop_start,1049,1049,telemetria,"primeiro quadro com FAN abaixo de 61 depois do trecho estável (59)"
+fan_reaches_38,1149,1149,telemetria,"primeiro quadro com FAN = 38 (3,8 V; a planilha de calibração diz que o ventilador para acima de 3,8 V)"
+flame_luminous_last,1109,1109,visual,"último quadro com lâminas vermelhas nítidas sem realce (prancha events-extinction.png)"
+flame_dim_last,1133,1142,visual,"chama azul fraca visível com ganho x4 até #1133; traços duvidosos até #1142; nada visível a partir de #1145 (events-extinction-gain4.png)"
+air_first_change_after_fan_drop,1249,1249,telemetria,"AIR passa de 5 para 4; ~6 s depois do início da queda de FAN (resposta lenta do transdutor)"
+video_end,1312,1312,telemetria,último quadro do TS original

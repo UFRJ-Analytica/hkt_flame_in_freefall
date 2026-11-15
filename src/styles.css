@@ -2857,3 +2857,21 @@ input[type="range"]::-webkit-slider-thumb {
     scroll-behavior: auto !important;
   }
 }
+
+/* BASS-II B1 observation: entry point in the catalogue (the module has its own stylesheet). */
+.b1-entry {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 4px;
+  padding: 12px 14px;
+  border: 1px solid #3987e555;
+  border-radius: 10px;
+  background: #3987e50d;
+  font-size: 12px;
+  color: #c9d6e6;
+}
+.b1-row-tag {
+  margin-left: 6px;
+  color: #9cc4f2;
+  border-color: #3987e555;
+}

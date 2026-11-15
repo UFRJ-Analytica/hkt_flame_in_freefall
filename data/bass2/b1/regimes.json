@@ -1,0 +1,728 @@
+{
+ "schemaVersion": 1,
+ "recordId": "PSI-25:t0:r2",
+ "test": "B1",
+ "conditionsFromCatalogue": {
+  "flowRestrictor": 2,
+  "fanDisplayCsv": "62",
+  "airDisplayCsv": "5",
+  "radiometerGain": "50",
+  "oxygenPctInitialCsv": 22.2,
+  "oxygenNote": "O₂ de GMT 50 incerto: Apêndice A sugere ~20,6 % (ver revisão documental §7.3)"
+ },
+ "fanCalibration": {
+  "gmtLabel": "2014-50- post soot cleaning",
+  "columns": "O:Q",
+  "restrictors": 2,
+  "points": [
+   [
+    38,
+    0,
+    "Q32"
+   ],
+   [
+    47,
+    2.5,
+    "Q31"
+   ],
+   [
+    55,
+    5,
+    "Q30"
+   ],
+   [
+    72,
+    9,
+    "Q29"
+   ],
+   [
+    89,
+    13,
+    "Q28"
+   ],
+   [
+    105,
+    18,
+    "Q27"
+   ],
+   [
+    122,
+    22,
+    "Q26"
+   ]
+  ],
+  "blockOrder": "inferida (ver BASS2_DOCUMENTATION_REVIEW.md §4.3)",
+  "sectionFactor": 1.0066,
+  "minimumUsableFanDisplay": 42.0
+ },
+ "velocityCaveats": [
+  "AIR é a leitura do transdutor, com resposta de ~1 min: não acompanha mudanças rápidas de FAN.",
+  "A velocidade pela calibração usa a calibração do fim do dia GMT 50 (rotulada \"post soot cleaning\"); durante o teste o transdutor mostrou 5 cm/s com FAN 61-62, abaixo do previsto pela calibração.",
+  "Durante a rampa de FAN a velocidade real na chama é desconhecida (atraso de transporte não documentado)."
+ ],
+ "events": {
+  "video_start": {
+   "event": "video_start",
+   "method": "telemetria",
+   "note": "primeiro quadro decodificável do TS original",
+   "first": {
+    "frame": 0,
+    "timestamp_video_s": 0.167,
+    "clock_display_raw": "10:09:36",
+    "timestamp_experiment_s": 36576.143,
+    "timestamp_experiment_clock": "10:09:36.14"
+   },
+   "last": {
+    "frame": 0,
+    "timestamp_video_s": 0.167,
+    "clock_display_raw": "10:09:36",
+    "timestamp_experiment_s": 36576.143,
+    "timestamp_experiment_clock": "10:09:36.14"
+   }
+  },
+  "light_first_visible": {
+   "event": "light_first_visible",
+   "method": "visual",
+   "note": "primeira luz abaixo da sobreposição: traço quase imperceptível em #276, ponto nítido em #280 (prancha events-ignition.png, quadros de 4 em 4)",
+   "first": {
+    "frame": 276,
+    "timestamp_video_s": 9.376,
+    "clock_display_raw": "10:09:45",
+    "timestamp_experiment_s": 36585.348,
+    "timestamp_experiment_clock": "10:09:45.35"
+   },
+   "last": {
+    "frame": 280,
+    "timestamp_video_s": 9.509,
+    "clock_display_raw": "10:09:45",
+    "timestamp_experiment_s": 36585.481,
+    "timestamp_experiment_clock": "10:09:45.48"
+   }
+  },
+  "ignitor_and_flame_overlap": {
+   "event": "ignitor_and_flame_overlap",
+   "method": "visual",
+   "note": "brilho do ignitor e da chama sobrepostos e saturados; não é possível separar ignitor de chama nem ver o desligamento do ignitor",
+   "first": {
+    "frame": 280,
+    "timestamp_video_s": 9.509,
+    "clock_display_raw": "10:09:45",
+    "timestamp_experiment_s": 36585.481,
+    "timestamp_experiment_clock": "10:09:45.48"
+   },
+   "last": {
+    "frame": 331,
+    "timestamp_video_s": 11.211,
+    "clock_display_raw": "10:09:47",
+    "timestamp_experiment_s": 36587.182,
+    "timestamp_experiment_clock": "10:09:47.18"
+   }
+  },
+  "flame_two_sheets_visible": {
+   "event": "flame_two_sheets_visible",
+   "method": "visual",
+   "note": "forma de duas lâminas luminosas (chama dos dois lados do filme) evidente a partir de #332; já sugerida em #324",
+   "first": {
+    "frame": 324,
+    "timestamp_video_s": 10.977,
+    "clock_display_raw": "10:09:46",
+    "timestamp_experiment_s": 36586.949,
+    "timestamp_experiment_clock": "10:09:46.95"
+   },
+   "last": {
+    "frame": 332,
+    "timestamp_video_s": 11.244,
+    "clock_display_raw": "10:09:47",
+    "timestamp_experiment_s": 36587.215,
+    "timestamp_experiment_clock": "10:09:47.22"
+   }
+  },
+  "fan_drop_start": {
+   "event": "fan_drop_start",
+   "method": "telemetria",
+   "note": "primeiro quadro com FAN abaixo de 61 depois do trecho estável (59)",
+   "first": {
+    "frame": 1049,
+    "timestamp_video_s": 35.167,
+    "clock_display_raw": "10:10:11",
+    "timestamp_experiment_s": 36611.128,
+    "timestamp_experiment_clock": "10:10:11.13"
+   },
+   "last": {
+    "frame": 1049,
+    "timestamp_video_s": 35.167,
+    "clock_display_raw": "10:10:11",
+    "timestamp_experiment_s": 36611.128,
+    "timestamp_experiment_clock": "10:10:11.13"
+   }
+  },
+  "fan_reaches_38": {
+   "event": "fan_reaches_38",
+   "method": "telemetria",
+   "note": "primeiro quadro com FAN = 38 (3,8 V; a planilha de calibração diz que o ventilador para acima de 3,8 V)",
+   "first": {
+    "frame": 1149,
+    "timestamp_video_s": 38.503,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36614.462,
+    "timestamp_experiment_clock": "10:10:14.46"
+   },
+   "last": {
+    "frame": 1149,
+    "timestamp_video_s": 38.503,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36614.462,
+    "timestamp_experiment_clock": "10:10:14.46"
+   }
+  },
+  "flame_luminous_last": {
+   "event": "flame_luminous_last",
+   "method": "visual",
+   "note": "último quadro com lâminas vermelhas nítidas sem realce (prancha events-extinction.png)",
+   "first": {
+    "frame": 1109,
+    "timestamp_video_s": 37.169,
+    "clock_display_raw": "10:10:13",
+    "timestamp_experiment_s": 36613.129,
+    "timestamp_experiment_clock": "10:10:13.13"
+   },
+   "last": {
+    "frame": 1109,
+    "timestamp_video_s": 37.169,
+    "clock_display_raw": "10:10:13",
+    "timestamp_experiment_s": 36613.129,
+    "timestamp_experiment_clock": "10:10:13.13"
+   }
+  },
+  "flame_dim_last": {
+   "event": "flame_dim_last",
+   "method": "visual",
+   "note": "chama azul fraca visível com ganho x4 até #1133; traços duvidosos até #1142; nada visível a partir de #1145 (events-extinction-gain4.png)",
+   "first": {
+    "frame": 1133,
+    "timestamp_video_s": 37.969,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36613.928,
+    "timestamp_experiment_clock": "10:10:13.93"
+   },
+   "last": {
+    "frame": 1142,
+    "timestamp_video_s": 38.27,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36614.229,
+    "timestamp_experiment_clock": "10:10:14.23"
+   }
+  },
+  "air_first_change_after_fan_drop": {
+   "event": "air_first_change_after_fan_drop",
+   "method": "telemetria",
+   "note": "AIR passa de 5 para 4; ~6 s depois do início da queda de FAN (resposta lenta do transdutor)",
+   "first": {
+    "frame": 1249,
+    "timestamp_video_s": 41.84,
+    "clock_display_raw": "10:10:17",
+    "timestamp_experiment_s": 36617.798,
+    "timestamp_experiment_clock": "10:10:17.80"
+   },
+   "last": {
+    "frame": 1249,
+    "timestamp_video_s": 41.84,
+    "clock_display_raw": "10:10:17",
+    "timestamp_experiment_s": 36617.798,
+    "timestamp_experiment_clock": "10:10:17.80"
+   }
+  },
+  "video_end": {
+   "event": "video_end",
+   "method": "telemetria",
+   "note": "último quadro do TS original",
+   "first": {
+    "frame": 1312,
+    "timestamp_video_s": 43.942,
+    "clock_display_raw": "10:10:19",
+    "timestamp_experiment_s": 36619.899,
+    "timestamp_experiment_clock": "10:10:19.90"
+   },
+   "last": {
+    "frame": 1312,
+    "timestamp_video_s": 43.942,
+    "clock_display_raw": "10:10:19",
+    "timestamp_experiment_s": 36619.899,
+    "timestamp_experiment_clock": "10:10:19.90"
+   }
+  }
+ },
+ "regimes": [
+  {
+   "regime": "antes da ignição",
+   "start": {
+    "frame": 0,
+    "timestamp_video_s": 0.167,
+    "clock_display_raw": "10:09:36",
+    "timestamp_experiment_s": 36576.143,
+    "timestamp_experiment_clock": "10:09:36.14"
+   },
+   "end": {
+    "frame": 279,
+    "timestamp_video_s": 9.476,
+    "clock_display_raw": "10:09:45",
+    "timestamp_experiment_s": 36585.448,
+    "timestamp_experiment_clock": "10:09:45.45"
+   },
+   "frames": 280,
+   "fan": {
+    "values": [
+     "61",
+     "62"
+    ],
+    "min": 61.0,
+    "max": 62.0,
+    "first": "61",
+    "last": "62",
+    "unreadableFrames": 0
+   },
+   "air": {
+    "values": [
+     "4",
+     "5"
+    ],
+    "min": 4.0,
+    "max": 5.0,
+    "first": "5",
+    "last": "5",
+    "unreadableFrames": 0
+   },
+   "fuel": {
+    "values": [
+     "-3",
+     "-2",
+     "-1"
+    ],
+    "min": -3.0,
+    "max": -1.0,
+    "first": "-2",
+    "last": "-2",
+    "unreadableFrames": 0
+   },
+   "rad": {
+    "values": [
+     "0.05",
+     "0.06",
+     "0.13",
+     "0.14"
+    ],
+    "min": 0.05,
+    "max": 0.14,
+    "first": "0.05",
+    "last": "0.14",
+    "unreadableFrames": 0
+   },
+   "fanVoltageRange_v": [
+    6.1,
+    6.2
+   ],
+   "velocityFromFanCalibration_cm_s": [
+    6.45,
+    6.69
+   ],
+   "velocityFromFanCalibrationNote": null,
+   "airTransducerModal_cm_s": 5.0,
+   "velocityFromAirTransducer_cm_s": 5.03,
+   "airTransducerState": "FAN constante desde antes do início do vídeo; leitura estável, mas o tempo de acomodação de ~1 min não pode ser verificado"
+  },
+  {
+   "regime": "ignição: ignitor e chama sobrepostos",
+   "start": {
+    "frame": 280,
+    "timestamp_video_s": 9.509,
+    "clock_display_raw": "10:09:45",
+    "timestamp_experiment_s": 36585.481,
+    "timestamp_experiment_clock": "10:09:45.48"
+   },
+   "end": {
+    "frame": 331,
+    "timestamp_video_s": 11.211,
+    "clock_display_raw": "10:09:47",
+    "timestamp_experiment_s": 36587.182,
+    "timestamp_experiment_clock": "10:09:47.18"
+   },
+   "frames": 52,
+   "fan": {
+    "values": [
+     "61",
+     "62"
+    ],
+    "min": 61.0,
+    "max": 62.0,
+    "first": "62",
+    "last": "62",
+    "unreadableFrames": 0
+   },
+   "air": {
+    "values": [
+     "5"
+    ],
+    "min": 5.0,
+    "max": 5.0,
+    "first": "5",
+    "last": "5",
+    "unreadableFrames": 0
+   },
+   "fuel": {
+    "values": [
+     "-2",
+     "-1"
+    ],
+    "min": -2.0,
+    "max": -1.0,
+    "first": "-2",
+    "last": "-1",
+    "unreadableFrames": 0
+   },
+   "rad": {
+    "values": [
+     "0.17",
+     "0.19",
+     "0.24",
+     "0.30",
+     "0.58",
+     "0.79",
+     "0.91",
+     "1.04",
+     "1.18"
+    ],
+    "min": 0.17,
+    "max": 1.18,
+    "first": "0.17",
+    "last": "1.18",
+    "unreadableFrames": 0
+   },
+   "fanVoltageRange_v": [
+    6.1,
+    6.2
+   ],
+   "velocityFromFanCalibration_cm_s": [
+    6.45,
+    6.69
+   ],
+   "velocityFromFanCalibrationNote": null,
+   "airTransducerModal_cm_s": 5.0,
+   "velocityFromAirTransducer_cm_s": 5.03,
+   "airTransducerState": "FAN constante desde antes do início do vídeo; leitura estável, mas o tempo de acomodação de ~1 min não pode ser verificado"
+  },
+  {
+   "regime": "chama estabelecida, FAN constante",
+   "start": {
+    "frame": 332,
+    "timestamp_video_s": 11.244,
+    "clock_display_raw": "10:09:47",
+    "timestamp_experiment_s": 36587.215,
+    "timestamp_experiment_clock": "10:09:47.22"
+   },
+   "end": {
+    "frame": 1048,
+    "timestamp_video_s": 35.133,
+    "clock_display_raw": "10:10:11",
+    "timestamp_experiment_s": 36611.094,
+    "timestamp_experiment_clock": "10:10:11.09"
+   },
+   "frames": 717,
+   "fan": {
+    "values": [
+     "61",
+     "62"
+    ],
+    "min": 61.0,
+    "max": 62.0,
+    "first": "62",
+    "last": "62",
+    "unreadableFrames": 0
+   },
+   "air": {
+    "values": [
+     "4",
+     "5",
+     "6"
+    ],
+    "min": 4.0,
+    "max": 6.0,
+    "first": "5",
+    "last": "5",
+    "unreadableFrames": 0
+   },
+   "fuel": {
+    "values": [
+     "-4",
+     "-3",
+     "-2",
+     "-1",
+     "0"
+    ],
+    "min": -4.0,
+    "max": 0.0,
+    "first": "-1",
+    "last": "-2",
+    "unreadableFrames": 0
+   },
+   "rad": {
+    "values": [
+     "0.86",
+     "0.87",
+     "0.88",
+     "0.89",
+     "0.90",
+     "0.91",
+     "0.92",
+     "0.93",
+     "0.94",
+     "0.95",
+     "0.97",
+     "0.98",
+     "1.00",
+     "1.01",
+     "1.03",
+     "1.04",
+     "1.05",
+     "1.06",
+     "1.07",
+     "1.08",
+     "1.09",
+     "1.10",
+     "1.11",
+     "1.12",
+     "1.13",
+     "1.14",
+     "1.15",
+     "1.16",
+     "1.17",
+     "1.18",
+     "1.19",
+     "1.20",
+     "1.21",
+     "1.22",
+     "1.23",
+     "1.24",
+     "1.25",
+     "1.26",
+     "1.27",
+     "1.28",
+     "1.29",
+     "1.30",
+     "1.34",
+     "1.42",
+     "1.49",
+     "1.51",
+     "1.54",
+     "1.55",
+     "1.?0"
+    ],
+    "min": 0.86,
+    "max": 1.55,
+    "first": "1.18",
+    "last": "1.27",
+    "unreadableFrames": 1
+   },
+   "fanVoltageRange_v": [
+    6.1,
+    6.2
+   ],
+   "velocityFromFanCalibration_cm_s": [
+    6.45,
+    6.69
+   ],
+   "velocityFromFanCalibrationNote": null,
+   "airTransducerModal_cm_s": 5.0,
+   "velocityFromAirTransducer_cm_s": 5.03,
+   "airTransducerState": "FAN constante desde antes do início do vídeo; leitura estável, mas o tempo de acomodação de ~1 min não pode ser verificado"
+  },
+  {
+   "regime": "redução de FAN (corte do ventilador)",
+   "start": {
+    "frame": 1049,
+    "timestamp_video_s": 35.167,
+    "clock_display_raw": "10:10:11",
+    "timestamp_experiment_s": 36611.128,
+    "timestamp_experiment_clock": "10:10:11.13"
+   },
+   "end": {
+    "frame": 1148,
+    "timestamp_video_s": 38.47,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36614.429,
+    "timestamp_experiment_clock": "10:10:14.43"
+   },
+   "frames": 100,
+   "fan": {
+    "values": [
+     "39",
+     "41",
+     "43",
+     "46",
+     "47",
+     "49",
+     "50",
+     "51",
+     "54",
+     "55",
+     "57",
+     "58",
+     "59"
+    ],
+    "min": 39.0,
+    "max": 59.0,
+    "first": "59",
+    "last": "39",
+    "unreadableFrames": 0
+   },
+   "air": {
+    "values": [
+     "5"
+    ],
+    "min": 5.0,
+    "max": 5.0,
+    "first": "5",
+    "last": "5",
+    "unreadableFrames": 0
+   },
+   "fuel": {
+    "values": [
+     "-2",
+     "-1"
+    ],
+    "min": -2.0,
+    "max": -1.0,
+    "first": "-2",
+    "last": "-2",
+    "unreadableFrames": 0
+   },
+   "rad": {
+    "values": [
+     "0.75",
+     "0.81",
+     "0.86",
+     "0.90",
+     "0.94",
+     "0.99",
+     "1.03",
+     "1.06",
+     "1.09",
+     "1.13",
+     "1.17",
+     "1.20",
+     "1.22",
+     "1.24",
+     "1.26",
+     "1.27",
+     "1.2?"
+    ],
+    "min": 0.75,
+    "max": 1.27,
+    "first": "1.27",
+    "last": "0.75",
+    "unreadableFrames": 1
+   },
+   "fanVoltageRange_v": [
+    3.9,
+    5.9
+   ],
+   "velocityFromFanCalibration_cm_s": null,
+   "velocityFromFanCalibrationNote": "FAN variando no intervalo",
+   "airTransducerModal_cm_s": null,
+   "velocityFromAirTransducer_cm_s": null,
+   "airTransducerState": "não acomodado: FAN mudou há menos de 1 min (resposta lenta do transdutor)"
+  },
+  {
+   "regime": "FAN no mínimo (38)",
+   "start": {
+    "frame": 1149,
+    "timestamp_video_s": 38.503,
+    "clock_display_raw": "10:10:14",
+    "timestamp_experiment_s": 36614.462,
+    "timestamp_experiment_clock": "10:10:14.46"
+   },
+   "end": {
+    "frame": 1312,
+    "timestamp_video_s": 43.942,
+    "clock_display_raw": "10:10:19",
+    "timestamp_experiment_s": 36619.899,
+    "timestamp_experiment_clock": "10:10:19.90"
+   },
+   "frames": 164,
+   "fan": {
+    "values": [
+     "37",
+     "38"
+    ],
+    "min": 37.0,
+    "max": 38.0,
+    "first": "38",
+    "last": "38",
+    "unreadableFrames": 0
+   },
+   "air": {
+    "values": [
+     "4",
+     "5"
+    ],
+    "min": 4.0,
+    "max": 5.0,
+    "first": "5",
+    "last": "4",
+    "unreadableFrames": 0
+   },
+   "fuel": {
+    "values": [
+     "-4",
+     "-3",
+     "-2",
+     "-1",
+     "-?"
+    ],
+    "min": -4.0,
+    "max": -1.0,
+    "first": "-2",
+    "last": "-2",
+    "unreadableFrames": 1
+   },
+   "rad": {
+    "values": [
+     "0.22",
+     "0.23",
+     "0.24",
+     "0.25",
+     "0.26",
+     "0.27",
+     "0.28",
+     "0.29",
+     "0.31",
+     "0.34",
+     "0.40",
+     "0.52",
+     "0.53",
+     "0.55",
+     "0.57",
+     "0.58",
+     "0.59",
+     "0.61",
+     "0.65",
+     "0.70",
+     "0.75"
+    ],
+    "min": 0.22,
+    "max": 0.75,
+    "first": "0.75",
+    "last": "0.22",
+    "unreadableFrames": 0
+   },
+   "fanVoltageRange_v": [
+    3.7,
+    3.8
+   ],
+   "velocityFromFanCalibration_cm_s": null,
+   "velocityFromFanCalibrationNote": "FAN abaixo de 42 ou fora da faixa calibrada",
+   "airTransducerModal_cm_s": null,
+   "velocityFromAirTransducer_cm_s": null,
+   "airTransducerState": "não acomodado: FAN mudou há menos de 1 min (resposta lenta do transdutor)"
+  }
+ ]
+}

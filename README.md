@@ -157,6 +157,37 @@ python -m unittest discover -s scripts/sofie -p "test_*.py"
 ```
 
 Documentação: `docs/research/SOFIE_DATA_REVIEW.md`, `SOFIE_GEL_METHOD.md`, `SOFIE_PILOT_REVIEW.md`, `SOFIE_ANALYSIS.md` e `SOFIE_FRONTEND_REVIEW.md`.
+## Observação experimental BASS-II B1 (vídeo medido)
+
+No catálogo, em **PSI-25 → B1** (marcado "vídeo analisado"), o botão **Abrir observação B1** mostra as frentes de chama medidas no vídeo lateral do teste B1 do BASS-II. É um filme de PMMA de 100 µm. A tela traz as duas lâminas luminosas no tempo, a reprodução da série medida, os eventos do experimento, FAN/AIR como telemetria complementar e os resultados com intervalo de confiança.
+
+É uma reconstrução de uma medição, não um modelo nem uma previsão. O módulo não se conecta à cabine 3D.
+
+- **Processamento:**
+  - O vídeo original (MPEG-TS) do PSI foi sincronizado com o relógio da telemetria.
+  - Cada lâmina é segmentada por quadro (limiar adaptativo, comparado com perfis de intensidade e cor).
+  - A frente é rastreada sem interpolação e sem impor crescimento.
+  - A posição × tempo é ajustada por regressão linear nos quadros 332–1048, com IC por bootstrap em blocos.
+  - Resultado: 9,77 px/s (lâmina superior) e 9,56 px/s (inferior).
+- **Arquivos:**
+  - Scripts em `scripts/bass2/`.
+  - Dados derivados em `data/bass2/b1/`.
+  - JSON da interface em `public/data/bass2/b1-replay.json` (55 KB).
+  - Relatórios em `docs/research/BASS2_*.md`; o principal é `BASS2_B1_FLAMEFRONT_ANALYSIS.md`.
+  - Os vídeos ficam em `data/cache/bass2/`, fora do Git, e não são necessários para a interface.
+- **Reconstruir o JSON** a partir dos artefatos versionados:
+  ```powershell
+  python scripts/bass2/build_b1_replay.py          # grava public/data/bass2/b1-replay.json
+  python scripts/bass2/build_b1_replay.py --check  # confere se o arquivo é reproduzível
+  ```
+  Refazer a análise a partir do vídeo exige o TS em cache (`fetch_bass2.py`) e a sequência `segment_b1.py` → `track_b1.py` → `analyze_b1.py`.
+- **Testes:** `python -m unittest discover -s scripts/bass2 -p "test_*.py"`.
+- **Limitações que permanecem:**
+  - Posição e velocidade estão em **pixels**; não há escala espacial validada.
+  - A referência NASA de 2,2 mm/s **não** foi comparada quantitativamente.
+  - As 32 anotações usadas para escolher o método são preliminares (um único anotador, o assistente de IA) e aguardam revisão humana ([docs/research/BASS2_B1_ANNOTATION_REVIEW.md](docs/research/BASS2_B1_ANNOTATION_REVIEW.md)).
+  - Os primeiros ~3 s da janela ainda mostram o brilho da ignição.
+  - O resultado vale só para o B1 e não deve ser generalizado para outros materiais ou condições do BASS-II.
 
 ## Estrutura
 
@@ -168,6 +199,7 @@ src/
   components/ExperimentExplorer.tsx catálogo e fontes
   components/research/SameSmokeObservation.tsx módulo SAME Smoke & Detection (lazy)
   components/research/SofieGelObservation.tsx evidência SoFIE-GEL (lazy)
+  components/research/BassB1Observation.tsx observação medida do BASS-II B1 (carregada sob demanda)
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
   types.ts                        contrato de cena e dados
@@ -186,6 +218,8 @@ scripts/sofie/                    SoFIE: aquisição, piloto 1410C, artefato da 
 data/sofie/                       SoFIE: manifesto, casos publicados, piloto (cache em data/cache/sofie/, fora do Git)
 data/saffire/                     registro e proveniência do ensaio
 data/cache/saffire/               arquivos grandes locais, fora do Git
+scripts/bass2/                    pipeline BASS-II (aquisição, base temporal, frente de chama B1) e testes
+data/bass2/                       inventário e derivados BASS-II (vídeos ficam no cache, fora do Git)
 public/data/                     snapshot e manifesto consumidos pela UI
 data/raw/psi/                    CSVs, metadados e hashes preservados
 data/raw/research/               PDFs/HTML NASA e manifesto de proveniência

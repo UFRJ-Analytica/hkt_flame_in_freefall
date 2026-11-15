@@ -1,0 +1,50 @@
+{
+ "schemaVersion": 1,
+ "recordId": "PSI-25:t0:r2",
+ "test": "B1",
+ "source": {
+  "preferred": "ts",
+  "fallback": "mp4",
+  "frameIndex": "ts_frame: índice do quadro decodificável do MPEG-TS original (0 = primeiro quadro decodificável, PTS relativo 0,167 s). É a convenção de data/bass2/b1/timebase-frames.csv, event-annotations.csv e regimes.json. No MP4 do PSI, mp4_frame = ts_frame + offset (offset lido de timebase.json, mp4ToTs.offsetFrames).",
+  "experimentTime": "timestamp_experiment_s = reta de timebase.json (fit); relógio verdadeiro = reta + 0 a 0,24 s"
+ },
+ "coordinates": {
+  "origin": "canto superior esquerdo do quadro 720 x 480 do TS",
+  "x": "colunas, crescendo para a direita",
+  "y": "linhas, crescendo para baixo",
+  "propagationAxis": "x",
+  "propagationSign": 1,
+  "propagationEvidence": "a extremidade direita da região luminosa avança para x maior ao longo do intervalo estável (medido); o relatório descreve fluxo da direita para a esquerda e ignição na ponta esquerda (Summary Report, PDF p. 29)",
+  "leadingEdge": "extremidade da emissão no sentido da propagação (+x), isto é, a montante do fluxo oposto",
+  "units": "pixels; tempo em segundos; velocidade em px/s. Nenhuma conversão para mm (registration.json: insufficient)"
+ },
+ "regions": {
+  "overlay": {"x": [0, 719], "y": [0, 89], "use": "excluída: sobreposição de telemetria"},
+  "flame": {"x": [40, 560], "y": [230, 355], "use": "região que contém as duas lâminas e o ignitor"},
+  "bands": {
+   "upper": {"y": [248, 278], "description": "lâmina luminosa superior (um lado do filme)"},
+   "lower": {"y": [308, 338], "description": "lâmina luminosa inferior (outro lado do filme)"}
+  },
+  "gap": {"y": [284, 302], "use": "faixa escura entre as lâminas; não usada para a frente"},
+  "ignitor": {"x": [60, 240], "y": [230, 355], "use": "brilho saturado do ignitor nos quadros 280–331 (event-annotations.csv)"},
+  "background": {"x": [580, 715], "y": [380, 470], "use": "estatística de ruído do fundo"}
+ },
+ "windows": {
+  "stable": {"first": 332, "last": 1048, "source": "regimes.json: chama estabelecida, FAN constante"},
+  "ignition": {"first": 280, "last": 331},
+  "fanRamp": {"first": 1049, "last": 1148},
+  "processed": {"first": 0, "last": 1312}
+ },
+ "processing": {
+  "intensity": "luminância Rec.601 (cv2.COLOR_BGR2GRAY), análoga a rgb2gray do MATLAB usado pela NASA",
+  "profileSmoothingPx": 5,
+  "methodA": {"thresholds": [20, 30, 50, 70, 100], "primaryThreshold": 50},
+  "methodB": {"globalThreshold": 50, "otsu": true, "adaptiveBlock": 31, "adaptiveC": -10, "openKernel": 3, "minArea": 30},
+  "methodC": {"valueThreshold": 50, "blueMinValue": 25, "blueDominance": 1.1},
+  "roiEdgeMarginPx": 3,
+  "tracking": {"gatePx": 40, "historyFrames": 15, "smoothingFrames": 15},
+  "velocity": {"blockSeconds": [0.5, 1.0, 2.0], "primaryBlockSeconds": 1.0, "bootstrap": 2000, "seed": 2014, "localWindowSeconds": 4.0, "localStepSeconds": 1.0},
+  "sensitivity": {"bandShiftPx": [-4, 0, 4], "bandHalfWidthDeltaPx": [-6, 0, 6]}
+ },
+ "notes": "Bandas, regiões e limiares escolhidos a partir do perfil médio de linhas no intervalo estável (picos em y≈262 e y≈322) e conferidos nas pranchas de diagnóstico. primaryThreshold = 50 é o limiar das séries gravadas em flamefront-observations.csv e flamefront-tracks.csv: fica bem acima do ruído do fundo (máximo do perfil antes da ignição < 1) e abaixo do menor pico do perfil da banda inferior no intervalo estável (≈71), de modo que as duas bandas têm cobertura completa; 100 já perde 16% dos quadros da banda inferior. A definição de frente usada como principal é escolhida por regra explícita em analyze_b1.py (flamefront-pixel.json, primary.selection) e justificada em BASS2_B1_FLAMEFRONT_ANALYSIS.md; os valores 30 e 70 da NASA referem-se a fotografias de topo e não são universais."
+}
