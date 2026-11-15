@@ -119,3 +119,74 @@ export const LUNAR_GAPS = [
   "No smoke transport or detector-response data in partial gravity.",
   "Opposed-flow spread rates (S2 samples) are under scientific review.",
 ];
+
+// ---- Historical lessons and spinoffs (challenge resources). Wording stays within the ingested
+// NASA page text; technical root causes live in board reports that are linked, not ingested.
+
+export interface Lesson {
+  id: string;
+  kind: "mishap" | "spinoff";
+  year: string;
+  title: string;
+  what: string;
+  lesson: string;
+  sourceId: string;
+  source: { label: string; url: string };
+}
+
+export const LESSONS: Lesson[] = [
+  {
+    id: "mir", kind: "mishap", year: "1997", title: "Mir: oxygen generator fire",
+    what: "A solid-fuel oxygen generator canister in Kvant-1 ignited, shooting a three-foot flame with sparks and molten metal, filling modules with smoke and blocking the route to one Soyuz. The crew donned oxygen masks and used foam extinguishers; the flame finally extinguished itself, and life support cleared the smoke over several hours. Investigators named latex glove material introduced into the canister as the most likely culprit.",
+    lesson: "Oxygen-generating equipment is itself an ignition source; egress routes, respiratory protection and atmosphere cleanup are part of the fire system. NASA notes the lessons passed into ISS design and operations, which now rely on electrolytic oxygen generation with dissimilar redundancy.",
+    sourceId: "nasa-mir-fire", source: { label: "NASA History: 25 Years Ago, Fire Aboard Space Station Mir", url: "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/" },
+  },
+  {
+    id: "apollo-1", kind: "mishap", year: "1967", title: "Apollo 1: command module fire on the pad",
+    what: "During a preflight test for Apollo 204, a fire swept through the command module and killed Virgil Grissom, Edward White and Roger Chaffee. The investigation and extensive reworking of the command modules postponed crewed launches.",
+    lesson: "Crewed ground tests sit inside the fire-safety envelope, and a cabin fire can force a redesign of the whole vehicle. The technical findings are in the Investigation Board final report linked from the NASA page (not ingested here).",
+    sourceId: "nasa-apollo-1", source: { label: "NASA: Apollo 1", url: "https://www.nasa.gov/mission/apollo-1/" },
+  },
+  {
+    id: "apollo-13", kind: "mishap", year: "1970", title: "Apollo 13: oxygen system failure in flight",
+    what: "On the way to the Moon the spacecraft was severely damaged about 200,000 miles from Earth and the crew returned without landing, a mission NASA calls a \"successful failure\". The challenge brief describes the event as an oxygen tank explosion.",
+    lesson: "Stored oxygen and its hardware are a hazard far from help. The Review Board and mission reports linked from the NASA page carry the technical cause (not ingested here).",
+    sourceId: "nasa-apollo-13", source: { label: "NASA: Apollo 13", url: "https://www.nasa.gov/mission/apollo-13/" },
+  },
+  {
+    id: "fire-detector", kind: "spinoff", year: "1978", title: "Shuttle fire detector",
+    what: "The Brunswick Incipient Fire Detector, first used in Space Shuttle orbiters, samples air for combustion particles and can tell them apart from dust, so it gives fewer false alarms. NASA Spinoff reports it signals a fire condition before flame and smoke appear, and networks of sensors were proposed for mines.",
+    lesson: "Particle discrimination against dust is a detector requirement in closed cabins, where dust stays airborne; early-stage (incipient) sensing was already a design goal.",
+    sourceId: "nasa-spinoff-detector", source: { label: "NASA Spinoff: Fire Detector", url: "https://spinoff.nasa.gov/node/9407" },
+  },
+  {
+    id: "air-tanks", kind: "spinoff", year: "1976", title: "Firefighter air tanks",
+    what: "With NASA Johnson, Scott Aviation built lightweight firefighter air tanks: 20 pounds for a 30-minute supply, 13 pounds less than conventional tanks, at 4,500 psi, with an aluminum liner wrapped in resin-impregnated glass fiber.",
+    lesson: "Respiratory protection weight and duration trade directly against mobility; relevant to crew breathing equipment after a fire.",
+    sourceId: "nasa-spinoff-air-tanks", source: { label: "NASA Spinoff: Fireman's Air Tanks", url: "https://spinoff.nasa.gov/node/9582" },
+  },
+  {
+    id: "fire-attire", kind: "spinoff", year: "1982", title: "Project FIRES protective clothing",
+    what: "NASA and the U.S. Fire Administration, with Marshall managing, applied lightweight fire-resistant, heat-protective materials developed for spacesuits and spacecraft to firefighter gear; fourteen municipal fire departments took part in the field evaluation.",
+    lesson: "Spacecraft thermal-protection materials already transferred to protective ensembles; candidate inputs for crew protective equipment.",
+    sourceId: "nasa-spinoff-fire-attire", source: { label: "NASA Spinoff: New Technology for the Fire Attire", url: "https://spinoff.nasa.gov/node/9918" },
+  },
+];
+
+export type SystemId = "materials" | "atmosphere" | "detection" | "suppression" | "recovery";
+export interface ControlSystem {
+  id: SystemId;
+  label: string;
+  question: string;
+  findings: string[];
+  lessons: string[];
+  gaps: number[];
+}
+/** Engineering systems a designer works on, mapped to the evidence above (indices into LUNAR_GAPS). */
+export const SYSTEMS: ControlSystem[] = [
+  { id: "materials", label: "Cabin materials & layout", question: "Which liners, fabrics and wire insulation to use, and how to arrange them", findings: ["lowg-spread", "material-outcomes", "enriched-atmosphere", "partial-gravity"], lessons: ["apollo-1"], gaps: [0, 1, 2] },
+  { id: "atmosphere", label: "Atmosphere & oxygen systems", question: "Cabin O₂ / pressure set-point, ventilation, oxygen generation and storage", findings: ["enriched-atmosphere", "extinction-modes", "lowg-spread"], lessons: ["mir", "apollo-13", "apollo-1"], gaps: [1] },
+  { id: "detection", label: "Smoke & fire detection", question: "Which sensors, size ranges and alarm logic", findings: ["smoke-size", "detector-response"], lessons: ["fire-detector"], gaps: [3] },
+  { id: "suppression", label: "Suppression & extinguishing", question: "Which agent, how much, and when ventilation shut-down helps", findings: ["suppressants", "extinction-modes", "bass-suppression"], lessons: ["mir"], gaps: [4] },
+  { id: "recovery", label: "Post-fire recovery & crew protection", question: "Atmosphere cleanup, toxic gases, masks and protective gear", findings: ["post-fire-gases", "smoke-transport"], lessons: ["mir", "air-tanks", "fire-attire"], gaps: [3] },
+];

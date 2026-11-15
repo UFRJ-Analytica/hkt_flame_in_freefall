@@ -169,6 +169,7 @@ class ResearchService:
                 if not isinstance(passage.get("text"), str) or not passage["text"].strip():
                     continue
                 self.entries.append({"id": passage["id"], "title": document["title"], "url": document["url"], "location": passage.get("location", "Original document"), "text": passage["text"], "investigationIds": document.get("investigationIds", []), "topics": document.get("topics", []), "kind": "document"})
+        self.roles = {document["title"]: document.get("role", "investigation") for document in self.documents}
         self.index = LexicalIndex(self.entries)
         self._vectors = None
         self._vector_lock = threading.Lock()
@@ -247,6 +248,45 @@ class ResearchService:
             scores = [sum(a * b for a, b in zip(row, vector)) for row in self._vectors]
             self._hybrid_ready = True
             return sorted(range(len(scores)), key=lambda index: (-scores[index], self.entries[index]["id"]))
+
+    def retrieve(self, query, limit=6, kind="any", investigation_ids=None):
+        """Plain hybrid retrieval over passages and PSI metadata, no intent filter.
+
+        Returns (passages, mode). Ranking is reciprocal-rank fusion of BM25 and dense
+        similarity; it orders relevance only and carries no physical confidence.
+        """
+        if not isinstance(query, str) or not query.strip() or len(query) > 1000:
+            raise ValueError("The query must contain 1 to 1000 characters.")
+        limit = max(1, min(int(limit), 12))
+        lexical = self.index.scores(question_query(query))
+        order = sorted(range(len(lexical)), key=lambda index: (-lexical[index], self.entries[index]["id"]))
+        fused = {index: 1 / (61 + rank) for rank, index in enumerate(order) if lexical[index] > 0}
+        mode = "lexical"
+        if self.provider.embeddings_configured:
+            try:
+                for rank, index in enumerate(self._dense_ranks(query)):
+                    fused[index] = fused.get(index, 0) + 1 / (61 + rank)
+                mode = "hybrid"
+            except Exception:
+                pass
+        wanted = set(investigation_ids or [])
+        hits, per_document = [], Counter()
+        for index in sorted(fused, key=lambda index: (-fused[index], self.entries[index]["id"])):
+            entry = self.entries[index]
+            if kind == "documents" and entry["kind"] != "document":
+                continue
+            if kind == "investigations" and entry["kind"] != "metadata":
+                continue
+            if wanted and not wanted & set(entry["investigationIds"]):
+                continue
+            if per_document[entry["title"]] >= 3:
+                continue
+            per_document[entry["title"]] += 1
+            text = entry["text"].replace("Materiais tabulares:", "Tabulated materials:")
+            hits.append({"id": entry["id"], "kind": entry["kind"], "title": entry["title"], "url": entry["url"], "location": entry["location"], "text": text, "investigationIds": entry["investigationIds"], "role": self.roles.get(entry["title"], "psi-metadata" if entry["kind"] == "metadata" else "investigation"), "relevance": round(fused[index], 5)})
+            if len(hits) >= limit:
+                break
+        return hits, mode
 
     def _record_rank(self, record, material, context):
         score = 12 if material and canonical_material(record.get("material") or "") == material else 0

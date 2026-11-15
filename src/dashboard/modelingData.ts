@@ -3,12 +3,20 @@
 // row keeping its observable, conditions and provenance. Nothing is computed that the artefacts
 // do not already contain; quantities of different kinds are never merged.
 
-export type Quantity = "spread-rate" | "flammability-outcome" | "extinction-limit" | "smoke-particle-size";
+export type Quantity = "spread-rate" | "flammability-outcome" | "extinction-limit" | "smoke-particle-size" | "test-conditions";
 export const QUANTITY_LABEL: Record<Quantity, string> = {
   "spread-rate": "Flame spread rate",
   "flammability-outcome": "Flammability outcome",
   "extinction-limit": "Extinction limit",
   "smoke-particle-size": "Smoke particle size",
+  "test-conditions": "PSI test conditions",
+};
+export const QUANTITY_HINT: Record<Quantity, string> = {
+  "spread-rate": "how fast flame or char fronts moved (mm/s)",
+  "flammability-outcome": "whether a sample sustained, anchored or did not spread",
+  "extinction-limit": "O₂ level and flow at which a flame went out",
+  "smoke-particle-size": "smoke particle diameter for detector design",
+  "test-conditions": "every tabulated PSI test: material, O₂, pressure, flow",
 };
 
 export interface ModelRow {
@@ -20,9 +28,9 @@ export interface ModelRow {
   unit: string;
   observable: string;
   material: string;
-  oxygenPct: string;
-  pressureKpa: string;
-  flowCmS: string;
+  oxygenPct: string | number;
+  pressureKpa: string | number;
+  flowCmS: string | number;
   gravity: string;
   note: string;
   source: string;
@@ -85,6 +93,24 @@ export function buildModelRows(src: { targets?: J; registry?: J; sofie?: J; same
     material: "PMMA film 100 µm", oxygenPct: "22.2", pressureKpa: "not tabulated", flowCmS: "opposed (display only)", gravity: "microgravity",
     note: "pixel units: not comparable to mm/s until a spatial scale is established", source: "public/data/bass2/b1-replay.json", url: "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
   });
+  return rows;
+}
+
+/** Every tabulated PSI record as a condition row (original units; missing values stay missing). */
+export function psiRecordRows(investigations: J[]): ModelRow[] {
+  const rows: ModelRow[] = [];
+  for (const inv of investigations) {
+    for (const t of inv.tests ?? []) {
+      const known = [t.oxygenPct, t.pressureKpa, t.flowCmS].filter((v) => v !== null && v !== undefined).length;
+      rows.push({
+        id: t.id, dataset: inv.name, investigation: inv.id, quantity: "test-conditions",
+        value: t.label ?? t.id, unit: "test", observable: t.outcome ? `outcome: ${t.outcome}` : `${known} of 3 conditions tabulated`,
+        material: t.material ?? "not tabulated", oxygenPct: t.oxygenPct ?? "not tabulated", pressureKpa: t.pressureKpa ?? "not tabulated",
+        flowCmS: t.flowCmS ?? "not tabulated", gravity: "microgravity", note: (t.normalizationNotes ?? []).join(" · "),
+        source: `${t.sourceFile}, row ${t.sourceRow}`, url: inv.sourceUrl ?? null,
+      });
+    }
+  }
   return rows;
 }
 

@@ -9,6 +9,7 @@ import {
   Film,
   Search,
   SlidersHorizontal,
+  Sparkles,
   Wind,
   X,
 } from "lucide-react";
@@ -18,6 +19,7 @@ import { useModalFocus } from "../hooks/useModalFocus";
 import { RecordVideos } from "./research/RecordVideos";
 import { englishText } from "../i18n/english";
 import { SAME_INVESTIGATION_ID } from "./research/sameSmoke";
+import { SIPanel } from "../si/SIPanel";
 
 // Loaded on request only: the SAME evidence module and its JSON stay out of the first render.
 const SameSmokeObservation = lazy(() => import("./research/SameSmokeObservation"));
@@ -49,6 +51,14 @@ export function ExperimentExplorer({
   const [smokeOpen, setSmokeOpen] = useState(false);
   const [sofieOpen, setSofieOpen] = useState(false);
   const [observationOpen, setObservationOpen] = useState(false);
+  const [siOpen, setSiOpen] = useState(false);
+  const openInvestigation = (id: string) => {
+    if (!data.investigations.some((i) => i.id === id)) return;
+    setCategory("all");
+    setSelectedId(id);
+    setPage(0);
+    setDetail(null);
+  };
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -104,11 +114,34 @@ export function ExperimentExplorer({
             investigation.
           </p>
         </div>
-        <span className="source-badge">
-          <Database size={14} />
-          NASA PSI snapshot
-        </span>
+        <div className="heading-actions">
+          <button type="button" className="button primary si-open" onClick={() => setSiOpen((v) => !v)} aria-expanded={siOpen}>
+            <Sparkles size={14} /> {siOpen ? "Close SI" : "Ask SI about this database"}
+          </button>
+          <span className="source-badge">
+            <Database size={14} />
+            NASA PSI snapshot
+          </span>
+        </div>
       </div>
+      {siOpen && (
+        <aside className="si-drawer" aria-label="SI assistant for the catalog">
+          <button type="button" className="icon-button si-drawer-close" onClick={() => setSiOpen(false)} aria-label="Close SI"><X size={15} /></button>
+          <SIPanel
+            context={{ stage: "catalog", investigation: selectedId }}
+            title="SI · catalog assistant"
+            intro="Ask about the 24 PSI combustion investigations and their 2,001 records. SI reads investigation metadata, queries records and opens the investigation it is talking about."
+            suggestions={[
+              "Which investigations tested Kapton, and under what oxygen levels?",
+              "What does BASS-II record for each test, and which columns matter for modeling?",
+              "Which investigations have no public data table, and why does that matter?",
+            ]}
+            placeholder="Ask about investigations, materials, conditions…"
+            onAction={(a) => { if (a.action === "open") openInvestigation(a.id); }}
+            onOpenInvestigation={openInvestigation}
+          />
+        </aside>
+      )}
       <div className="category-filters">
         <SlidersHorizontal size={15} />
         <button

@@ -12,12 +12,14 @@ from urllib.parse import parse_qs, unquote, urlsplit
 from backend.env import load_env
 from backend.media import MediaResolver
 from backend.research import ResearchService
+from backend.si import MODEL as SI_MODEL, ScienceIntelligence
 
 ROOT = Path(__file__).resolve().parents[1]
-MAX_BODY = 32768
+MAX_BODY = 131072
 
 
-def make_handler(service, root=ROOT):
+def make_handler(service, root=ROOT, si=None):
+    si = si if si is not None else ScienceIntelligence(service, service.provider)
     dist = (Path(root) / "dist").resolve()
     media = MediaResolver(root)
 
@@ -51,7 +53,7 @@ def make_handler(service, root=ROOT):
                 self._send(200, {"status": "ready", "service": "habitatfire-research"})
                 return
             if path == "/api/research/status":
-                self._send(200, service.status())
+                self._send(200, service.status() | {"siConfigured": si.configured, "siModel": SI_MODEL if si.configured else None, "documents": [{"id": d["id"], "title": d["title"], "url": d["url"], "role": d.get("role", "investigation"), "passages": len(d.get("passages", []))} for d in service.documents]})
                 return
             if path == "/api/media":
                 query = parse_qs(urlsplit(self.path).query)
@@ -89,9 +91,48 @@ def make_handler(service, root=ROOT):
                 content_type = "text/javascript"
             self._send(200, target.read_bytes(), content_type)
 
+        def _client_key(self):
+            forwarded = self.headers.get("X-Forwarded-For", "")
+            return forwarded.split(",")[0].strip() or self.client_address[0]
+
+        def _si(self, payload):
+            if not si.limiter.allow(self._client_key()):
+                self._send(429, {"error": "Too many SI questions from this address; try again in a few minutes."})
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Accel-Buffering", "no")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Connection", "close")
+            self.end_headers()
+            self.close_connection = True
+            self.connection.settimeout(180)
+
+            def emit(event):
+                data = json.dumps(event, ensure_ascii=False, allow_nan=False, default=str)
+                self.wfile.write(b"data: " + data.encode("utf-8") + b"\n\n")
+                self.wfile.flush()
+
+            try:
+                si.ask(payload, emit)
+            except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+                pass
+            except ValueError as exc:
+                try:
+                    emit({"type": "error", "message": str(exc)[:200]})
+                except OSError:
+                    pass
+            except Exception as exc:
+                print(f"[HabitatFire] SI failure ({type(exc).__name__})", flush=True)
+                try:
+                    emit({"type": "error", "message": "SI is unavailable right now. Semantic search and the catalog still work."})
+                except OSError:
+                    pass
+
         def do_POST(self):
             path = urlsplit(self.path).path
-            if path not in {"/api/research/search", "/api/research/synthesize"}:
+            if path not in {"/api/research/search", "/api/research/synthesize", "/api/research/retrieve", "/api/si/ask"}:
                 self._send(404, {"error": "Unknown endpoint."})
                 return
             origin = self.headers.get("Origin")
@@ -108,6 +149,15 @@ def make_handler(service, root=ROOT):
                     self._send(415, {"error": "Use Content-Type application/json."})
                     return
                 payload = json.loads(self.rfile.read(size).decode("utf-8"))
+                if path == "/api/si/ask":
+                    self._si(payload)
+                    return
+                if path == "/api/research/retrieve":
+                    if not isinstance(payload, dict):
+                        raise ValueError("Send a JSON object.")
+                    hits, mode = service.retrieve(payload.get("query"), payload.get("limit", 10) if isinstance(payload.get("limit"), int) else 10, payload.get("scope") if payload.get("scope") in {"any", "documents", "investigations"} else "any")
+                    self._send(200, {"query": payload.get("query"), "retrieval": mode, "passages": hits})
+                    return
                 result = service.search(payload, synthesize=path.endswith("/synthesize"))
                 self._send(200, result)
             except (ValueError, UnicodeDecodeError) as exc:

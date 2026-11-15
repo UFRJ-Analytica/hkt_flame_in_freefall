@@ -36,7 +36,9 @@ class HttpChecks(unittest.TestCase):
         with urlopen(self.base + "/api/research/status") as response:
             status = json.load(response)
         self.assertEqual(status["investigationCount"], 24)
-        self.assertEqual(status["documentCount"], 8)
+        self.assertEqual(status["documentCount"], 14)
+        self.assertFalse(status["siConfigured"])
+        self.assertEqual(len(status["documents"]), 14)
         self.assertFalse(status["generationConfigured"])
 
     def test_search_and_unconfigured_synthesis_preserve_real_extractive_mode(self):
