@@ -55,13 +55,15 @@ import { ModelApplicability } from "./model/ModelApplicability";
 import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from "./model/domain";
 import { HabitatLab } from "./habitat/HabitatLab";
 import { SpecialistWorkspace } from "./specialist/SpecialistWorkspace";
+import { ExperimentReplays } from "./components/research/ExperimentReplays";
 import "./habitat/habitat.css";
 import { englishText } from "./i18n/english";
 import { Dashboard } from "./dashboard/Dashboard";
-type LabMode = "habitat" | "workspace" | "cabin" | SaffireMission;
-const LAB_TABS: { id: "habitat" | "workspace" | "saffire" | "cabin"; label: string; hint: string }[] = [
+type LabMode = "habitat" | "workspace" | "replays" | "cabin" | SaffireMission;
+const LAB_TABS: { id: "habitat" | "workspace" | "replays" | "saffire" | "cabin"; label: string; hint: string }[] = [
   { id: "habitat", label: "Lunar habitat · 3D simulation", hint: "exploratory scenarios and A/B alternatives" },
   { id: "workspace", label: "Specialist workspace", hint: "gallery, comparison and dossier for 9 trials" },
+  { id: "replays", label: "NASA experiment replays", hint: "BASS-II video, SoFIE-GEL extinction, SAME smoke" },
   { id: "saffire", label: "SAFFIRE I–VI trials", hint: "calibration and validation by trial" },
   { id: "cabin", label: "Cabin and evidence", hint: "search, catalog and applicability" },
 ];
@@ -99,7 +101,7 @@ export default function App() {
   const [sample, setSample] = useState<SaffireIICase>(SAFFIRE_II_CASES[4]);
   const [opposed, setOpposed] = useState<OpposedModel>({ status: "unavailable" });
   const [saffireStatus, setSaffireStatus] = useState("Loading trial data…");
-  const mission = labMode === "cabin" || labMode === "habitat" || labMode === "workspace" ? null : SAFFIRE_MISSIONS[labMode];
+  const mission = labMode === "cabin" || labMode === "habitat" || labMode === "workspace" || labMode === "replays" ? null : SAFFIRE_MISSIONS[labMode];
   const [habitatAnchor, setHabitatAnchor] = useState<{ id: string; nonce: number } | null>(null);
   const isSaffire = mission !== null;
   const iiCase = labMode === "saffire-ii" ? sample : null;
@@ -499,6 +501,8 @@ export default function App() {
               <p>
                 {labMode === "workspace"
                   ? "Compare NASA SAFFIRE trials: conditions, sources, model, speeds and curves, with dossier export."
+                  : labMode === "replays"
+                  ? "Replay NASA experiments from their own measurements: BASS-II flame video, SoFIE-GEL extinction and SAME smoke."
                   : labMode === "habitat"
                   ? "Simulate fire spread across lunar habitat surfaces with a model calibrated using NASA images."
                   : isSaffire
@@ -506,7 +510,7 @@ export default function App() {
                   : "Explore a microgravity cabin and connect your questions to NASA science."}
               </p>
             </div>
-            {labMode !== "habitat" && labMode !== "workspace" && <button
+            {labMode !== "habitat" && labMode !== "workspace" && labMode !== "replays" && <button
               className="button secondary export-button"
               onClick={exportScenario}
               disabled={unavailable}
@@ -518,6 +522,8 @@ export default function App() {
           {labMode === "workspace" ? (
             <SpecialistWorkspace modeSwitch={modeSwitch}
               onUseInHabitat={(id) => { setHabitatAnchor({ id, nonce: Date.now() }); changeLabMode("habitat"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+          ) : labMode === "replays" ? (
+            <ExperimentReplays modeSwitch={modeSwitch} />
           ) : labMode === "habitat" ? (
             <HabitatLab modeSwitch={modeSwitch} requestedAnchor={habitatAnchor} onOpenCalibration={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
           ) : <main className="workbench">

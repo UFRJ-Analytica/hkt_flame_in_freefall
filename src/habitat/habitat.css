@@ -187,3 +187,20 @@
 .diff-table th:first-child, .diff-table td:first-child { width: 31%; }
 .diff-table td { overflow-wrap: anywhere; }
 .diff-table td, .diff-table td:first-child { white-space: normal; text-overflow: clip; }
+
+/* NASA experiment replays tab */
+.replays { display: grid; gap: 16px; margin: 0 26px 26px; }
+.replays-intro { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); max-width: 900px; }
+.replay-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.replay-card { display: grid; gap: 10px; align-content: start; padding: 18px; border-radius: 12px; border: 1px solid var(--line); background: linear-gradient(160deg, #1a2029, #141920); }
+.replay-card header { display: flex; gap: 10px; align-items: center; }
+.replay-card header small { font: 10.5px var(--mono); color: #c7b09d; }
+.replay-icon { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); }
+.replay-card h3 { margin: 0; font-size: 16px; font-weight: 550; line-height: 1.35; }
+.replay-card p { margin: 0; font-size: 12.5px; line-height: 1.6; color: #c3ccd6; }
+.replay-card dl { margin: 0; display: grid; gap: 6px; }
+.replay-card dl div { display: grid; grid-template-columns: 52px 1fr; gap: 8px; font-size: 11.5px; line-height: 1.5; }
+.replay-card dt { color: var(--faint); }
+.replay-card dd { margin: 0; color: #d5dbe3; }
+.replay-card .button { justify-self: start; margin-top: 4px; }
+@media (max-width: 650px) { .replays { margin: 0 16px 20px; } }
