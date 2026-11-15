@@ -1,6 +1,6 @@
 /* Shared visual language of the experimental replays (rp-), plus one small block per renderer.
    Colour is never the only cue: nature badges carry text, measured vs model lines differ in dash and shape. */
-.rp-modal {
+.modal.rp-modal {
   --rp-upper: #3987e5;
   --rp-lower: #d95926;
   --rp-meas: #5de6e3;
@@ -54,21 +54,39 @@
   color: var(--text);
   overflow-wrap: anywhere;
 }
-.rp-notices {
-  margin-bottom: 14px;
-  padding: 10px 14px;
-  border: 1px solid #e6b38c55;
-  border-radius: 10px;
-  background: #e6b38c0a;
-}
-.rp-notices h3 {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 0 6px;
+.rp-details {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  color: var(--muted);
   font-size: 12px;
+  line-height: 1.55;
+}
+.rp-details > summary {
+  cursor: pointer;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 0;
   font-weight: 600;
-  color: #e6b38c;
+}
+.rp-details > summary svg {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+.rp-details > summary:focus-visible {
+  outline: 2px solid var(--accent, #7cc7f0);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.rp-details[open] > summary {
+  margin-bottom: 8px;
+}
+.rp-notices {
+  margin-top: 16px;
+}
+.rp-notices > summary {
+  color: var(--rp-ink);
 }
 .rp-notices ul {
   margin: 0;
@@ -638,7 +656,7 @@
 }
 
 @media (max-width: 760px) {
-  .rp-modal {
+  .modal.rp-modal {
     padding: 16px 14px;
   }
   .rp-meta {

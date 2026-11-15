@@ -7,7 +7,7 @@ import "./replay.css";
 
 /**
  * Shared frame of every experimental replay: what is shown, of which nature, in which unit and on
- * which time reference, with the scientific notices always visible. The renderer is the child.
+ * which time reference. Detailed scientific notices are available on demand; the renderer is the child.
  */
 export function ExperimentalReplay({
   id,
@@ -78,16 +78,6 @@ export function ExperimentalReplay({
             </div>
           </dl>
         </div>
-        <div className="rp-notices" role="note">
-          <h3>
-            <TriangleAlert size={14} /> Limitations of this visualization
-          </h3>
-          <ul>
-            {notices.map((notice) => (
-              <li key={notice}>{notice}</li>
-            ))}
-          </ul>
-        </div>
         {status?.error && (
           <div className="data-notice" role="alert">
             {status.error}
@@ -95,6 +85,18 @@ export function ExperimentalReplay({
         )}
         {!status?.error && status?.loading && <p className="rp-loading">{status.loading}</p>}
         {!status?.error && !status?.loading && children}
+        {notices.length > 0 && (
+          <details className="rp-details rp-notices">
+            <summary tabIndex={0}>
+              <TriangleAlert size={14} aria-hidden="true" /> Limitations of this visualization
+            </summary>
+            <ul>
+              {notices.map((notice) => (
+                <li key={notice}>{notice}</li>
+              ))}
+            </ul>
+          </details>
+        )}
       </section>
     </div>
   );
