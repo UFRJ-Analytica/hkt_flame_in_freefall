@@ -67,7 +67,7 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
             <p>
               Em 1/6 g o empuxo volta a induzir escoamento, mas sem o <em>blowoff</em> de 1 g. Ensaios em centrífuga e voo
               parabólico (LUCI) indicam que alguns materiais queimam com menos O₂ na gravidade lunar do que na Terra; o tecido SIBAL
-              queima para baixo em 1/6 g e se extingue em 1 g. O FM² vai medir isso na superfície lunar. Nem µg nem 1 g são limites conservadores.
+              queima para baixo em 1/6 g e se extingue em 1 g. Ensaios em centrífuga (ICES-2025-392) mostram que o efeito depende do material: materiais de maior temperatura de pirólise podem ficar menos inflamáveis. O FM² vai medir na superfície lunar. Nem µg nem 1 g são limites conservadores universais.
             </p>
             <span className="gravity-links">
               <a href={PARTIAL_GRAVITY_SOURCES.fm2} target="_blank" rel="noreferrer">FM² · NASA Glenn <ArrowUpRight size={11} /></a>

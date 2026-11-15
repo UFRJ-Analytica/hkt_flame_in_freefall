@@ -1,7 +1,6 @@
 // Lunar surface habitat: liner geometry, material zones and the evidence rules that decide how each
 // material may behave in the simulation. Every rule names the measurement (or the absence of one) behind it.
 
-import type { SaffireModel } from "../saffire";
 
 /** Liner cell size equals the SAFFIRE I S1 calibration grid: 10 mm along the flow, 20 mm across. */
 export const CELL = { alongMm: 10, acrossMm: 20, stepSeconds: 2 };
@@ -62,12 +61,14 @@ export interface MaterialRule {
   bias?: string;
 }
 
-const SAFFIRE_II_O2_MAX = 22.1;
+const SAFFIRE_II_O2 = [21.5, 22.1];
 const nearAtmosphere = (p: number) => p >= 95 && p <= 105;
 
 export function materialRule(material: MaterialId, c: Conditions): MaterialRule {
   const microgravity = c.gravityG < 0.01;
-  const saffireAtmosphere = c.oxygen <= SAFFIRE_II_O2_MAX + 0.5 && nearAtmosphere(c.pressure) && microgravity;
+  // SAFFIRE-II outcomes hold only near that test: ~22% O2, ~1 atm, 20 cm/s concurrent, microgravity.
+  const saffireAtmosphere = c.oxygen >= SAFFIRE_II_O2[0] - 0.5 && c.oxygen <= SAFFIRE_II_O2[1] + 0.5 &&
+    nearAtmosphere(c.pressure) && microgravity && Math.abs(c.flow - 20) <= 2;
   switch (material) {
     case "SIBAL": {
       const testAtmosphere = c.oxygen >= 21 && c.oxygen <= 22.2 && nearAtmosphere(c.pressure) && microgravity;
@@ -93,68 +94,21 @@ export function materialRule(material: MaterialId, c: Conditions): MaterialRule 
     }
     case "Nomex":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Não ignitou no ensaio", evidence: "SAFFIRE-II 2-7: a chama do PMMA consumiu a porção de PMMA e não ignitou o Nomex 0,37 mm (~22% O₂, 20 cm/s, µg)." }
+        ? { behavior: 2, tier: "measured-no-spread", title: "Não ignitou no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-7: a chama do PMMA consumiu a porção de PMMA e não ignitou o Nomex 0,37 mm (~22% O₂, 20 cm/s, µg). É o desfecho de uma amostra de 5 cm com ignição específica, não uma barreira demonstrada: a simulação apenas para no contato." }
         : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Só há ensaio de Nomex em ~22% O₂, 1 atm, µg. Nestas condições não há evidência: a simulação para aqui e marca o contato." };
     case "Silicone":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Não sustentou chama", evidence: "SAFFIRE-II 2-1 a 2-4: comprimento queimado ~0 em µg, 0,27–1,03 mm, ~22% O₂." }
+        ? { behavior: 2, tier: "measured-no-spread", title: "Não sustentou chama no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-1 a 2-4: comprimento queimado ~0 em µg, 0,27–1,03 mm, ~22% O₂. Não é barreira demonstrada para outra exposição." }
         : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Ensaio só em ~22% O₂, 1 atm, µg." };
     case "PMMA":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Chama ancorada", evidence: "SAFFIRE-II 2-8/2-9: chama ancorada na base, regressão 0,01–0,04 mm/s, sem propagação ao longo da amostra." }
+        ? { behavior: 2, tier: "measured-no-spread", title: "Chama ancorada no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-8/2-9: chama ancorada na base, regressão 0,01–0,04 mm/s, sem propagação ao longo da amostra. Não é barreira demonstrada." }
         : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Ensaio só em ~22% O₂, 1 atm, µg." };
     case "Kapton":
       return { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Nenhum ensaio de propagação de Kapton nos dados PSI deste projeto (há só medições de fumaça no SAME)." };
     case "Alumínio":
       return { behavior: 0, tier: "inert", title: "Não combustível (premissa)", evidence: "Estrutura metálica tratada como não combustível; não é resultado de ensaio." };
   }
-}
-
-/** SAFFIRE-III S1 (25 cm/s), measured with the same pipeline; see scripts/crosstrial_saffire.py. */
-export interface SecondTrial {
-  neighborhood: { combinations: Record<string, { exposures: number; transitions: number; probability: number | null }> };
-  observed: { speedMmS: number; standardErrorMmS: number };
-  comparisonWithSaffireI: { saffireIObservedSpeedMmS: number; beta: number };
-  prediction: { unscaledSpeedMmS: number; linearFlowSpeedMmS: number; observedSpeedMmS: number };
-  /** Simulation-calibrated kernels: one hazard factor per trial so the simulated speed matches the measured one. */
-  speedMatch?: Record<"saffireI" | "saffireIII", {
-    factor: number; targetSpeedMmS: number; simulatedBeforeMmS: number; simulatedAfterMmS: number;
-    combinations: Record<string, { probability: number | null }>;
-  }>;
-}
-
-export interface Kernel {
-  p: (number | null)[];
-  flowFactor: number;
-  quench: boolean;
-  reference: "SAFFIRE I · S1 (20 cm/s)" | "SAFFIRE-III · S1 (25 cm/s)";
-  beta: number;
-}
-
-/** Advance probabilities per 2 s step for the propagating material, keyed by upstream/above/below.
- *  Base kernel = the trial at the nearest measured flow; outside it the hazard is scaled by
- *  (u/u_ref)^beta, beta measured between the two trials (falls back to 1 without the second trial). */
-export function buildKernel(model: SaffireModel, second: SecondTrial | null, c: Conditions, tier: Tier): Kernel {
-  const quench = c.flow < 2;
-  const useSecond = second !== null && c.flow > 22.5;
-  const uRef = useSecond ? 25 : 20;
-  const beta = second?.comparisonWithSaffireI.beta ?? 1;
-  const flowFactor = tier === "calibrated" ? 1 : Math.pow(Math.min(40, Math.max(2, c.flow)) / uRef, beta);
-  const p: (number | null)[] = [];
-  for (let key = 0; key < 8; key++) {
-    const k = key.toString(2).padStart(3, "0");
-    // Prefer the simulation-calibrated kernels; keys without an estimate at 25 cm/s fall back to 20 cm/s.
-    const matched = second?.speedMatch;
-    const kernel20 = matched?.saffireI.combinations ?? model.combinations;
-    const kernel30 = matched?.saffireIII.combinations ?? second?.neighborhood.combinations;
-    const primary = useSecond ? kernel30?.[k]?.probability ?? null : null;
-    const base = primary ?? kernel20[k]?.probability ?? null;
-    if (base === null) { p.push(null); continue; }
-    if (quench) { p.push(0); continue; }
-    // Constant-hazard equivalence: lambda = -ln(1-p)/dt scaled by the flow factor.
-    p.push(1 - Math.pow(1 - base, flowFactor));
-  }
-  return { p, flowFactor, quench, reference: useSecond ? "SAFFIRE-III · S1 (25 cm/s)" : "SAFFIRE I · S1 (20 cm/s)", beta };
 }
 
 export function buildGrid(zones: Zone[], c: Conditions) {

@@ -48,7 +48,8 @@ export function runOnce(input: EngineInput, seed: number): RunResult {
     if (y + 1 < rows) expose(i + cols, step);
   };
 
-  for (let i = 0; i < n; i++) if (ignition[i] && behavior[i] !== 0) { state[i] = 1; arrival[i] = 0; }
+  // The imposed focus only lights cells that propagate in the model; other materials are left untouched.
+  for (let i = 0; i < n; i++) if (ignition[i] && behavior[i] === 1) { state[i] = 1; arrival[i] = 0; }
   for (let i = 0; i < n; i++) if (arrival[i] === 0) reach(i, 0);
 
   const flips: number[] = [];

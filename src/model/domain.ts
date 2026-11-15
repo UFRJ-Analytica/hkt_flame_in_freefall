@@ -187,8 +187,8 @@ export function rankComparables(records: TargetRecord[], s: Scenario): Comparabl
   }).sort((a, b) => a.score - b.score);
 }
 
-/** Wilson score interval for k events in n exposures. Treats exposures as independent:
- *  a lower bound on the true uncertainty when cells and frames are correlated. */
+/** Wilson score interval for k events in n exposures, assuming independent exposures. Descriptive
+ *  only: cells and frames are correlated and observation/model error is not included. */
 export function wilson(k: number, n: number, z = 1.96): [number, number] {
   if (n <= 0) return [0, 1];
   const p = k / n;
