@@ -1,0 +1,5314 @@
+{
+ "schemaVersion": 1,
+ "investigationId": "PSI-102",
+ "source": "NASA PSI-102 \"Analyzed Data\" (housekeeping .hkp exportado para Excel) + Final Science Report, Apêndice A",
+ "units": {
+  "channels": {
+   "ptrak": {
+    "column": "PTrakMeasurement(PtPerCC)",
+    "unit": "pt/cc",
+    "description": "P-Trak (contador de núcleos de condensação)"
+   },
+   "dusttrakA": {
+    "column": "DustTrakAMeasurement(MgPerM3)",
+    "unit": "mg/m3",
+    "description": "DustTrak A, impactador 1 um"
+   },
+   "dusttrakB": {
+    "column": "DustTrakBMeasurement(MgPerM3)",
+    "unit": "mg/m3",
+    "description": "DustTrak B, impactador 10 um"
+   },
+   "ionA": {
+    "column": "IonDetectorAMeasurement(Volts)",
+    "unit": "V",
+    "description": "câmara de ionização A"
+   },
+   "ionB": {
+    "column": "IonDetectorBMeasurement(Volts)",
+    "unit": "V",
+    "description": "câmara de ionização B"
+   },
+   "issScatter": {
+    "column": "ISSDetectorScatterMeasurement(Volts)",
+    "unit": "V",
+    "description": "detector ISS, espalhamento"
+   },
+   "issObscuration": {
+    "column": "ISSDetectorObscurationMeasurement(Volts)",
+    "unit": "V",
+    "description": "detector ISS, obscurecimento"
+   },
+   "sts": {
+    "column": "STSDetectorMeasurement(Volts)",
+    "unit": "V",
+    "description": "detector STS (ônibus espacial), ionização"
+   }
+  },
+  "time": "s",
+  "resistance": "ohm",
+  "flow": "sccm"
+ },
+ "method": {
+  "windows": "state (PTrakSolenoid[VR06] = 1)",
+  "plateauFraction": 0.5,
+  "noSmokeThreshold_mg_m3": 0.05,
+  "baselineSamples": 30,
+  "ptrakErrorCode": -999.0,
+  "ptrakNominalMax_pt_cc": 100000.0
+ },
+ "measurementKind": "direct-instrument-units",
+ "momentsAvailable": false,
+ "ptrakNote": "O controle dinâmico de diluição (\"Dilution control enabled\" nos logs de voo) atua durante os diagnósticos: a contagem bruta do P-Trak não é proporcional à concentração da fumaça e não é comparável entre janelas ou testes sem a razão de diluição, que não consta dos arquivos PSI-102.",
+ "momentsNote": "Nenhum M0, M1 ou M3 é calculado: faltam nos arquivos PSI-102 as razões de diluição, as curvas de calibração (P-Trak por tamanho, câmara de ionização vs EAD, DustTrak vs TEOM por fonte de fumaça) e as densidades estimadas dos materiais.",
+ "notSegmentedFiles": {
+  "PSI-102_Analyzed Data_GMT255hkp.xlsx": "TestNumber = 2 para todo o dia 255 (testes 4 DBP e 5 silicone no Apêndice A) e só traços de fumaça (DustTrak B <= 0,16 mg/m3): identificação ambígua.",
+  "PSI-102_Analyzed Data_GMT256HKP.xls": "Planilha de 13 colunas sem TestNumber nem estados de solenoide; cobre os testes 6 (Teflon) e 7 (lamp wick).",
+  "PSI-102_Analyzed Data_TeflonGMT257hkp.xls": "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 10, Teflon, reaquecimento).",
+  "PSI-102_Analyzed Data_kaptonGMT257.xls": "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 8, Kapton, abortado segundo o Apêndice A).",
+  "PSI-102_Analyzed Data_DBP  GMT257hkp.xls": "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 9, DBP).",
+  "PSI-102_Analyzed Data_GMT262 Run 12 dbp.xls": "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA.",
+  "PSI-102_Analyzed Data_GMT263 Run 16 DBP.xls": "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA.",
+  "PSI-102_Analyzed Data_GMT272kapton30.xls": "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA.",
+  "PSI-102_Analyzed Data_GMT272lampwick31.xls": "Planilha de 21 colunas sem estados de solenoide e sem aba de média da NASA."
+ },
+ "tests": [
+  {
+   "investigationId": "PSI-102",
+   "test": 1,
+   "sampleId": "C1-P1",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 252,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 1,
+    "position": 1,
+    "record_time_raw": "11:50 - 13:20",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 2,
+   "sampleId": "C1-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 254,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 1,
+    "position": 5,
+    "record_time_raw": "5:50 - 7:01",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT254run2btesthkp with zgy average.xls",
+    "sheet": "Copy of GMT254run2btesthkp",
+    "sha256": "40ecd32ddb099aedcafaaa8c6c9a91dd511b8f9083e1f0d982401f8a4307b889",
+    "testNumberColumn": 2,
+    "rows": 935,
+    "start": "2007/254/17:09:18",
+    "end": "2007/254/17:24:54",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 4.9837,
+     "ionB": 4.7452,
+     "issScatter": -0.1895,
+     "issObscuration": 3.4383,
+     "sts": 5.1358
+    },
+    "conditions": {
+     "heatingStart": "2007/254/17:13:54",
+     "heatingEnd": "2007/254/17:14:53",
+     "heatingEndEpoch_s": 1189530893.0,
+     "heatingSamples_s": 60,
+     "R0_ohm": 0.7694,
+     "RtPlateau_ohm": 0.9076,
+     "RtOverR0": 1.18,
+     "RtMax_ohm": 0.9081,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 100.159,
+      "max": 100.842,
+      "min": 99.646,
+      "n": 60
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 69.2572,
+      "max": 71.6849,
+      "min": 28.5579,
+      "n": 60
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/254/17:12:47",
+      "end": "2007/254/17:16:42",
+      "startEpoch_s": 1189530767.0,
+      "endEpoch_s": 1189531002.0,
+      "samples": 235,
+      "smoke": true,
+      "plateauSamples": 48,
+      "plateauStart": "2007/254/17:15:55",
+      "plateauEnd": "2007/254/17:16:42",
+      "plateauStartEpoch_s": 1189530955.0,
+      "channels": {
+       "ptrak": {
+        "median": 2600.0,
+        "max": 2850.0,
+        "min": 892.0,
+        "n": 48
+       },
+       "dusttrakA": {
+        "median": 0.9765,
+        "max": 1.066,
+        "min": 0.74,
+        "n": 48
+       },
+       "dusttrakB": {
+        "median": 29.287,
+        "max": 33.673,
+        "min": 16.902,
+        "n": 48
+       },
+       "ionA": {
+        "median": 5.0829,
+        "max": 5.1163,
+        "min": 4.8907,
+        "n": 48,
+        "deltaFromBaseline": 0.0992
+       },
+       "ionB": {
+        "median": 4.9084,
+        "max": 4.9606,
+        "min": 4.6487,
+        "n": 48,
+        "deltaFromBaseline": 0.1632
+       },
+       "issScatter": {
+        "median": -6.2907,
+        "max": -5.6052,
+        "min": -6.3055,
+        "n": 48,
+        "deltaFromBaseline": -6.1012,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.2706,
+        "max": 3.3334,
+        "min": 3.2474,
+        "n": 48,
+        "deltaFromBaseline": -0.1677
+       },
+       "sts": {
+        "median": 5.1067,
+        "max": 5.1358,
+        "min": 5.0812,
+        "n": 48,
+        "deltaFromBaseline": -0.0291,
+        "powered": true
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 41
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 29.992,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 62.0
+     },
+     {
+      "start": "2007/254/17:17:04",
+      "end": "2007/254/17:20:39",
+      "startEpoch_s": 1189531024.0,
+      "endEpoch_s": 1189531239.0,
+      "samples": 216,
+      "smoke": true,
+      "plateauSamples": 5,
+      "plateauStart": "2007/254/17:17:04",
+      "plateauEnd": "2007/254/17:17:08",
+      "plateauStartEpoch_s": 1189531024.0,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": {
+        "median": 1.702,
+        "max": 6.28,
+        "min": 0.387,
+        "n": 5
+       },
+       "dusttrakB": {
+        "median": 23.118,
+        "max": 25.745,
+        "min": 15.444,
+        "n": 5
+       },
+       "ionA": {
+        "median": 5.1675,
+        "max": 5.2063,
+        "min": 5.123,
+        "n": 5,
+        "deltaFromBaseline": 0.1838
+       },
+       "ionB": {
+        "median": 4.9112,
+        "max": 4.9289,
+        "min": 4.8959,
+        "n": 5,
+        "deltaFromBaseline": 0.166
+       },
+       "issScatter": {
+        "median": -3.5764,
+        "max": -2.2876,
+        "min": -5.6406,
+        "n": 5,
+        "deltaFromBaseline": -3.3869
+       },
+       "issObscuration": {
+        "median": 3.3646,
+        "max": 3.3835,
+        "min": 3.3411,
+        "n": 5,
+        "deltaFromBaseline": -0.0737
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0003,
+        "min": -0.0012,
+        "n": 5,
+        "powered": false
+       }
+      },
+      "flags": {
+       "ptrak": {
+        "errorCode-999": 5
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 13.583,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 131.0
+     },
+     {
+      "start": "2007/254/17:22:11",
+      "end": "2007/254/17:24:54",
+      "startEpoch_s": 1189531331.0,
+      "endEpoch_s": 1189531494.0,
+      "samples": 161,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 22.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.789
+   },
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT254run2btesthkp with zgy average.xls",
+     "sheet": "For Average",
+     "start": "2007/254/17:08:38",
+     "end": "2007/254/17:24:54",
+     "samples": 975,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.0,
+       "max": 6.28,
+       "min": 0.0,
+       "n": 976
+      },
+      "dusttrakB": {
+       "median": 0.0,
+       "max": 43.698,
+       "min": 0.0,
+       "n": 976
+      }
+     },
+     "dusttrakRatioBoverA_medians": null,
+     "dusttrakRatioBoverA_means": 17.977
+    }
+   ],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 3,
+   "sampleId": "C1-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 254,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 1,
+    "position": 5,
+    "record_time_raw": "4:48 - 6:10",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 4,
+   "sampleId": "C1-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 255,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 1,
+    "position": 5,
+    "record_time_raw": "37:42 - 38:51",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "TestNumber = 2 para todo o dia 255 (testes 4 DBP e 5 silicone no Apêndice A) e só traços de fumaça (DustTrak B <= 0,16 mg/m3): identificação ambígua."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 5,
+   "sampleId": "C1-P6",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 255,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 1,
+    "position": 6,
+    "record_time_raw": "39:99 - 41:15",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "TestNumber = 2 para todo o dia 255 (testes 4 DBP e 5 silicone no Apêndice A) e só traços de fumaça (DustTrak B <= 0,16 mg/m3): identificação ambígua."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 6,
+   "sampleId": "C1-P2",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 256,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 1,
+    "position": 2,
+    "record_time_raw": "",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 13 colunas sem TestNumber nem estados de solenoide; cobre os testes 6 (Teflon) e 7 (lamp wick)."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 7,
+   "sampleId": "C1-P3",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 256,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 1,
+    "position": 3,
+    "record_time_raw": "18:54 - 20.25",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 13 colunas sem TestNumber nem estados de solenoide; cobre os testes 6 (Teflon) e 7 (lamp wick)."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 8,
+   "sampleId": "C1-P4",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 257,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 1,
+    "position": 4,
+    "record_time_raw": "1:13 - 1:46",
+    "comment_raw": "run abort because of high Rt/Ro, finished"
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 8, Kapton, abortado segundo o Apêndice A)."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 9,
+   "sampleId": "C1-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 257,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 1,
+    "position": 5,
+    "record_time_raw": "1:13 - 2:50",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 9, DBP)."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 10,
+   "sampleId": "C1-P2",
+   "material": "Teflon",
+   "heating": "Reheat",
+   "gmtDay": 257,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 1,
+    "position": 2,
+    "record_time_raw": "6:35 - 8:17",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 13 colunas sem TestNumber nem estados de solenoide (teste 10, Teflon, reaquecimento)."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 11,
+   "sampleId": "C2-P4",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 262,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 4,
+    "record_time_raw": "1:39 - 3:07",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT262 Run 11 DBP hkp.xls",
+     "sheet": "for average",
+     "start": "2007/262/15:23:52",
+     "end": "2007/262/15:28:07",
+     "samples": 256,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.0,
+       "max": 4.315,
+       "min": 0.0,
+       "n": 257
+      },
+      "dusttrakB": {
+       "median": 0.0,
+       "max": 29.178,
+       "min": 0.0,
+       "n": 257
+      }
+     },
+     "dusttrakRatioBoverA_medians": null,
+     "dusttrakRatioBoverA_means": 18.984
+    },
+    {
+     "role": "secondary",
+     "file": "PSI-102_Analyzed Data_GMT262 Run 11 DBP hkp.xls",
+     "sheet": "for aged average",
+     "start": "2007/262/15:29:59",
+     "end": "2007/262/15:34:13",
+     "samples": 254,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.191,
+       "max": 1.034,
+       "min": 0.006,
+       "n": 255
+      },
+      "dusttrakB": {
+       "median": 5.002,
+       "max": 18.348,
+       "min": 0.154,
+       "n": 255
+      }
+     },
+     "dusttrakRatioBoverA_medians": 26.188,
+     "dusttrakRatioBoverA_means": 18.965
+    }
+   ],
+   "status": "nasa-averaging-window-only"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 12,
+   "sampleId": "C2-P4",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 262,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 4,
+    "record_time_raw": "5:37 - 7:05",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 13,
+   "sampleId": "C2-P1",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 262,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 2,
+    "position": 1,
+    "record_time_raw": "9:36 - 10:59",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT262 RUN 13 teflon.xls",
+     "sheet": "for average",
+     "start": "2007/262/18:46:48",
+     "end": "2007/262/18:48:49",
+     "samples": 122,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 12.327,
+       "max": 16.621,
+       "min": 0.0,
+       "n": 123
+      },
+      "dusttrakB": {
+       "median": 16.128,
+       "max": 20.783,
+       "min": 0.0,
+       "n": 123
+      }
+     },
+     "dusttrakRatioBoverA_medians": 1.308,
+     "dusttrakRatioBoverA_means": 1.277
+    }
+   ],
+   "status": "nasa-averaging-window-only"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 14,
+   "sampleId": "C2-P3",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 263,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 2,
+    "position": 3,
+    "record_time_raw": "33:05 - 34:18",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT263 run 14 kapton avg.xls",
+     "sheet": "for average",
+     "start": "2007/263/15:08:31",
+     "end": "2007/263/15:10:05",
+     "samples": 95,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.0,
+       "max": 13.01,
+       "min": 0.0,
+       "n": 96
+      },
+      "dusttrakB": {
+       "median": 0.0,
+       "max": 16.177,
+       "min": 0.0,
+       "n": 96
+      }
+     },
+     "dusttrakRatioBoverA_medians": null,
+     "dusttrakRatioBoverA_means": 1.202
+    }
+   ],
+   "status": "nasa-averaging-window-only"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 15,
+   "sampleId": "C2-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 263,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 5,
+    "record_time_raw": "38:29 - 40:03",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT263 Run 15 DBP.xls",
+     "sheet": "for average",
+     "start": "2007/263/16:39:46",
+     "end": "2007/263/16:43:28",
+     "samples": 223,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.0,
+       "max": 0.0,
+       "min": 0.0,
+       "n": 224
+      },
+      "dusttrakB": {
+       "median": 0.8765,
+       "max": 4.57,
+       "min": 0.0,
+       "n": 224
+      }
+     },
+     "dusttrakRatioBoverA_medians": null,
+     "dusttrakRatioBoverA_means": null
+    }
+   ],
+   "status": "nasa-averaging-window-only"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 16,
+   "sampleId": "C2-P4",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 263,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 4,
+    "record_time_raw": "35:42 - 36:48",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 17,
+   "sampleId": "C2-P2",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 2,
+    "position": 2,
+    "record_time_raw": "14:05 - 15: 50",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT264 Run 17 lampwick.xls",
+    "sheet": "GMT264lampwick17hkp (2)",
+    "sha256": "fe4a6fcf8fc4fc478ac2835cceeaa396e3f02df12f0e6e4bd68b398e2af32022",
+    "testNumberColumn": 17,
+    "rows": 1084,
+    "start": "2007/264/13:46:04",
+    "end": "2007/264/14:04:07",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0349,
+     "ionB": 4.762,
+     "issScatter": -0.1939,
+     "issObscuration": 3.439,
+     "sts": 5.1509
+    },
+    "conditions": {
+     "heatingStart": "2007/264/13:50:49",
+     "heatingEnd": "2007/264/13:51:49",
+     "heatingEndEpoch_s": 1190382709.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.7535,
+     "RtPlateau_ohm": 0.938,
+     "RtOverR0": 1.245,
+     "RtMax_ohm": 0.9383,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.0903,
+      "max": 30.7373,
+      "min": 29.8218,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 82.2249,
+      "max": 83.4412,
+      "min": 24.4795,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/264/13:48:45",
+      "end": "2007/264/13:54:01",
+      "startEpoch_s": 1190382525.0,
+      "endEpoch_s": 1190382841.0,
+      "samples": 317,
+      "smoke": true,
+      "plateauSamples": 44,
+      "plateauStart": "2007/264/13:53:18",
+      "plateauEnd": "2007/264/13:54:01",
+      "plateauStartEpoch_s": 1190382798.0,
+      "channels": {
+       "ptrak": {
+        "median": 45800.0,
+        "max": 48700.0,
+        "min": 42.0,
+        "n": 42
+       },
+       "dusttrakA": {
+        "median": 17.1895,
+        "max": 19.242,
+        "min": 10.338,
+        "n": 44
+       },
+       "dusttrakB": {
+        "median": 31.324,
+        "max": 33.16,
+        "min": 19.622,
+        "n": 44
+       },
+       "ionA": {
+        "median": 5.6168,
+        "max": 5.8261,
+        "min": 4.8596,
+        "n": 44,
+        "deltaFromBaseline": 0.5819
+       },
+       "ionB": {
+        "median": 5.7408,
+        "max": 5.8469,
+        "min": 4.6735,
+        "n": 44,
+        "deltaFromBaseline": 0.9788
+       },
+       "issScatter": {
+        "median": -6.232,
+        "max": -5.9491,
+        "min": -6.2418,
+        "n": 44,
+        "deltaFromBaseline": -6.0381,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3272,
+        "max": 3.3612,
+        "min": 3.3176,
+        "n": 44,
+        "deltaFromBaseline": -0.1118
+       },
+       "sts": {
+        "median": 4.5558,
+        "max": 5.0244,
+        "min": 4.5312,
+        "n": 44,
+        "deltaFromBaseline": -0.5951,
+        "powered": true
+       }
+      },
+      "flags": {
+       "ptrak": {
+        "errorCode-999": 2
+       },
+       "issScatter": {
+        "clippedAtRail_samples": 43
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.822,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 89.0
+     },
+     {
+      "start": "2007/264/13:54:24",
+      "end": "2007/264/13:58:06",
+      "startEpoch_s": 1190382864.0,
+      "endEpoch_s": 1190383086.0,
+      "samples": 223,
+      "smoke": true,
+      "plateauSamples": 6,
+      "plateauStart": "2007/264/13:54:24",
+      "plateauEnd": "2007/264/13:56:52",
+      "plateauStartEpoch_s": 1190382864.0,
+      "channels": {
+       "ptrak": {
+        "median": 100450.0,
+        "max": 139000.0,
+        "min": 1140.0,
+        "n": 6
+       },
+       "dusttrakA": {
+        "median": 22.327,
+        "max": 53.193,
+        "min": 9.712,
+        "n": 6
+       },
+       "dusttrakB": {
+        "median": 39.7115,
+        "max": 49.366,
+        "min": 25.549,
+        "n": 6
+       },
+       "ionA": {
+        "median": 5.847,
+        "max": 5.8725,
+        "min": 5.0079,
+        "n": 6,
+        "deltaFromBaseline": 0.8121
+       },
+       "ionB": {
+        "median": 5.8516,
+        "max": 5.8694,
+        "min": 4.9292,
+        "n": 6,
+        "deltaFromBaseline": 1.0896
+       },
+       "issScatter": {
+        "median": -5.4243,
+        "max": -3.074,
+        "min": -6.2164,
+        "n": 6,
+        "deltaFromBaseline": -5.2304,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3611,
+        "max": 3.3752,
+        "min": 3.3325,
+        "n": 6,
+        "deltaFromBaseline": -0.0779
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0012,
+        "n": 6,
+        "powered": false
+       }
+      },
+      "flags": {
+       "ptrak": {
+        "aboveNominalRange_1e5": 3
+       },
+       "issScatter": {
+        "clippedAtRail_samples": 1
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.779,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 155.0
+     },
+     {
+      "start": "2007/264/13:59:40",
+      "end": "2007/264/14:03:40",
+      "startEpoch_s": 1190383180.0,
+      "endEpoch_s": 1190383420.0,
+      "samples": 242,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 23.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 1.268
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 18,
+   "sampleId": "C2-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 6,
+    "record_time_raw": "<6.:39",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 19,
+   "sampleId": "C2-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 6,
+    "record_time_raw": "6:39 - 8:00",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 20,
+   "sampleId": "C2-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 6,
+    "record_time_raw": "8:00 - 11:00",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 21,
+   "sampleId": "C2-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 6,
+    "record_time_raw": "19:32 - 21:10",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 22,
+   "sampleId": "C2-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 264,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 2,
+    "position": 6,
+    "record_time_raw": "22:30 - 24:16",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 23,
+   "sampleId": "C3-P1",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 267,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 3,
+    "position": 1,
+    "record_time_raw": "12:28 - 13:48",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT267silicon23hkp.xls",
+    "sheet": "Copy (2) of GMT267silicon23hkp",
+    "sha256": "cc3a81fa9119ea806ae50b0d3035fca5c5188f8fac6e5eca8de8eea4b5a755f1",
+    "testNumberColumn": 23,
+    "rows": 3406,
+    "start": "2007/267/11:54:18",
+    "end": "2007/267/13:35:32",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0447,
+     "ionB": 4.7755,
+     "issScatter": -0.1956,
+     "issObscuration": 3.4399,
+     "sts": -0.0006
+    },
+    "conditions": {
+     "heatingStart": "2007/267/11:56:53",
+     "heatingEnd": "2007/267/13:12:08",
+     "heatingEndEpoch_s": 1190639528.0,
+     "heatingSamples_s": 106,
+     "R0_ohm": 0.6641,
+     "RtPlateau_ohm": 0.8826,
+     "RtOverR0": 1.329,
+     "RtMax_ohm": 0.8883,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 25.1343,
+      "max": 25.5127,
+      "min": 24.8169,
+      "n": 106
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 22.844,
+      "max": 105.508,
+      "min": 22.2622,
+      "n": 106
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/267/11:55:52",
+      "end": "2007/267/12:00:19",
+      "startEpoch_s": 1190634952.0,
+      "endEpoch_s": 1190635219.0,
+      "samples": 268,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     },
+     {
+      "start": "2007/267/12:00:42",
+      "end": "2007/267/12:04:14",
+      "startEpoch_s": 1190635242.0,
+      "endEpoch_s": 1190635454.0,
+      "samples": 213,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     },
+     {
+      "start": "2007/267/12:05:48",
+      "end": "2007/267/12:07:14",
+      "startEpoch_s": 1190635548.0,
+      "endEpoch_s": 1190635634.0,
+      "samples": 87,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     },
+     {
+      "start": "2007/267/13:10:08",
+      "end": "2007/267/13:14:59",
+      "startEpoch_s": 1190639408.0,
+      "endEpoch_s": 1190639699.0,
+      "samples": 293,
+      "smoke": true,
+      "plateauSamples": 86,
+      "plateauStart": "2007/267/13:13:26",
+      "plateauEnd": "2007/267/13:14:51",
+      "plateauStartEpoch_s": 1190639606.0,
+      "channels": {
+       "ptrak": {
+        "median": 61100.0,
+        "max": 64900.0,
+        "min": 0.0,
+        "n": 86
+       },
+       "dusttrakA": {
+        "median": 53.932,
+        "max": 62.282,
+        "min": 32.292,
+        "n": 86
+       },
+       "dusttrakB": {
+        "median": 105.292,
+        "max": 117.858,
+        "min": 62.343,
+        "n": 86
+       },
+       "ionA": {
+        "median": 6.9527,
+        "max": 7.0804,
+        "min": 5.054,
+        "n": 86,
+        "deltaFromBaseline": 1.908
+       },
+       "ionB": {
+        "median": 7.2185,
+        "max": 7.2992,
+        "min": 4.7739,
+        "n": 86,
+        "deltaFromBaseline": 2.443
+       },
+       "issScatter": {
+        "median": -6.2384,
+        "max": -6.2201,
+        "min": -6.2518,
+        "n": 86,
+        "deltaFromBaseline": -6.0428,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.0234,
+        "max": 3.1183,
+        "min": 2.9736,
+        "n": 86,
+        "deltaFromBaseline": -0.4165
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0015,
+        "n": 86,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 86
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        0.0,
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.952,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 78.0
+     },
+     {
+      "start": "2007/267/13:24:29",
+      "end": "2007/267/13:29:20",
+      "startEpoch_s": 1190640269.0,
+      "endEpoch_s": 1190640560.0,
+      "samples": 292,
+      "smoke": true,
+      "plateauSamples": 102,
+      "plateauStart": "2007/267/13:24:29",
+      "plateauEnd": "2007/267/13:28:33",
+      "plateauStartEpoch_s": 1190640269.0,
+      "channels": {
+       "ptrak": {
+        "median": 25450.0,
+        "max": 92600.0,
+        "min": 213.0,
+        "n": 102
+       },
+       "dusttrakA": {
+        "median": 42.8795,
+        "max": 47.269,
+        "min": 16.215,
+        "n": 102
+       },
+       "dusttrakB": {
+        "median": 88.794,
+        "max": 93.791,
+        "min": 46.996,
+        "n": 102
+       },
+       "ionA": {
+        "median": 6.4313,
+        "max": 6.5888,
+        "min": 4.8917,
+        "n": 102,
+        "deltaFromBaseline": 1.3866
+       },
+       "ionB": {
+        "median": 6.5836,
+        "max": 6.6766,
+        "min": 4.6866,
+        "n": 102,
+        "deltaFromBaseline": 1.8081
+       },
+       "issScatter": {
+        "median": -6.241,
+        "max": -6.2311,
+        "min": -6.2546,
+        "n": 102,
+        "deltaFromBaseline": -6.0454,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.0043,
+        "max": 3.2562,
+        "min": 2.9651,
+        "n": 102,
+        "deltaFromBaseline": -0.4356
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0015,
+        "n": 102,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 102
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 2.071,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 741.0
+     },
+     {
+      "start": "2007/267/13:31:05",
+      "end": "2007/267/13:35:07",
+      "startEpoch_s": 1190640665.0,
+      "endEpoch_s": 1190640907.0,
+      "samples": 243,
+      "smoke": true,
+      "plateauSamples": 62,
+      "plateauStart": "2007/267/13:33:33",
+      "plateauEnd": "2007/267/13:34:34",
+      "plateauStartEpoch_s": 1190640813.0,
+      "channels": {
+       "ptrak": {
+        "median": 112.5,
+        "max": 136.0,
+        "min": 37.0,
+        "n": 62
+       },
+       "dusttrakA": {
+        "median": 0.1485,
+        "max": 0.197,
+        "min": 0.08,
+        "n": 62
+       },
+       "dusttrakB": {
+        "median": 0.328,
+        "max": 0.411,
+        "min": 0.208,
+        "n": 62
+       },
+       "ionA": {
+        "median": 4.8209,
+        "max": 4.8453,
+        "min": 4.7977,
+        "n": 62,
+        "deltaFromBaseline": -0.2238
+       },
+       "ionB": {
+        "median": 4.5937,
+        "max": 4.6268,
+        "min": 4.5621,
+        "n": 62,
+        "deltaFromBaseline": -0.1818
+       },
+       "issScatter": {
+        "median": -0.2704,
+        "max": -0.22,
+        "min": -0.3677,
+        "n": 62,
+        "deltaFromBaseline": -0.0748
+       },
+       "issObscuration": {
+        "median": 3.4332,
+        "max": 3.436,
+        "min": 3.4311,
+        "n": 62,
+        "deltaFromBaseline": -0.0067
+       },
+       "sts": {
+        "median": -0.0003,
+        "max": 0.0003,
+        "min": -0.0015,
+        "n": 62,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 2.209,
+      "dusttrakRatioNote": null,
+      "role": "additional",
+      "ageAtPlateauStart_s": 1285.0
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 570.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 0.843
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 24,
+   "sampleId": "C3-P2",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 267,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 3,
+    "position": 2,
+    "record_time_raw": "17:40 - 19:10",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT267silicon24hkp.xls",
+    "sheet": "GMT267silicon23hkp",
+    "sha256": "28f4d2078703d1ee8f4136ae9bcb15c5866d2a49500eb65b120c7a84289b9894",
+    "testNumberColumn": 24,
+    "rows": 1195,
+    "start": "2007/267/14:58:49",
+    "end": "2007/267/15:18:43",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.015,
+     "ionB": 4.7292,
+     "issScatter": -0.1933,
+     "issObscuration": 3.4381,
+     "sts": 5.1326
+    },
+    "conditions": {
+     "heatingStart": "2007/267/15:04:57",
+     "heatingEnd": "2007/267/15:05:34",
+     "heatingEndEpoch_s": 1190646334.0,
+     "heatingSamples_s": 38,
+     "R0_ohm": 0.6699,
+     "RtPlateau_ohm": 0.883,
+     "RtOverR0": 1.318,
+     "RtMax_ohm": 0.8846,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 25.0977,
+      "max": 25.4272,
+      "min": 24.8169,
+      "n": 38
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 102.5995,
+      "max": 103.422,
+      "min": 25.6265,
+      "n": 38
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/267/15:02:32",
+      "end": "2007/267/15:07:59",
+      "startEpoch_s": 1190646152.0,
+      "endEpoch_s": 1190646479.0,
+      "samples": 328,
+      "smoke": true,
+      "plateauSamples": 47,
+      "plateauStart": "2007/267/15:06:56",
+      "plateauEnd": "2007/267/15:07:42",
+      "plateauStartEpoch_s": 1190646416.0,
+      "channels": {
+       "ptrak": {
+        "median": 39500.0,
+        "max": 43300.0,
+        "min": 2.0,
+        "n": 47
+       },
+       "dusttrakA": {
+        "median": 37.973,
+        "max": 45.858,
+        "min": 24.029,
+        "n": 47
+       },
+       "dusttrakB": {
+        "median": 72.368,
+        "max": 77.861,
+        "min": 46.928,
+        "n": 47
+       },
+       "ionA": {
+        "median": 6.1697,
+        "max": 6.4285,
+        "min": 4.9277,
+        "n": 47,
+        "deltaFromBaseline": 1.1547
+       },
+       "ionB": {
+        "median": 6.4581,
+        "max": 6.5335,
+        "min": 4.6762,
+        "n": 47,
+        "deltaFromBaseline": 1.7289
+       },
+       "issScatter": {
+        "median": -6.2506,
+        "max": -6.2054,
+        "min": -6.2646,
+        "n": 47,
+        "deltaFromBaseline": -6.0573,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.1506,
+        "max": 3.2993,
+        "min": 3.0664,
+        "n": 47,
+        "deltaFromBaseline": -0.2875
+       },
+       "sts": {
+        "median": 4.2947,
+        "max": 4.7958,
+        "min": 4.2447,
+        "n": 47,
+        "deltaFromBaseline": -0.8379,
+        "powered": true
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 47
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.906,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 82.0
+     },
+     {
+      "start": "2007/267/15:08:59",
+      "end": "2007/267/15:12:43",
+      "startEpoch_s": 1190646539.0,
+      "endEpoch_s": 1190646763.0,
+      "samples": 225,
+      "smoke": true,
+      "plateauSamples": 13,
+      "plateauStart": "2007/267/15:11:25",
+      "plateauEnd": "2007/267/15:12:24",
+      "plateauStartEpoch_s": 1190646685.0,
+      "channels": {
+       "ptrak": {
+        "median": 924.0,
+        "max": 2000.0,
+        "min": 86.0,
+        "n": 13
+       },
+       "dusttrakA": {
+        "median": 19.37,
+        "max": 23.067,
+        "min": 8.726,
+        "n": 13
+       },
+       "dusttrakB": {
+        "median": 30.894,
+        "max": 37.898,
+        "min": 22.208,
+        "n": 13
+       },
+       "ionA": {
+        "median": 5.0259,
+        "max": 5.3488,
+        "min": 4.834,
+        "n": 13,
+        "deltaFromBaseline": 0.0109
+       },
+       "ionB": {
+        "median": 4.8144,
+        "max": 5.2753,
+        "min": 4.5853,
+        "n": 13,
+        "deltaFromBaseline": 0.0852
+       },
+       "issScatter": {
+        "median": -6.2237,
+        "max": -4.8923,
+        "min": -6.2588,
+        "n": 13,
+        "deltaFromBaseline": -6.0304,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.2852,
+        "max": 3.3524,
+        "min": 3.2388,
+        "n": 13,
+        "deltaFromBaseline": -0.1529
+       },
+       "sts": {
+        "median": 4.8929,
+        "max": 5.2853,
+        "min": -0.0012,
+        "n": 13,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 7
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.595,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 351.0
+     },
+     {
+      "start": "2007/267/15:14:16",
+      "end": "2007/267/15:18:17",
+      "startEpoch_s": 1190646856.0,
+      "endEpoch_s": 1190647097.0,
+      "samples": 242,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 60.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.427
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 25,
+   "sampleId": "C3-P4",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 268,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 3,
+    "position": 4,
+    "record_time_raw": "17:58 - 19:12",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT268teflon25.xls",
+    "sheet": "GMT268teflon25hkp",
+    "sha256": "457ba2741845343afc82e8ca2d437bb6ae4578f0b08859a4a6e4580ba456c7e9",
+    "testNumberColumn": 25,
+    "rows": 805,
+    "start": "2007/268/12:16:35",
+    "end": "2007/268/12:29:58",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0339,
+     "ionB": 4.763,
+     "issScatter": -0.1949,
+     "issObscuration": 3.4393,
+     "sts": 5.1227
+    },
+    "conditions": {
+     "heatingStart": "2007/268/12:22:27",
+     "heatingEnd": "2007/268/12:23:27",
+     "heatingEndEpoch_s": 1190723007.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.9404,
+     "RtPlateau_ohm": 1.3587,
+     "RtOverR0": 1.445,
+     "RtMax_ohm": 1.3597,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 40.1123,
+      "max": 40.625,
+      "min": 39.6851,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 131.227,
+      "max": 134.488,
+      "min": 24.3933,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/268/12:20:26",
+      "end": "2007/268/12:25:40",
+      "startEpoch_s": 1190722826.0,
+      "endEpoch_s": 1190723140.0,
+      "samples": 314,
+      "smoke": true,
+      "plateauSamples": 40,
+      "plateauStart": "2007/268/12:24:42",
+      "plateauEnd": "2007/268/12:25:21",
+      "plateauStartEpoch_s": 1190723082.0,
+      "channels": {
+       "ptrak": {
+        "median": 59100.0,
+        "max": 61800.0,
+        "min": 1.0,
+        "n": 40
+       },
+       "dusttrakA": {
+        "median": 18.678,
+        "max": 20.924,
+        "min": 15.247,
+        "n": 40
+       },
+       "dusttrakB": {
+        "median": 23.5255,
+        "max": 26.11,
+        "min": 18.166,
+        "n": 40
+       },
+       "ionA": {
+        "median": 5.6935,
+        "max": 5.7605,
+        "min": 4.9405,
+        "n": 40,
+        "deltaFromBaseline": 0.6596
+       },
+       "ionB": {
+        "median": 5.8566,
+        "max": 5.9134,
+        "min": 4.682,
+        "n": 40,
+        "deltaFromBaseline": 1.0936
+       },
+       "issScatter": {
+        "median": -1.4055,
+        "max": -0.8658,
+        "min": -3.6899,
+        "n": 40,
+        "deltaFromBaseline": -1.2106
+       },
+       "issObscuration": {
+        "median": 3.4161,
+        "max": 3.4283,
+        "min": 3.411,
+        "n": 40,
+        "deltaFromBaseline": -0.0232
+       },
+       "sts": {
+        "median": 4.5508,
+        "max": 5.0308,
+        "min": 4.483,
+        "n": 40,
+        "deltaFromBaseline": -0.5719,
+        "powered": true
+       }
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.26,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 75.0
+     },
+     {
+      "start": "2007/268/12:25:54",
+      "end": "2007/268/12:29:05",
+      "startEpoch_s": 1190723154.0,
+      "endEpoch_s": 1190723345.0,
+      "samples": 193,
+      "smoke": true,
+      "plateauSamples": 5,
+      "plateauStart": "2007/268/12:28:36",
+      "plateauEnd": "2007/268/12:28:40",
+      "plateauStartEpoch_s": 1190723316.0,
+      "channels": {
+       "ptrak": {
+        "median": 1610.0,
+        "max": 1720.0,
+        "min": 1530.0,
+        "n": 5
+       },
+       "dusttrakA": {
+        "median": 1.345,
+        "max": 1.847,
+        "min": 0.552,
+        "n": 5
+       },
+       "dusttrakB": {
+        "median": 1.986,
+        "max": 2.613,
+        "min": 1.355,
+        "n": 5
+       },
+       "ionA": {
+        "median": 4.9701,
+        "max": 4.9722,
+        "min": 4.9554,
+        "n": 5,
+        "deltaFromBaseline": -0.0638
+       },
+       "ionB": {
+        "median": 4.6982,
+        "max": 4.7305,
+        "min": 4.6793,
+        "n": 5,
+        "deltaFromBaseline": -0.0648
+       },
+       "issScatter": {
+        "median": -0.4446,
+        "max": -0.3287,
+        "min": -0.6912,
+        "n": 5,
+        "deltaFromBaseline": -0.2497
+       },
+       "issObscuration": {
+        "median": 3.4363,
+        "max": 3.4372,
+        "min": 3.4338,
+        "n": 5,
+        "deltaFromBaseline": -0.003
+       },
+       "sts": {
+        "median": 5.1602,
+        "max": 5.1675,
+        "min": 5.1395,
+        "n": 5,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.477,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 309.0
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 14.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.084
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 26,
+   "sampleId": "C3-P5",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 268,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 3,
+    "position": 5,
+    "record_time_raw": "20:33 - 21:58",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT268teflon26.xls",
+    "sheet": "GMT268teflon26hkp",
+    "sha256": "395bb9d1367e07a503929cc59300e6135ca11498d9c58601ba6128ba55666424",
+    "testNumberColumn": 26,
+    "rows": 1435,
+    "start": "2007/268/15:01:32",
+    "end": "2007/268/15:25:30",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0273,
+     "ionB": 4.7609,
+     "issScatter": -0.193,
+     "issObscuration": 3.4399,
+     "sts": -0.0006
+    },
+    "conditions": {
+     "heatingStart": "2007/268/15:07:16",
+     "heatingEnd": "2007/268/15:08:15",
+     "heatingEndEpoch_s": 1190732895.0,
+     "heatingSamples_s": 60,
+     "R0_ohm": 0.9413,
+     "RtPlateau_ohm": 1.36,
+     "RtOverR0": 1.445,
+     "RtMax_ohm": 1.3608,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 40.1672,
+      "max": 40.625,
+      "min": 39.5996,
+      "n": 60
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 129.9845,
+      "max": 134.702,
+      "min": 25.4562,
+      "n": 60
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/268/15:06:15",
+      "end": "2007/268/15:10:17",
+      "startEpoch_s": 1190732775.0,
+      "endEpoch_s": 1190733017.0,
+      "samples": 243,
+      "smoke": true,
+      "plateauSamples": 39,
+      "plateauStart": "2007/268/15:09:26",
+      "plateauEnd": "2007/268/15:10:04",
+      "plateauStartEpoch_s": 1190732966.0,
+      "channels": {
+       "ptrak": {
+        "median": 49000.0,
+        "max": 53200.0,
+        "min": 3.0,
+        "n": 39
+       },
+       "dusttrakA": {
+        "median": 4.619,
+        "max": 5.095,
+        "min": 2.604,
+        "n": 39
+       },
+       "dusttrakB": {
+        "median": 5.713,
+        "max": 6.323,
+        "min": 3.31,
+        "n": 39
+       },
+       "ionA": {
+        "median": 5.769,
+        "max": 6.0178,
+        "min": 4.9008,
+        "n": 39,
+        "deltaFromBaseline": 0.7417
+       },
+       "ionB": {
+        "median": 6.0059,
+        "max": 6.1145,
+        "min": 4.6835,
+        "n": 39,
+        "deltaFromBaseline": 1.245
+       },
+       "issScatter": {
+        "median": -0.8267,
+        "max": -0.5069,
+        "min": -1.8158,
+        "n": 39,
+        "deltaFromBaseline": -0.6337
+       },
+       "issObscuration": {
+        "median": 3.4351,
+        "max": 3.4366,
+        "min": 3.4335,
+        "n": 39,
+        "deltaFromBaseline": -0.0048
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0003,
+        "min": -0.0012,
+        "n": 39,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.237,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 71.0
+     },
+     {
+      "start": "2007/268/15:19:48",
+      "end": "2007/268/15:23:41",
+      "startEpoch_s": 1190733588.0,
+      "endEpoch_s": 1190733821.0,
+      "samples": 234,
+      "smoke": true,
+      "plateauSamples": 42,
+      "plateauStart": "2007/268/15:22:12",
+      "plateauEnd": "2007/268/15:22:53",
+      "plateauStartEpoch_s": 1190733732.0,
+      "channels": {
+       "ptrak": {
+        "median": 22800.0,
+        "max": 24600.0,
+        "min": 87.0,
+        "n": 42
+       },
+       "dusttrakA": {
+        "median": 4.8935,
+        "max": 5.161,
+        "min": 2.328,
+        "n": 42
+       },
+       "dusttrakB": {
+        "median": 6.0185,
+        "max": 6.329,
+        "min": 3.169,
+        "n": 42
+       },
+       "ionA": {
+        "median": 5.4591,
+        "max": 5.6558,
+        "min": 4.9194,
+        "n": 42,
+        "deltaFromBaseline": 0.4318
+       },
+       "ionB": {
+        "median": 5.5777,
+        "max": 5.6519,
+        "min": 4.6942,
+        "n": 42,
+        "deltaFromBaseline": 0.8168
+       },
+       "issScatter": {
+        "median": -0.9209,
+        "max": -0.4672,
+        "min": -0.9576,
+        "n": 42,
+        "deltaFromBaseline": -0.7279
+       },
+       "issObscuration": {
+        "median": 3.4345,
+        "max": 3.4363,
+        "min": 3.4335,
+        "n": 42,
+        "deltaFromBaseline": -0.0054
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0015,
+        "n": 42,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.23,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 837.0
+     },
+     {
+      "start": "2007/268/15:25:13",
+      "end": "2007/268/15:25:29",
+      "startEpoch_s": 1190733913.0,
+      "endEpoch_s": 1190733929.0,
+      "samples": 17,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 571.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 1.053
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 27,
+   "sampleId": "C3-P3",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 269,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 3,
+    "position": 3,
+    "record_time_raw": "1:48 - 3:09",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT269silicon27.xls",
+    "sheet": "GMT269silicon27hkp",
+    "sha256": "18b4a85279226481cfcec14ea78e3cb6357a5c0414f6293154fb052fc337c44c",
+    "testNumberColumn": 27,
+    "rows": 1233,
+    "start": "2007/269/12:31:05",
+    "end": "2007/269/12:51:37",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.04,
+     "ionB": 4.7646,
+     "issScatter": -0.1941,
+     "issObscuration": 3.4396,
+     "sts": 5.1363
+    },
+    "conditions": {
+     "heatingStart": "2007/269/12:37:38",
+     "heatingEnd": "2007/269/12:38:22",
+     "heatingEndEpoch_s": 1190810302.0,
+     "heatingSamples_s": 45,
+     "R0_ohm": 0.6647,
+     "RtPlateau_ohm": 0.8775,
+     "RtOverR0": 1.32,
+     "RtMax_ohm": 0.8778,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 25.1587,
+      "max": 25.8423,
+      "min": 24.8169,
+      "n": 45
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 102.126,
+      "max": 104.212,
+      "min": 24.4277,
+      "n": 45
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/269/12:36:19",
+      "end": "2007/269/12:40:36",
+      "startEpoch_s": 1190810179.0,
+      "endEpoch_s": 1190810436.0,
+      "samples": 258,
+      "smoke": true,
+      "plateauSamples": 48,
+      "plateauStart": "2007/269/12:39:32",
+      "plateauEnd": "2007/269/12:40:19",
+      "plateauStartEpoch_s": 1190810372.0,
+      "channels": {
+       "ptrak": {
+        "median": 52250.0,
+        "max": 57400.0,
+        "min": 528.0,
+        "n": 48
+       },
+       "dusttrakA": {
+        "median": 46.048,
+        "max": 51.988,
+        "min": 21.501,
+        "n": 48
+       },
+       "dusttrakB": {
+        "median": 81.9305,
+        "max": 88.573,
+        "min": 44.938,
+        "n": 48
+       },
+       "ionA": {
+        "median": 6.4241,
+        "max": 6.68,
+        "min": 4.9536,
+        "n": 48,
+        "deltaFromBaseline": 1.3841
+       },
+       "ionB": {
+        "median": 6.734,
+        "max": 6.8616,
+        "min": 4.7116,
+        "n": 48,
+        "deltaFromBaseline": 1.9694
+       },
+       "issScatter": {
+        "median": -6.2334,
+        "max": -6.1697,
+        "min": -6.2415,
+        "n": 48,
+        "deltaFromBaseline": -6.0393,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.1381,
+        "max": 3.3029,
+        "min": 3.0869,
+        "n": 48,
+        "deltaFromBaseline": -0.3015
+       },
+       "sts": {
+        "median": 4.2195,
+        "max": 4.8288,
+        "min": 4.1418,
+        "n": 48,
+        "deltaFromBaseline": -0.9168,
+        "powered": true
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 47
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.779,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 70.0
+     },
+     {
+      "start": "2007/269/12:41:50",
+      "end": "2007/269/12:45:37",
+      "startEpoch_s": 1190810510.0,
+      "endEpoch_s": 1190810737.0,
+      "samples": 228,
+      "smoke": true,
+      "plateauSamples": 16,
+      "plateauStart": "2007/269/12:44:16",
+      "plateauEnd": "2007/269/12:45:15",
+      "plateauStartEpoch_s": 1190810656.0,
+      "channels": {
+       "ptrak": {
+        "median": 2120.0,
+        "max": 14500.0,
+        "min": 121.0,
+        "n": 16
+       },
+       "dusttrakA": {
+        "median": 25.112,
+        "max": 32.327,
+        "min": 14.368,
+        "n": 16
+       },
+       "dusttrakB": {
+        "median": 38.6545,
+        "max": 60.936,
+        "min": 32.338,
+        "n": 16
+       },
+       "ionA": {
+        "median": 5.1967,
+        "max": 5.6165,
+        "min": 4.8907,
+        "n": 16,
+        "deltaFromBaseline": 0.1567
+       },
+       "ionB": {
+        "median": 5.0615,
+        "max": 5.9576,
+        "min": 4.7003,
+        "n": 16,
+        "deltaFromBaseline": 0.2969
+       },
+       "issScatter": {
+        "median": -6.2234,
+        "max": -4.7687,
+        "min": -6.2418,
+        "n": 16,
+        "deltaFromBaseline": -6.0293,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.2626,
+        "max": 3.3127,
+        "min": 3.2034,
+        "n": 16,
+        "deltaFromBaseline": -0.177
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 5.2792,
+        "min": -0.0012,
+        "n": 16,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 9
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.539,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 354.0
+     },
+     {
+      "start": "2007/269/12:47:10",
+      "end": "2007/269/12:51:11",
+      "startEpoch_s": 1190810830.0,
+      "endEpoch_s": 1190811071.0,
+      "samples": 242,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 74.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.472
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 28,
+   "sampleId": "C3-P6",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 269,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 3,
+    "position": 6,
+    "record_time_raw": "4:35 - 5:36",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT269teflon28hkp.xls",
+    "sheet": "GMT269teflon28hkp",
+    "sha256": "eb8d65c3dcd2390e38d5244bd33543c228e8fe9f145fe5a6565619339225dd19",
+    "testNumberColumn": 28,
+    "rows": 1004,
+    "start": "2007/269/14:01:43",
+    "end": "2007/269/14:18:26",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0372,
+     "ionB": 4.7664,
+     "issScatter": -0.1929,
+     "issObscuration": 3.4393,
+     "sts": 5.1329
+    },
+    "conditions": {
+     "heatingStart": "2007/269/14:05:47",
+     "heatingEnd": "2007/269/14:06:46",
+     "heatingEndEpoch_s": 1190815606.0,
+     "heatingSamples_s": 60,
+     "R0_ohm": 0.9383,
+     "RtPlateau_ohm": 1.3516,
+     "RtOverR0": 1.44,
+     "RtMax_ohm": 1.3526,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 40.1245,
+      "max": 40.625,
+      "min": 39.8193,
+      "n": 60
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 128.363,
+      "max": 132.955,
+      "min": 26.0339,
+      "n": 60
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/269/14:04:44",
+      "end": "2007/269/14:08:53",
+      "startEpoch_s": 1190815484.0,
+      "endEpoch_s": 1190815733.0,
+      "samples": 249,
+      "smoke": true,
+      "plateauSamples": 40,
+      "plateauStart": "2007/269/14:07:55",
+      "plateauEnd": "2007/269/14:08:34",
+      "plateauStartEpoch_s": 1190815675.0,
+      "channels": {
+       "ptrak": {
+        "median": 45500.0,
+        "max": 46700.0,
+        "min": 1490.0,
+        "n": 40
+       },
+       "dusttrakA": {
+        "median": 4.255,
+        "max": 5.078,
+        "min": 3.03,
+        "n": 40
+       },
+       "dusttrakB": {
+        "median": 5.3455,
+        "max": 6.212,
+        "min": 3.483,
+        "n": 40
+       },
+       "ionA": {
+        "median": 5.5971,
+        "max": 5.7077,
+        "min": 4.968,
+        "n": 40,
+        "deltaFromBaseline": 0.5599
+       },
+       "ionB": {
+        "median": 5.7245,
+        "max": 5.8044,
+        "min": 4.7067,
+        "n": 40,
+        "deltaFromBaseline": 0.9581
+       },
+       "issScatter": {
+        "median": -0.862,
+        "max": -0.4846,
+        "min": -1.6257,
+        "n": 40,
+        "deltaFromBaseline": -0.6691
+       },
+       "issObscuration": {
+        "median": 3.4331,
+        "max": 3.4366,
+        "min": 3.4308,
+        "n": 40,
+        "deltaFromBaseline": -0.0062
+       },
+       "sts": {
+        "median": 4.6399,
+        "max": 5.0494,
+        "min": 4.6127,
+        "n": 40,
+        "deltaFromBaseline": -0.493,
+        "powered": true
+       }
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.256,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 69.0
+     },
+     {
+      "start": "2007/269/14:09:08",
+      "end": "2007/269/14:12:26",
+      "startEpoch_s": 1190815748.0,
+      "endEpoch_s": 1190815946.0,
+      "samples": 200,
+      "smoke": true,
+      "plateauSamples": 7,
+      "plateauStart": "2007/269/14:11:30",
+      "plateauEnd": "2007/269/14:12:02",
+      "plateauStartEpoch_s": 1190815890.0,
+      "channels": {
+       "ptrak": {
+        "median": 401.0,
+        "max": 2890.0,
+        "min": 84.0,
+        "n": 7
+       },
+       "dusttrakA": {
+        "median": 2.04,
+        "max": 2.846,
+        "min": 1.711,
+        "n": 7
+       },
+       "dusttrakB": {
+        "median": 2.61,
+        "max": 3.265,
+        "min": 1.955,
+        "n": 7
+       },
+       "ionA": {
+        "median": 4.9881,
+        "max": 5.0308,
+        "min": 4.9493,
+        "n": 7,
+        "deltaFromBaseline": -0.0491
+       },
+       "ionB": {
+        "median": 4.7769,
+        "max": 4.8291,
+        "min": 4.7122,
+        "n": 7,
+        "deltaFromBaseline": 0.0105
+       },
+       "issScatter": {
+        "median": -0.3647,
+        "max": -0.2734,
+        "min": -0.7819,
+        "n": 7,
+        "deltaFromBaseline": -0.1718
+       },
+       "issObscuration": {
+        "median": 3.4363,
+        "max": 3.4375,
+        "min": 3.4348,
+        "n": 7,
+        "deltaFromBaseline": -0.003
+       },
+       "sts": {
+        "median": 0.0,
+        "max": 5.2881,
+        "min": -0.0006,
+        "n": 7,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.279,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 284.0
+     },
+     {
+      "start": "2007/269/14:13:59",
+      "end": "2007/269/14:18:00",
+      "startEpoch_s": 1190816039.0,
+      "endEpoch_s": 1190816280.0,
+      "samples": 241,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 15.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.488
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 29,
+   "sampleId": "C4-P4",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 271,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 4,
+    "position": 4,
+    "record_time_raw": "1:22 - 2:23",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT271kapton29.xls",
+    "sheet": "GMT271kapton29hkp",
+    "sha256": "5658570e3419fafe19d23e0f25f0ad53634ef79a40e7baf16b69a1c7e25e92d9",
+    "testNumberColumn": 29,
+    "rows": 1360,
+    "start": "2007/271/18:22:41",
+    "end": "2007/271/18:45:21",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0421,
+     "ionB": 4.7748,
+     "issScatter": -0.193,
+     "issObscuration": 3.4396,
+     "sts": -0.0005
+    },
+    "conditions": {
+     "heatingStart": "2007/271/18:27:20",
+     "heatingEnd": "2007/271/18:28:20",
+     "heatingEndEpoch_s": 1191004100.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.6226,
+     "RtPlateau_ohm": 0.8588,
+     "RtOverR0": 1.379,
+     "RtMax_ohm": 0.8594,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.1758,
+      "max": 30.603,
+      "min": 28.7964,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 107.669,
+      "max": 112.407,
+      "min": 24.6516,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/271/18:26:21",
+      "end": "2007/271/18:30:22",
+      "startEpoch_s": 1191003981.0,
+      "endEpoch_s": 1191004222.0,
+      "samples": 242,
+      "smoke": true,
+      "plateauSamples": 39,
+      "plateauStart": "2007/271/18:29:30",
+      "plateauEnd": "2007/271/18:30:08",
+      "plateauStartEpoch_s": 1191004170.0,
+      "channels": {
+       "ptrak": {
+        "median": 60400.0,
+        "max": 66000.0,
+        "min": 209.0,
+        "n": 39
+       },
+       "dusttrakA": {
+        "median": 19.093,
+        "max": 22.352,
+        "min": 11.564,
+        "n": 39
+       },
+       "dusttrakB": {
+        "median": 23.907,
+        "max": 27.718,
+        "min": 14.668,
+        "n": 39
+       },
+       "ionA": {
+        "median": 5.7242,
+        "max": 5.9528,
+        "min": 4.9347,
+        "n": 39,
+        "deltaFromBaseline": 0.6821
+       },
+       "ionB": {
+        "median": 5.9112,
+        "max": 6.0245,
+        "min": 4.7592,
+        "n": 39,
+        "deltaFromBaseline": 1.1364
+       },
+       "issScatter": {
+        "median": -3.548,
+        "max": -2.1579,
+        "min": -4.2496,
+        "n": 39,
+        "deltaFromBaseline": -3.355
+       },
+       "issObscuration": {
+        "median": 3.4167,
+        "max": 3.4222,
+        "min": 3.4085,
+        "n": 39,
+        "deltaFromBaseline": -0.0229
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0012,
+        "n": 39,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.252,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 70.0
+     },
+     {
+      "start": "2007/271/18:39:53",
+      "end": "2007/271/18:43:46",
+      "startEpoch_s": 1191004793.0,
+      "endEpoch_s": 1191005026.0,
+      "samples": 235,
+      "smoke": true,
+      "plateauSamples": 41,
+      "plateauStart": "2007/271/18:42:18",
+      "plateauEnd": "2007/271/18:42:57",
+      "plateauStartEpoch_s": 1191004938.0,
+      "channels": {
+       "ptrak": {
+        "median": 22900.0,
+        "max": 27600.0,
+        "min": 149.0,
+        "n": 41
+       },
+       "dusttrakA": {
+        "median": 22.834,
+        "max": 23.849,
+        "min": 12.328,
+        "n": 41
+       },
+       "dusttrakB": {
+        "median": 28.645,
+        "max": 30.03,
+        "min": 15.877,
+        "n": 41
+       },
+       "ionA": {
+        "median": 5.3345,
+        "max": 5.4813,
+        "min": 4.776,
+        "n": 41,
+        "deltaFromBaseline": 0.2924
+       },
+       "ionB": {
+        "median": 5.4517,
+        "max": 5.4898,
+        "min": 4.6426,
+        "n": 41,
+        "deltaFromBaseline": 0.6769
+       },
+       "issScatter": {
+        "median": -4.7922,
+        "max": -2.4039,
+        "min": -4.9762,
+        "n": 41,
+        "deltaFromBaseline": -4.5992
+       },
+       "issObscuration": {
+        "median": 3.4082,
+        "max": 3.4183,
+        "min": 3.4058,
+        "n": 41,
+        "deltaFromBaseline": -0.0314
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0015,
+        "n": 41,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.254,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 838.0
+     },
+     {
+      "start": "2007/271/18:45:19",
+      "end": "2007/271/18:45:21",
+      "startEpoch_s": 1191005119.0,
+      "endEpoch_s": 1191005121.0,
+      "samples": 3,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 571.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 1.198
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 30,
+   "sampleId": "C4-P5",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 272,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 4,
+    "position": 5,
+    "record_time_raw": "1:00 - 2.30",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 19 colunas sem estados de solenoide e sem aba de média da NASA."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 31,
+   "sampleId": "C4-P1",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 272,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 4,
+    "position": 1,
+    "record_time_raw": "2:50 - 4:20",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "downloaded-not-segmented",
+   "notSegmentedReason": [
+    "Planilha de 21 colunas sem estados de solenoide e sem aba de média da NASA."
+   ]
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 32,
+   "sampleId": "C4-P2",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 272,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 4,
+    "position": 2,
+    "record_time_raw": "8:35 - 9:57",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT272lampwick32.xls",
+    "sheet": "GMT272lampwick32HKP",
+    "sha256": "f1e3b3df8bcedcff6497710e51da90ff2e82d1d5f580f5498b73e70beff37e1f",
+    "testNumberColumn": 32,
+    "rows": 1822,
+    "start": "2007/272/19:31:05",
+    "end": "2007/272/20:01:26",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0215,
+     "ionB": 4.7482,
+     "issScatter": -0.1939,
+     "issObscuration": 3.4405,
+     "sts": -0.0003
+    },
+    "conditions": {
+     "heatingStart": "2007/272/19:37:01",
+     "heatingEnd": "2007/272/19:38:02",
+     "heatingEndEpoch_s": 1191094682.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.7533,
+     "RtPlateau_ohm": 0.9383,
+     "RtOverR0": 1.246,
+     "RtMax_ohm": 0.9442,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.188,
+      "max": 30.5908,
+      "min": 29.7607,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 78.3292,
+      "max": 80.099,
+      "min": 24.6172,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/272/19:35:59",
+      "end": "2007/272/19:40:54",
+      "startEpoch_s": 1191094559.0,
+      "endEpoch_s": 1191094854.0,
+      "samples": 296,
+      "smoke": true,
+      "plateauSamples": 91,
+      "plateauStart": "2007/272/19:39:19",
+      "plateauEnd": "2007/272/19:40:49",
+      "plateauStartEpoch_s": 1191094759.0,
+      "channels": {
+       "ptrak": {
+        "median": 47400.0,
+        "max": 49700.0,
+        "min": 1.0,
+        "n": 91
+       },
+       "dusttrakA": {
+        "median": 22.335,
+        "max": 23.769,
+        "min": 11.106,
+        "n": 91
+       },
+       "dusttrakB": {
+        "median": 39.032,
+        "max": 40.851,
+        "min": 20.931,
+        "n": 91
+       },
+       "ionA": {
+        "median": 6.2344,
+        "max": 6.3538,
+        "min": 4.7998,
+        "n": 91,
+        "deltaFromBaseline": 1.2129
+       },
+       "ionB": {
+        "median": 6.4081,
+        "max": 6.5091,
+        "min": 4.6497,
+        "n": 91,
+        "deltaFromBaseline": 1.6599
+       },
+       "issScatter": {
+        "median": -6.2418,
+        "max": -6.1658,
+        "min": -6.2549,
+        "n": 91,
+        "deltaFromBaseline": -6.0479,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.338,
+        "max": 3.3612,
+        "min": 3.3203,
+        "n": 91,
+        "deltaFromBaseline": -0.1025
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0015,
+        "n": 91,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 89
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.748,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 77.0
+     },
+     {
+      "start": "2007/272/19:50:25",
+      "end": "2007/272/19:55:26",
+      "startEpoch_s": 1191095425.0,
+      "endEpoch_s": 1191095726.0,
+      "samples": 302,
+      "smoke": true,
+      "plateauSamples": 97,
+      "plateauStart": "2007/272/19:52:51",
+      "plateauEnd": "2007/272/19:54:27",
+      "plateauStartEpoch_s": 1191095571.0,
+      "channels": {
+       "ptrak": {
+        "median": 22800.0,
+        "max": 24200.0,
+        "min": 163.0,
+        "n": 97
+       },
+       "dusttrakA": {
+        "median": 21.517,
+        "max": 22.824,
+        "min": 6.999,
+        "n": 97
+       },
+       "dusttrakB": {
+        "median": 38.619,
+        "max": 40.37,
+        "min": 21.124,
+        "n": 97
+       },
+       "ionA": {
+        "median": 5.7727,
+        "max": 5.9003,
+        "min": 4.7714,
+        "n": 97,
+        "deltaFromBaseline": 0.7512
+       },
+       "ionB": {
+        "median": 5.8636,
+        "max": 5.946,
+        "min": 4.6631,
+        "n": 97,
+        "deltaFromBaseline": 1.1154
+       },
+       "issScatter": {
+        "median": -6.2439,
+        "max": -3.2178,
+        "min": -6.2558,
+        "n": 97,
+        "deltaFromBaseline": -6.05,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3258,
+        "max": 3.3615,
+        "min": 3.3127,
+        "n": 97,
+        "deltaFromBaseline": -0.1147
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0003,
+        "min": -0.0015,
+        "n": 97,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 86
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.795,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 889.0
+     },
+     {
+      "start": "2007/272/19:56:59",
+      "end": "2007/272/20:01:00",
+      "startEpoch_s": 1191095819.0,
+      "endEpoch_s": 1191096060.0,
+      "samples": 242,
+      "smoke": true,
+      "plateauSamples": 62,
+      "plateauStart": "2007/272/19:59:25",
+      "plateauEnd": "2007/272/20:00:26",
+      "plateauStartEpoch_s": 1191095965.0,
+      "channels": {
+       "ptrak": {
+        "median": 113.5,
+        "max": 194.0,
+        "min": 40.0,
+        "n": 62
+       },
+       "dusttrakA": {
+        "median": 0.069,
+        "max": 0.079,
+        "min": 0.04,
+        "n": 62
+       },
+       "dusttrakB": {
+        "median": 0.113,
+        "max": 0.145,
+        "min": 0.076,
+        "n": 62
+       },
+       "ionA": {
+        "median": 4.7614,
+        "max": 4.7913,
+        "min": 4.7241,
+        "n": 62,
+        "deltaFromBaseline": -0.2601
+       },
+       "ionB": {
+        "median": 4.6117,
+        "max": 4.6362,
+        "min": 4.5697,
+        "n": 62,
+        "deltaFromBaseline": -0.1365
+       },
+       "issScatter": {
+        "median": -0.2141,
+        "max": -0.195,
+        "min": -0.246,
+        "n": 62,
+        "deltaFromBaseline": -0.0202
+       },
+       "issObscuration": {
+        "median": 3.439,
+        "max": 3.4402,
+        "min": 3.4378,
+        "n": 62,
+        "deltaFromBaseline": -0.0015
+       },
+       "sts": {
+        "median": -0.0003,
+        "max": 0.0003,
+        "min": -0.0015,
+        "n": 62,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.638,
+      "dusttrakRatioNote": null,
+      "role": "additional",
+      "ageAtPlateauStart_s": 1283.0
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 571.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 0.989
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 33,
+   "sampleId": "C4-P6",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 273,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 4,
+    "position": 6,
+    "record_time_raw": "9:58 - 10:59",
+    "comment_raw": "missed first part of heating, using 2 cm/s"
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT273kapton33.xls",
+    "sheet": "GMT273kapton33hkp",
+    "sha256": "c8741e785c69d9d04e72bf098a25709db780359977a3ee804f5db1778b8469b4",
+    "testNumberColumn": 33,
+    "rows": 1349,
+    "start": "2007/273/15:40:31",
+    "end": "2007/273/16:05:02",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.047,
+     "ionB": 4.7667,
+     "issScatter": -0.1939,
+     "issObscuration": 3.4399,
+     "sts": 5.1415
+    },
+    "conditions": {
+     "heatingStart": "2007/273/15:52:32",
+     "heatingEnd": "2007/273/15:53:31",
+     "heatingEndEpoch_s": 1191167611.0,
+     "heatingSamples_s": 60,
+     "R0_ohm": 0.6162,
+     "RtPlateau_ohm": 0.8492,
+     "RtOverR0": 1.378,
+     "RtMax_ohm": 0.8496,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.0476,
+      "max": 30.6519,
+      "min": 29.7119,
+      "n": 60
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 116.4955,
+      "max": 118.247,
+      "min": 25.0463,
+      "n": 60
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/273/15:47:51",
+      "end": "2007/273/15:56:12",
+      "startEpoch_s": 1191167271.0,
+      "endEpoch_s": 1191167772.0,
+      "samples": 503,
+      "smoke": true,
+      "plateauSamples": 42,
+      "plateauStart": "2007/273/15:55:13",
+      "plateauEnd": "2007/273/15:55:54",
+      "plateauStartEpoch_s": 1191167713.0,
+      "channels": {
+       "ptrak": {
+        "median": 35400.0,
+        "max": 38700.0,
+        "min": 0.0,
+        "n": 42
+       },
+       "dusttrakA": {
+        "median": 29.116,
+        "max": 30.811,
+        "min": 14.993,
+        "n": 42
+       },
+       "dusttrakB": {
+        "median": 39.41,
+        "max": 42.603,
+        "min": 25.098,
+        "n": 42
+       },
+       "ionA": {
+        "median": 5.4872,
+        "max": 5.6821,
+        "min": 4.8468,
+        "n": 42,
+        "deltaFromBaseline": 0.4402
+       },
+       "ionB": {
+        "median": 5.7066,
+        "max": 5.8374,
+        "min": 4.6433,
+        "n": 42,
+        "deltaFromBaseline": 0.9399
+       },
+       "issScatter": {
+        "median": -5.2876,
+        "max": -3.0469,
+        "min": -6.1075,
+        "n": 42,
+        "deltaFromBaseline": -5.0937
+       },
+       "issObscuration": {
+        "median": 3.369,
+        "max": 3.4116,
+        "min": 3.3557,
+        "n": 42,
+        "deltaFromBaseline": -0.0709
+       },
+       "sts": {
+        "median": 4.6124,
+        "max": 5.1114,
+        "min": 4.5792,
+        "n": 42,
+        "deltaFromBaseline": -0.5291,
+        "powered": true
+       }
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.354,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 102.0
+     },
+     {
+      "start": "2007/273/15:58:32",
+      "end": "2007/273/16:01:52",
+      "startEpoch_s": 1191167912.0,
+      "endEpoch_s": 1191168112.0,
+      "samples": 202,
+      "smoke": true,
+      "plateauSamples": 6,
+      "plateauStart": "2007/273/16:00:56",
+      "plateauEnd": "2007/273/16:01:28",
+      "plateauStartEpoch_s": 1191168056.0,
+      "channels": {
+       "ptrak": {
+        "median": 847.5,
+        "max": 1890.0,
+        "min": 58.0,
+        "n": 6
+       },
+       "dusttrakA": {
+        "median": 13.404,
+        "max": 15.216,
+        "min": 7.742,
+        "n": 6
+       },
+       "dusttrakB": {
+        "median": 19.7805,
+        "max": 24.385,
+        "min": 13.025,
+        "n": 6
+       },
+       "ionA": {
+        "median": 4.7986,
+        "max": 4.8236,
+        "min": 4.7504,
+        "n": 6,
+        "deltaFromBaseline": -0.2484
+       },
+       "ionB": {
+        "median": 4.6489,
+        "max": 4.6942,
+        "min": 4.5966,
+        "n": 6,
+        "deltaFromBaseline": -0.1178
+       },
+       "issScatter": {
+        "median": -1.5829,
+        "max": -1.077,
+        "min": -2.5366,
+        "n": 6,
+        "deltaFromBaseline": -1.389
+       },
+       "issObscuration": {
+        "median": 3.4166,
+        "max": 3.4265,
+        "min": 3.4112,
+        "n": 6,
+        "deltaFromBaseline": -0.0233
+       },
+       "sts": {
+        "median": 2.6424,
+        "max": 5.3,
+        "min": -0.0012,
+        "n": 6,
+        "powered": false
+       }
+      },
+      "flags": {
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.476,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 445.0
+     },
+     {
+      "start": "2007/273/16:03:25",
+      "end": "2007/273/16:05:01",
+      "startEpoch_s": 1191168205.0,
+      "endEpoch_s": 1191168301.0,
+      "samples": 97,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 140.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.502
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 34,
+   "sampleId": "C4-P3",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 273,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 4,
+    "position": 3,
+    "record_time_raw": "14:38 - 15:48",
+    "comment_raw": "using 2 cm/s"
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT273lampwick34.xls",
+    "sheet": "GMT273lampwick34hkp",
+    "sha256": "c380f296dc95d00308fdabb778a9528ea5b7e2306123af87246aaaa400818c2c",
+    "testNumberColumn": 34,
+    "rows": 1542,
+    "start": "2007/273/17:08:25",
+    "end": "2007/273/17:36:14",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0252,
+     "ionB": 4.7554,
+     "issScatter": -0.1924,
+     "issObscuration": 3.4396,
+     "sts": 5.1501
+    },
+    "conditions": {
+     "heatingStart": "2007/273/17:22:13",
+     "heatingEnd": "2007/273/17:23:13",
+     "heatingEndEpoch_s": 1191172993.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.7609,
+     "RtPlateau_ohm": 0.9466,
+     "RtOverR0": 1.244,
+     "RtMax_ohm": 0.9505,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.0781,
+      "max": 30.6152,
+      "min": 29.7485,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 82.6139,
+      "max": 84.1327,
+      "min": 26.4226,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/273/17:17:29",
+      "end": "2007/273/17:26:06",
+      "startEpoch_s": 1191172649.0,
+      "endEpoch_s": 1191173166.0,
+      "samples": 519,
+      "smoke": true,
+      "plateauSamples": 47,
+      "plateauStart": "2007/273/17:25:03",
+      "plateauEnd": "2007/273/17:25:49",
+      "plateauStartEpoch_s": 1191173103.0,
+      "channels": {
+       "ptrak": {
+        "median": 29400.0,
+        "max": 32700.0,
+        "min": 0.0,
+        "n": 47
+       },
+       "dusttrakA": {
+        "median": 13.03,
+        "max": 16.049,
+        "min": 5.862,
+        "n": 47
+       },
+       "dusttrakB": {
+        "median": 29.83,
+        "max": 33.4,
+        "min": 17.336,
+        "n": 47
+       },
+       "ionA": {
+        "median": 5.4367,
+        "max": 5.6241,
+        "min": 4.7885,
+        "n": 47,
+        "deltaFromBaseline": 0.4115
+       },
+       "ionB": {
+        "median": 5.6186,
+        "max": 5.6857,
+        "min": 4.6179,
+        "n": 47,
+        "deltaFromBaseline": 0.8632
+       },
+       "issScatter": {
+        "median": -6.2558,
+        "max": -4.3372,
+        "min": -6.2705,
+        "n": 47,
+        "deltaFromBaseline": -6.0634,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3243,
+        "max": 3.3905,
+        "min": 3.3154,
+        "n": 47,
+        "deltaFromBaseline": -0.1153
+       },
+       "sts": {
+        "median": 4.6713,
+        "max": 5.0433,
+        "min": 4.632,
+        "n": 47,
+        "deltaFromBaseline": -0.4788,
+        "powered": true
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 43
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        0.0,
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0,
+        1.0
+       ]
+      },
+      "dusttrakRatioBoverA": 2.289,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 110.0
+     },
+     {
+      "start": "2007/273/17:28:25",
+      "end": "2007/273/17:32:13",
+      "startEpoch_s": 1191173305.0,
+      "endEpoch_s": 1191173533.0,
+      "samples": 228,
+      "smoke": true,
+      "plateauSamples": 12,
+      "plateauStart": "2007/273/17:30:53",
+      "plateauEnd": "2007/273/17:31:50",
+      "plateauStartEpoch_s": 1191173453.0,
+      "channels": {
+       "ptrak": {
+        "median": 597.0,
+        "max": 6400.0,
+        "min": 49.0,
+        "n": 12
+       },
+       "dusttrakA": {
+        "median": 6.5745,
+        "max": 9.319,
+        "min": 5.109,
+        "n": 12
+       },
+       "dusttrakB": {
+        "median": 14.942,
+        "max": 21.972,
+        "min": 12.73,
+        "n": 12
+       },
+       "ionA": {
+        "median": 4.8479,
+        "max": 4.9573,
+        "min": 4.7589,
+        "n": 12,
+        "deltaFromBaseline": -0.1773
+       },
+       "ionB": {
+        "median": 4.7118,
+        "max": 5.058,
+        "min": 4.6274,
+        "n": 12,
+        "deltaFromBaseline": -0.0436
+       },
+       "issScatter": {
+        "median": -6.1543,
+        "max": -2.6279,
+        "min": -6.2637,
+        "n": 12,
+        "deltaFromBaseline": -5.9619,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3731,
+        "max": 3.4055,
+        "min": 3.3594,
+        "n": 12,
+        "deltaFromBaseline": -0.0665
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 5.2982,
+        "min": -0.0012,
+        "n": 12,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 6
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 2.273,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 460.0
+     },
+     {
+      "start": "2007/273/17:33:45",
+      "end": "2007/273/17:36:14",
+      "startEpoch_s": 1191173625.0,
+      "endEpoch_s": 1191173774.0,
+      "samples": 150,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 139.0,
+    "secondaryAgingClass": "short",
+    "dusttrakBSecondaryOverPrimary": 0.501
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 35,
+   "sampleId": "C5-P1",
+   "material": "Silicone rubber",
+   "heating": "Initial",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "Silicone",
+    "carousel": 5,
+    "position": 1,
+    "record_time_raw": "10:10 - 11:05",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT276silicone35.xls",
+    "sheet": "GMT6silicone35hkp",
+    "sha256": "74047bee25b1167f4ab8d1f823b3ac28b8716a8a43c774c9dd36cb7f3fab0865",
+    "testNumberColumn": 35,
+    "rows": 1445,
+    "start": "2007/276/15:33:58",
+    "end": "2007/276/15:58:02",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0192,
+     "ionB": 4.7595,
+     "issScatter": -0.1955,
+     "issObscuration": 3.4402,
+     "sts": -0.0003
+    },
+    "conditions": {
+     "heatingStart": "2007/276/15:38:42",
+     "heatingEnd": "2007/276/15:38:51",
+     "heatingEndEpoch_s": 1191425931.0,
+     "heatingSamples_s": 10,
+     "R0_ohm": 0.6629,
+     "RtPlateau_ohm": 0.9135,
+     "RtOverR0": 1.378,
+     "RtMax_ohm": 0.9142,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.2612,
+      "max": 30.7007,
+      "min": 30.0659,
+      "n": 10
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 75.5872,
+      "max": 93.7227,
+      "min": 22.7386,
+      "n": 10
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/276/15:37:05",
+      "end": "2007/276/15:41:59",
+      "startEpoch_s": 1191425825.0,
+      "endEpoch_s": 1191426119.0,
+      "samples": 296,
+      "smoke": true,
+      "plateauSamples": 93,
+      "plateauStart": "2007/276/15:40:23",
+      "plateauEnd": "2007/276/15:41:55",
+      "plateauStartEpoch_s": 1191426023.0,
+      "channels": {
+       "ptrak": {
+        "median": 41000.0,
+        "max": 45500.0,
+        "min": 2.0,
+        "n": 91
+       },
+       "dusttrakA": {
+        "median": 25.184,
+        "max": 26.157,
+        "min": 11.225,
+        "n": 93
+       },
+       "dusttrakB": {
+        "median": 42.776,
+        "max": 45.382,
+        "min": 23.444,
+        "n": 93
+       },
+       "ionA": {
+        "median": 6.3275,
+        "max": 6.47,
+        "min": 4.8245,
+        "n": 93,
+        "deltaFromBaseline": 1.3083
+       },
+       "ionB": {
+        "median": 6.4932,
+        "max": 6.5619,
+        "min": 4.6527,
+        "n": 93,
+        "deltaFromBaseline": 1.7337
+       },
+       "issScatter": {
+        "median": -6.2122,
+        "max": -5.9232,
+        "min": -6.2256,
+        "n": 93,
+        "deltaFromBaseline": -6.0167,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3182,
+        "max": 3.353,
+        "min": 3.2999,
+        "n": 93,
+        "deltaFromBaseline": -0.122
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0003,
+        "min": -0.0015,
+        "n": 93,
+        "powered": false
+       }
+      },
+      "flags": {
+       "ptrak": {
+        "errorCode-999": 2
+       },
+       "issScatter": {
+        "clippedAtRail_samples": 88
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.699,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 92.0
+     },
+     {
+      "start": "2007/276/15:51:29",
+      "end": "2007/276/15:56:44",
+      "startEpoch_s": 1191426689.0,
+      "endEpoch_s": 1191427004.0,
+      "samples": 316,
+      "smoke": true,
+      "plateauSamples": 102,
+      "plateauStart": "2007/276/15:51:29",
+      "plateauEnd": "2007/276/15:56:23",
+      "plateauStartEpoch_s": 1191426689.0,
+      "channels": {
+       "ptrak": {
+        "median": 22900.0,
+        "max": 77000.0,
+        "min": 286.0,
+        "n": 102
+       },
+       "dusttrakA": {
+        "median": 22.493,
+        "max": 24.131,
+        "min": 9.283,
+        "n": 102
+       },
+       "dusttrakB": {
+        "median": 39.204,
+        "max": 41.436,
+        "min": 20.734,
+        "n": 102
+       },
+       "ionA": {
+        "median": 6.0153,
+        "max": 6.1252,
+        "min": 4.827,
+        "n": 102,
+        "deltaFromBaseline": 0.9961
+       },
+       "ionB": {
+        "median": 6.102,
+        "max": 6.1517,
+        "min": 4.6726,
+        "n": 102,
+        "deltaFromBaseline": 1.3425
+       },
+       "issScatter": {
+        "median": -6.2189,
+        "max": -2.0096,
+        "min": -6.2326,
+        "n": 102,
+        "deltaFromBaseline": -6.0234,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3069,
+        "max": 3.4116,
+        "min": 3.2944,
+        "n": 102,
+        "deltaFromBaseline": -0.1333
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0003,
+        "min": -0.0015,
+        "n": 102,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 88
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.743,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 758.0
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 570.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 0.916
+   },
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT276silicone35.xls",
+     "sheet": "for Average",
+     "start": "2007/276/15:39:46",
+     "end": "2007/276/15:58:02",
+     "samples": 631,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 8.664,
+       "max": 27.821,
+       "min": 0.0,
+       "n": 633
+      },
+      "dusttrakB": {
+       "median": 17.294,
+       "max": 45.213,
+       "min": 0.0,
+       "n": 633
+      }
+     },
+     "dusttrakRatioBoverA_medians": 1.996,
+     "dusttrakRatioBoverA_means": 1.533
+    }
+   ],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 36,
+   "sampleId": "C5-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 6,
+    "record_time_raw": "12:08 - 13:32",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 37,
+   "sampleId": "C5-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 6,
+    "record_time_raw": "14:46 - 15:45 8",
+    "comment_raw": "cm/s"
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT276dbp37.xls",
+    "sheet": "GMT276dbp37hkp",
+    "sha256": "089b75e87857ea09df6ec0661e962f7646f37df50da5399bb9e8ce8a3ca110bc",
+    "testNumberColumn": 37,
+    "rows": 543,
+    "start": "2007/276/17:49:03",
+    "end": "2007/276/17:58:04",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.0304,
+     "ionB": 4.7745,
+     "issScatter": -0.1935,
+     "issObscuration": 3.4375,
+     "sts": 5.1424
+    },
+    "conditions": {
+     "heatingStart": "2007/276/17:52:26",
+     "heatingEnd": "2007/276/17:53:26",
+     "heatingEndEpoch_s": 1191434006.0,
+     "heatingSamples_s": 61,
+     "R0_ohm": 0.7666,
+     "RtPlateau_ohm": 0.9036,
+     "RtOverR0": 1.179,
+     "RtMax_ohm": 0.9041,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 100.159,
+      "max": 100.769,
+      "min": 99.8413,
+      "n": 61
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 56.8498,
+      "max": 59.5373,
+      "min": 25.3539,
+      "n": 61
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/276/17:51:21",
+      "end": "2007/276/17:56:13",
+      "startEpoch_s": 1191433881.0,
+      "endEpoch_s": 1191434173.0,
+      "samples": 293,
+      "smoke": true,
+      "plateauSamples": 50,
+      "plateauStart": "2007/276/17:54:36",
+      "plateauEnd": "2007/276/17:55:25",
+      "plateauStartEpoch_s": 1191434076.0,
+      "channels": {
+       "ptrak": {
+        "median": 5230.0,
+        "max": 5920.0,
+        "min": 337.0,
+        "n": 50
+       },
+       "dusttrakA": {
+        "median": 0.122,
+        "max": 0.19,
+        "min": 0.065,
+        "n": 50
+       },
+       "dusttrakB": {
+        "median": 94.066,
+        "max": 116.591,
+        "min": 64.747,
+        "n": 50
+       },
+       "ionA": {
+        "median": 5.3639,
+        "max": 5.4892,
+        "min": 4.9045,
+        "n": 50,
+        "deltaFromBaseline": 0.3335
+       },
+       "ionB": {
+        "median": 5.3775,
+        "max": 5.4184,
+        "min": 4.7058,
+        "n": 50,
+        "deltaFromBaseline": 0.603
+       },
+       "issScatter": {
+        "median": -6.247,
+        "max": -6.1877,
+        "min": -6.2613,
+        "n": 50,
+        "deltaFromBaseline": -6.0535,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 2.9272,
+        "max": 3.2251,
+        "min": 2.8455,
+        "n": 50,
+        "deltaFromBaseline": -0.5103
+       },
+       "sts": {
+        "median": 5.1308,
+        "max": 5.163,
+        "min": 5.105,
+        "n": 50,
+        "deltaFromBaseline": -0.0116,
+        "powered": true
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 49
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 771.033,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 70.0
+     },
+     {
+      "start": "2007/276/17:57:45",
+      "end": "2007/276/17:58:03",
+      "startEpoch_s": 1191434265.0,
+      "endEpoch_s": 1191434283.0,
+      "samples": 19,
+      "smoke": false,
+      "plateauSamples": 0,
+      "plateauStart": null,
+      "plateauEnd": null,
+      "plateauStartEpoch_s": null,
+      "channels": {
+       "ptrak": null,
+       "dusttrakA": null,
+       "dusttrakB": null,
+       "ionA": null,
+       "ionB": null,
+       "issScatter": null,
+       "issObscuration": null,
+       "sts": null
+      },
+      "flags": {},
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": null,
+      "dusttrakRatioNote": null,
+      "role": "no-smoke"
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": null,
+    "secondaryAgingClass": null,
+    "dusttrakBSecondaryOverPrimary": null
+   },
+   "nasaAveragingWindows": [
+    {
+     "role": "primary",
+     "file": "PSI-102_Analyzed Data_GMT276dbp37.xls",
+     "sheet": "for average",
+     "start": "2007/276/17:53:06",
+     "end": "2007/276/17:58:04",
+     "samples": 299,
+     "dusttrak": {
+      "dusttrakA": {
+       "median": 0.007,
+       "max": 0.19,
+       "min": 0.0,
+       "n": 299
+      },
+      "dusttrakB": {
+       "median": 0.685,
+       "max": 116.591,
+       "min": 0.0,
+       "n": 299
+      }
+     },
+     "dusttrakRatioBoverA_medians": 97.857,
+     "dusttrakRatioBoverA_means": 500.722
+    }
+   ],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 38,
+   "sampleId": "C5-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 6,
+    "record_time_raw": "18:46 - 20:18",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 39,
+   "sampleId": "C5-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 6,
+    "record_time_raw": "20:25 -21:55",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 40,
+   "sampleId": "C5-P6",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 276,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 6,
+    "record_time_raw": "22:58 - 23:58",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 41,
+   "sampleId": "C5-P2",
+   "material": "Teflon",
+   "heating": "Initial",
+   "gmtDay": 277,
+   "appendixA": {
+    "material_raw": "Teflon",
+    "carousel": 5,
+    "position": 2,
+    "record_time_raw": "3:57 - 5:15",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 42,
+   "sampleId": "C5-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Initial",
+   "gmtDay": 277,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 5,
+    "record_time_raw": "00:53 - 2.21",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 43,
+   "sampleId": "C5-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 277,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 5,
+    "record_time_raw": "6:19 - 7:55",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 44,
+   "sampleId": "C5-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 277,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 5,
+    "record_time_raw": "8:05 - 9:42 30",
+    "comment_raw": "minute aging, 75 second heating"
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 45,
+   "sampleId": "C5-P5",
+   "material": "DBP (dibutyl phthalate on cotton wick)",
+   "heating": "Reheat",
+   "gmtDay": 278,
+   "appendixA": {
+    "material_raw": "DBP",
+    "carousel": 5,
+    "position": 5,
+    "record_time_raw": "10:58 - 12:17",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 46,
+   "sampleId": "C5-P3",
+   "material": "Lamp wick (cellulose)",
+   "heating": "Initial",
+   "gmtDay": 278,
+   "appendixA": {
+    "material_raw": "Lampwick",
+    "carousel": 5,
+    "position": 3,
+    "record_time_raw": "13:34 - 14:29",
+    "comment_raw": ""
+   },
+   "housekeeping": {
+    "method": "state",
+    "file": "PSI-102_Analyzed Data_GMT278Lampwick46.xls",
+    "sheet": "GMT278Lampwick46hkp",
+    "sha256": "4d437e8e816e830b46b395ee05d8142c866b67f07088c7173039352555600e28",
+    "testNumberColumn": 46,
+    "rows": 2261,
+    "start": "2007/278/14:32:46",
+    "end": "2007/278/15:10:26",
+    "baselineSamples": 30,
+    "baseline": {
+     "ptrak": 0.0,
+     "dusttrakA": 0.0,
+     "dusttrakB": 0.0,
+     "ionA": 5.024,
+     "ionB": 4.765,
+     "issScatter": -0.1926,
+     "issObscuration": 3.4396,
+     "sts": -0.0006
+    },
+    "conditions": {
+     "heatingStart": "2007/278/14:35:11",
+     "heatingEnd": "2007/278/14:35:31",
+     "heatingEndEpoch_s": 1191594931.0,
+     "heatingSamples_s": 21,
+     "R0_ohm": 0.7638,
+     "RtPlateau_ohm": 1.0081,
+     "RtOverR0": 1.32,
+     "RtMax_ohm": 1.0106,
+     "lfeFlowDuringHeating_sccm": {
+      "median": 30.2368,
+      "max": 30.542,
+      "min": 29.9316,
+      "n": 21
+     },
+     "plumeTemperatureDuringHeating_C": {
+      "median": 82.327,
+      "max": 88.8358,
+      "min": 25.2344,
+      "n": 21
+     },
+     "note": "R0 = mediana dos 10 s anteriores ao início do aquecimento (fio frio, amostra posicionada); Rt = mediana da metade mais quente das amostras com HeatingInProgress = 1. Rt/R0 é a grandeza de controle do aquecedor (SetTestSetup/MaxRt nos logs); a conversão para temperatura exige o coeficiente do fio, não aplicado aqui."
+    },
+    "windows": [
+     {
+      "start": "2007/278/14:33:28",
+      "end": "2007/278/14:38:23",
+      "startEpoch_s": 1191594808.0,
+      "endEpoch_s": 1191595103.0,
+      "samples": 296,
+      "smoke": true,
+      "plateauSamples": 94,
+      "plateauStart": "2007/278/14:36:47",
+      "plateauEnd": "2007/278/14:38:19",
+      "plateauStartEpoch_s": 1191595007.0,
+      "channels": {
+       "ptrak": {
+        "median": 39800.0,
+        "max": 41300.0,
+        "min": 0.0,
+        "n": 92
+       },
+       "dusttrakA": {
+        "median": 27.1425,
+        "max": 29.672,
+        "min": 13.263,
+        "n": 94
+       },
+       "dusttrakB": {
+        "median": 44.422,
+        "max": 47.889,
+        "min": 24.471,
+        "n": 94
+       },
+       "ionA": {
+        "median": 6.2894,
+        "max": 6.4142,
+        "min": 4.9027,
+        "n": 94,
+        "deltaFromBaseline": 1.2654
+       },
+       "ionB": {
+        "median": 6.4896,
+        "max": 6.5854,
+        "min": 4.7235,
+        "n": 94,
+        "deltaFromBaseline": 1.7246
+       },
+       "issScatter": {
+        "median": -6.2497,
+        "max": -5.2075,
+        "min": -6.2637,
+        "n": 94,
+        "deltaFromBaseline": -6.0571,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3353,
+        "max": 3.3569,
+        "min": 3.3197,
+        "n": 94,
+        "deltaFromBaseline": -0.1043
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0018,
+        "n": 94,
+        "powered": false
+       }
+      },
+      "flags": {
+       "ptrak": {
+        "errorCode-999": 2
+       },
+       "issScatter": {
+        "clippedAtRail_samples": 87
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.637,
+      "dusttrakRatioNote": null,
+      "role": "primary",
+      "ageAtPlateauStart_s": 76.0
+     },
+     {
+      "start": "2007/278/15:05:56",
+      "end": "2007/278/15:10:25",
+      "startEpoch_s": 1191596756.0,
+      "endEpoch_s": 1191597025.0,
+      "samples": 270,
+      "smoke": true,
+      "plateauSamples": 96,
+      "plateauStart": "2007/278/15:08:34",
+      "plateauEnd": "2007/278/15:10:09",
+      "plateauStartEpoch_s": 1191596914.0,
+      "channels": {
+       "ptrak": {
+        "median": 15100.0,
+        "max": 16400.0,
+        "min": 160.0,
+        "n": 96
+       },
+       "dusttrakA": {
+        "median": 25.311,
+        "max": 28.083,
+        "min": 11.845,
+        "n": 96
+       },
+       "dusttrakB": {
+        "median": 43.1845,
+        "max": 47.236,
+        "min": 24.487,
+        "n": 96
+       },
+       "ionA": {
+        "median": 5.688,
+        "max": 5.7657,
+        "min": 4.8813,
+        "n": 96,
+        "deltaFromBaseline": 0.664
+       },
+       "ionB": {
+        "median": 5.726,
+        "max": 5.8096,
+        "min": 4.7031,
+        "n": 96,
+        "deltaFromBaseline": 0.961
+       },
+       "issScatter": {
+        "median": -6.2535,
+        "max": -5.4486,
+        "min": -6.2637,
+        "n": 96,
+        "deltaFromBaseline": -6.0609,
+        "clippedAtRail": true
+       },
+       "issObscuration": {
+        "median": 3.3137,
+        "max": 3.3594,
+        "min": 3.3047,
+        "n": 96,
+        "deltaFromBaseline": -0.1259
+       },
+       "sts": {
+        "median": -0.0006,
+        "max": 0.0,
+        "min": -0.0018,
+        "n": 96,
+        "powered": false
+       }
+      },
+      "flags": {
+       "issScatter": {
+        "clippedAtRail_samples": 88
+       },
+       "sts": {
+        "detectorNotPowered": true
+       }
+      },
+      "solenoidStates": {
+       "CommDiagADilutionSolenoid[PN24]": [
+        0.0,
+        1.0
+       ],
+       "CommDiagBDilutionSolenoid[PN27]": [
+        0.0,
+        1.0
+       ],
+       "DynamicDilutorSolenoid[PN15]": [
+        1.0
+       ],
+       "STSDetectorAlarm": [
+        0.0
+       ]
+      },
+      "dusttrakRatioBoverA": 1.706,
+      "dusttrakRatioNote": null,
+      "role": "secondary",
+      "ageAtPlateauStart_s": 1983.0
+     }
+    ],
+    "secondaryAfterPrimaryGap_s": 1653.0,
+    "secondaryAgingClass": "long",
+    "dusttrakBSecondaryOverPrimary": 0.972
+   },
+   "nasaAveragingWindows": [],
+   "status": "processed-state-windows"
+  },
+  {
+   "investigationId": "PSI-102",
+   "test": 47,
+   "sampleId": "C5-P4",
+   "material": "Kapton",
+   "heating": "Initial",
+   "gmtDay": 278,
+   "appendixA": {
+    "material_raw": "Kapton",
+    "carousel": 5,
+    "position": 4,
+    "record_time_raw": "15: 59 - 17:06",
+    "comment_raw": ""
+   },
+   "housekeeping": null,
+   "nasaAveragingWindows": [],
+   "status": "not-downloaded",
+   "notSegmentedReason": null
+  }
+ ]
+}

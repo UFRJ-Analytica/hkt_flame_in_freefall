@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import {
   ArrowDownToLine,
   ArrowUpRight,
@@ -7,12 +7,17 @@ import {
   Database,
   Search,
   SlidersHorizontal,
+  Wind,
   X,
 } from "lucide-react";
 import type { ExperimentTest, Investigation, NasaData } from "../types";
 import { CATEGORY_LABELS, number } from "../config";
 import { useModalFocus } from "../hooks/useModalFocus";
 import { RecordVideos } from "./research/RecordVideos";
+import { SAME_INVESTIGATION_ID } from "./research/sameSmoke";
+
+// Loaded on request only: the SAME evidence module and its JSON stay out of the first render.
+const SameSmokeObservation = lazy(() => import("./research/SameSmokeObservation"));
 
 export function ExperimentExplorer({
   data,
@@ -28,6 +33,7 @@ export function ExperimentExplorer({
   const [selectedId, setSelectedId] = useState("PSI-25");
   const [detail, setDetail] = useState<ExperimentTest | null>(null);
   const [page, setPage] = useState(0);
+  const [smokeOpen, setSmokeOpen] = useState(false);
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -186,6 +192,29 @@ export function ExperimentExplorer({
                 <p className="record-grain">
                   Unidade da tabela: {selected.recordGrain}.
                 </p>
+              )}
+              {selected.id === SAME_INVESTIGATION_ID && (
+                <div className="same-entry">
+                  <div>
+                    <strong>Smoke &amp; Detection: evidência do SAME</strong>
+                    <p>
+                      Fumaça de materiais superaquecidos (não propagação de
+                      chama): Tabela 1 agregada por material, envelhecimento,
+                      razão DustTrak B/A e resposta dos detectores da ISS e do
+                      Space Shuttle, com cada valor rotulado como publicado,
+                      medido, derivado, hipótese ou indisponível. Os 8 registros
+                      abaixo reproduzem a matriz de testes planejada, não os 47
+                      testes voados.
+                    </p>
+                  </div>
+                  <button
+                    className="button secondary"
+                    onClick={() => setSmokeOpen(true)}
+                  >
+                    <Wind size={15} />
+                    Abrir análise Smoke &amp; Detection
+                  </button>
+                </div>
               )}
               <details className="data-notice">
                 <summary>
@@ -394,6 +423,17 @@ export function ExperimentExplorer({
             </button>
           </section>
         </div>
+      )}
+      {smokeOpen && (
+        <Suspense
+          fallback={
+            <div className="modal-backdrop">
+              <p className="same-loading">Carregando análise SAME…</p>
+            </div>
+          }
+        >
+          <SameSmokeObservation onClose={() => setSmokeOpen(false)} />
+        </Suspense>
       )}
     </div>
   );
