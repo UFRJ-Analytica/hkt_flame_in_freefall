@@ -3,6 +3,7 @@ import {
   ArrowDownToLine,
   ArrowUpRight,
   Beaker,
+  BookOpen,
   ChevronRight,
   Database,
   Search,
@@ -18,6 +19,10 @@ import { SAME_INVESTIGATION_ID } from "./research/sameSmoke";
 
 // Loaded on request only: the SAME evidence module and its JSON stay out of the first render.
 const SameSmokeObservation = lazy(() => import("./research/SameSmokeObservation"));
+import { SOFIE_GEL_TITLE } from "./research/sofieGel";
+
+// Published evidence outside the PSI catalogue: module and JSON load only when opened.
+const SofieGelObservation = lazy(() => import("./research/SofieGelObservation"));
 
 export function ExperimentExplorer({
   data,
@@ -34,6 +39,7 @@ export function ExperimentExplorer({
   const [detail, setDetail] = useState<ExperimentTest | null>(null);
   const [page, setPage] = useState(0);
   const [smokeOpen, setSmokeOpen] = useState(false);
+  const [sofieOpen, setSofieOpen] = useState(false);
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -124,6 +130,27 @@ export function ExperimentExplorer({
       </div>
       <div className="explorer-layout">
         <aside className="investigation-list">
+          {(category === "all" || category === "solid") && (
+            <div className="evidence-group">
+              <span className="evidence-group-label">
+                Evidência publicada · fora do PSI
+              </span>
+              <button
+                className="investigation-item evidence-item"
+                onClick={() => setSofieOpen(true)}
+                aria-label={`${SOFIE_GEL_TITLE}: abrir evidência (sem dataset PSI público)`}
+              >
+                <div className="investigation-icon">
+                  <BookOpen size={19} />
+                </div>
+                <span>
+                  <strong>SoFIE-GEL</strong>
+                  <small>NASA · 5 casos publicados · sem dataset PSI</small>
+                </span>
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          )}
           {investigations.map((investigation) => (
             <button
               key={investigation.id}
@@ -433,6 +460,17 @@ export function ExperimentExplorer({
           }
         >
           <SameSmokeObservation onClose={() => setSmokeOpen(false)} />
+        </Suspense>
+      )}
+      {sofieOpen && (
+        <Suspense
+          fallback={
+            <div className="modal-backdrop">
+              <p className="evidence-loading">Carregando evidência SoFIE-GEL…</p>
+            </div>
+          }
+        >
+          <SofieGelObservation onClose={() => setSofieOpen(false)} />
         </Suspense>
       )}
     </div>

@@ -1,0 +1,359 @@
+{
+ "schemaVersion": 1,
+ "video": {
+  "file": "data/cache/sofie/media/SoFIE-GEL_large.mp4",
+  "sha256": "8086ea9eacbd00c5bce1f4a28307d9b79bd2f8dc5c947e1b4ebf74b06df09d38",
+  "bytes": 27042449,
+  "origin": "https://images.nasa.gov/details/SoFIE-GEL (derivado ~large)",
+  "codec": "h264",
+  "fps": 30.0,
+  "width": 1920,
+  "height": 1080,
+  "framesDecoded": 1380,
+  "timestampStep_s": {
+   "median": 0.033333,
+   "min": 0.033333,
+   "max": 0.033333
+  },
+  "duration_s": 46.0,
+  "sourceIngredient": "1410C with Interstellar theme.mp4 (XMP), editado no Adobe Premiere Pro 2023",
+  "associatedTest": "1410C",
+  "associationEvidence": "nome do arquivo-fonte no XMP; corresponde ao Caso 5 de NTRS 20240007628",
+  "overlay": "nenhum relógio, régua ou rótulo sobreposto nos quadros inspecionados"
+ },
+ "cadence": {
+  "period": 3,
+  "phase": 0,
+  "score": 0.991,
+  "changedAtPhase": 1.0,
+  "changedOffPhase": 0.009,
+  "uniqueFramesPerVideoSecond": 10.0,
+  "uniqueFrames": 460,
+  "meaning": "cada quadro-fonte aparece em `period` quadros consecutivos do MP4"
+ },
+ "sceneChanges": {
+  "uniqueFramePositions": [
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116
+  ],
+  "video_s": [
+   11.0,
+   11.1,
+   11.2,
+   11.3,
+   11.4,
+   11.5,
+   11.6
+  ],
+  "rule": "diferença entre quadros únicos > 3 x mediana local (±20 quadros)"
+ },
+ "segments": [
+  {
+   "uniqueFrames": [
+    0,
+    109
+   ],
+   "video_s": [
+    0.0,
+    10.9
+   ],
+   "duration_s": 10.9
+  },
+  {
+   "uniqueFrames": [
+    117,
+    459
+   ],
+   "video_s": [
+    11.7,
+    45.9
+   ],
+   "duration_s": 34.2
+  }
+ ],
+ "analysisSegment": {
+  "uniqueFrames": [
+   117,
+   459
+  ],
+  "video_s": [
+   11.7,
+   45.9
+  ],
+  "flameCentreX_px_reduced": 232.0,
+  "reducedSize": [
+   480,
+   270
+  ],
+  "samples": 343,
+  "missingSamples": 7
+ },
+ "spin": {
+  "kind": "measured-video-time",
+  "signal": "A(t) = (L - R)/(L + R) da luminosidade acima do limiar, em torno do centro horizontal da chama",
+  "window_s": 8.0,
+  "step_s": 2.0,
+  "litMinPixels": 1500,
+  "permutations": 200,
+  "seed": 1410,
+  "nyquist_videoHz": 5.0,
+  "windows": [
+   {
+    "video_s": [
+     11.7,
+     19.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 22590,
+    "status": "analysed",
+    "peak_Hz": 0.129,
+    "peakPower": 0.314,
+    "threshold99": 0.212,
+    "significant": true
+   },
+   {
+    "video_s": [
+     13.7,
+     21.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 18115,
+    "status": "analysed",
+    "peak_Hz": 0.134,
+    "peakPower": 0.18,
+    "threshold99": 0.206,
+    "significant": false
+   },
+   {
+    "video_s": [
+     15.7,
+     23.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 15174,
+    "status": "analysed",
+    "peak_Hz": 3.036,
+    "peakPower": 0.314,
+    "threshold99": 0.251,
+    "significant": true
+   },
+   {
+    "video_s": [
+     17.7,
+     25.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 13448,
+    "status": "analysed",
+    "peak_Hz": 3.026,
+    "peakPower": 0.227,
+    "threshold99": 0.211,
+    "significant": true
+   },
+   {
+    "video_s": [
+     19.7,
+     27.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 12094,
+    "status": "analysed",
+    "peak_Hz": 3.516,
+    "peakPower": 0.25,
+    "threshold99": 0.229,
+    "significant": true
+   },
+   {
+    "video_s": [
+     21.7,
+     29.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 10716,
+    "status": "analysed",
+    "peak_Hz": 3.622,
+    "peakPower": 0.377,
+    "threshold99": 0.239,
+    "significant": true
+   },
+   {
+    "video_s": [
+     23.7,
+     31.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 9062,
+    "status": "analysed",
+    "peak_Hz": 3.569,
+    "peakPower": 0.208,
+    "threshold99": 0.202,
+    "significant": true
+   },
+   {
+    "video_s": [
+     25.7,
+     33.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 7549,
+    "status": "analysed",
+    "peak_Hz": 4.429,
+    "peakPower": 0.291,
+    "threshold99": 0.213,
+    "significant": true
+   },
+   {
+    "video_s": [
+     27.7,
+     35.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 5727,
+    "status": "analysed",
+    "peak_Hz": 4.386,
+    "peakPower": 0.488,
+    "threshold99": 0.204,
+    "significant": true
+   },
+   {
+    "video_s": [
+     29.7,
+     37.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 4645,
+    "status": "analysed",
+    "peak_Hz": 4.347,
+    "peakPower": 0.403,
+    "threshold99": 0.212,
+    "significant": true
+   },
+   {
+    "video_s": [
+     31.7,
+     39.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 3637,
+    "status": "analysed",
+    "peak_Hz": 4.242,
+    "peakPower": 0.412,
+    "threshold99": 0.216,
+    "significant": true
+   },
+   {
+    "video_s": [
+     33.7,
+     41.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 3052,
+    "status": "analysed",
+    "peak_Hz": 4.271,
+    "peakPower": 0.224,
+    "threshold99": 0.242,
+    "significant": false
+   },
+   {
+    "video_s": [
+     35.7,
+     43.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 2736,
+    "status": "analysed",
+    "peak_Hz": 2.719,
+    "peakPower": 0.127,
+    "threshold99": 0.24,
+    "significant": false
+   },
+   {
+    "video_s": [
+     37.7,
+     45.7
+    ],
+    "samples": 80,
+    "medianLitPixels": 2288,
+    "status": "analysed",
+    "peak_Hz": 2.656,
+    "peakPower": 0.333,
+    "threshold99": 0.3,
+    "significant": true
+   }
+  ],
+  "summary": {
+   "analysedWindows": 14,
+   "significantWindows": 11,
+   "slowDriftWindows": [
+    [
+     11.7,
+     19.7
+    ]
+   ],
+   "spinningWindows": 10,
+   "spinningSpan_video_s": [
+    15.7,
+    45.7
+   ],
+   "peakRange_videoHz": [
+    2.656,
+    4.429
+   ],
+   "hypotheses": {
+    "H1_realTime": {
+     "assumes": "fonte a 10 quadros/s exibida em tempo real",
+     "physical_Hz_range": [
+      2.656,
+      4.429
+     ],
+     "windowsInsidePublishedRange": 3,
+     "windowsOutside": 7
+    },
+    "H2_slowMotion": {
+     "assumes": "fonte a 30 quadros/s em câmera lenta 3x",
+     "physical_Hz_range": [
+      7.968,
+      13.287
+     ],
+     "windowsInsidePublishedRange": 0,
+     "windowsOutside": 10
+    }
+   },
+   "reading": "H1 é a única hipótese com janelas dentro da faixa publicada, e a duração da fase giratória no vídeo é comparável aos ~35 s publicados; picos acima de 3,5 Hz podem refletir mais de uma chama giratória ou aliasing (componente real acima de 5 Hz). Coerência, não validação."
+  },
+  "caveats": [
+   "O vídeo é uma edição de divulgação, não o arquivo de voo; a base de tempo não está documentada.",
+   "A assimetria esquerda/direita oscila na frequência de passagem das chamas pela face visível; com mais de uma chama giratória, essa frequência é um múltiplo da frequência de rotação de cada chama.",
+   "Com 10 quadros únicos por segundo (H1), 2-3,5 Hz fica abaixo de Nyquist (5 Hz), mas perto; aliasing de componentes acima de 5 Hz não pode ser excluído.",
+   "A faixa publicada (2-3,5 Hz) só indica qual hipótese de base de tempo é coerente; não é validação independente."
+  ]
+ },
+ "published": {
+  "test": "1410C",
+  "case": 5,
+  "source": "NTRS 20240007628 (Li, T'ien, Ferkul, Olson, Johnston), §3.5 e Tabela 1",
+  "flow_cm_s": 49.68,
+  "o2_pct_at_extinction": 14.37,
+  "p_atm": 1.07,
+  "reynolds": 1324.8,
+  "strainRate_per_s": 37.26,
+  "sampleLocation": "duct exit",
+  "extinctionMode": "blowoff",
+  "sideStabilizedDuration_s": 40,
+  "spinningDuration_s": 35,
+  "spinFrequency_Hz": [
+   2.0,
+   3.5
+  ],
+  "kind": "published"
+ },
+ "spatialScale": {
+  "status": "not-applied",
+  "reason": "Sem régua no quadro; a esfera de 4 cm é um corpo 3-D visto em projeção, parcialmente encoberta pela chama e com enquadramento alterado na transição de edição."
+ }
+}

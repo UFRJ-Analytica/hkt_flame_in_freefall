@@ -1,0 +1,25 @@
+{
+ "kind": "published",
+ "source": "NTRS 20240007628, Li C., T'ien J.S., Ferkul P.V., Olson S.L., Johnston M.C., 'Extinction of solid diffusion flame in microgravity: details of quenching and blowoff processes', Table 1",
+ "sourceSha256": "see data/sofie/docs-manifest.json (id gel-symposium-2024)",
+ "transcription": "manual, from pdftotext -layout of the cached PDF; values exactly as printed",
+ "sample": {"material": "PMMA", "shape": "sphere", "diameter_cm": 4.0},
+ "definitions": {
+  "reynolds": "evaluated at ambient temperature based on sphere diameter (table footnote a)",
+  "strainRate_per_s": "stagnation-point flow strain rate a = 3/2 U/R (table footnote b)",
+  "extinctionMethod": "gradual natural oxygen depletion at constant flow in the sealed CIR chamber (85.7 L free volume)"
+ },
+ "cases": [
+  {"case": 1, "sample": "1409B", "mode": "quenching", "location": "inside duct", "flow_cm_s": 4.83, "reynolds": 128.8, "strainRate_per_s": 3.63, "o2_pct": 14.21, "p_atm": 1.04, "conductiveHeatLoss_W_cm2": 0.36},
+  {"case": 2, "sample": "1408A", "mode": "blowoff", "location": "inside duct", "flow_cm_s": 34.28, "reynolds": 914.1, "strainRate_per_s": 25.71, "o2_pct": 14.99, "p_atm": 1.06, "conductiveHeatLoss_W_cm2": 0.95},
+  {"case": 3, "sample": "1402C", "mode": "intermediate", "location": "inside duct", "flow_cm_s": 11.50, "reynolds": 306.7, "strainRate_per_s": 8.63, "o2_pct": 13.54, "p_atm": 1.07, "conductiveHeatLoss_W_cm2": 0.37},
+  {"case": 4, "sample": "1409C", "mode": "quenching", "location": "duct exit", "flow_cm_s": 0.44, "reynolds": 11.7, "strainRate_per_s": 0.33, "o2_pct": 20.77, "p_atm": 1.03, "conductiveHeatLoss_W_cm2": 0.17},
+  {"case": 5, "sample": "1410C", "mode": "blowoff", "location": "duct exit", "flow_cm_s": 49.68, "reynolds": 1324.8, "strainRate_per_s": 37.26, "o2_pct": 14.37, "p_atm": 1.07, "conductiveHeatLoss_W_cm2": null, "conductiveHeatLossNote": "not recorded (as printed)"}
+ ],
+ "dynamics": {
+  "1409B": {"pulsationCycles": 10, "pulsationPeriod_s": 0.4, "extinction_s": 757.55},
+  "1408A": {"baseTravel_cm": 5.4, "upstreamPulsationPeriod_s": 0.41, "azimuthalSpinning_s": 3.18},
+  "1409C": {"pulsation_s": 927, "pulsationFrequency_Hz": [1.4, 1.0, 0.8], "peakTipSpeed_cm_s": 25, "standoff_mm": [7, 10], "quenching_s": 1237.88},
+  "1410C": {"sideStabilized_s": 40, "spinning_s": 35, "spinFrequency_Hz": [2.0, 3.5]}
+ }
+}
