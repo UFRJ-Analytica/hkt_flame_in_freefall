@@ -24,6 +24,7 @@ import {
   Focus,
   Info,
   Layers3,
+  LayoutDashboard,
   LoaderCircle,
   MousePointer2,
   Pause,
@@ -56,6 +57,7 @@ import { HabitatLab } from "./habitat/HabitatLab";
 import { SpecialistWorkspace } from "./specialist/SpecialistWorkspace";
 import "./habitat/habitat.css";
 import { englishText } from "./i18n/english";
+import { Dashboard } from "./dashboard/Dashboard";
 type LabMode = "habitat" | "workspace" | "cabin" | SaffireMission;
 const LAB_TABS: { id: "habitat" | "workspace" | "saffire" | "cabin"; label: string; hint: string }[] = [
   { id: "habitat", label: "Lunar habitat · 3D simulation", hint: "exploratory scenarios and A/B alternatives" },
@@ -79,7 +81,7 @@ import type {
 } from "./types";
 const CabinScene = lazy(() => import("./components/CabinScene"));
 const SaffireScene = lazy(() => import("./components/SaffireScene"));
-type Page = "lab" | "experiments" | "sources";
+type Page = "home" | "lab" | "experiments" | "sources";
 const OVERLAYS = [
   { id: "materials", label: "Materials", icon: Layers3 },
   { id: "thermal", label: "Thermal", icon: Thermometer },
@@ -88,7 +90,9 @@ const OVERLAYS = [
 
 export default function App() {
   const { data, error, loading, reload } = useNasaData();
-  const [page, setPage] = useState<Page>("lab");
+  const [page, setPage] = useState<Page>("home");
+  const [catalogTarget, setCatalogTarget] = useState<string | undefined>(undefined);
+  const goTo = (next: Page) => { setPage(next); window.scrollTo({ top: 0 }); };
   const [labMode, setLabMode] = useState<LabMode>("habitat");
   const [loadedSaffire, setSaffire] = useState<SaffireModel | SaffireII5Model | PublishedModel | null>(null);
   const [loadedLocal, setLocalized] = useState<SaffireIILocalized | null>(null);
@@ -388,8 +392,8 @@ export default function App() {
       <header className="app-header">
         <a
           className="brand"
-          href="#laboratorio"
-          onClick={() => setPage("lab")}
+          href="#dashboard"
+          onClick={() => goTo("home")}
           aria-label="HabitatFire home"
         >
           <span className="brand-symbol">
@@ -402,14 +406,21 @@ export default function App() {
         </a>
         <nav className="main-nav" aria-label="Main navigation">
           <button
-            onClick={() => setPage("lab")}
+            onClick={() => goTo("home")}
+            className={page === "home" ? "active" : ""}
+          >
+            <LayoutDashboard size={15} />
+            Dashboard
+          </button>
+          <button
+            onClick={() => goTo("lab")}
             className={page === "lab" ? "active" : ""}
           >
             <Box size={15} />
-            Laboratory
+            Simulation lab
           </button>
           <button
-            onClick={() => setPage("experiments")}
+            onClick={() => { setCatalogTarget(undefined); goTo("experiments"); }}
             className={page === "experiments" ? "active" : ""}
           >
             <Beaker size={15} />
@@ -417,7 +428,7 @@ export default function App() {
             {allTests > 0 && <span className="nav-count">{allTests}</span>}
           </button>
           <button
-            onClick={() => setPage("sources")}
+            onClick={() => goTo("sources")}
             className={page === "sources" ? "active" : ""}
           >
             <BookOpen size={15} />
@@ -468,7 +479,15 @@ export default function App() {
           <button onClick={reload}>Try again</button>
         </div>
       )}
-      {page === "lab" ? (
+      {page === "home" ? (
+        <Dashboard
+          data={data}
+          onOpenCatalog={(id) => { setCatalogTarget(id); goTo("experiments"); }}
+          onOpenSimulation={() => { changeLabMode("habitat"); goTo("lab"); }}
+          onOpenBench={() => { changeLabMode("workspace"); goTo("lab"); }}
+          onOpenSources={() => goTo("sources")}
+        />
+      ) : page === "lab" ? (
         <>
           <div className="lab-heading">
             <div>
@@ -1055,7 +1074,7 @@ export default function App() {
         </div>
       ) : data ? (
         page === "experiments" ? (
-          <ExperimentExplorer data={data} onApply={applyTest} applicationPending={pendingTest !== null} />
+          <ExperimentExplorer key={catalogTarget ?? "default"} initialId={catalogTarget} data={data} onApply={applyTest} applicationPending={pendingTest !== null} />
         ) : (
           <SourcesView data={data} />
         )

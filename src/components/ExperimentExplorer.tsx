@@ -34,14 +34,16 @@ export function ExperimentExplorer({
   data,
   onApply,
   applicationPending = false,
+  initialId,
 }: {
   data: NasaData;
   onApply: (test: ExperimentTest) => void;
   applicationPending?: boolean;
+  initialId?: string;
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
-  const [selectedId, setSelectedId] = useState("PSI-25");
+  const [selectedId, setSelectedId] = useState(initialId && data.investigations.some((i) => i.id === initialId) ? initialId : "PSI-25");
   const [detail, setDetail] = useState<ExperimentTest | null>(null);
   const [page, setPage] = useState(0);
   const [smokeOpen, setSmokeOpen] = useState(false);

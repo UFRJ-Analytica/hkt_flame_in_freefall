@@ -18,7 +18,7 @@
     "media:index": "python scripts/build_media_index.py",
     "research:check": "python -m unittest discover -s backend -p test_*.py",
     "targets:build": "python scripts/build_modeling_targets.py",
-    "sim:check": "node --test scripts/test_habitat_engine.mjs scripts/test_saffire_bidirectional.mjs scripts/test_saffire_ii5.mjs scripts/test_saffire_ii_all.mjs scripts/test_saffire_ii_board.mjs scripts/test_saffire_iii.mjs scripts/test_saffire_published.mjs scripts/test_specialist_frontend.mjs"
+    "sim:check": "node --test scripts/test_habitat_engine.mjs scripts/test_saffire_bidirectional.mjs scripts/test_saffire_ii5.mjs scripts/test_saffire_ii_all.mjs scripts/test_saffire_ii_board.mjs scripts/test_saffire_iii.mjs scripts/test_saffire_published.mjs scripts/test_specialist_frontend.mjs scripts/test_english_frontend.mjs scripts/test_dashboard.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
