@@ -116,6 +116,26 @@ A cabine usa geometria aproximada e atribuições hipotéticas de materiais. As 
 
 PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenários dos sketches históricos de modelos físicos. Reprodução experimental exige mídia/tempo medidos; previsão calibrada exige observações e validação independentes. Nenhum desses modos deve ser fabricado a partir de um score de busca.
 
+## SoFIE-GEL: evidência publicada (fora do PSI)
+
+Em **Experimentos**, o grupo **"Evidência publicada · fora do PSI"** traz a entrada **SoFIE-GEL**, que abre sob demanda o módulo *NASA SoFIE-GEL — Published Experimental Evidence*. O módulo reúne:
+
+- os 5 casos de extinção de chama sobre esfera de PMMA de 4 cm em microgravidade (Tabela 1 de NASA NTRS 20240007628), com tabela e gráficos SVG sem ajuste;
+- as conclusões publicadas;
+- a análise do vídeo público do teste 1410C, marcada como **"Análise exploratória — não validada experimentalmente"**.
+
+**Não há dataset SoFIE público no NASA PSI**, e nenhum ID PSI é atribuído. Não é modelo de propagação nem previsão. Cinco casos não sustentam generalização. O vídeo não tem escala espacial e tem base temporal ambígua. A geometria esférica não se compara às amostras planas do BASS-II.
+
+O módulo lê só `public/data/sofie/gel-evidence.json`:
+
+```powershell
+python scripts/sofie/build_sofie_replay.py          # regenera
+python scripts/sofie/build_sofie_replay.py --check  # confere
+python -m unittest discover -s scripts/sofie -p "test_*.py"
+```
+
+Documentação: `docs/research/SOFIE_DATA_REVIEW.md`, `SOFIE_GEL_METHOD.md`, `SOFIE_PILOT_REVIEW.md`, `SOFIE_ANALYSIS.md` e `SOFIE_FRONTEND_REVIEW.md`.
+
 ## Estrutura
 
 ```text
@@ -124,6 +144,7 @@ src/
   components/CabinScene.tsx        cena Three.js / React Three Fiber
   components/SaffireScene.tsx      cena da amostra SAFFIRE na grade
   components/ExperimentExplorer.tsx catálogo e fontes
+  components/research/SofieGelObservation.tsx evidência SoFIE-GEL (lazy)
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
   types.ts                        contrato de cena e dados
@@ -136,6 +157,8 @@ scripts/build_research_corpus.py  extração citável dos documentos científico
 scripts/dev.mjs                   inicia API e frontend locais
 scripts/ingest_saffire.py         download e manifesto das imagens do ensaio
 scripts/calibrate_saffire*.py     extração da frente e ajuste das transições
+scripts/sofie/                    SoFIE: aquisição, piloto 1410C, artefato da UI
+data/sofie/                       SoFIE: manifesto, casos publicados, piloto (cache em data/cache/sofie/, fora do Git)
 data/saffire/                     registro e proveniência do ensaio
 data/cache/saffire/               arquivos grandes locais, fora do Git
 public/data/                     snapshot e manifesto consumidos pela UI
