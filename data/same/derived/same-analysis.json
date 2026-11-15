@@ -1,0 +1,1011 @@
+{
+ "schemaVersion": 1,
+ "investigationId": "PSI-102",
+ "inputs": {
+  "tests": "data/same/derived/same-tests.json",
+  "report": "Final Science Report, NIST/NASA, 15 mar 2010 (PSI-102 Reports), Tabela 1 p. 17 e apêndices"
+ },
+ "table1": [
+  {
+   "material": "Kapton",
+   "aged": false,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 80,
+    "D0.5_nm": 105,
+    "D1.5_nm": 179,
+    "sigma_g": 2.08
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 80.4,
+    "sigma_g": 2.076,
+    "dDg_nm": 0.4,
+    "dSigma_g": -0.004
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 398.0,
+    "numberFractionAbove300nm": 0.036,
+    "numberFractionAbove1um": 0.0003,
+    "massFractionAbove1um": 0.104,
+    "numberPerUnitVolumeRelative": 0.1744
+   }
+  },
+  {
+   "material": "Kapton",
+   "aged": true,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 155,
+    "D0.5_nm": 186,
+    "D1.5_nm": 267,
+    "sigma_g": 1.82
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 155.2,
+    "sigma_g": 1.824,
+    "dDg_nm": 0.2,
+    "dSigma_g": 0.004
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 459.0,
+    "numberFractionAbove300nm": 0.137,
+    "numberFractionAbove1um": 0.001,
+    "massFractionAbove1um": 0.098,
+    "numberPerUnitVolumeRelative": 0.0525
+   }
+  },
+  {
+   "material": "Lamp wick (cellulose)",
+   "aged": false,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 186,
+    "D0.5_nm": 227,
+    "D1.5_nm": 341,
+    "sigma_g": 1.89
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 185.2,
+    "sigma_g": 1.893,
+    "dDg_nm": -0.8,
+    "dSigma_g": 0.003
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 628.0,
+    "numberFractionAbove300nm": 0.225,
+    "numberFractionAbove1um": 0.0041,
+    "massFractionAbove1um": 0.233,
+    "numberPerUnitVolumeRelative": 0.0252
+   }
+  },
+  {
+   "material": "Lamp wick (cellulose)",
+   "aged": true,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 258,
+    "D0.5_nm": 308,
+    "D1.5_nm": 438,
+    "sigma_g": 1.81
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 258.3,
+    "sigma_g": 1.81,
+    "dDg_nm": 0.3,
+    "dSigma_g": 0.0
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 743.0,
+    "numberFractionAbove300nm": 0.4,
+    "numberFractionAbove1um": 0.0113,
+    "massFractionAbove1um": 0.308,
+    "numberPerUnitVolumeRelative": 0.0119
+   }
+  },
+  {
+   "material": "Silicone rubber",
+   "aged": false,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 189,
+    "D0.5_nm": 257,
+    "D1.5_nm": 472,
+    "sigma_g": 2.18
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 189.6,
+    "sigma_g": 2.181,
+    "dDg_nm": 0.6,
+    "dSigma_g": 0.001
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 1175.0,
+    "numberFractionAbove300nm": 0.278,
+    "numberFractionAbove1um": 0.0165,
+    "massFractionAbove1um": 0.582,
+    "numberPerUnitVolumeRelative": 0.0095
+   }
+  },
+  {
+   "material": "Silicone rubber",
+   "aged": true,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 352,
+    "D0.5_nm": 422,
+    "D1.5_nm": 606,
+    "sigma_g": 1.83
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 352.2,
+    "sigma_g": 1.825,
+    "dDg_nm": 0.2,
+    "dSigma_g": -0.005
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 1043.0,
+    "numberFractionAbove300nm": 0.605,
+    "numberFractionAbove1um": 0.0414,
+    "massFractionAbove1um": 0.528,
+    "numberPerUnitVolumeRelative": 0.0045
+   }
+  },
+  {
+   "material": "Teflon",
+   "aged": false,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 170,
+    "D0.5_nm": 205,
+    "D1.5_nm": 297,
+    "sigma_g": 1.84
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 170.3,
+    "sigma_g": 1.838,
+    "dDg_nm": 0.3,
+    "dSigma_g": -0.002
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 518.0,
+    "numberFractionAbove300nm": 0.176,
+    "numberFractionAbove1um": 0.0018,
+    "massFractionAbove1um": 0.14,
+    "numberPerUnitVolumeRelative": 0.0382
+   }
+  },
+  {
+   "material": "Teflon",
+   "aged": true,
+   "published": {
+    "kind": "published",
+    "Dg_nm": 228,
+    "D0.5_nm": 273,
+    "D1.5_nm": 392,
+    "sigma_g": 1.82
+   },
+   "recomputed": {
+    "kind": "derived",
+    "Dg_nm": 227.8,
+    "sigma_g": 1.825,
+    "dDg_nm": -0.2,
+    "dSigma_g": 0.005
+   },
+   "lognormal": {
+    "kind": "model",
+    "massMedian_nm": 674.0,
+    "numberFractionAbove300nm": 0.324,
+    "numberFractionAbove1um": 0.007,
+    "massFractionAbove1um": 0.256,
+    "numberPerUnitVolumeRelative": 0.0166
+   }
+  }
+ ],
+ "table1Reproduction": {
+  "kind": "derived",
+  "maxAbs_dDg_nm": 0.8,
+  "maxAbs_dSigma_g": 0.005,
+  "statement": "Dg e sigma_g publicados são reproduzidos a partir de D0.5 e D1.5 publicados pelas Eqs. 7-8 (diferenças dentro do arredondamento). Isso verifica a aritmética, não a medição: D0.5 e D1.5 dependem de calibrações e diluições que não estão nos arquivos PSI-102."
+ },
+ "agingTable1": {
+  "Kapton": {
+   "kind": "derived",
+   "Dg_ratio": 1.938,
+   "D0.5_ratio": 1.771,
+   "D1.5_ratio": 1.492,
+   "sigma_g_change": -0.26,
+   "numberRatioIfVolumeConserved": 0.301
+  },
+  "Lamp wick (cellulose)": {
+   "kind": "derived",
+   "Dg_ratio": 1.387,
+   "D0.5_ratio": 1.357,
+   "D1.5_ratio": 1.284,
+   "sigma_g_change": -0.08,
+   "numberRatioIfVolumeConserved": 0.472
+  },
+  "Silicone rubber": {
+   "kind": "derived",
+   "Dg_ratio": 1.862,
+   "D0.5_ratio": 1.642,
+   "D1.5_ratio": 1.284,
+   "sigma_g_change": -0.35,
+   "numberRatioIfVolumeConserved": 0.473
+  },
+  "Teflon": {
+   "kind": "derived",
+   "Dg_ratio": 1.341,
+   "D0.5_ratio": 1.332,
+   "D1.5_ratio": 1.32,
+   "sigma_g_change": -0.02,
+   "numberRatioIfVolumeConserved": 0.435
+  }
+ },
+ "earlierPublishedVersions": {
+  "AIAA-2008-0806 (Apêndice E, p. E-6, Tabela 1)": {
+   "quantity": "D0.5 (count mean diameter), baseline runs, nm, from calibrated P-Trak and ion signals",
+   "entries": {
+    "Silicone rubber": {
+     "kind": "published",
+     "value": 263
+    },
+    "Teflon": {
+     "kind": "published",
+     "value": 223
+    },
+    "Lamp wick (cellulose)": {
+     "kind": "published",
+     "value": 248
+    },
+    "Kapton": {
+     "kind": "published",
+     "value": 114
+    }
+   }
+  },
+  "08ICES-2089 (Apêndice D, p. D-7, Tabela 1)": {
+   "quantity": "D0.5 média dos testes sem envelhecimento (nm) e razão DustTrak B/DustTrak A",
+   "entries": {
+    "Silicone rubber": {
+     "kind": "published",
+     "value": [
+      227,
+      1.92
+     ]
+    },
+    "Teflon": {
+     "kind": "published",
+     "value": [
+      158,
+      1.22
+     ]
+    },
+    "Lamp wick (cellulose)": {
+     "kind": "published",
+     "value": [
+      172,
+      1.79
+     ]
+    },
+    "Kapton": {
+     "kind": "published",
+     "value": [
+      128,
+      1.26
+     ]
+    }
+   }
+  },
+  "AIAA-2009-956 (Apêndice C, p. C-6, Tabela 1)": {
+   "quantity": "Dg, D0.5, D1.5 em um (baseline runs); \"Silicone results did not converge\"",
+   "entries": {
+    "Kapton": {
+     "kind": "published",
+     "value": [
+      0.08,
+      0.105,
+      0.172
+     ],
+     "DgFromEq7_um": 0.082,
+     "consistentWithEq7": true
+    },
+    "Lamp wick (cellulose)": {
+     "kind": "published",
+     "value": [
+      0.186,
+      0.227,
+      0.42
+     ],
+     "DgFromEq7_um": 0.167,
+     "consistentWithEq7": false
+    },
+    "Silicone rubber": {
+     "kind": "published",
+     "value": [
+      0.189,
+      null,
+      null
+     ]
+    },
+    "Teflon": {
+     "kind": "published",
+     "value": [
+      0.159,
+      0.205,
+      0.219
+     ],
+     "DgFromEq7_um": 0.198,
+     "consistentWithEq7": false
+    }
+   }
+  }
+ },
+ "flight": {
+  "dusttrakRatio": {
+   "Kapton": {
+    "kind": "measured",
+    "tests": [
+     29,
+     33
+    ],
+    "primaryBoverA": {
+     "n": 2,
+     "mean": 1.303,
+     "sd": 0.072,
+     "min": 1.252,
+     "max": 1.354
+    },
+    "massFractionAbove1umFromDustTraks": {
+     "n": 2,
+     "mean": 0.231,
+     "sd": 0.043,
+     "min": 0.201,
+     "max": 0.261
+    },
+    "nasaAveragingSheetBoverA": [
+     1.202
+    ],
+    "published08ICES_BoverA": {
+     "kind": "published",
+     "value": 1.26
+    },
+    "lognormalMassFractionAbove1um_Table1": {
+     "kind": "model",
+     "value": 0.104
+    }
+   },
+   "Lamp wick (cellulose)": {
+    "kind": "measured",
+    "tests": [
+     17,
+     32,
+     34,
+     46
+    ],
+    "primaryBoverA": {
+     "n": 4,
+     "mean": 1.874,
+     "sd": 0.287,
+     "min": 1.637,
+     "max": 2.289
+    },
+    "massFractionAbove1umFromDustTraks": {
+     "n": 4,
+     "mean": 0.458,
+     "sd": 0.075,
+     "min": 0.389,
+     "max": 0.563
+    },
+    "nasaAveragingSheetBoverA": [],
+    "published08ICES_BoverA": {
+     "kind": "published",
+     "value": 1.79
+    },
+    "lognormalMassFractionAbove1um_Table1": {
+     "kind": "model",
+     "value": 0.233
+    }
+   },
+   "Silicone rubber": {
+    "kind": "measured",
+    "tests": [
+     23,
+     24,
+     27,
+     35
+    ],
+    "primaryBoverA": {
+     "n": 4,
+     "mean": 1.834,
+     "sd": 0.116,
+     "min": 1.699,
+     "max": 1.952
+    },
+    "massFractionAbove1umFromDustTraks": {
+     "n": 4,
+     "mean": 0.453,
+     "sd": 0.035,
+     "min": 0.411,
+     "max": 0.488
+    },
+    "nasaAveragingSheetBoverA": [],
+    "published08ICES_BoverA": {
+     "kind": "published",
+     "value": 1.92
+    },
+    "lognormalMassFractionAbove1um_Table1": {
+     "kind": "model",
+     "value": 0.582
+    }
+   },
+   "Teflon": {
+    "kind": "measured",
+    "tests": [
+     25,
+     26,
+     28
+    ],
+    "primaryBoverA": {
+     "n": 3,
+     "mean": 1.251,
+     "sd": 0.012,
+     "min": 1.237,
+     "max": 1.26
+    },
+    "massFractionAbove1umFromDustTraks": {
+     "n": 3,
+     "mean": 0.201,
+     "sd": 0.008,
+     "min": 0.192,
+     "max": 0.206
+    },
+    "nasaAveragingSheetBoverA": [
+     1.277
+    ],
+    "published08ICES_BoverA": {
+     "kind": "published",
+     "value": 1.22
+    },
+    "lognormalMassFractionAbove1um_Table1": {
+     "kind": "model",
+     "value": 0.14
+    }
+   }
+  },
+  "aging": {
+   "Kapton": {
+    "kind": "measured",
+    "tests": [
+     29
+    ],
+    "secondaryAge_s": [
+     838.0
+    ],
+    "dusttrakBSecondaryOverPrimary": {
+     "n": 1,
+     "mean": 1.198,
+     "sd": null,
+     "min": 1.198,
+     "max": 1.198
+    },
+    "BoverA_primary": {
+     "n": 1,
+     "mean": 1.252,
+     "sd": null,
+     "min": 1.252,
+     "max": 1.252
+    },
+    "BoverA_secondary": {
+     "n": 1,
+     "mean": 1.254,
+     "sd": null,
+     "min": 1.254,
+     "max": 1.254
+    }
+   },
+   "Lamp wick (cellulose)": {
+    "kind": "measured",
+    "tests": [
+     32,
+     46
+    ],
+    "secondaryAge_s": [
+     889.0,
+     1983.0
+    ],
+    "dusttrakBSecondaryOverPrimary": {
+     "n": 2,
+     "mean": 0.98,
+     "sd": 0.012,
+     "min": 0.972,
+     "max": 0.989
+    },
+    "BoverA_primary": {
+     "n": 2,
+     "mean": 1.692,
+     "sd": 0.078,
+     "min": 1.637,
+     "max": 1.748
+    },
+    "BoverA_secondary": {
+     "n": 2,
+     "mean": 1.75,
+     "sd": 0.063,
+     "min": 1.706,
+     "max": 1.795
+    }
+   },
+   "Silicone rubber": {
+    "kind": "measured",
+    "tests": [
+     23,
+     35
+    ],
+    "secondaryAge_s": [
+     741.0,
+     758.0
+    ],
+    "dusttrakBSecondaryOverPrimary": {
+     "n": 2,
+     "mean": 0.879,
+     "sd": 0.052,
+     "min": 0.843,
+     "max": 0.916
+    },
+    "BoverA_primary": {
+     "n": 2,
+     "mean": 1.825,
+     "sd": 0.179,
+     "min": 1.699,
+     "max": 1.952
+    },
+    "BoverA_secondary": {
+     "n": 2,
+     "mean": 1.907,
+     "sd": 0.232,
+     "min": 1.743,
+     "max": 2.071
+    }
+   },
+   "Teflon": {
+    "kind": "measured",
+    "tests": [
+     26
+    ],
+    "secondaryAge_s": [
+     837.0
+    ],
+    "dusttrakBSecondaryOverPrimary": {
+     "n": 1,
+     "mean": 1.053,
+     "sd": null,
+     "min": 1.053,
+     "max": 1.053
+    },
+    "BoverA_primary": {
+     "n": 1,
+     "mean": 1.237,
+     "sd": null,
+     "min": 1.237,
+     "max": 1.237
+    },
+    "BoverA_secondary": {
+     "n": 1,
+     "mean": 1.23,
+     "sd": null,
+     "min": 1.23,
+     "max": 1.23
+    }
+   }
+  },
+  "detectors": [
+   {
+    "kind": "measured",
+    "test": 2,
+    "material": "DBP (dibutyl phthalate on cotton wick)",
+    "dusttrakB_mg_m3": 29.287,
+    "dusttrakA_mg_m3": 0.9765,
+    "ionB_delta_V": 0.1632,
+    "ionA_delta_V": 0.0992,
+    "issScatter_delta_V": -6.1012,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.1677,
+    "sts_delta_V": -0.0291,
+    "stsPowered": true,
+    "RtOverR0": 1.18,
+    "ageAtPlateauStart_s": 62.0
+   },
+   {
+    "kind": "measured",
+    "test": 17,
+    "material": "Lamp wick (cellulose)",
+    "dusttrakB_mg_m3": 31.324,
+    "dusttrakA_mg_m3": 17.1895,
+    "ionB_delta_V": 0.9788,
+    "ionA_delta_V": 0.5819,
+    "issScatter_delta_V": -6.0381,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.1118,
+    "sts_delta_V": -0.5951,
+    "stsPowered": true,
+    "RtOverR0": 1.245,
+    "ageAtPlateauStart_s": 89.0
+   },
+   {
+    "kind": "measured",
+    "test": 23,
+    "material": "Silicone rubber",
+    "dusttrakB_mg_m3": 105.292,
+    "dusttrakA_mg_m3": 53.932,
+    "ionB_delta_V": 2.443,
+    "ionA_delta_V": 1.908,
+    "issScatter_delta_V": -6.0428,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.4165,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.329,
+    "ageAtPlateauStart_s": 78.0
+   },
+   {
+    "kind": "measured",
+    "test": 24,
+    "material": "Silicone rubber",
+    "dusttrakB_mg_m3": 72.368,
+    "dusttrakA_mg_m3": 37.973,
+    "ionB_delta_V": 1.7289,
+    "ionA_delta_V": 1.1547,
+    "issScatter_delta_V": -6.0573,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.2875,
+    "sts_delta_V": -0.8379,
+    "stsPowered": true,
+    "RtOverR0": 1.318,
+    "ageAtPlateauStart_s": 82.0
+   },
+   {
+    "kind": "measured",
+    "test": 25,
+    "material": "Teflon",
+    "dusttrakB_mg_m3": 23.5255,
+    "dusttrakA_mg_m3": 18.678,
+    "ionB_delta_V": 1.0936,
+    "ionA_delta_V": 0.6596,
+    "issScatter_delta_V": -1.2106,
+    "issScatterClipped": false,
+    "issObscuration_delta_V": -0.0232,
+    "sts_delta_V": -0.5719,
+    "stsPowered": true,
+    "RtOverR0": 1.445,
+    "ageAtPlateauStart_s": 75.0
+   },
+   {
+    "kind": "measured",
+    "test": 26,
+    "material": "Teflon",
+    "dusttrakB_mg_m3": 5.713,
+    "dusttrakA_mg_m3": 4.619,
+    "ionB_delta_V": 1.245,
+    "ionA_delta_V": 0.7417,
+    "issScatter_delta_V": -0.6337,
+    "issScatterClipped": false,
+    "issObscuration_delta_V": -0.0048,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.445,
+    "ageAtPlateauStart_s": 71.0
+   },
+   {
+    "kind": "measured",
+    "test": 27,
+    "material": "Silicone rubber",
+    "dusttrakB_mg_m3": 81.9305,
+    "dusttrakA_mg_m3": 46.048,
+    "ionB_delta_V": 1.9694,
+    "ionA_delta_V": 1.3841,
+    "issScatter_delta_V": -6.0393,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.3015,
+    "sts_delta_V": -0.9168,
+    "stsPowered": true,
+    "RtOverR0": 1.32,
+    "ageAtPlateauStart_s": 70.0
+   },
+   {
+    "kind": "measured",
+    "test": 28,
+    "material": "Teflon",
+    "dusttrakB_mg_m3": 5.3455,
+    "dusttrakA_mg_m3": 4.255,
+    "ionB_delta_V": 0.9581,
+    "ionA_delta_V": 0.5599,
+    "issScatter_delta_V": -0.6691,
+    "issScatterClipped": false,
+    "issObscuration_delta_V": -0.0062,
+    "sts_delta_V": -0.493,
+    "stsPowered": true,
+    "RtOverR0": 1.44,
+    "ageAtPlateauStart_s": 69.0
+   },
+   {
+    "kind": "measured",
+    "test": 29,
+    "material": "Kapton",
+    "dusttrakB_mg_m3": 23.907,
+    "dusttrakA_mg_m3": 19.093,
+    "ionB_delta_V": 1.1364,
+    "ionA_delta_V": 0.6821,
+    "issScatter_delta_V": -3.355,
+    "issScatterClipped": false,
+    "issObscuration_delta_V": -0.0229,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.379,
+    "ageAtPlateauStart_s": 70.0
+   },
+   {
+    "kind": "measured",
+    "test": 32,
+    "material": "Lamp wick (cellulose)",
+    "dusttrakB_mg_m3": 39.032,
+    "dusttrakA_mg_m3": 22.335,
+    "ionB_delta_V": 1.6599,
+    "ionA_delta_V": 1.2129,
+    "issScatter_delta_V": -6.0479,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.1025,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.246,
+    "ageAtPlateauStart_s": 77.0
+   },
+   {
+    "kind": "measured",
+    "test": 33,
+    "material": "Kapton",
+    "dusttrakB_mg_m3": 39.41,
+    "dusttrakA_mg_m3": 29.116,
+    "ionB_delta_V": 0.9399,
+    "ionA_delta_V": 0.4402,
+    "issScatter_delta_V": -5.0937,
+    "issScatterClipped": false,
+    "issObscuration_delta_V": -0.0709,
+    "sts_delta_V": -0.5291,
+    "stsPowered": true,
+    "RtOverR0": 1.378,
+    "ageAtPlateauStart_s": 102.0
+   },
+   {
+    "kind": "measured",
+    "test": 34,
+    "material": "Lamp wick (cellulose)",
+    "dusttrakB_mg_m3": 29.83,
+    "dusttrakA_mg_m3": 13.03,
+    "ionB_delta_V": 0.8632,
+    "ionA_delta_V": 0.4115,
+    "issScatter_delta_V": -6.0634,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.1153,
+    "sts_delta_V": -0.4788,
+    "stsPowered": true,
+    "RtOverR0": 1.244,
+    "ageAtPlateauStart_s": 110.0
+   },
+   {
+    "kind": "measured",
+    "test": 35,
+    "material": "Silicone rubber",
+    "dusttrakB_mg_m3": 42.776,
+    "dusttrakA_mg_m3": 25.184,
+    "ionB_delta_V": 1.7337,
+    "ionA_delta_V": 1.3083,
+    "issScatter_delta_V": -6.0167,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.122,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.378,
+    "ageAtPlateauStart_s": 92.0
+   },
+   {
+    "kind": "measured",
+    "test": 37,
+    "material": "DBP (dibutyl phthalate on cotton wick)",
+    "dusttrakB_mg_m3": 94.066,
+    "dusttrakA_mg_m3": 0.122,
+    "ionB_delta_V": 0.603,
+    "ionA_delta_V": 0.3335,
+    "issScatter_delta_V": -6.0535,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.5103,
+    "sts_delta_V": -0.0116,
+    "stsPowered": true,
+    "RtOverR0": 1.179,
+    "ageAtPlateauStart_s": 70.0
+   },
+   {
+    "kind": "measured",
+    "test": 46,
+    "material": "Lamp wick (cellulose)",
+    "dusttrakB_mg_m3": 44.422,
+    "dusttrakA_mg_m3": 27.1425,
+    "ionB_delta_V": 1.7246,
+    "ionA_delta_V": 1.2654,
+    "issScatter_delta_V": -6.0571,
+    "issScatterClipped": true,
+    "issObscuration_delta_V": -0.1043,
+    "sts_delta_V": null,
+    "stsPowered": false,
+    "RtOverR0": 1.32,
+    "ageAtPlateauStart_s": 76.0
+   }
+  ],
+  "conditions": {
+   "Kapton": {
+    "kind": "measured",
+    "tests": [
+     29,
+     33
+    ],
+    "RtOverR0": {
+     "n": 2,
+     "mean": 1.378,
+     "sd": 0.001,
+     "min": 1.378,
+     "max": 1.379
+    },
+    "heating_s": {
+     "n": 2,
+     "mean": 60.5,
+     "sd": 0.707,
+     "min": 60,
+     "max": 61
+    },
+    "lfeFlowDuringHeating_sccm_median": {
+     "n": 2,
+     "mean": 30.112,
+     "sd": 0.091,
+     "min": 30.048,
+     "max": 30.176
+    }
+   },
+   "Lamp wick (cellulose)": {
+    "kind": "measured",
+    "tests": [
+     17,
+     32,
+     34,
+     46
+    ],
+    "RtOverR0": {
+     "n": 4,
+     "mean": 1.264,
+     "sd": 0.038,
+     "min": 1.244,
+     "max": 1.32
+    },
+    "heating_s": {
+     "n": 4,
+     "mean": 51.0,
+     "sd": 20.0,
+     "min": 21,
+     "max": 61
+    },
+    "lfeFlowDuringHeating_sccm_median": {
+     "n": 4,
+     "mean": 30.148,
+     "sd": 0.077,
+     "min": 30.078,
+     "max": 30.237
+    }
+   },
+   "Silicone rubber": {
+    "kind": "measured",
+    "tests": [
+     23,
+     24,
+     27,
+     35
+    ],
+    "RtOverR0": {
+     "n": 4,
+     "mean": 1.336,
+     "sd": 0.028,
+     "min": 1.318,
+     "max": 1.378
+    },
+    "heating_s": {
+     "n": 4,
+     "mean": 49.75,
+     "sd": 40.434,
+     "min": 10,
+     "max": 106
+    },
+    "lfeFlowDuringHeating_sccm_median": {
+     "n": 4,
+     "mean": 26.413,
+     "sd": 2.566,
+     "min": 25.098,
+     "max": 30.261
+    }
+   },
+   "Teflon": {
+    "kind": "measured",
+    "tests": [
+     25,
+     26,
+     28
+    ],
+    "RtOverR0": {
+     "n": 3,
+     "mean": 1.443,
+     "sd": 0.003,
+     "min": 1.44,
+     "max": 1.445
+    },
+    "heating_s": {
+     "n": 3,
+     "mean": 60.333,
+     "sd": 0.577,
+     "min": 60,
+     "max": 61
+    },
+    "lfeFlowDuringHeating_sccm_median": {
+     "n": 3,
+     "mean": 40.135,
+     "sd": 0.029,
+     "min": 40.112,
+     "max": 40.167
+    }
+   },
+   "DBP (dibutyl phthalate on cotton wick)": {
+    "kind": "measured",
+    "tests": [
+     2,
+     37
+    ],
+    "RtOverR0": {
+     "n": 2,
+     "mean": 1.179,
+     "sd": 0.001,
+     "min": 1.179,
+     "max": 1.18
+    },
+    "heating_s": {
+     "n": 2,
+     "mean": 60.5,
+     "sd": 0.707,
+     "min": 60,
+     "max": 61
+    },
+    "lfeFlowDuringHeating_sccm_median": {
+     "n": 2,
+     "mean": 100.159,
+     "sd": 0.0,
+     "min": 100.159,
+     "max": 100.159
+    }
+   }
+  }
+ },
+ "notes": {
+  "dusttrakCut": "O impactador do DustTrak A corta por diâmetro aerodinâmico (~1 um); a comparação com a fração de massa lognormal acima de 1 um usa o diâmetro geométrico e trata o sinal do DustTrak como proporcional à massa: é uma verificação de coerência de ordem de grandeza, não uma calibração.",
+  "ptrak": "O controle dinâmico de diluição (\"Dilution control enabled\" nos logs de voo) atua durante os diagnósticos: a contagem bruta do P-Trak não é proporcional à concentração da fumaça e não é comparável entre janelas ou testes sem a razão de diluição, que não consta dos arquivos PSI-102.",
+  "sts": "Nos testes de envelhecimento longo o detector STS estava desligado (STSDetectorPower = 0).",
+  "iss": "O sinal de espalhamento do detector ISS satura em cerca de -6,25 V para silicone, lamp wick, DBP e um Kapton."
+ }
+}
