@@ -1,0 +1,710 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/build_trial_registry.py",
+  "trials": [
+    {
+      "id": "SAFFIRE-I-S1",
+      "campaign": "SAFFIRE I",
+      "sample": "S1",
+      "investigation": "PSI-98",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": null,
+        "oxygenRangePct": [
+          21.5,
+          21.7
+        ],
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenRangePct",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/oxygenRangePct; curadoria da tabela PSI-98",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-98",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowDirection; curadoria da tabela PSI-98",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.9502572898799264,
+          "window": "Trecho reservado do mesmo ensaio; S1C1/S1C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+          },
+          "artifact": "public/data/saffire/psi-98-s1-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "ef2511736924bfe9025e552694df631b962e367f9949b7a93bf2c51d15f11fe8"
+      },
+      "conflicts": [],
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
+        "oxygenPct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ]
+    },
+    {
+      "id": "SAFFIRE-I-S2",
+      "campaign": "SAFFIRE I",
+      "sample": "S2",
+      "investigation": "PSI-98",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": null,
+        "oxygenRangePct": [
+          21.5,
+          21.5
+        ],
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "opposed",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenRangePct",
+          "label": "modeling-targets.json, PSI-98:S2, oxygenRangePct",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "modeling-targets.json, PSI-98:S2, flowCmS",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-98, amostra S2, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.9999999999999998,
+          "window": "Trecho reservado do mesmo ensaio; S2C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+          },
+          "artifact": "public/data/saffire/psi-98-s2-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-98-s2-neighbors.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "4c614561f45fab7d2e3c9197db4b9df785b9cfbf7268e005a3cf1eb0a68b6c50"
+      },
+      "conflicts": [],
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
+        "Desfecho não tabulado; a tabela registra 70 s de queima. Frames públicos ainda não processados.",
+        "oxygenPct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ]
+    },
+    {
+      "id": "SAFFIRE-II-5",
+      "campaign": "SAFFIRE II",
+      "sample": "2-5",
+      "investigation": "PSI-99",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 290,
+        "widthMm": 50
+      },
+      "conditions": {
+        "oxygenPct": 22.1,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/oxygenPct; curadoria da tabela PSI-99",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/flowCmS; curadoria da tabela PSI-99",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-5, flowDirection",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.053571428571429,
+          "window": "Trecho reservado do mesmo ensaio; S5C1; janela [22, 114]; reserva desde 86 s",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+          },
+          "artifact": "public/data/saffire/psi-99-ii5.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-99-ii5.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "e0f5c8f82cd85c4385f7eef611f0746ee6633757bc597eae3641e31e2c81481e"
+      },
+      "conflicts": [],
+      "notes": [
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm, o mesmo tecido do SAFFIRE-I.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ]
+    },
+    {
+      "id": "SAFFIRE-II-6",
+      "campaign": "SAFFIRE II",
+      "sample": "2-6",
+      "investigation": "PSI-99",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 290,
+        "widthMm": 50
+      },
+      "conditions": {
+        "oxygenPct": 22.1,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/oxygenPct; curadoria da tabela PSI-99",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/flowCmS; curadoria da tabela PSI-99",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-6, flowDirection",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.4313186813186842,
+          "window": "Trecho reservado do mesmo ensaio; S6C1; janela [22, 98]; reserva desde 74 s",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+          },
+          "artifact": "public/data/saffire/psi-99-ii6.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-99-ii6.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "ff96f346cac0f2950b46b7987a2419d1ec78c6464ce4566e9036c5ae3f7a3564"
+      },
+      "conflicts": [
+        "Artefato II-6 registra 25 cm/s; curadoria PSI-99 registra 20 cm/s. Preservado o valor do modelo, sem resolver a divergência."
+      ],
+      "notes": [
+        "Célula de material vazia; interpretada como continuação da linha anterior (SIBAL).",
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ]
+    },
+    {
+      "id": "SAFFIRE-III-S1",
+      "campaign": "SAFFIRE III",
+      "sample": "S1",
+      "investigation": "PSI-100",
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 21.2,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-100-s1-neighbors.json, conditions/oxygenPct; curadoria da tabela PSI-100",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s1-neighbors.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-100-s1-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-100",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s1-neighbors.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-100, amostra S1, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.4319943622269244,
+          "window": "Trecho reservado do mesmo ensaio; S1C1 + S1C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/psi-100-s1-neighbors.json"
+        },
+        {
+          "kind": "char-front",
+          "speedMmS": 2.20403409693066,
+          "window": "Câmera 1, janela completa selecionada do cross-trial; não é a janela reservada das duas câmeras",
+          "uncertainty": {
+            "kind": "ols-se-iid",
+            "value": 0.01023696779603607,
+            "note": "Erro padrão OLS sob independência; não inclui autocorrelação, registro ou incerteza total."
+          },
+          "source": {
+            "label": "OLS da frente de contraste, crosstrial-i-iii.json",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/crosstrial-i-iii.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-100-s1-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "fc5cce59f0c122ff834515e70ee2f00f9fc9ce22e0aba64bdfcb7bfa5c572e97"
+      },
+      "conflicts": [
+        "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+        "Espessura literal .33 cm não confirmada: thicknessMm permanece null."
+      ],
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
+        "O₂ e desfecho não tabulados. Frames da câmera 1 processados (ver derivado).",
+        "Desfecho \"propagação sustentada\" observado nos frames (frente atravessa todo o campo da câmera 1), não tabulado pela NASA.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar.",
+        "Estimativas das duas câmeras e da câmera 1 têm janelas distintas; não formam intervalo de confiança."
+      ]
+    },
+    {
+      "id": "SAFFIRE-III-S2",
+      "campaign": "SAFFIRE III",
+      "sample": "S2",
+      "investigation": "PSI-100",
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 21.2,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "opposed",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-100-s2-neighbors.json, conditions/oxygenPct; curadoria da tabela PSI-100",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s2-neighbors.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-100-s2-neighbors.json, conditions/flowCmS; curadoria da tabela PSI-100",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-100-s2-neighbors.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-100, amostra S2, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.0454545454545454,
+          "window": "Trecho reservado do mesmo ensaio; S2C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/psi-100-s2-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-100-s2-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "6582f3f4f91250c332f9ea352ae8a0954354df97fb9ca9d00d1bad9ed4900b03"
+      },
+      "conflicts": [
+        "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+        "Espessura literal .33 cm não confirmada: thicknessMm permanece null."
+      ],
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
+        "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ]
+    },
+    {
+      "id": "SAFFIRE-IV-1",
+      "campaign": "SAFFIRE IV",
+      "sample": "IV-1",
+      "investigation": null,
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 23.1,
+        "oxygenRangePct": null,
+        "pressureKpa": 99,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.6,
+          "window": "Taxa publicada; não estimada novamente dos frames",
+          "uncertainty": null,
+          "source": {
+            "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+            "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+          },
+          "artifact": "public/data/saffire/saffire-iv-1.json"
+        },
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.655274725274725,
+          "window": "Curva digitalizada, [32, 110] s; mesmo ensaio",
+          "uncertainty": null,
+          "source": {
+            "label": "Manuscrito aceito, Figura 8, p. 15 do PDF",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf"
+          },
+          "artifact": "public/data/saffire/saffire-iv-1.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-iv-1.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "published-curve-consistency",
+        "artifactSha256": "76b4bf79c54721ec82fafb49f02f116bedc1b76c941a9b714801e9382e3f8090"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"oxygenPct\": 22, \"pressureKpa\": 100}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 23, \"pressureKpa\": 98}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ]
+    },
+    {
+      "id": "SAFFIRE-V-2",
+      "campaign": "SAFFIRE V",
+      "sample": "V-2",
+      "investigation": null,
+      "material": "Algodão jersey",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 26.9,
+        "oxygenRangePct": null,
+        "pressureKpa": 76,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.4,
+          "window": "Antes de 100 s e de 300 mm, antes do enrolamento",
+          "uncertainty": null,
+          "source": {
+            "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+            "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+          },
+          "artifact": "public/data/saffire/saffire-v-2.json"
+        },
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.35060606060606,
+          "window": "Curva digitalizada, [32, 92] s; mesmo ensaio",
+          "uncertainty": null,
+          "source": {
+            "label": "Manuscrito aceito, Figura 8, p. 15 do PDF",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf"
+          },
+          "artifact": "public/data/saffire/saffire-v-2.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-v-2.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "published-curve-consistency",
+        "artifactSha256": "5cc42f6b68fdf5a1b42af722eab8831005f8bb945787d657cfb6b0b6d2b2e729"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"oxygenPct\": 26.2, \"pressureKpa\": 70.7}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 28, \"pressureKpa\": 74.1}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 26.5, \"pressureKpa\": null}; Cronologia do SAFFIRE V, Tabela 1 (https://ntrs.nasa.gov/citations/20240008602)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ]
+    },
+    {
+      "id": "SAFFIRE-VI-2",
+      "campaign": "SAFFIRE VI",
+      "sample": "VI-2",
+      "investigation": null,
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 400
+      },
+      "conditions": {
+        "oxygenPct": 31,
+        "oxygenRangePct": null,
+        "pressureKpa": 54.1,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "flowCmS",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "flowDirection",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "published-rate",
+          "speedMmS": 4.05,
+          "window": "Taxa publicada; não estimada novamente dos frames",
+          "uncertainty": null,
+          "source": {
+            "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+            "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+          },
+          "artifact": "public/data/saffire/saffire-vi-2.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-vi-2.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "none",
+        "artifactSha256": "cb3199ee11c147a68bfcc6235b4062ce41a0b0b85e47065387b98c42d2600c65"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"lengthMm\": 500, \"widthMm\": 410}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Checagem numérica da velocidade imposta não é validação experimental; trajetória observada indisponível.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ]
+    }
+  ]
+}
