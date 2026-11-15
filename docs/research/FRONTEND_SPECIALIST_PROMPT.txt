@@ -1,0 +1,30 @@
+Você implementa o FRONTEND da experiência especialista completa do HabitatFire.
+
+REPOSITÓRIO E COORDENAÇÃO
+C:\Users\lucas\Documents\hkt_nasa_flame_snapshot_20261114. Preserve qualquer WIP. O develop de partida contém 290dd28 (cena lunar, efeitos ilustrativos de fogo/fumaça e reimportação). Confirme git status/branch antes de agir. Você é dono de src/ e dos novos testes do frontend; não comite arquivos do outro agente. Não faça push/merge na develop/main sem autorização específica.
+
+O outro agente trabalha em C:\Users\lucas\Documents\habitatfire-trial-registry, branch feat/trial-registry, e é dono de novos scripts Python, testes, dados científicos e dossiês. NÃO edite scripts de calibração, scripts/build_specialist_workspace.py, scripts/test_specialist_workspace.py ou public/data/saffire/specialist-workspace.json. Não abra segredos nem mova frames/ZIPs para Git.
+
+CONTRATO OBRIGATÓRIO
+Leia C:\Users\lucas\Documents\habitatfire-trial-registry\docs\research\SPECIALIST_WORKSPACE_CONTRACT.md. O dataset real já foi gerado nesse worktree: public/data/saffire/specialist-workspace.json. Após integrar a branch de dados pelo procedimento autorizado, a aplicação deve buscar /data/saffire/specialist-workspace.json. Enquanto isso, implemente os componentes e testes contra o contrato; não invente medições nem reescreva o dataset. Registre incompatibilidades em vez de alterar o contrato unilateralmente. As propriedades extras de diagnóstico são aditivas.
+
+RESULTADO DE PRODUTO
+A experiência deve ser útil HOJE a um especialista: selecionar evidências, inspecionar validade, confrontar observado versus simulado, comparar ensaios e alternativas de habitat, e exportar um dossiê auditável. Não entregue só navegação, cartões sem ação, mockups ou animações novas.
+
+1. GALERIA E DETALHE
+Galeria visível dos nove ensaios, com filtros por material, campanha, observável, disponibilidade de curva e estado de revisão. Abrir um cartão deve selecionar o ensaio real e seus dados. Mostrar condições, fontes originais clicáveis, conflitos, geometria, modelo e métricas. S2 deve permanecer visível e marcado como em revisão, sem ser âncora automática do habitat.
+
+2. COMPARAÇÃO DE ENSAIOS
+Selecionar dois ou mais ensaios. Mostrar tabela quantitativa, condições diferentes/desconhecidas, gráfico com legenda inequívoca e resíduos onde existem pontos pareados. Respeitar timeOrigin. Curvas indisponíveis não viram retas sintetizadas a partir da taxa. Para artefatos de vizinhança, a curva armazenada pode pertencer ao baseline longitudinal: relationToRegisteredModel é obrigatório na apresentação. Não misturar essa curva com o MAE do modelo de vizinhança como se fossem a mesma avaliação. Diferentes observáveis não produzem ranking nem delta de velocidade. Comparações entre ensaios são descritivas, não efeitos causais isolados.
+
+3. HABITAT A/B
+Salvar alternativas nomeadas; duplicar; editar materiais, foco e condições; executar com mesmas sementes e horizonte; comparar área alcançada, chegada/contato por zona e velocidade, quando definidos. Mostrar referência e gate por cenário. O cenário não pode fixar silenciosamente material SIBAL e apresentar algodão como se já estivesse modelado. Só habilite comportamento com uma regra explícita e identificada. Não aplique um núcleo global de um material a misturas sem declarar a simplificação. Preserve a exploração 3D existente, sem transformar sua aparência em alegação de CFD.
+
+4. LIMITES NO PONTO DE USO
+O₂, pressão e gravidade não têm correções físicas validadas no motor atual; diferencie mudanças na seleção da referência de respostas calculadas pelo modelo. Chama e fumaça decorativas devem aparecer como ilustrativas junto à visualização. Material sem dados não é uma barreira demonstrada. Variação entre sementes não é incerteza experimental. Sem previsão fictícia de CO, temperatura, detecção, extinção ou segurança de ocupantes.
+
+5. DOSSIÊ E REIMPORTAÇÃO
+Exportar JSON/CSV/Markdown com IDs, condições, modelos, hashes exatos, métricas, curvas disponíveis, comparações e limitações. A implementação Python fornece referência de dossiê e CSVs completos. Para cenários A/B, incluir entradas completas, sementes, horizonte, código e hashes. Validar todas as entradas antes de alterar estado. Enumerar divergências. Não afirmar reprodução do campo inteiro apenas pela igualdade de velocidade e área final. Falha de carregamento não deve ativar um registro científico embutido divergente sem aviso.
+
+6. QUALIDADE E ENTREGA
+UI modular, clara e polida, com gráficos legíveis, unidades, estados vazios/erro e uso em mobile. Exercitar no navegador: galeria → detalhe → comparação → alternativas A/B → exportação/reimportação. Testar entrada malformada, observáveis incompatíveis e curva ausente. Rode typecheck, testes e build. Não faça chamadas pagas nem instale serviços de nuvem. Reporte o que foi realmente verificado, os arquivos alterados e o que ainda depende de integração ou validação física. Não declare a experiência completa se os fluxos não estiverem conectados.

@@ -82,10 +82,16 @@ Na raiz:
 
 O worktree isolado reutiliza o interpretador absoluto da pasta original; não instala outra venv. ZIPs, frames e verificações transitórias permanecem ignorados em data/cache/ ou .scratch/.
 
+## Workspace especialista
+
+O contrato adicional está em SPECIALIST_WORKSPACE_CONTRACT.md. O gerador scripts/build_specialist_workspace.py preserva os nove registros e acrescenta diagnósticos de curvas, distinção de baseline/modelo, 36 comparações descritivas e manifestos SHA256. Não ajusta novos modelos físicos. O frontend consome public/data/saffire/specialist-workspace.json; usa null/estado indisponível onde não existe curva comparável.
+
+O CLI exporta dossiê JSON/Markdown e CSVs de métricas, curvas e comparações. A verificação valida a estrutura completa antes de confrontar os dados e enumera divergências por JSON pointer, separando identidade de entradas de resultados derivados. Igualdade do dossiê não é reprodução do motor do habitat. O prompt do agente de interface está em FRONTEND_SPECIALIST_PROMPT.txt.
+
 ## Estado
 
 Tarefa 1: registro publicado; frontend consome public/data/saffire/trial-registry.json, preservando fontes, conflitos e nulls.
 Tarefa 2: S2_REVIEW.md publicado; quantização e ausência de pixels/ignitor impedem aprovação física das taxas S2.
 Tarefa 3: execução real e JSON aditivo concluídos; campos observations, timeSensitivity e provenance.frameAudit documentados em CROSSTRIAL_PROVENANCE.md.
-Tarefa 4: critérios e testes de dados entregues; gate/exportação do frontend ainda exigem integração e teste ponta a ponta.
+Workspace especialista: dados, análises e dossiê executados; frontend deve integrar specialist-workspace.json e verificar galeria/comparação/habitat A/B/exportação ponta a ponta.
 Não verificado: transferência lunar, incerteza total, teste externo congelado, segurança de interfaces ou certificação.
