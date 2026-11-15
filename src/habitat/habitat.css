@@ -203,5 +203,11 @@
 .replay-card dt { color: var(--faint); }
 .replay-card dd { margin: 0; color: #d5dbe3; }
 .replay-card .button { justify-self: start; margin-top: 4px; }
+/* Replay cards built from the shared catalogue (src/components/replay/replayCatalog.ts). */
+.replay-natures { display: flex; flex-wrap: wrap; gap: 6px; }
+.replay-actions { display: flex; flex-wrap: wrap; gap: 8px; align-self: end; }
+.replay-actions .button { margin-top: 0; white-space: normal; text-align: left; }
+.replay-card p.replay-extra { font-size: 11px; color: var(--muted); }
+.replay-card.replay-static { border-style: dashed; background: #141920; }
 @media (max-width: 650px) { .replays { margin: 0 16px 20px; } }
 .replays > .lab-mode-tabs { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }

@@ -63,7 +63,7 @@ type LabMode = "habitat" | "workspace" | "replays" | "cabin" | SaffireMission;
 const LAB_TABS: { id: "habitat" | "workspace" | "replays" | "saffire" | "cabin"; label: string; hint: string }[] = [
   { id: "habitat", label: "Lunar habitat · 3D simulation", hint: "exploratory scenarios and A/B alternatives" },
   { id: "workspace", label: "Specialist workspace", hint: "gallery, comparison and dossier for 9 trials" },
-  { id: "replays", label: "NASA experiment replays", hint: "BASS-II video, SoFIE-GEL extinction, SAME smoke" },
+  { id: "replays", label: "NASA experiment replays", hint: "BASS-II, SAFFIRE, SoFIE-GEL, SAME replays · FLARE evidence" },
   { id: "saffire", label: "SAFFIRE I–VI trials", hint: "calibration and validation by trial" },
   { id: "cabin", label: "Cabin and evidence", hint: "search, catalog and applicability" },
 ];
@@ -502,7 +502,7 @@ export default function App() {
                 {labMode === "workspace"
                   ? "Compare NASA SAFFIRE trials: conditions, sources, model, speeds and curves, with dossier export."
                   : labMode === "replays"
-                  ? "Replay NASA experiments from their own measurements: BASS-II flame video, SoFIE-GEL extinction and SAME smoke."
+                  ? "Replay NASA experiments from their own data: BASS-II tracked fronts, SAFFIRE images and model, SoFIE-GEL video analysis, SAME measurement windows; FLARE stays static."
                   : labMode === "habitat"
                   ? "Simulate fire spread across lunar habitat surfaces with a model calibrated using NASA images."
                   : isSaffire

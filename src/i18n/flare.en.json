@@ -19,6 +19,7 @@
   "microgravidade de curta duração (~20 s)": "short-duration microgravity (~20 s)",
   "microgravidade de longa duração": "long-duration microgravity",
   "não tabelado": "not tabulated",
+  "ar (N₂)": "air (N₂)",
   "MLOC/LOC é uma razão descritiva entre valores medidos em configurações diferentes (1g descendente e microgravidade com fluxo oposto); não é um efeito isolado da gravidade nem um parâmetro de modelo.": "MLOC/LOC is a descriptive ratio between values measured in different configurations (downward spread in 1g and opposed flow in microgravity); it is neither an isolated gravity effect nor a model parameter.",
   "previsão abaixo do medido (lado seguro: prevê inflamável onde não queimou)": "prediction below the measurement (conservative side: predicts flammable where it did not burn)",
   "previsão acima do medido": "prediction above the measurement",

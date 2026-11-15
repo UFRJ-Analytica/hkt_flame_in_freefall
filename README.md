@@ -73,6 +73,14 @@ npm run preview
   - Divergências preservadas: 14,7 % contra 14,9 %, e 10 contra 6 cm/s. Seis limitações ficam sempre visíveis.
   - O módulo não tem regressão, interpolação nem previsão. Carrega sob demanda.
   - Mais detalhes em [FLARE_FRONTEND_REVIEW.md](docs/research/FLARE_FRONTEND_REVIEW.md), com base em [FLARE_ANALYSIS.md](docs/research/FLARE_ANALYSIS.md).
+- **Reproduções experimentais** (Simulation lab → NASA experiment replays), com os mesmos controles e um selo da natureza dos dados em cada uma:
+  - BASS-II B1: trajetórias ópticas medidas no vídeo, em pixels;
+  - SAFFIRE II: quadros originais das câmeras;
+  - SAFFIRE I · S1: simulação estocástica com semente fixa, ao lado da frente medida;
+  - SoFIE-GEL 1410C: cursor sobre a análise exploratória, com o vídeo público da NASA transmitido só sob pedido;
+  - SAME: sequência medida das janelas de amostragem.
+
+  O FLARE permanece estático. Nada é interpolado entre amostras. Detalhes em [EXPERIMENTAL_ANIMATIONS_REVIEW.md](docs/research/EXPERIMENTAL_ANIMATIONS_REVIEW.md).
 - Proveniência e limitações visíveis na aplicação.
 - Vídeos brutos da NASA por registro: 1.629 vídeos referenciados pelos metadados PSI, 790 registros ligados por regra explícita de nome de arquivo (ensaio exato no BASS-II, ACME Flame Design/CFI-G e CFI; mesmo dia de teste nos resumos diários do ACME). Os vídeos não são redistribuídos: `/api/media` aceita só arquivos do índice e redireciona para o link assinado do PSI. Reconstruir o índice: `npm run media:index`.
 
@@ -210,6 +218,8 @@ src/
   components/research/SofieGelObservation.tsx evidência SoFIE-GEL (lazy)
   components/research/BassB1Observation.tsx observação medida do BASS-II B1 (carregada sob demanda)
   components/research/Flare*      módulo FLARE (evidência publicada, carregado sob demanda)
+  components/replay/              controles, linha do tempo e moldura comuns das reproduções experimentais
+  components/research/*Replay.tsx renderizadores por experimento (BASS-II, SAFFIRE, SoFIE-GEL, SAME), sob demanda
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
   types.ts                        contrato de cena e dados

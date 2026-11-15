@@ -1,0 +1,92 @@
+{
+ "schemaVersion": 1,
+ "recordId": "PSI-25:t0:r2",
+ "test": "B1",
+ "units": "px",
+ "frame": {
+  "width_px": 720,
+  "height_px": 480
+ },
+ "origin": "top-left corner of the 720 x 480 TS frame; x grows to the right, y grows downwards",
+ "propagation": {
+  "axis": "x",
+  "sign": 1,
+  "leadingEdge": "end of the emission in the propagation direction (+x), i.e. upstream of the opposed flow"
+ },
+ "regions": {
+  "flame": {
+   "x": [
+    40,
+    560
+   ],
+   "y": [
+    230,
+    355
+   ],
+   "label": "region containing both luminous sheets and the ignitor"
+  },
+  "bands": {
+   "upper": {
+    "y": [
+     248,
+     278
+    ],
+    "label": "upper luminous band (one side of the film)"
+   },
+   "lower": {
+    "y": [
+     308,
+     338
+    ],
+    "label": "lower luminous band (other side of the film)"
+   }
+  },
+  "gap": {
+   "y": [
+    284,
+    302
+   ],
+   "label": "dark gap between the bands (not used for the front)"
+  },
+  "ignitor": {
+   "x": [
+    60,
+    240
+   ],
+   "y": [
+    230,
+    355
+   ],
+   "label": "saturated ignitor glow (frames 280–331)"
+  },
+  "overlay": {
+   "x": [
+    0,
+    719
+   ],
+   "y": [
+    0,
+    89
+   ],
+   "label": "telemetry overlay (excluded)"
+  }
+ },
+ "spatialScale": {
+  "status": "insufficient",
+  "mm_per_px": null
+ },
+ "drawingNote": "Drawn in the image plane of the side video, to scale in pixels. A perspective sample (parallelogram) is not used: no 3-D geometry of the B1 film is registered to this view.",
+ "provenance": {
+  "generator": "scripts/bass2/build_b1_sample_plane.py",
+  "inputs": {
+   "flamefrontConfig": {
+    "path": "data/bass2/b1/flamefront-config.json",
+    "sha256": "d897969212f2c1adcd72d8168550ba26206ae29d6bde652cc2dd13d094cb4eb1"
+   },
+   "registration": {
+    "path": "data/bass2/b1/registration.json",
+    "sha256": "879a68ca3b57cc94d6685c9e891102f756c8234423dd84f23428d7552f38b809"
+   }
+  }
+ }
+}

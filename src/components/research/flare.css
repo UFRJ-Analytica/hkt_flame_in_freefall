@@ -368,3 +368,26 @@
     padding: 11px;
   }
 }
+
+/* Selection over existing published values (material, gas, campaign). */
+.fl-filters {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 10px;
+}
+.fl-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.fl-filter > span {
+  min-width: 70px;
+  font: 10px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--faint);
+}
+.fl-filter .chip {
+  padding: 5px 9px;
+}

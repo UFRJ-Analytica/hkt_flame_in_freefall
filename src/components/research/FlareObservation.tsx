@@ -381,7 +381,44 @@ function LimitsChart({ groups }: { groups: LimitGroup[] }) {
   );
 }
 
+const CAMPAIGN_LABEL: Record<string, string> = { "ground-1g-japan": "1g ground (Japan)", "parabolic-flight": "Parabolic flight · µg" };
+
+/** Selection over existing published values only: it hides or shows values, never fills a gap. */
+function useLimitFilter(groups: LimitGroup[]) {
+  const [material, setMaterial] = useState("all");
+  const [gas, setGas] = useState("all");
+  const [campaign, setCampaign] = useState("all");
+  const options = {
+    material: Array.from(new Set(groups.map((g) => g.material))),
+    gas: Array.from(new Set(groups.map((g) => g.gasLabel))),
+    campaign: Array.from(new Set(groups.flatMap((g) => g.values.map((v) => v.campaign)))),
+  };
+  const filtered = groups
+    .filter((g) => (material === "all" || g.material === material) && (gas === "all" || g.gasLabel === gas))
+    .map((g) => ({ ...g, values: g.values.filter((v) => campaign === "all" || v.campaign === campaign) }))
+    .filter((g) => g.values.length > 0);
+  const chips = (label: string, values: string[], current: string, set: (v: string) => void, name: (v: string) => string = (v) => v) => (
+    <div className="fl-filter" role="group" aria-label={label}>
+      <span>{label}</span>
+      {["all", ...values].map((v) => (
+        <button key={v} className={`chip ${current === v ? "active" : ""}`} aria-pressed={current === v} onClick={() => set(v)}>
+          {v === "all" ? "All" : name(v)}
+        </button>
+      ))}
+    </div>
+  );
+  const controls = (
+    <div className="fl-filters">
+      {chips("Material", options.material, material, setMaterial)}
+      {chips("Gas", options.gas, gas, setGas)}
+      {chips("Campaign", options.campaign, campaign, setCampaign, (v) => CAMPAIGN_LABEL[v] ?? v)}
+    </div>
+  );
+  return { filtered, controls };
+}
+
 function Limits({ data }: { data: FlareEvidence }) {
+  const { filtered, controls } = useLimitFilter(data.limits);
   return (
     <Section id="limits" letter="B" title="Quantitative comparison of LOC and MLOC (2016 and 2018)">
       <p className="fl-note fl-emph">
@@ -389,7 +426,14 @@ function Limits({ data }: { data: FlareEvidence }) {
         own line) and predicted (hollow dashed, bottom line) are never mixed. Each publication has its own rows; nothing is combined
         between them.
       </p>
-      <LimitsChart groups={data.limits} />
+      {controls}
+      {filtered.length ? (
+        <LimitsChart groups={filtered} />
+      ) : (
+        <p className="fl-note fl-emph" role="status">
+          No published value matches this selection. Nothing is drawn for combinations the tables do not contain.
+        </p>
+      )}
       <div className="table-scroll fl-table-scroll">
         <table className="fl-table">
           <thead>
@@ -405,7 +449,7 @@ function Limits({ data }: { data: FlareEvidence }) {
             </tr>
           </thead>
           <tbody>
-            {data.limits.flatMap((g) =>
+            {filtered.flatMap((g) =>
               g.values.map((v, i) => (
                 <tr key={v.id} className={i === 0 ? "fl-row-start" : ""}>
                   <td>{i === 0 ? `${g.material}${g.thickness_mm ? ` ${fmt(g.thickness_mm, 3)} mm` : ""}` : ""}</td>

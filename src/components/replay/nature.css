@@ -1,0 +1,51 @@
+/* Nature badges of the experimental visualizations (loaded with the replays tab; tiny). */
+.rp-natures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.rp-nature {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font: 500 10.5px var(--mono);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.rp-nature::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.rp-nature-experimental-images,
+.rp-nature-experimental-video {
+  color: #8ec9ac;
+  border-color: #8ec9ac66;
+}
+.rp-nature-video-derived,
+.rp-nature-measurement-sequence {
+  color: #7cc7f0;
+  border-color: #7cc7f066;
+}
+.rp-nature-computational-model {
+  color: #f4a467;
+  border-color: #f4a46777;
+  border-style: dashed;
+}
+.rp-nature-computational-model::before {
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+.rp-nature-illustrative {
+  color: #c9a7ef;
+  border-style: dotted;
+}
+.rp-nature-published-static {
+  color: #c3ccd6;
+}

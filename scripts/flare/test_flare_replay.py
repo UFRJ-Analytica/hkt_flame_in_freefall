@@ -113,6 +113,10 @@ class FlareEvidence(unittest.TestCase):
                 leaks.append(value)
         walk(DATA)
         self.assertEqual(leaks, [])
+        # Unaccented Portuguese labels shown in the chart and tables.
+        for group in DATA['limits']:
+            if group['gasLabel'].startswith('ar '):
+                self.assertIn(group['gasLabel'], dictionary)
         self.assertTrue(all(isinstance(v, str) and v.strip() for v in dictionary.values()))
 
     def test_file_is_light(self):
