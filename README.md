@@ -116,6 +116,29 @@ A cabine usa geometria aproximada e atribuições hipotéticas de materiais. As 
 
 PROJECT.md e TECHNICAL_FOUNDATIONS.md distinguem a entrega de evidências/cenários dos sketches históricos de modelos físicos. Reprodução experimental exige mídia/tempo medidos; previsão calibrada exige observações e validação independentes. Nenhum desses modos deve ser fabricado a partir de um score de busca.
 
+## SAME (PSI-102): Smoke & Detection
+
+Em **Experimentos → SAME (PSI-102)**, o botão **Abrir análise Smoke & Detection** carrega sob demanda um módulo de evidência sobre a fumaça de materiais superaquecidos abaixo da ignição. O SAME não é propagação de chama.
+
+O módulo mostra:
+
+- a Tabela 1 publicada, agregada por material, com Dg e σg reproduzidos pelas Eqs. 7–8;
+- o envelhecimento (dois pontos publicados mais a conservação do sinal de massa medida);
+- a razão DustTrak B/A reproduzida dos sinais brutos de voo;
+- a resposta dos detectores da ISS e do Space Shuttle.
+
+Cada valor é rotulado como `published`, `measured`, `derived`, `model_assumption` ou `unavailable`. **M0, M1 e M3 por teste não estão disponíveis**, porque faltam calibrações, razões de diluição e densidades. O SAME-R (PSI-101) não está incluído.
+
+O módulo lê apenas `public/data/same/smoke-analysis.json` (cerca de 49 KB), gerado de forma reprodutível a partir dos derivados versionados:
+
+```powershell
+python scripts/same/build_same_replay.py          # regenera
+python scripts/same/build_same_replay.py --check  # confere
+python -m unittest discover -s scripts/same -p "test_*.py"
+```
+
+Documentação: `docs/research/SAME_DATA_REVIEW.md`, `SAME_MOMENT_METHOD.md`, `SAME_ANALYSIS.md` e `SAME_FRONTEND_REVIEW.md` (guia de avaliação).
+
 ## Estrutura
 
 ```text
@@ -124,6 +147,7 @@ src/
   components/CabinScene.tsx        cena Three.js / React Three Fiber
   components/SaffireScene.tsx      cena da amostra SAFFIRE na grade
   components/ExperimentExplorer.tsx catálogo e fontes
+  components/research/SameSmokeObservation.tsx módulo SAME Smoke & Detection (lazy)
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
   types.ts                        contrato de cena e dados
@@ -136,6 +160,8 @@ scripts/build_research_corpus.py  extração citável dos documentos científico
 scripts/dev.mjs                   inicia API e frontend locais
 scripts/ingest_saffire.py         download e manifesto das imagens do ensaio
 scripts/calibrate_saffire*.py     extração da frente e ajuste das transições
+scripts/same/                     SAME: aquisição, normalização, método dos momentos, artefato da UI
+data/same/                        SAME: manifesto, log de voo e derivados (cache em data/cache/same/, fora do Git)
 data/saffire/                     registro e proveniência do ensaio
 data/cache/saffire/               arquivos grandes locais, fora do Git
 public/data/                     snapshot e manifesto consumidos pela UI
