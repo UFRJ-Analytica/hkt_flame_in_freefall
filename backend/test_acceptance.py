@@ -38,7 +38,7 @@ class AcceptanceChecks(unittest.TestCase):
 
     def test_unsupported_partial_gravity_question_reports_gap(self):
         result = self.service.search(question("Isso vale para um habitat em Marte?", "prevention", gravityG=0.38))
-        self.assertTrue(any("gravidade" in gap.lower() for gap in result["gaps"]))
+        self.assertTrue(any("gravity" in gap.lower() for gap in result["gaps"]))
 
     def test_unknown_material_reports_gap_instead_of_inventing(self):
         result = self.service.search(question("Como queima este tecido?", "prevention", material="Tecido experimental XYZ"))

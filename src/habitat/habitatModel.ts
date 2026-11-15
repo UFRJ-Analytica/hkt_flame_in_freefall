@@ -16,12 +16,12 @@ export const CELL_AREA_M2 = (CELL.alongMm / 1000) * (CELL.acrossMm / 1000);
 export const MATERIAL_IDS = ["SIBAL", "Nomex", "PMMA", "Silicone", "Kapton", "Alumínio"] as const;
 export type MaterialId = (typeof MATERIAL_IDS)[number];
 export const MATERIAL_INFO: Record<MaterialId, { label: string; color: [number, number, number] }> = {
-  SIBAL: { label: "Tecido algodão/fibra de vidro (SIBAL)", color: [205, 191, 155] },
+  SIBAL: { label: "Cotton/fiberglass fabric (SIBAL)", color: [205, 191, 155] },
   Nomex: { label: "Nomex", color: [196, 178, 112] },
-  PMMA: { label: "PMMA (acrílico)", color: [146, 186, 198] },
+  PMMA: { label: "PMMA (acrylic)", color: [146, 186, 198] },
   Silicone: { label: "Silicone", color: [170, 160, 170] },
-  Kapton: { label: "Kapton (filme de poliimida)", color: [200, 128, 52] },
-  "Alumínio": { label: "Alumínio", color: [128, 137, 148] },
+  Kapton: { label: "Kapton (polyimide film)", color: [200, 128, 52] },
+  "Alumínio": { label: "Aluminum", color: [128, 137, 148] },
 };
 
 export interface Zone {
@@ -36,11 +36,11 @@ export interface Zone {
 
 const r = (fraction: number) => Math.round(fraction * GRID.rows);
 export const DEFAULT_ZONES: Zone[] = [
-  { id: "stowage", name: "Bolsas de estiva", hint: "parede traseira inferior", cols: [0, GRID.cols], rows: [0, r(0.36)], material: "SIBAL" },
-  { id: "racks", name: "Painéis de equipamentos", hint: "parede traseira, lado de entrada", cols: [0, 250], rows: [r(0.36), r(0.66)], material: "Alumínio" },
-  { id: "quarters", name: "Cortinas dos alojamentos", hint: "parede traseira, lado do fundo", cols: [250, GRID.cols], rows: [r(0.36), r(0.66)], material: "Nomex" },
-  { id: "cables", name: "Feixe de cabos", hint: "transição para o teto", cols: [0, GRID.cols], rows: [r(0.66), r(0.71)], material: "Kapton" },
-  { id: "ceiling", name: "Revestimento do teto", hint: "teto", cols: [0, GRID.cols], rows: [r(0.71), GRID.rows], material: "SIBAL" },
+  { id: "stowage", name: "Stowage bags", hint: "lower rear wall", cols: [0, GRID.cols], rows: [0, r(0.36)], material: "SIBAL" },
+  { id: "racks", name: "Equipment panels", hint: "rear wall, entrance side", cols: [0, 250], rows: [r(0.36), r(0.66)], material: "Alumínio" },
+  { id: "quarters", name: "Crew-quarter curtains", hint: "rear wall, far end", cols: [250, GRID.cols], rows: [r(0.36), r(0.66)], material: "Nomex" },
+  { id: "cables", name: "Cable bundle", hint: "transition to ceiling", cols: [0, GRID.cols], rows: [r(0.66), r(0.71)], material: "Kapton" },
+  { id: "ceiling", name: "Ceiling liner", hint: "ceiling", cols: [0, GRID.cols], rows: [r(0.71), GRID.rows], material: "SIBAL" },
 ];
 
 export interface Conditions {
@@ -73,41 +73,41 @@ export function materialRule(material: MaterialId, c: Conditions): MaterialRule 
     case "SIBAL": {
       const testAtmosphere = c.oxygen >= 21 && c.oxygen <= 22.2 && nearAtmosphere(c.pressure) && microgravity;
       if (testAtmosphere && Math.abs(c.flow - 20) <= 1) return {
-        behavior: 1, tier: "calibrated", title: "Calibrado",
-        evidence: "Probabilidades de avanço ajustadas nas imagens do SAFFIRE I · S1 (SIBAL, 20 cm/s, 21,5–21,7% O₂, µg).",
+        behavior: 1, tier: "calibrated", title: "Calibrated",
+        evidence: "Spread probabilities fitted to SAFFIRE I · S1 images (SIBAL, 20 cm/s, 21.5–21.7% O₂, µg).",
       };
       if (testAtmosphere && Math.abs(c.flow - 25) <= 1.5) return {
-        behavior: 1, tier: "calibrated", title: "Calibrado",
-        evidence: "Probabilidades de avanço ajustadas nas imagens do SAFFIRE-III · S1 (SIBAL, 25 cm/s, 21,2% O₂, µg; condições do artigo da equipe).",
+        behavior: 1, tier: "calibrated", title: "Calibrated",
+        evidence: "Spread probabilities fitted to SAFFIRE III · S1 images (SIBAL, 25 cm/s, 21.2% O₂, µg; conditions from the team's paper).",
       };
       const bias = [
-        c.oxygen > 22.2 && "O₂ acima do ensaio acelera a propagação: a simulação tende a subestimar.",
-        c.oxygen < 21 && "O₂ abaixo do ensaio desacelera e pode extinguir: a simulação tende a superestimar.",
-        !nearAtmosphere(c.pressure) && "Pressão diferente do ensaio não é modelada.",
-        !microgravity && "Em gravidade parcial o empuxo induz escoamento adicional; LUCI indica maior inflamabilidade em 1/6 g para alguns materiais.",
+        c.oxygen > 22.2 && "O₂ above the trial level accelerates spread: the simulation tends to underestimate.",
+        c.oxygen < 21 && "O₂ below the trial level slows spread and may cause extinction: the simulation tends to overestimate.",
+        !nearAtmosphere(c.pressure) && "Pressure differences from the trial are not modeled.",
+        !microgravity && "In partial gravity, buoyancy induces additional flow; LUCI indicates greater flammability at 1/6 g for some materials.",
       ].filter(Boolean).join(" ");
       return {
-        behavior: 1, tier: "exploratory", title: "Exploratório",
-        evidence: "Núcleo do ensaio mais próximo (SAFFIRE I a 20 cm/s ou SAFFIRE-III a 25 cm/s), com a intensidade escalada por (u/u_ref)^β, β medido entre os dois ensaios. Efeitos de O₂, pressão e gravidade não modelados.",
+        behavior: 1, tier: "exploratory", title: "Exploratory",
+        evidence: "Kernel from the nearest trial (SAFFIRE I at 20 cm/s or SAFFIRE III at 25 cm/s), with intensity scaled by (u/u_ref)^β, β measured between the two trials. O₂, pressure, and gravity effects are not modeled.",
         bias: bias || undefined,
       };
     }
     case "Nomex":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Não ignitou no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-7: a chama do PMMA consumiu a porção de PMMA e não ignitou o Nomex 0,37 mm (~22% O₂, 20 cm/s, µg). É o desfecho de uma amostra de 5 cm com ignição específica, não uma barreira demonstrada: a simulação apenas para no contato." }
-        : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Só há ensaio de Nomex em ~22% O₂, 1 atm, µg. Nestas condições não há evidência: a simulação para aqui e marca o contato." };
+        ? { behavior: 2, tier: "measured-no-spread", title: "Did not ignite in the trial · contact not modeled", evidence: "SAFFIRE II 2-7: the PMMA flame consumed the PMMA portion and did not ignite 0.37 mm Nomex (~22% O₂, 20 cm/s, µg). This is the outcome for a 5 cm sample with specific ignition, not a demonstrated barrier: the simulation simply stops at contact." }
+        : { behavior: 3, tier: "unknown", title: "Unknown", evidence: "Nomex was tested only at ~22% O₂, 1 atm, µg. There is no evidence under these conditions: the simulation stops here and marks contact." };
     case "Silicone":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Não sustentou chama no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-1 a 2-4: comprimento queimado ~0 em µg, 0,27–1,03 mm, ~22% O₂. Não é barreira demonstrada para outra exposição." }
-        : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Ensaio só em ~22% O₂, 1 atm, µg." };
+        ? { behavior: 2, tier: "measured-no-spread", title: "Did not sustain a flame in the trial · contact not modeled", evidence: "SAFFIRE II 2-1 to 2-4: burned length ~0 in µg, 0.27–1.03 mm, ~22% O₂. Not a demonstrated barrier for another exposure." }
+        : { behavior: 3, tier: "unknown", title: "Unknown", evidence: "Tested only at ~22% O₂, 1 atm, µg." };
     case "PMMA":
       return saffireAtmosphere
-        ? { behavior: 2, tier: "measured-no-spread", title: "Chama ancorada no ensaio · contato não modelado", evidence: "SAFFIRE-II 2-8/2-9: chama ancorada na base, regressão 0,01–0,04 mm/s, sem propagação ao longo da amostra. Não é barreira demonstrada." }
-        : { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Ensaio só em ~22% O₂, 1 atm, µg." };
+        ? { behavior: 2, tier: "measured-no-spread", title: "Anchored flame in the trial · contact not modeled", evidence: "SAFFIRE II 2-8/2-9: flame anchored at the base, regression 0.01–0.04 mm/s, no spread along the sample. Not a demonstrated barrier." }
+        : { behavior: 3, tier: "unknown", title: "Unknown", evidence: "Tested only at ~22% O₂, 1 atm, µg." };
     case "Kapton":
-      return { behavior: 3, tier: "unknown", title: "Desconhecido", evidence: "Nenhum ensaio de propagação de Kapton nos dados PSI deste projeto (há só medições de fumaça no SAME)." };
+      return { behavior: 3, tier: "unknown", title: "Unknown", evidence: "No Kapton spread trial in this project's PSI data (only smoke measurements in SAME)." };
     case "Alumínio":
-      return { behavior: 0, tier: "inert", title: "Não combustível (premissa)", evidence: "Estrutura metálica tratada como não combustível; não é resultado de ensaio." };
+      return { behavior: 0, tier: "inert", title: "Noncombustible (assumption)", evidence: "Metal structure treated as noncombustible; not a test result." };
   }
 }
 

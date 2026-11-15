@@ -4,6 +4,7 @@ import { ArrowUpRight, TriangleAlert, X } from "lucide-react";
 import { useModalFocus } from "../../hooks/useModalFocus";
 import { SOFIE_GEL_DATA_PATH, SOFIE_GEL_TITLE } from "./sofieGel";
 import "./sofie-gel.css";
+import { englishDisplayData } from "../../i18n/english";
 
 /* ------------------------------------------------------------------ data contract (gel-evidence.json) */
 type Kind = "published" | "derived" | "video_observation" | "exploratory" | "hypothesis" | "unavailable";
@@ -106,34 +107,34 @@ function isGelEvidence(value: unknown): value is GelEvidence {
 
 /* ------------------------------------------------------------------ helpers */
 const KIND_LABEL: Record<Kind, string> = {
-  published: "publicado",
-  derived: "derivado",
-  video_observation: "observação do vídeo",
-  exploratory: "exploratório",
-  hypothesis: "hipótese",
-  unavailable: "indisponível",
+  published: "published",
+  derived: "derived",
+  video_observation: "video observation",
+  exploratory: "exploratory",
+  hypothesis: "hypothesis",
+  unavailable: "unavailable",
 };
-const MODE_LABEL: Record<Mode, string> = { quenching: "quenching", blowoff: "blowoff", intermediate: "intermediário" };
-const LOCATION_LABEL: Record<string, string> = { "inside duct": "dentro do duto", "duct exit": "saída do duto" };
+const MODE_LABEL: Record<Mode, string> = { quenching: "quenching", blowoff: "blowoff", intermediate: "intermediate" };
+const LOCATION_LABEL: Record<string, string> = { "inside duct": "inside duct", "duct exit": "duct exit" };
 const fmt = (value: number | null | undefined, digits = 2) =>
   value == null || !Number.isFinite(value)
     ? "—"
-    : value.toLocaleString("pt-BR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+    : value.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 const DYNAMICS_LABEL: Record<string, [string, string]> = {
-  pulsationCycles: ["ciclos de pulsação", ""],
-  pulsationPeriod_s: ["período da pulsação", "s"],
-  extinction_s: ["extinção em", "s"],
-  baseTravel_cm: ["deslocamento médio da base", "cm"],
-  upstreamPulsationPeriod_s: ["período da pulsação a montante", "s"],
-  azimuthalSpinning_s: ["giro azimutal", "s"],
-  pulsation_s: ["pulsação autossustentada", "s"],
-  pulsationFrequency_Hz: ["frequência da pulsação", "Hz"],
-  peakTipSpeed_cm_s: ["velocidade de pico da ponta", "cm/s"],
-  standoff_mm: ["standoff na estagnação", "mm"],
-  quenching_s: ["quenching em", "s"],
-  sideStabilized_s: ["chama estabilizada lateralmente", "s"],
-  spinning_s: ["giro", "s"],
-  spinFrequency_Hz: ["frequência de giro", "Hz"],
+  pulsationCycles: ["pulsation cycles", ""],
+  pulsationPeriod_s: ["pulsation period", "s"],
+  extinction_s: ["extinction at", "s"],
+  baseTravel_cm: ["mean base displacement", "cm"],
+  upstreamPulsationPeriod_s: ["upstream pulsation period", "s"],
+  azimuthalSpinning_s: ["azimuthal spinning", "s"],
+  pulsation_s: ["self-sustained pulsation", "s"],
+  pulsationFrequency_Hz: ["pulsation frequency", "Hz"],
+  peakTipSpeed_cm_s: ["peak tip speed", "cm/s"],
+  standoff_mm: ["stagnation-point standoff", "mm"],
+  quenching_s: ["quenching at", "s"],
+  sideStabilized_s: ["side-stabilized flame", "s"],
+  spinning_s: ["spinning", "s"],
+  spinFrequency_Hz: ["spin frequency", "Hz"],
 };
 
 function KindTag({ kind }: { kind: Kind }) {
@@ -182,10 +183,10 @@ export default function SofieGelObservation({ onClose }: { onClose: () => void }
       })
       .then((value: unknown) => {
         if (!alive) return;
-        if (isGelEvidence(value)) setData(value);
-        else setError("O arquivo gel-evidence.json não tem o formato esperado.");
+        if (isGelEvidence(value)) setData(englishDisplayData(value));
+        else setError("The gel-evidence.json file does not have the expected format.");
       })
-      .catch((reason: unknown) => alive && setError(`Não foi possível carregar a evidência SoFIE-GEL (${String(reason)}).`));
+      .catch((reason: unknown) => alive && setError(`Could not load SoFIE-GEL evidence (${String(reason)}).`));
     return () => {
       alive = false;
     };
@@ -196,15 +197,15 @@ export default function SofieGelObservation({ onClose }: { onClose: () => void }
       <section className="modal sg-modal" role="dialog" aria-modal="true" aria-labelledby="sg-title" onClick={(event) => event.stopPropagation()}>
         <div className="modal-heading">
           <div>
-            <span className="eyebrow">NASA SoFIE-GEL · EVIDÊNCIA PUBLICADA · SEM DATASET PSI</span>
+            <span className="eyebrow">NASA SoFIE-GEL · PUBLISHED EVIDENCE · NO PSI DATASET</span>
             <h2 id="sg-title">{SOFIE_GEL_TITLE}</h2>
           </div>
-          <button className="icon-button" aria-label="Fechar evidência SoFIE-GEL" onClick={onClose}>
+          <button className="icon-button" aria-label="Close SoFIE-GEL evidence" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
         {error && <div className="data-notice">{error}</div>}
-        {!data && !error && <p className="sg-loading">Carregando a evidência SoFIE-GEL…</p>}
+        {!data && !error && <p className="sg-loading">Loading SoFIE-GEL evidence…</p>}
         {data && <Body data={data} />}
       </section>
     </div>
@@ -230,7 +231,7 @@ function Limitations({ data }: { data: GelEvidence }) {
   return (
     <div className="sg-notices" role="note">
       <h3>
-        <TriangleAlert size={15} /> E. Limitações permanentes
+        <TriangleAlert size={15} /> E. Permanent limitations
       </h3>
       <p className="sg-statement">{data.statement}</p>
       <ol>
@@ -244,7 +245,7 @@ function Limitations({ data }: { data: GelEvidence }) {
 
 function KindLegend({ data }: { data: GelEvidence }) {
   return (
-    <dl className="sg-kind-legend" aria-label="Tipos de valor">
+    <dl className="sg-kind-legend" aria-label="Value types">
       {(Object.keys(data.kinds) as Kind[]).map((kind) => (
         <div key={kind}>
           <dt>
@@ -263,49 +264,49 @@ function Identification({ data }: { data: GelEvidence }) {
   const facility = data.facility;
   const range = (v: Val<string | number | number[]>) => (Array.isArray(v.value) ? `${fmt(v.value[0], v.value[0] < 1 ? 2 : 0)}–${fmt(v.value[1], v.value[1] < 2 ? 2 : 0)} ${v.unit ?? ""}` : String(v.value));
   return (
-    <Section id="id" letter="A" title="Identificação científica" kinds={["published", "unavailable"]}>
+    <Section id="id" letter="A" title="Scientific identification" kinds={["published", "unavailable"]}>
       <dl className="sg-facts">
         <div>
-          <dt>Investigação</dt>
+          <dt>Investigation</dt>
           <dd>{inv.name}</dd>
         </div>
         <div>
-          <dt>Agência e equipe</dt>
+          <dt>Agency and team</dt>
           <dd>
             {inv.agency}. PI: {inv.principalInvestigator}
           </dd>
         </div>
         <div>
-          <dt>Plataforma</dt>
+          <dt>Platform</dt>
           <dd>{inv.platform}</dd>
         </div>
         <div>
-          <dt>Combustível e geometria</dt>
+          <dt>Fuel and geometry</dt>
           <dd>
-            {String(data.sample.material.value)}, {String(data.sample.geometry.value)} de {fmt(Number(data.sample.diameter.value), 0)} cm
+            {String(data.sample.material.value)}, {fmt(Number(data.sample.diameter.value), 0)} cm {String(data.sample.geometry.value)}
             <small>{data.sample.diameter.note}</small>
           </dd>
         </div>
         <div>
-          <dt>Faixas da campanha</dt>
+          <dt>Campaign ranges</dt>
           <dd>
-            fluxo {range(facility.flowRange)} · O₂ {range(facility.o2Range)} · pressão {range(facility.pressureRange)}
-            <small>resumo publicado de 2025</small>
+            flow {range(facility.flowRange)} · O₂ {range(facility.o2Range)} · pressure {range(facility.pressureRange)}
+            <small>published 2025 summary</small>
           </dd>
         </div>
         <div>
-          <dt>Dataset NASA PSI</dt>
+          <dt>NASA PSI dataset</dt>
           <dd>
             <KindTag kind="unavailable" /> {inv.psi.reason}
           </dd>
         </div>
       </dl>
       <p className="sg-objective">
-        <strong>Objetivo.</strong> {inv.objective}
+        <strong>Objective.</strong> {inv.objective}
       </p>
-      <p className="sg-note">{data.context.role} Não está conectado a: {data.context.notConnectedTo.join(", ")}.</p>
+      <p className="sg-note">{data.context.role} Not connected to: {data.context.notConnectedTo.join(", ")}.</p>
       <a className="text-link" href={inv.officialPage} target="_blank" rel="noreferrer">
-        Página NASA SoFIE-GEL <ArrowUpRight size={13} />
+        NASA SoFIE-GEL page <ArrowUpRight size={13} />
       </a>
     </Section>
   );
@@ -315,24 +316,24 @@ function Identification({ data }: { data: GelEvidence }) {
 function Cases({ data }: { data: GelEvidence }) {
   const rows = data.cases.rows;
   return (
-    <Section id="cases" letter="B" title="Cinco casos de extinção publicados" kinds={["published", "derived", "unavailable"]}>
+    <Section id="cases" letter="B" title="Five published extinction cases" kinds={["published", "derived", "unavailable"]}>
       <p className="sg-note sg-emph">
-        Fonte: {data.cases.source}. Esfera de PMMA de 4 cm; extinção por depleção gradual de O₂ a fluxo constante. Valores como
-        impressos.
+        Source: {data.cases.source}. 4 cm PMMA sphere; extinction by gradual O₂ depletion at constant flow. Values as
+        printed.
       </p>
       <div className="table-scroll sg-table-scroll">
         <table className="sg-table">
           <thead>
             <tr>
-              <th>Caso · amostra</th>
-              <th>Modo de extinção</th>
-              <th>Local</th>
-              <th>Fluxo (cm/s)</th>
-              <th>O₂ na extinção (%)</th>
-              <th>Pressão (atm)</th>
+              <th>Case · sample</th>
+              <th>Extinction mode</th>
+              <th>Location</th>
+              <th>Flow (cm/s)</th>
+              <th>O₂ at extinction (%)</th>
+              <th>Pressure (atm)</th>
               <th>Re</th>
-              <th>Taxa de deformação (1/s)</th>
-              <th>Perda condutiva (W/cm²)</th>
+              <th>Strain rate (1/s)</th>
+              <th>Conductive heat loss (W/cm²)</th>
             </tr>
           </thead>
           <tbody>
@@ -355,7 +356,7 @@ function Cases({ data }: { data: GelEvidence }) {
                 <td className="mono">{fmt(row.strainRate.value)}</td>
                 <td className="mono">
                   {row.conductiveHeatLoss.kind === "unavailable" ? (
-                    <span className="sg-missing">não registrada</span>
+                    <span className="sg-missing">not recorded</span>
                   ) : (
                     fmt(row.conductiveHeatLoss.value)
                   )}
@@ -366,9 +367,9 @@ function Cases({ data }: { data: GelEvidence }) {
         </table>
       </div>
       <p className="sg-note">
-        <KindTag kind="derived" /> Coerência da tabela: 3U/(2R) difere da taxa publicada em no máximo {fmt(data.cases.consistency.strainRate.value, 4)} 1/s
-        (limite de arredondamento 0,00875); os cinco Re correspondem a uma única viscosidade de {fmt(data.cases.consistency.viscosity.value?.[0], 3)}–
-        {fmt(data.cases.consistency.viscosity.value?.[1], 4)} cm²/s (ar a temperatura ambiente).
+        <KindTag kind="derived" /> Table consistency: 3U/(2R) differs from the published rate by at most {fmt(data.cases.consistency.strainRate.value, 4)} 1/s
+        (rounding bound 0.00875); all five Re values correspond to a single viscosity of {fmt(data.cases.consistency.viscosity.value?.[0], 3)}–
+        {fmt(data.cases.consistency.viscosity.value?.[1], 4)} cm²/s (room-temperature air).
       </p>
       <div className="sg-dynamics">
         {rows
@@ -395,7 +396,7 @@ function Cases({ data }: { data: GelEvidence }) {
           ))}
       </div>
       <h4 className="sg-subtitle">
-        Conclusões publicadas <KindTag kind="published" />
+        Published findings <KindTag kind="published" />
       </h4>
       <ul className="sg-list sg-findings">
         {data.publishedFindings.map((finding) => (
@@ -421,7 +422,7 @@ function ExtinctionChart({ rows }: { rows: CaseRow[] }) {
   const y = (o: number) => M.top + (1 - (o - yMin) / (yMax - yMin)) * (H - M.top - M.bottom);
   return (
     <div className="sg-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="O2 na extinção versus taxa de deformação no ponto de estagnação, cinco casos publicados">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="O2 at extinction versus stagnation-point strain rate, five published cases">
         {[0.3, 1, 3, 10, 30].map((t) => (
           <g key={t}>
             <line className="sg-grid" x1={x(t)} x2={x(t)} y1={M.top} y2={H - M.bottom} />
@@ -440,20 +441,20 @@ function ExtinctionChart({ rows }: { rows: CaseRow[] }) {
         ))}
         <line className="sg-ref" x1={x(7.5)} x2={x(7.5)} y1={M.top} y2={H - M.bottom} />
         <text className="sg-region-label" x={x(7.5) + 5} y={M.top + 10}>
-          7,5 1/s: junção dos ramos (publicado, 2025)
+          7.5 1/s: branch junction (published, 2025)
         </text>
         <text className="sg-axis-label" x={(M.left + W - M.right) / 2} y={H - 8} textAnchor="middle">
-          taxa de deformação a = 3U/(2R) (1/s, escala log)
+          strain rate a = 3U/(2R) (1/s, log scale)
         </text>
         <text className="sg-axis-label" x={12} y={M.top - 8}>
-          O₂ na extinção (%)
+          O₂ at extinction (%)
         </text>
         {rows.map((row) => {
           const cx = x(row.strainRate.value!);
           const cy = y(row.o2AtExtinction.value!);
           return (
             <g key={row.sample}>
-              <title>{`${row.sample}: ${MODE_LABEL[row.extinctionMode.value as Mode]}, U = ${fmt(row.flow.value)} cm/s, a = ${fmt(row.strainRate.value)} 1/s, O₂ = ${fmt(row.o2AtExtinction.value)} %, p = ${fmt(row.pressure.value)} atm (publicado)`}</title>
+              <title>{`${row.sample}: ${MODE_LABEL[row.extinctionMode.value as Mode]}, U = ${fmt(row.flow.value)} cm/s, a = ${fmt(row.strainRate.value)} 1/s, O₂ = ${fmt(row.o2AtExtinction.value)} %, p = ${fmt(row.pressure.value)} atm (published)`}</title>
               <ModeMark mode={row.extinctionMode.value as Mode} x={cx} y={cy} />
               <text className="sg-mark-label" x={cx + 9} y={cy - 7}>
                 {row.sample}
@@ -463,8 +464,8 @@ function ExtinctionChart({ rows }: { rows: CaseRow[] }) {
         })}
       </svg>
       <p className="sg-chart-key">
-        ● quenching · ■ blowoff · ◆ intermediário. Cinco pontos publicados, sem ajuste nem extrapolação; a forma em "U" da fronteira
-        completa está no artigo de 2025 (não transcrita).
+        ● quenching · ■ blowoff · ◆ intermediate. Five published points, with no fit or extrapolation; the full boundary's "U" shape
+        appears in the 2025 paper (not transcribed here).
       </p>
     </div>
   );
@@ -485,7 +486,7 @@ function CaseBars({ rows, field, title, unit, digits, log }: { rows: CaseRow[]; 
       <h4>
         {title} <KindTag kind="published" />
       </h4>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title} por caso`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title} by case`}>
         {rows.map((row, i) => {
           const y = M.top + i * rowH;
           const entry = row[field];
@@ -498,12 +499,12 @@ function CaseBars({ rows, field, title, unit, digits, log }: { rows: CaseRow[]; 
                 <>
                   <rect className="sg-bar-missing" x={M.left} y={y + 7} width={W - M.left - M.right} height={rowH - 14} rx={3} />
                   <text className="sg-missing-label" x={M.left + 8} y={y + rowH / 2 + 4}>
-                    não registrada
+                    not recorded
                   </text>
                 </>
               ) : (
                 <>
-                  <title>{`${row.sample}: ${fmt(entry.value, digits)} ${unit} (publicado)`}</title>
+                  <title>{`${row.sample}: ${fmt(entry.value, digits)} ${unit} (published)`}</title>
                   <rect className={`sg-bar sg-mode-${row.extinctionMode.value}`} x={M.left} y={y + 7} width={Math.max(scale(entry.value), 2)} height={rowH - 14} rx={3} />
                   <text className="sg-bar-label" x={M.left + Math.max(scale(entry.value), 2) + 6} y={y + rowH / 2 + 4}>
                     {fmt(entry.value, digits)}
@@ -516,7 +517,7 @@ function CaseBars({ rows, field, title, unit, digits, log }: { rows: CaseRow[]; 
       </svg>
       <p className="sg-chart-key">
         {unit}
-        {log ? " · escala log" : ""}
+        {log ? " · log scale" : ""}
       </p>
     </div>
   );
@@ -525,17 +526,17 @@ function CaseBars({ rows, field, title, unit, digits, log }: { rows: CaseRow[]; 
 function Comparison({ data }: { data: GelEvidence }) {
   const rows = data.cases.rows;
   return (
-    <Section id="compare" letter="C" title="Comparação experimental dos cinco casos" kinds={["published"]}>
+    <Section id="compare" letter="C" title="Experimental comparison of the five cases" kinds={["published"]}>
       <ExtinctionChart rows={rows} />
       <div className="sg-three">
-        <CaseBars rows={rows} field="flow" title="Velocidade do ar" unit="cm/s" digits={2} log />
-        <CaseBars rows={rows} field="o2AtExtinction" title="O₂ na extinção" unit="%" digits={2} />
-        <CaseBars rows={rows} field="conductiveHeatLoss" title="Perda condutiva ao sólido" unit="W/cm²" digits={2} />
+        <CaseBars rows={rows} field="flow" title="Air velocity" unit="cm/s" digits={2} log />
+        <CaseBars rows={rows} field="o2AtExtinction" title="O₂ at extinction" unit="%" digits={2} />
+        <CaseBars rows={rows} field="conductiveHeatLoss" title="Conductive heat loss to the solid" unit="W/cm²" digits={2} />
       </div>
       <p className="sg-note">
-        Associação observada, não causalidade: nos cinco casos, quenching ocorre nos fluxos mais baixos e blowoff nos mais altos, como
-        descrevem os autores. Pressão praticamente constante (1,03–1,07 atm) e pré-aquecimento diferente entre casos impedem isolar o
-        efeito de uma única variável; nenhuma regra de extinção é derivada aqui.
+        Observed association, not causation: in these five cases, quenching occurs at lower flows and blowoff at higher flows, as
+        described by the authors. Nearly constant pressure (1.03–1.07 atm) and different preheating between cases prevent isolating
+        a single variable's effect; no extinction rule is derived here.
       </p>
     </Section>
   );
@@ -555,14 +556,14 @@ function SpinChart({ data }: { data: GelEvidence }) {
   const [lo, hi] = v.publishedReference.value ?? [2, 3.5];
   return (
     <div className="sg-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Frequência dominante por janela do vídeo 1410C, análise exploratória">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Dominant frequency by window in video 1410C, exploratory analysis">
         <rect className="sg-band" x={M.left} y={y(hi)} width={W - M.left - M.right} height={y(lo) - y(hi)} />
         <text className="sg-region-label" x={W - M.right - 4} y={y(hi) + 12} textAnchor="end">
-          faixa publicada 2–3,5 Hz (comparável só sob H1)
+          published range 2–3.5 Hz (comparable only under H1)
         </text>
         <line className="sg-ref" x1={M.left} x2={W - M.right} y1={y(v.method.nyquist_videoHz)} y2={y(v.method.nyquist_videoHz)} />
         <text className="sg-region-label" x={M.left + 4} y={y(v.method.nyquist_videoHz) - 5}>
-          Nyquist 5 Hz (10 quadros únicos/s)
+          Nyquist 5 Hz (10 unique frames/s)
         </text>
         {[0, 1, 2, 3, 4, 5].map((t) => (
           <g key={t}>
@@ -579,29 +580,29 @@ function SpinChart({ data }: { data: GelEvidence }) {
         ))}
         {v.editTransition_video_s.value && (
           <rect className="sg-cut" x={x(v.editTransition_video_s.value[0])} y={M.top} width={Math.max(x(v.editTransition_video_s.value[1]) - x(v.editTransition_video_s.value[0]), 3)} height={H - M.top - M.bottom}>
-            <title>Transição de edição (observação do vídeo)</title>
+            <title>Edit transition (video observation)</title>
           </rect>
         )}
         <text className="sg-axis-label" x={(M.left + W - M.right) / 2} y={H - 6} textAnchor="middle">
-          centro da janela (s de vídeo)
+          window center (video s)
         </text>
         <text className="sg-axis-label" x={8} y={M.top - 6}>
-          pico (Hz de vídeo)
+          peak (video Hz)
         </text>
         {windows.map((w) => {
           const cx = x((w.video_s[0] + w.video_s[1]) / 2);
           const cy = y(w.peak_Hz!);
           return (
             <g key={w.video_s[0]}>
-              <title>{`Janela ${fmt(w.video_s[0], 1)}–${fmt(w.video_s[1], 1)} s: pico ${fmt(w.peak_Hz, 2)} Hz de vídeo, potência ${fmt(w.peakPower, 2)} (limiar 99 % ${fmt(w.threshold99, 2)}) — ${w.significant ? "significativo" : "não significativo"} · exploratório`}</title>
+              <title>{`Window ${fmt(w.video_s[0], 1)}–${fmt(w.video_s[1], 1)} s: peak ${fmt(w.peak_Hz, 2)} video Hz, power ${fmt(w.peakPower, 2)} (99 % threshold ${fmt(w.threshold99, 2)}) — ${w.significant ? "significant" : "not significant"} · exploratory`}</title>
               <circle className={w.significant ? "sg-spin" : "sg-spin sg-spin-ns"} cx={cx} cy={cy} r={5.5} />
             </g>
           );
         })}
       </svg>
       <p className="sg-chart-key">
-        ● janela significativa (permutação, 99 %) · ○ não significativa · faixa cinza: transição de edição. Picos abaixo de 1 Hz são deriva
-        lenta da chama envolvente.
+        ● significant window (permutation, 99 %) · ○ not significant · gray band: edit transition. Peaks below 1 Hz reflect slow drift
+        of the enveloping flame.
       </p>
     </div>
   );
@@ -611,16 +612,16 @@ function Video1410C({ data }: { data: GelEvidence }) {
   const v = data.video1410C;
   const summary = v.summary.value;
   return (
-    <Section id="video" letter="D" title="Caso 1410C: vídeo público e rotação aparente da chama" kinds={["video_observation", "exploratory", "hypothesis", "published", "unavailable"]}>
+    <Section id="video" letter="D" title="Case 1410C: public video and apparent flame rotation" kinds={["video_observation", "exploratory", "hypothesis", "published", "unavailable"]}>
       <div className="sg-exploratory-label" role="note">
         <TriangleAlert size={15} />
         <strong>{v.label}</strong>
-        <span>Não é usado como parâmetro de modelo.</span>
+        <span>Not used as a model parameter.</span>
       </div>
       <dl className="sg-facts">
         <div>
           <dt>
-            Vídeo <KindTag kind="video_observation" />
+            Video <KindTag kind="video_observation" />
           </dt>
           <dd>
             “{v.video.title}” · NASA, {v.video.publicRelease}
@@ -628,35 +629,35 @@ function Video1410C({ data }: { data: GelEvidence }) {
           </dd>
         </div>
         <div>
-          <dt>Associação ao teste</dt>
+          <dt>Test association</dt>
           <dd>
             1410C
             <small>{v.video.association}</small>
           </dd>
         </div>
         <div>
-          <dt>Arquivo</dt>
+          <dt>File</dt>
           <dd>
             {v.video.codec.toUpperCase()} {v.video.resolution.join(" × ")} · {fmt(v.video.fps, 0)} fps · {fmt(v.video.duration_s, 0)} s
             <small>{v.video.overlay}</small>
           </dd>
         </div>
         <div>
-          <dt>Duplicação de quadros</dt>
+          <dt>Frame duplication</dt>
           <dd>
-            cada quadro-fonte repetido {v.cadence.value}× → {fmt(v.cadence.uniqueFramesPerVideoSecond, 0)} quadros únicos por segundo de vídeo
+            each source frame repeated {v.cadence.value}× → {fmt(v.cadence.uniqueFramesPerVideoSecond, 0)} unique frames per video second
           </dd>
         </div>
         <div>
-          <dt>Edição</dt>
+          <dt>Editing</dt>
           <dd>
-            transição em {fmt(v.editTransition_video_s.value?.[0], 1)}–{fmt(v.editTransition_video_s.value?.[1], 1)} s; segmentos{" "}
-            {v.segments.map((s) => `${fmt(s.value?.[0], 1)}–${fmt(s.value?.[1], 1)} s`).join(" e ")}
+            transition at {fmt(v.editTransition_video_s.value?.[0], 1)}–{fmt(v.editTransition_video_s.value?.[1], 1)} s; segments{" "}
+            {v.segments.map((s) => `${fmt(s.value?.[0], 1)}–${fmt(s.value?.[1], 1)} s`).join(" and ")}
           </dd>
         </div>
         <div>
           <dt>
-            Escala espacial <KindTag kind="unavailable" />
+            Spatial scale <KindTag kind="unavailable" />
           </dt>
           <dd>
             <small>{v.spatialScale.reason}</small>
@@ -668,10 +669,10 @@ function Video1410C({ data }: { data: GelEvidence }) {
         <table className="sg-table sg-compact">
           <thead>
             <tr>
-              <th>Hipótese de base de tempo</th>
-              <th>Premissa</th>
-              <th>Faixa física das janelas giratórias</th>
-              <th>Janelas na faixa publicada</th>
+              <th>Time-base hypothesis</th>
+              <th>Assumption</th>
+              <th>Physical frequency range of spinning windows</th>
+              <th>Windows in the published range</th>
             </tr>
           </thead>
           <tbody>
@@ -680,14 +681,14 @@ function Video1410C({ data }: { data: GelEvidence }) {
               return (
                 <tr key={key}>
                   <td>
-                    {key === "H1_realTime" ? "H1 · tempo real" : "H2 · câmera lenta 3×"} <KindTag kind="hypothesis" />
+                    {key === "H1_realTime" ? "H1 · real time" : "H2 · 3× slow motion"} <KindTag kind="hypothesis" />
                   </td>
                   <td className="sg-small">{h.assumes}</td>
                   <td className="mono">
                     {fmt(h.value?.[0])}–{fmt(h.value?.[1])} Hz
                   </td>
                   <td className="mono">
-                    {h.windowsInsidePublishedRange} de {summary?.spinningWindows}
+                    {h.windowsInsidePublishedRange} of {summary?.spinningWindows}
                   </td>
                 </tr>
               );
@@ -697,13 +698,13 @@ function Video1410C({ data }: { data: GelEvidence }) {
       </div>
       <ul className="sg-list sg-caveats">
         <li>
-          <KindTag kind="published" /> Faixa publicada para 1410C: {fmt(v.publishedReference.value?.[0], 1)}–{fmt(v.publishedReference.value?.[1], 1)} Hz
-          (chamas giratórias por cerca de 35 s). Mostrada ao lado, não misturada aos resultados do vídeo.
+          <KindTag kind="published" /> Published range for 1410C: {fmt(v.publishedReference.value?.[0], 1)}–{fmt(v.publishedReference.value?.[1], 1)} Hz
+          (spinning flames for about 35 s). Shown alongside, not mixed with video results.
         </li>
         <li>
-          <KindTag kind="exploratory" /> {summary?.spinningWindows} de {summary?.analysedWindows} janelas com periodicidade significativa entre{" "}
-          {fmt(summary?.peakRange_videoHz[0])} e {fmt(summary?.peakRange_videoHz[1])} Hz de vídeo ({v.method.window_s} s por janela, passo de{" "}
-          {v.method.step_s} s, {v.method.permutations} permutações, semente {v.method.seed}).
+          <KindTag kind="exploratory" /> {summary?.spinningWindows} of {summary?.analysedWindows} windows with significant periodicity between{" "}
+          {fmt(summary?.peakRange_videoHz[0])} and {fmt(summary?.peakRange_videoHz[1])} video Hz ({v.method.window_s} s per window, step{" "}
+          {v.method.step_s} s, {v.method.permutations} permutations, seed {v.method.seed}).
         </li>
         <li>
           <KindTag kind="hypothesis" /> {v.timeBase.note}
@@ -720,7 +721,7 @@ function Sources({ data }: { data: GelEvidence }) {
   return (
     <section className="sg-section" aria-labelledby="sg-sources">
       <h3 id="sg-sources" className="sg-sources-title">
-        Fontes
+        Sources
       </h3>
       <ul className="sg-sources">
         {data.sources.map((s) => (

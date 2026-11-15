@@ -29,7 +29,7 @@ export function useMediaIndex() {
 const mediaUrl = (investigationId: string, file: string) =>
   `/api/media?${new URLSearchParams({ investigation: investigationId, file })}`;
 const playable = (file: string) => /\.(mp4|mov)$/i.test(file);
-const megabytes = (bytes?: number) => (bytes ? `${Math.max(1, Math.round(bytes / 1e6))} MB` : "tamanho desconhecido");
+const megabytes = (bytes?: number) => (bytes ? `${Math.max(1, Math.round(bytes / 1e6))} MB` : "unknown size");
 const shortName = (file: string, investigationId: string) => file.replace(`${investigationId}_Raw Data_`, "").replace(/^.*_Raw Data_/, "");
 
 /** Raw NASA PSI video(s) for one tabular record, linked only by explicit filename rules. */
@@ -46,9 +46,9 @@ export function RecordVideos({ recordId, investigationId }: { recordId: string; 
       <div className="record-videos muted">
         <Film size={13} aria-hidden="true" />
         <span>
-          {investigation.videoCount} vídeos brutos desta investigação no PSI, sem ligação segura a este registro.{" "}
+          {investigation.videoCount} raw videos for this investigation in PSI, with no reliable link to this record.{" "}
           <a href={investigation.portalUrl} target="_blank" rel="noreferrer">
-            Ver no PSI <ArrowUpRight size={11} />
+            View in PSI <ArrowUpRight size={11} />
           </a>
         </span>
       </div>
@@ -57,8 +57,8 @@ export function RecordVideos({ recordId, investigationId }: { recordId: string; 
 
   const heading =
     link.precision === "test"
-      ? link.count > 1 ? `${link.count} vídeos deste ensaio` : "Vídeo deste ensaio"
-      : `${link.count} vídeos gravados no mesmo dia de teste (não necessariamente desta linha)`;
+      ? link.count > 1 ? `${link.count} videos of this test` : "Video of this test"
+      : `${link.count} videos recorded on the same test day (not necessarily for this row)`;
   return (
     <div className="record-videos">
       <p className="record-videos-heading">
@@ -71,22 +71,22 @@ export function RecordVideos({ recordId, investigationId }: { recordId: string; 
             <small>{megabytes(investigation.files[file])}</small>
             {playable(file) && (
               <button className="button secondary small" onClick={() => setPlaying(playing === file ? null : file)} aria-pressed={playing === file}>
-                <Play size={11} /> {playing === file ? "Fechar" : "Assistir"}
+                <Play size={11} /> {playing === file ? "Close" : "Watch"}
               </button>
             )}
             <a className="button secondary small" href={mediaUrl(investigationId, file)} target="_blank" rel="noreferrer">
-              <Download size={11} /> Baixar
+              <Download size={11} /> Download
             </a>
           </li>
         ))}
       </ul>
-      {link.count > link.videos.length && <small>+{link.count - link.videos.length} no PSI.</small>}
+      {link.count > link.videos.length && <small>+{link.count - link.videos.length} in PSI.</small>}
       {playing && (
         <video className="record-video-player" controls autoPlay preload="metadata" src={mediaUrl(investigationId, playing)}>
-          Seu navegador não reproduz este vídeo; use “Baixar”.
+          Your browser cannot play this video; use “Download”.
         </video>
       )}
-      <small className="muted">Vídeo bruto da NASA, transmitido diretamente do PSI. Arquivos .ts exigem download (ex.: VLC).</small>
+      <small className="muted">Raw NASA video, streamed directly from PSI. Download .ts files to play them (e.g., in VLC).</small>
     </div>
   );
 }

@@ -4,17 +4,17 @@
 
 export type GravityId = "orbit" | "moon" | "mars";
 export const GRAVITY_ENVIRONMENTS: { id: GravityId; label: string; g: number; short: string }[] = [
-  { id: "orbit", label: "Órbita", g: 0, short: "0 g" },
-  { id: "moon", label: "Lua", g: 0.166, short: "0,17 g" },
-  { id: "mars", label: "Marte", g: 0.38, short: "0,38 g" },
+  { id: "orbit", label: "Orbit", g: 0, short: "0 g" },
+  { id: "moon", label: "Moon", g: 0.166, short: "0.17 g" },
+  { id: "mars", label: "Mars", g: 0.38, short: "0.38 g" },
 ];
 export const gravityOf = (id: GravityId) => GRAVITY_ENVIRONMENTS.find((env) => env.id === id)!;
 
 export const SURFACE_PRESETS = [
   {
     id: "lunar-exploration",
-    label: "Habitat lunar · atmosfera de exploração",
-    note: "8,2 psia (56,5 kPa) e 34% O₂: atmosfera de exploração estudada pela NASA para encurtar o prebreathe de EVA. Ventilação hipotética.",
+    label: "Lunar habitat · exploration atmosphere",
+    note: "8.2 psia (56.5 kPa) and 34% O₂: exploration atmosphere studied by NASA to shorten EVA prebreathe. Hypothetical ventilation.",
     atmosphere: { oxygen: 34, pressure: 56.5, flow: 10 },
     gravity: "moon" as GravityId,
   },
@@ -47,48 +47,48 @@ export interface Assessment {
   criteria: Criterion[];
 }
 
-const fmt = (n: number, digits = 1) => n.toLocaleString("pt-BR", { maximumFractionDigits: digits });
+const fmt = (n: number, digits = 1) => n.toLocaleString("en-US", { maximumFractionDigits: digits });
 
 /** Domain of the SAFFIRE I · S1 neighbourhood model (PSI-98:t0:r2). */
 export function assessSaffireS1(s: Scenario): Assessment {
   const criteria: Criterion[] = [];
   criteria.push({
-    id: "material", label: "Material", scenario: s.material, domain: "SIBAL 0,37 mm",
+    id: "material", label: "Material", scenario: s.material, domain: "SIBAL 0.37 mm",
     status: s.material === "SIBAL" ? "ok" : "out",
     note: s.material === "SIBAL"
-      ? "Mesmo tecido do ensaio; a espessura da superfície do cenário não é verificada."
-      : "As probabilidades foram ajustadas só em SIBAL. Não há transferência para outro material.",
+      ? "Same fabric as the trial; the scenario's surface thickness is not verified."
+      : "Probabilities were fitted only to SIBAL. No transfer to another material is available.",
   });
   const [o2Low, o2High] = [21.5, 21.7];
   const o2Gap = s.oxygen < o2Low ? o2Low - s.oxygen : s.oxygen > o2High ? s.oxygen - o2High : 0;
   criteria.push({
-    id: "oxygen", label: "Oxigênio", scenario: `${fmt(s.oxygen)}%`, domain: "21,5–21,7%",
+    id: "oxygen", label: "Oxygen", scenario: `${fmt(s.oxygen)}%`, domain: "21.5–21.7%",
     status: o2Gap === 0 ? "ok" : "out",
-    note: o2Gap === 0 ? "Dentro da faixa medida."
-      : "Um único ensaio não identifica o efeito do O₂; a taxa de propagação cresce com O₂ e não pode ser reescalada daqui.",
+    note: o2Gap === 0 ? "Within the measured range."
+      : "A single trial does not identify the O₂ effect; spread rate increases with O₂ and cannot be rescaled from this evidence.",
   });
   criteria.push({
-    id: "pressure", label: "Pressão", scenario: `${fmt(s.pressure)} kPa`, domain: "não tabulada",
+    id: "pressure", label: "Pressure", scenario: `${fmt(s.pressure)} kPa`, domain: "not tabulated",
     status: "warn",
-    note: "A pressão não consta da tabela do ensaio: permanece desconhecida, e nenhuma faixa em torno de 1 atm é aprovada automaticamente.",
+    note: "Pressure is not listed in the trial table: it remains unknown, and no range around 1 atm is automatically accepted.",
   });
   const flowGap = Math.min(Math.abs(s.flow - 20), Math.abs(s.flow - 25)) < 1e-6 ? 0 : Infinity;
   const between = s.flow > 20 && s.flow < 25;
   criteria.push({
-    id: "flow", label: "Escoamento", scenario: `${fmt(s.flow)} cm/s`, domain: "20 e 25 cm/s, concorrente",
+    id: "flow", label: "Flow", scenario: `${fmt(s.flow)} cm/s`, domain: "20 and 25 cm/s, concurrent",
     status: flowGap === 0 ? "ok" : between ? "warn" : "out",
     note: flowGap === 0
-      ? "Velocidade de um dos ensaios (SAFFIRE I ou III); a direção do escoamento em relação à superfície do cenário não é modelada."
-      : "Velocidade medida em dois ensaios (20 e 25 cm/s). Fora desse intervalo a dependência é extrapolada com o expoente medido.",
+      ? "Speed from one of the trials (SAFFIRE I or III); flow direction relative to the scenario surface is not modeled."
+      : "Speed measured in two trials (20 and 25 cm/s). Outside this interval, the dependence is extrapolated using the measured exponent.",
   });
   const gravity = s.gravityG < 0.01;
   criteria.push({
-    id: "gravity", label: "Gravidade", scenario: s.gravityG < 0.01 ? "microgravidade" : `${fmt(s.gravityG, 2)} g`,
-    domain: "microgravidade (Cygnus)",
+    id: "gravity", label: "Gravity", scenario: s.gravityG < 0.01 ? "microgravity" : `${fmt(s.gravityG, 2)} g`,
+    domain: "microgravity (Cygnus)",
     status: gravity ? "ok" : "out",
     note: gravity
-      ? "Mesmo regime do ensaio."
-      : "Em gravidade parcial o empuxo volta a induzir escoamento. LUCI e FM² indicam que alguns materiais queimam com menos O₂ em 1/6 g do que em 1 g: nem µg nem 1 g são limites conservadores.",
+      ? "Same regime as the trial."
+      : "In partial gravity, buoyancy again induces flow. LUCI and FM² indicate that some materials burn with less O₂ at 1/6 g than at 1 g: neither µg nor 1 g is a conservative bound.",
   });
   const status: Status = criteria.some((c) => c.status === "out") ? "out"
     : criteria.some((c) => c.status === "warn") ? "warn" : "ok";
@@ -143,7 +143,7 @@ export interface ModelingTargets {
 export function readModelingTargets(value: unknown): ModelingTargets {
   const data = value as Partial<ModelingTargets> | null;
   if (!data || data.schemaVersion !== 1 || !Array.isArray(data.records) || !Array.isArray(data.derived)) {
-    throw new Error("Tabela de alvos de modelagem inválida.");
+    throw new Error("Invalid modeling-target table.");
   }
   return data as ModelingTargets;
 }
@@ -162,7 +162,7 @@ export function rankComparables(records: TargetRecord[], s: Scenario): Comparabl
     const materialMatch: Comparable["materialMatch"] = record.material === s.material ? "exact" : parts.includes(s.material) ? "partial" : "none";
     const mismatches: string[] = [];
     let score = materialMatch === "exact" ? 0 : materialMatch === "partial" ? 1.5 : 4;
-    if (materialMatch !== "exact") mismatches.push(materialMatch === "partial" ? "material composto" : "outro material");
+    if (materialMatch !== "exact") mismatches.push(materialMatch === "partial" ? "composite material" : "different material");
     if (record.oxygenPct) {
       const [low, high] = record.oxygenPct;
       const gap = s.oxygen < low ? low - s.oxygen : s.oxygen > high ? s.oxygen - high : 0;
@@ -170,15 +170,15 @@ export function rankComparables(records: TargetRecord[], s: Scenario): Comparabl
       if (gap > 0.5) mismatches.push(`ΔO₂ ${fmt(gap)} p.p.`);
     } else {
       score += 1;
-      mismatches.push("O₂ não tabulado");
+      mismatches.push("O₂ not tabulated");
     }
     const flowGap = Math.abs(record.flowCmS - s.flow);
     score += flowGap / 10;
-    if (flowGap > 2) mismatches.push(`Δ escoamento ${fmt(flowGap)} cm/s`);
-    if (s.pressure < 95 || s.pressure > 105) mismatches.push("pressão não tabulada");
+    if (flowGap > 2) mismatches.push(`Δ flow ${fmt(flowGap)} cm/s`);
+    if (s.pressure < 95 || s.pressure > 105) mismatches.push("pressure not tabulated");
     if (s.gravityG >= 0.01) {
       score += 2;
-      mismatches.push("ensaio em µg");
+      mismatches.push("trial in µg");
     }
     if (record.outcome === null) score += 0.5;
     return { record, score, mismatches, materialMatch };

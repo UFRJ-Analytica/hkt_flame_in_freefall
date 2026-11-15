@@ -15,6 +15,7 @@ import {
 import { Html, OrbitControls, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import type { SceneProps } from "../types";
+import { englishText } from "../i18n/english";
 import { phase, surfaceFrame, visualFlow, visualState, visualTime, type SurfaceId, type V3 } from "./scene/visualRules";
 
 const IVORY = "#d4d0bb";
@@ -26,10 +27,10 @@ const AMBER = "#ffc36c";
 const ignoreRaycast = () => {};
 const names: Record<string, string> = {
   console_main: "CONSOLE",
-  crew_seats: "ASSENTOS",
-  wall_panels: "ISOLAMENTO",
-  cable_run: "CABEAMENTO",
-  floor: "PISO",
+  crew_seats: "SEATS",
+  wall_panels: "INSULATION",
+  cable_run: "WIRING",
+  floor: "FLOOR",
 };
 
 function useReducedMotion() {
@@ -1023,7 +1024,7 @@ function Fire({ props, reduced }: { props: SceneProps; reduced: boolean }) {
       <pointLight color="#efad69" intensity={0.75 * pulse} distance={1.45} decay={2} />
       <Html position={[0, -0.19, 0]} center style={{ pointerEvents: "none" }}>
         <div style={{ color: "#c7b8a5", background: "#08131ee8", border: "1px solid #aa815043", padding: "4px 6px", borderRadius: 3, font: "9px monospace", whiteSpace: "nowrap" }}>
-          CENÁRIO ILUSTRATIVO · NÃO PREDITIVO
+          ILLUSTRATIVE SCENARIO · NOT PREDICTIVE
         </div>
       </Html>
     </group>
@@ -1082,7 +1083,7 @@ function Thermal({ props }: { props: SceneProps }) {
         </mesh>
       ))}
       <Html position={[0, -state.frame.footprint[1] * 2.3, 0.02]} center style={{ pointerEvents: "none" }}>
-        <div style={{ color: "#c6b9c9", background: "#08131ee8", padding: "4px 6px", borderRadius: 3, font: "9px monospace", whiteSpace: "nowrap" }}>CONTORNOS ILUSTRATIVOS · SEM ESCALA TÉRMICA</div>
+        <div style={{ color: "#c6b9c9", background: "#08131ee8", padding: "4px 6px", borderRadius: 3, font: "9px monospace", whiteSpace: "nowrap" }}>ILLUSTRATIVE CONTOURS · NO THERMAL SCALE</div>
       </Html>
     </group>
   );
@@ -1247,8 +1248,8 @@ function World(props: SceneProps) {
                   padding: "6px 9px",
                 }}
               >
-                {names[props.selectedSurface]} · {props.materialAssignments[props.selectedSurface] || "NÃO ATRIBUÍDO"}
-                <span style={{ display: "block", marginTop: 4, color: "#a3b2bc", fontSize: 8, letterSpacing: "0.7px" }}>MATERIAL HIPOTÉTICO</span>
+                {names[props.selectedSurface]} · {englishText(props.materialAssignments[props.selectedSurface] || "UNASSIGNED")}
+                <span style={{ display: "block", marginTop: 4, color: "#a3b2bc", fontSize: 8, letterSpacing: "0.7px" }}>HYPOTHETICAL MATERIAL</span>
               </div>
             </Html>
           </group>
@@ -1299,7 +1300,7 @@ function Fallback() {
         fontFamily: "system-ui",
       }}
     >
-      <strong>Visualização 3D indisponível</strong>
+      <strong>3D view unavailable</strong>
       <p
         style={{
           maxWidth: 320,
@@ -1308,8 +1309,8 @@ function Fallback() {
           color: "#8fa5b4",
         }}
       >
-        Ative a aceleração gráfica ou tente outro navegador. Os materiais e os
-        dados de pesquisa continuam disponíveis.
+        Enable graphics acceleration or try another browser. Materials and
+        research data remain available.
       </p>
     </div>
   );

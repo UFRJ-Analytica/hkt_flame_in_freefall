@@ -27,16 +27,16 @@ export function validateInputs(v: unknown): string[] {
   const p: string[] = [];
   const o = v as Partial<ScenarioInputs> | null;
   const num = (x: unknown, lo: number, hi: number) => typeof x === "number" && Number.isFinite(x) && x >= lo && x <= hi;
-  if (!o || typeof o !== "object") return ["entradas ausentes"];
-  if (!num(o.oxygen, 15, 40)) p.push("O₂ fora de 15–40%");
-  if (!num(o.pressure, 35, 110)) p.push("pressão fora de 35–110 kPa");
-  if (!num(o.flow, 0, 40)) p.push("escoamento fora de 0–40 cm/s");
-  if (!GRAVITIES.includes(o.gravity as GravityId)) p.push("gravidade desconhecida");
+  if (!o || typeof o !== "object") return ["missing inputs"];
+  if (!num(o.oxygen, 15, 40)) p.push("O₂ outside 15–40%");
+  if (!num(o.pressure, 35, 110)) p.push("pressure outside 35–110 kPa");
+  if (!num(o.flow, 0, 40)) p.push("flow outside 0–40 cm/s");
+  if (!GRAVITIES.includes(o.gravity as GravityId)) p.push("unknown gravity");
   if (!Array.isArray(o.zones) || o.zones.length !== DEFAULT_ZONES.length ||
-    !o.zones.every((z) => z && DEFAULT_ZONES.some((d) => d.id === z.id) && MATERIAL_IDS.includes(z.material))) p.push("zonas inválidas");
+    !o.zones.every((z) => z && DEFAULT_ZONES.some((d) => d.id === z.id) && MATERIAL_IDS.includes(z.material))) p.push("invalid zones");
   if (!o.ignition || !Number.isInteger(o.ignition.col) || !Number.isInteger(o.ignition.row) ||
-    o.ignition.col < 0 || o.ignition.col >= GRID.cols || o.ignition.row < 0 || o.ignition.row >= GRID.rows) p.push("foco fora da parede");
-  if (typeof o.anchorChoice !== "string") p.push("ensaio de referência ausente");
+    o.ignition.col < 0 || o.ignition.col >= GRID.cols || o.ignition.row < 0 || o.ignition.row >= GRID.rows) p.push("ignition outside the wall");
+  if (typeof o.anchorChoice !== "string") p.push("missing reference trial");
   return p;
 }
 

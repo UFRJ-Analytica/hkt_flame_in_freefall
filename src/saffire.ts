@@ -3,26 +3,26 @@ export const SAFFIRE_S2_ID = "PSI-98:t0:r3";
 export const SAFFIRE_II5_ID = "PSI-99:t0:r6";
 export const SAFFIRE_SOURCE = "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98";
 export const SAFFIRE_MISSIONS = {
-  saffire: { label: "SAFFIRE I", accession: "PSI-98", flow: 20, oxygen: "21,5 a 21,7%" },
-  "saffire-ii": { label: "SAFFIRE II", accession: "PSI-99", flow: 20, oxygen: "≈22,1%" },
-  "saffire-iii": { label: "SAFFIRE III", accession: "PSI-100", flow: 25, oxygen: "21,2%" },
-  "saffire-iv": { label: "SAFFIRE IV · IV-1", accession: "SAFFIRE-IV-1", flow: 20, oxygen: "23,1%" },
-  "saffire-v": { label: "SAFFIRE V · V-2", accession: "SAFFIRE-V-2", flow: 20, oxygen: "26,9%" },
-  "saffire-vi": { label: "SAFFIRE VI · VI-2", accession: "SAFFIRE-VI-2", flow: 20, oxygen: "31,0%" },
+  saffire: { label: "SAFFIRE I", accession: "PSI-98", flow: 20, oxygen: "21.5–21.7%" },
+  "saffire-ii": { label: "SAFFIRE II", accession: "PSI-99", flow: 20, oxygen: "≈22.1%" },
+  "saffire-iii": { label: "SAFFIRE III", accession: "PSI-100", flow: 25, oxygen: "21.2%" },
+  "saffire-iv": { label: "SAFFIRE IV · IV-1", accession: "SAFFIRE-IV-1", flow: 20, oxygen: "23.1%" },
+  "saffire-v": { label: "SAFFIRE V · V-2", accession: "SAFFIRE-V-2", flow: 20, oxygen: "26.9%" },
+  "saffire-vi": { label: "SAFFIRE VI · VI-2", accession: "SAFFIRE-VI-2", flow: 20, oxygen: "31.0%" },
 } as const;
 export type SaffireMission = keyof typeof SAFFIRE_MISSIONS;
 
-const siliconeOutcome = "Após a ignição, a propagação em microgravidade não se sustentou.";
+const siliconeOutcome = "After ignition, spread in microgravity was not sustained.";
 export const SAFFIRE_II_CASES = [
-  { sample: 1, material: "Silicone (PDMS)", thickness: "0,27 mm", flow: 20, oxygen: "≈21,5%", direction: "a favor", model: false, outcome: siliconeOutcome },
-  { sample: 2, material: "Silicone (PDMS)", thickness: "0,61 mm", flow: 20, oxygen: "≈22,1%", direction: "a favor", model: false, outcome: siliconeOutcome },
-  { sample: 3, material: "Silicone (PDMS)", thickness: "1,03 mm", flow: 20, oxygen: "≈22,1%", direction: "a favor", model: false, outcome: siliconeOutcome },
-  { sample: 4, material: "Silicone (PDMS)", thickness: "0,37 mm", flow: 20, oxygen: "≈22,1%", direction: "contra", model: false, outcome: siliconeOutcome },
-  { sample: 5, material: "SIBAL", thickness: "0,37 mm", flow: 20, oxygen: "≈22,1%", direction: "a favor", model: true },
-  { sample: 6, material: "SIBAL", thickness: "0,37 mm", flow: 25, oxygen: "≈22,1%", direction: "a favor", model: true },
-  { sample: 7, material: "PMMA + Nomex", thickness: "0,85 + 0,37 mm", flow: 20, oxygen: "≈22,1%", direction: "a favor", model: false, outcome: "A queima consumiu o trecho de 5 cm de PMMA. O Nomex não acendeu." },
-  { sample: 8, material: "PMMA estruturado", thickness: null, flow: 20, oxygen: "22,0 a 22,1%", direction: "a favor", model: false, outcome: "A chama permaneceu ancorada perto da borda. O ensaio registrou dano localizado e regressão do material." },
-  { sample: 9, material: "PMMA plano", thickness: "10 mm", flow: 20, oxygen: "21,9 a 22,0%", direction: "a favor", model: false, outcome: "A chama permaneceu ancorada perto da borda. O ensaio registrou dano localizado e regressão do material." },
+  { sample: 1, material: "Silicone (PDMS)", thickness: "0.27 mm", flow: 20, oxygen: "≈21.5%", direction: "concurrent", model: false, outcome: siliconeOutcome },
+  { sample: 2, material: "Silicone (PDMS)", thickness: "0.61 mm", flow: 20, oxygen: "≈22.1%", direction: "concurrent", model: false, outcome: siliconeOutcome },
+  { sample: 3, material: "Silicone (PDMS)", thickness: "1.03 mm", flow: 20, oxygen: "≈22.1%", direction: "concurrent", model: false, outcome: siliconeOutcome },
+  { sample: 4, material: "Silicone (PDMS)", thickness: "0.37 mm", flow: 20, oxygen: "≈22.1%", direction: "opposed", model: false, outcome: siliconeOutcome },
+  { sample: 5, material: "SIBAL", thickness: "0.37 mm", flow: 20, oxygen: "≈22.1%", direction: "concurrent", model: true },
+  { sample: 6, material: "SIBAL", thickness: "0.37 mm", flow: 25, oxygen: "≈22.1%", direction: "concurrent", model: true },
+  { sample: 7, material: "PMMA + Nomex", thickness: "0.85 + 0.37 mm", flow: 20, oxygen: "≈22.1%", direction: "concurrent", model: false, outcome: "Burning consumed the 5 cm PMMA section. The Nomex did not ignite." },
+  { sample: 8, material: "Structured PMMA", thickness: null, flow: 20, oxygen: "22.0–22.1%", direction: "concurrent", model: false, outcome: "The flame remained anchored near the edge. The trial recorded localized damage and material regression." },
+  { sample: 9, material: "Flat PMMA", thickness: "10 mm", flow: 20, oxygen: "21.9–22.0%", direction: "concurrent", model: false, outcome: "The flame remained anchored near the edge. The trial recorded localized damage and material regression." },
 ] as const;
 export type SaffireIICase = typeof SAFFIRE_II_CASES[number];
 export const saffireIIId = (sample: number) => `PSI-99:t0:r${sample + 1}`;
@@ -55,7 +55,7 @@ export function readSaffireIILocalized(value: unknown, sample: number): SaffireI
         item.timeSeconds >= 0 && (i === 0 || item.timeSeconds > all[i - 1].timeSeconds) &&
         Number.isInteger(item.orangePixels) && item.orangePixels >= 0 && typeof item.edgeGlow === "boolean") ||
       (sample === 7 ? !end || end.reachedMm !== 50 || end.timeSeconds !== data.durationSeconds : !!end)) {
-    throw new Error("Observações de borda do SAFFIRE II inválidas.");
+    throw new Error("Invalid SAFFIRE II edge observations.");
   }
   return data as SaffireIILocalized;
 }
@@ -78,7 +78,7 @@ export function readSaffireIIReplay(value: unknown, sample: number): SaffireIIRe
       !replay.frames.every((frame, i, frames) => frame && Number.isFinite(frame.timeSeconds) &&
         frame.timeSeconds >= 0 && (i === 0 || frame.timeSeconds > frames[i - 1].timeSeconds) &&
         frame.path === `ii-replays/${sample}/${String(i).padStart(2, "0")}.jpg`)) {
-    throw new Error("Sequência de quadros SAFFIRE II inválida.");
+    throw new Error("Invalid SAFFIRE II frame sequence.");
   }
   return replay as SaffireIIReplay;
 }
@@ -97,7 +97,7 @@ export type OpposedModel = {
 export function readOpposedModel(value: unknown, experimentId: string = SAFFIRE_S2_ID): OpposedModel {
   const model = value as (OpposedModel & { experimentId: string; schemaVersion: number; stepSeconds: number }) | null;
   if (model?.experimentId !== experimentId || model.schemaVersion !== 1 || model.stepSeconds !== 2) {
-    throw new Error("Artefato S2 incompatível.");
+    throw new Error("Incompatible S2 artifact.");
   }
   if (model.status === "unavailable" && typeof model.reason === "string") return model;
   const longitudinal = model.longitudinal;
@@ -105,14 +105,14 @@ export function readOpposedModel(value: unknown, experimentId: string = SAFFIRE_
       !Number.isInteger(longitudinal.transitions) || longitudinal.transitions <= 0 ||
       longitudinal.transitions > longitudinal.exposures ||
       longitudinal.probability !== longitudinal.transitions / longitudinal.exposures)) {
-    throw new Error("Probabilidade longitudinal S2 inválida.");
+    throw new Error("Invalid S2 longitudinal probability.");
   }
   if (model.status !== "ready" || !model.combinations ||
       !Object.entries(model.combinations).every(([key, entry]) =>
         /^[01]{3}$/.test(key) && Number.isInteger(entry.exposures) && entry.exposures >= 0 &&
         Number.isInteger(entry.transitions) && entry.transitions >= 0 && entry.transitions <= entry.exposures &&
         (entry.probability === null || (entry.exposures >= 30 && entry.probability === entry.transitions / entry.exposures)))) {
-    throw new Error("Probabilidades S2 inválidas.");
+    throw new Error("Invalid S2 probabilities.");
   }
   return model;
 }
@@ -174,20 +174,20 @@ export function readSaffireII5Model(value: unknown, sample: 5 | 6 = 5): SaffireI
       model.probability !== train.transitions / train.exposures ||
       !validation || ![validation.positionMaeMm, validation.observedSpeedMmS, validation.simulatedSpeedMmS,
         validation.seedCount, validation.comparableRows].every(Number.isFinite) || !model.sampling) {
-    throw new Error("O artefato SAFFIRE II · 2-5 contém parâmetros inválidos.");
+    throw new Error("The SAFFIRE II · 2-5 artifact contains invalid parameters.");
   }
   return model as SaffireII5Model;
 }
 
 export function readSaffireModel(value: unknown, experimentId: string = SAFFIRE_ID): SaffireModel {
-  if (!value || typeof value !== "object") throw new Error("Artefato SAFFIRE inválido.");
+  if (!value || typeof value !== "object") throw new Error("Invalid SAFFIRE artifact.");
   const model = value as Partial<SaffireModel>;
   if (model.schemaVersion !== 2 || model.experimentId !== experimentId) {
-    throw new Error("Versão ou ensaio incompatível com o laboratório.");
+    throw new Error("Version or trial incompatible with the laboratory.");
   }
   if (model.status !== "ready") {
     const reason = (value as { reason?: unknown }).reason;
-    throw new Error(typeof reason === "string" ? reason : "A extração da frente está inconclusiva.");
+    throw new Error(typeof reason === "string" ? reason : "Front extraction is inconclusive.");
   }
   const { grid, probability, initialFront, stepSeconds, durationSeconds, train, validation } = model;
   if (!grid || !initialFront || probability === undefined || stepSeconds !== 2 ||
@@ -202,17 +202,17 @@ export function readSaffireModel(value: unknown, experimentId: string = SAFFIRE_
       !Number.isInteger(train.transitions) || train.transitions < 0 || train.transitions > train.exposures ||
       probability !== train.transitions / train.exposures ||
       !validation || ![validation.positionMaeMm, validation.observedSpeedMmS, validation.simulatedSpeedMmS].every(Number.isFinite)) {
-    throw new Error("O artefato SAFFIRE contém parâmetros inválidos.");
+    throw new Error("The SAFFIRE artifact contains invalid parameters.");
   }
   if (!model.combinations || !model.neighborhoodTraining || !model.comparison) {
-    throw new Error("O artefato não contém os dados de vizinhança.");
+    throw new Error("The artifact does not contain neighborhood data.");
   }
   for (let i = 0; i < 8; i++) {
     const entry = model.combinations[i.toString(2).padStart(3, "0")];
     if (!entry || !Number.isInteger(entry.exposures) || entry.exposures < 0 ||
         !Number.isInteger(entry.transitions) || entry.transitions < 0 || entry.transitions > entry.exposures ||
         (entry.probability !== null && (!entry.exposures || entry.probability !== entry.transitions / entry.exposures))) {
-      throw new Error("Contagens de vizinhança inválidas.");
+      throw new Error("Invalid neighborhood counts.");
     }
   }
   return model as SaffireModel;

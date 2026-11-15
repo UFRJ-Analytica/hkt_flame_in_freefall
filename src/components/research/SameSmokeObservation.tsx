@@ -4,6 +4,7 @@ import { ArrowUpRight, TriangleAlert, X } from "lucide-react";
 import { useModalFocus } from "../../hooks/useModalFocus";
 import { SAME_DATA_PATH } from "./sameSmoke";
 import "./same-smoke.css";
+import { englishDisplayData } from "../../i18n/english";
 
 /* ------------------------------------------------------------------ data contract (smoke-analysis.json) */
 type Kind = "published" | "measured" | "derived" | "model_assumption" | "unavailable";
@@ -187,16 +188,16 @@ const SHORT: Record<MaterialId, string> = {
   dbp: "DBP",
 };
 const KIND_LABEL: Record<Kind, string> = {
-  published: "publicado",
-  measured: "medido",
-  derived: "derivado",
-  model_assumption: "hipótese de modelo",
-  unavailable: "indisponível",
+  published: "published",
+  measured: "measured",
+  derived: "derived",
+  model_assumption: "model assumption",
+  unavailable: "unavailable",
 };
 const fmt = (value: number | null | undefined, digits = 2) =>
   value == null || !Number.isFinite(value)
     ? "—"
-    : value.toLocaleString("pt-BR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+    : value.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 const pct = (value: number | null | undefined, digits = 0) => (value == null ? "—" : `${fmt(value * 100, digits)} %`);
 const signed = (value: number | null | undefined, digits = 2) =>
   value == null ? "—" : `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value), digits)}`;
@@ -241,10 +242,10 @@ export default function SameSmokeObservation({ onClose }: { onClose: () => void 
       })
       .then((value: unknown) => {
         if (!alive) return;
-        if (isSmokeAnalysis(value)) setData(value);
-        else setError("O arquivo smoke-analysis.json não tem o formato esperado.");
+        if (isSmokeAnalysis(value)) setData(englishDisplayData(value));
+        else setError("The smoke-analysis.json file does not have the expected format.");
       })
-      .catch((reason: unknown) => alive && setError(`Não foi possível carregar a análise SAME (${String(reason)}).`));
+      .catch((reason: unknown) => alive && setError(`Could not load SAME analysis (${String(reason)}).`));
     return () => {
       alive = false;
     };
@@ -262,9 +263,9 @@ export default function SameSmokeObservation({ onClose }: { onClose: () => void 
         <div className="modal-heading">
           <div>
             <span className="eyebrow">NASA SAME · PSI-102 · SMOKE &amp; DETECTION</span>
-            <h2 id="ss-title">Fumaça e detecção em microgravidade</h2>
+            <h2 id="ss-title">Smoke and detection in microgravity</h2>
           </div>
-          <button className="icon-button" aria-label="Fechar análise SAME" onClick={onClose}>
+          <button className="icon-button" aria-label="Close SAME analysis" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -273,11 +274,11 @@ export default function SameSmokeObservation({ onClose }: { onClose: () => void 
           <TriangleAlert size={14} />
           <span>
             {data?.momentMethod.notice ??
-              "Os momentos M0, M1 e M3 por teste não estão disponíveis devido à ausência das calibrações e razões de diluição necessárias."}
+              "Per-test M0, M1, and M3 moments are unavailable because the required calibrations and dilution ratios are missing."}
           </span>
         </div>
         {error && <div className="data-notice">{error}</div>}
-        {!data && !error && <p className="ss-loading">Carregando a evidência SAME…</p>}
+        {!data && !error && <p className="ss-loading">Loading SAME evidence…</p>}
         {data && <Body data={data} />}
       </section>
     </div>
@@ -304,7 +305,7 @@ function Notices({ data }: { data: SmokeAnalysis }) {
   return (
     <div className="ss-notices">
       <h3>
-        <TriangleAlert size={15} /> Avisos científicos
+        <TriangleAlert size={15} /> Scientific notices
       </h3>
       <p className="ss-statement">{data.statement}</p>
       <ol>
@@ -318,7 +319,7 @@ function Notices({ data }: { data: SmokeAnalysis }) {
 
 function KindLegend({ data }: { data: SmokeAnalysis }) {
   return (
-    <dl className="ss-kind-legend" aria-label="Tipos de valor">
+    <dl className="ss-kind-legend" aria-label="Value types">
       {(Object.keys(data.kinds) as Kind[]).map((kind) => (
         <div key={kind}>
           <dt>
@@ -335,10 +336,10 @@ function KindLegend({ data }: { data: SmokeAnalysis }) {
 function Identification({ data }: { data: SmokeAnalysis }) {
   const inv = data.investigation;
   return (
-    <Section id="id" letter="A" title="Identificação" kinds={["published"]}>
+    <Section id="id" letter="A" title="Identification" kinds={["published"]}>
       <dl className="ss-facts">
         <div>
-          <dt>Investigação</dt>
+          <dt>Investigation</dt>
           <dd>
             NASA {inv.acronym} · {inv.title}
           </dd>
@@ -350,29 +351,29 @@ function Identification({ data }: { data: SmokeAnalysis }) {
           </dd>
         </div>
         <div>
-          <dt>Plataforma</dt>
+          <dt>Platform</dt>
           <dd>{inv.platform}</dd>
         </div>
         <div>
-          <dt>Voo</dt>
+          <dt>Flight</dt>
           <dd>{inv.flight}</dd>
         </div>
         <div>
-          <dt>Equipe</dt>
+          <dt>Team</dt>
           <dd>{inv.principalInvestigator}</dd>
         </div>
         <div>
-          <dt>Pontos de teste</dt>
+          <dt>Test points</dt>
           <dd>
-            {inv.flightTests.value} (Apêndice A) · envelhecimento de {inv.agingRange.value?.[0]} a {inv.agingRange.value?.[1]} s
+            {inv.flightTests.value} (Appendix A) · aging from {inv.agingRange.value?.[0]} to {inv.agingRange.value?.[1]} s
           </dd>
         </div>
       </dl>
       <p className="ss-objective">
-        <strong>Objetivo.</strong> {inv.objective}
+        <strong>Objective.</strong> {inv.objective}
       </p>
       <a className="text-link" href={inv.portal} target="_blank" rel="noreferrer">
-        Investigação na NASA PSI <ArrowUpRight size={13} />
+        Investigation in NASA PSI <ArrowUpRight size={13} />
       </a>
     </Section>
   );
@@ -389,26 +390,26 @@ function statRange(stat: Stat | null, digits = 2) {
 function Materials({ data }: { data: SmokeAnalysis }) {
   const materials = ORDER.map((id) => data.materials.find((m) => m.id === id)!).filter(Boolean);
   return (
-    <Section id="materials" letter="B" title="Materiais e condições de aquecimento" kinds={["published", "measured"]}>
+    <Section id="materials" letter="B" title="Materials and heating conditions" kinds={["published", "measured"]}>
       <div className="table-scroll ss-table-scroll">
         <table className="ss-table">
           <thead>
             <tr>
               <th>Material</th>
               <th>
-                Testes de voo <KindTag kind="published" />
+                Flight tests <KindTag kind="published" />
               </th>
-              <th>Testes processados</th>
+              <th>Processed tests</th>
               <th>
-                Rt/R0 do fio <KindTag kind="measured" />
-              </th>
-              <th>
-                Aquecimento (s) <KindTag kind="measured" />
+                Wire Rt/R0 <KindTag kind="measured" />
               </th>
               <th>
-                Vazão LFE (sccm) <KindTag kind="measured" />
+                Heating (s) <KindTag kind="measured" />
               </th>
-              <th>Tabela 1</th>
+              <th>
+                LFE flow rate (sccm) <KindTag kind="measured" />
+              </th>
+              <th>Table 1</th>
             </tr>
           </thead>
           <tbody>
@@ -420,22 +421,22 @@ function Materials({ data }: { data: SmokeAnalysis }) {
                   <small>{m.description}</small>
                 </td>
                 <td className="mono">
-                  {m.flightTests.value} ({m.initialHeatings.value} amostras)
+                  {m.flightTests.value} ({m.initialHeatings.value} samples)
                 </td>
                 <td className="mono">{m.processedTests.length ? m.processedTests.join(", ") : "—"}</td>
                 <td className="mono">{statRange(m.heaterRtOverR0.value, 3)}</td>
                 <td className="mono">{statRange(m.heatingDuration.value, 0)}</td>
                 <td className="mono">{statRange(m.lfeFlowDuringHeating.value, 1)}</td>
-                <td>{m.inTable1 ? "sim" : "não (referência)"}</td>
+                <td>{m.inTable1 ? "yes" : "no (reference)"}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <p className="ss-note">
-        Rt/R0 é a razão de resistência do fio aquecedor (grandeza de controle); a temperatura e a velocidade do ar em cm/s não
-        estão disponíveis. Cada material foi aquecido no seu próprio set-point: diferenças entre materiais misturam química e
-        condição de aquecimento. O DBP foi reaquecido várias vezes (22 dos 47 pontos).
+        Rt/R0 is the heater-wire resistance ratio (a control quantity); temperature and air velocity in cm/s are
+        unavailable. Each material was heated at its own set point: differences between materials combine chemistry and
+        heating conditions. DBP was reheated multiple times (22 of the 47 points).
       </p>
       <Coverage data={data} />
     </Section>
@@ -454,14 +455,14 @@ function Coverage({ data }: { data: SmokeAnalysis }) {
   return (
     <div className="ss-coverage">
       <h4>
-        Cobertura dos {data.coverage.total} testes do Apêndice A <KindTag kind="measured" />
+        Coverage of the {data.coverage.total} Appendix A tests <KindTag kind="measured" />
       </h4>
-      <ol className="ss-cells" aria-label="Situação de cada teste">
+      <ol className="ss-cells" aria-label="Status of each test">
         {data.coverage.perTest.map((t) => (
           <li
             key={t.test}
             className={STATUS_CLASS[t.status]}
-            title={`Teste ${t.test} · ${SHORT[t.material]} (${t.heating}) · GMT ${t.gmtDay} · ${label[t.status]}`}
+            title={`Test ${t.test} · ${SHORT[t.material]} (${t.heating}) · GMT ${t.gmtDay} · ${label[t.status]}`}
           >
             <span>{t.test}</span>
             <i className={`ss-cell-mat ${matClass(t.material)}`} aria-hidden="true" />
@@ -477,7 +478,7 @@ function Coverage({ data }: { data: SmokeAnalysis }) {
         ))}
       </ul>
       <p className="ss-note">
-        A faixa colorida sob cada número indica o material. {data.coverage.note}
+        The colored strip below each number indicates the material. {data.coverage.note}
       </p>
     </div>
   );
@@ -496,7 +497,7 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
   const ticks = [50, 100, 200, 500, 1000];
   return (
     <div className="ss-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Dg, D0,5 e D1,5 publicados por material, sem envelhecimento e com 720 s">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Published Dg, D0.5, and D1.5 by material, unaged and aged 720 s">
         {ticks.map((t) => (
           <g key={t}>
             <line className="ss-grid" x1={x(t)} x2={x(t)} y1={M.top - 6} y2={H - M.bottom} />
@@ -506,7 +507,7 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
           </g>
         ))}
         <text className="ss-axis-label" x={(M.left + W - M.right) / 2} y={H - 4} textAnchor="middle">
-          diâmetro (nm, escala log) — Tabela 1, agregado por material
+          diameter (nm, log scale) — Table 1, aggregated by material
         </text>
         {SOLIDS.map((id, index) => {
           const y0 = M.top + index * rowH;
@@ -518,7 +519,7 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
               {[false, true].map((aged) => {
                 const row = rows.find((r) => r.material === id && r.aged === aged)!;
                 const y = y0 + (aged ? rowH * 0.68 : rowH * 0.32);
-                const tip = `${SHORT[id]} · ${row.agingLabel}: Dg ${row.Dg.value} nm, D0,5 ${row.D05.value} nm, D1,5 ${row.D15.value} nm, σg ${fmt(row.sigmaG.value)} (publicado)`;
+                const tip = `${SHORT[id]} · ${row.agingLabel}: Dg ${row.Dg.value} nm, D0.5 ${row.D05.value} nm, D1.5 ${row.D15.value} nm, σg ${fmt(row.sigmaG.value)} (published)`;
                 return (
                   <g key={String(aged)}>
                     <title>{tip}</title>
@@ -531,7 +532,7 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
                       <circle className="ss-mark" cx={x(row.Dg.value!)} cy={y} r={5.5} />
                     )}
                     <text className="ss-mark-label" x={x(row.D15.value!) + 8} y={y + 3.5}>
-                      {aged ? "720 s" : "sem env."} · σg {fmt(row.sigmaG.value)}
+                      {aged ? "720 s" : "unaged"} · σg {fmt(row.sigmaG.value)}
                     </text>
                   </g>
                 );
@@ -541,7 +542,7 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
         })}
       </svg>
       <p className="ss-chart-key">
-        ● Dg sem envelhecimento · ■ Dg após 720 s · traço de D0,5 (média aritmética) a D1,5 (diâmetro de massa média)
+        ● unaged Dg · ■ Dg after 720 s · line from D0.5 (arithmetic mean) to D1.5 (mean mass diameter)
       </p>
     </div>
   );
@@ -550,10 +551,10 @@ function DiameterChart({ rows }: { rows: Table1Row[] }) {
 function Distribution({ data }: { data: SmokeAnalysis }) {
   const rows = data.table1.rows;
   return (
-    <Section id="dist" letter="C" title="Distribuição de partículas (Tabela 1, agregada por material)" kinds={["published", "derived", "model_assumption"]}>
+    <Section id="dist" letter="C" title="Particle distribution (Table 1, aggregated by material)" kinds={["published", "derived", "model_assumption"]}>
       <p className="ss-note ss-emph">
-        Valores por material ({data.table1.rowsMeaning}), publicados no {data.table1.source}. Não são resultados individuais dos 47
-        testes e não existe distribuição reconstruída por teste.
+        Material-level values ({data.table1.rowsMeaning}), published in {data.table1.source}. These are not individual results from the 47
+        tests, and no per-test distribution has been reconstructed.
       </p>
       <DiameterChart rows={rows} />
       <div className="table-scroll ss-table-scroll">
@@ -561,27 +562,27 @@ function Distribution({ data }: { data: SmokeAnalysis }) {
           <thead>
             <tr>
               <th>Material</th>
-              <th>Estado</th>
+              <th>State</th>
               <th>
                 Dg (nm) <KindTag kind="published" />
               </th>
               <th>
-                Dg recalc. <KindTag kind="derived" />
+                Dg recomputed <KindTag kind="derived" />
               </th>
               <th>
                 σg <KindTag kind="published" />
               </th>
               <th>
-                σg recalc. <KindTag kind="derived" />
+                σg recomputed <KindTag kind="derived" />
               </th>
               <th>
-                D0,5 / D1,5 (nm) <KindTag kind="published" />
+                D0.5 / D1.5 (nm) <KindTag kind="published" />
               </th>
               <th>
-                Mediana de massa <KindTag kind="model_assumption" />
+                Mass median <KindTag kind="model_assumption" />
               </th>
               <th>
-                Massa &gt; 1 µm <KindTag kind="model_assumption" />
+                Mass &gt; 1 µm <KindTag kind="model_assumption" />
               </th>
             </tr>
           </thead>
@@ -608,8 +609,8 @@ function Distribution({ data }: { data: SmokeAnalysis }) {
         </table>
       </div>
       <p className="ss-note">
-        Reprodução: |ΔDg| ≤ {fmt(data.table1.reproduction.maxAbs_dDg_nm, 1)} nm e |Δσg| ≤ {fmt(data.table1.reproduction.maxAbs_dSigma_g, 3)}.{" "}
-        {data.table1.reproduction.statement} A mediana de massa e a fração de massa acima de 1 µm supõem a lognormal unimodal.
+        Reproduction: |ΔDg| ≤ {fmt(data.table1.reproduction.maxAbs_dDg_nm, 1)} nm and |Δσg| ≤ {fmt(data.table1.reproduction.maxAbs_dSigma_g, 3)}.{" "}
+        {data.table1.reproduction.statement} Mass median and mass fraction above 1 µm assume a unimodal lognormal distribution.
       </p>
       <Earlier data={data} />
     </Section>
@@ -622,14 +623,14 @@ function Earlier({ data }: { data: SmokeAnalysis }) {
   return (
     <div className="ss-subpanel">
       <h4>
-        Versões publicadas anteriores (mesmos voos, reduções diferentes) <KindTag kind="published" />
+        Earlier published versions (same flights, different reductions) <KindTag kind="published" />
       </h4>
       <div className="table-scroll ss-table-scroll">
         <table className="ss-table">
           <thead>
             <tr>
-              <th>Publicação</th>
-              <th>Grandeza</th>
+              <th>Publication</th>
+              <th>Quantity</th>
               {SOLIDS.map((id) => (
                 <th key={id}>{SHORT[id]}</th>
               ))}
@@ -646,7 +647,7 @@ function Earlier({ data }: { data: SmokeAnalysis }) {
                   return (
                     <td key={id} className="mono">
                       {entry ? show(entry.value.value) : "—"}
-                      {check && <small className={check.value ? "ss-ok" : "ss-bad"}>{check.value ? "coerente com Eq. 7" : "incoerente com Eq. 7"}</small>}
+                      {check && <small className={check.value ? "ss-ok" : "ss-bad"}>{check.value ? "consistent with Eq. 7" : "inconsistent with Eq. 7"}</small>}
                     </td>
                   );
                 })}
@@ -656,7 +657,7 @@ function Earlier({ data }: { data: SmokeAnalysis }) {
         </table>
       </div>
       <p className="ss-note">
-        O D0,5 de um mesmo material variou até 30 % entre versões — a melhor estimativa disponível da incerteza sistemática.
+        D0.5 for the same material varied by up to 30 % between versions — the best available estimate of systematic uncertainty.
       </p>
     </div>
   );
@@ -674,7 +675,7 @@ function AgingBars({ data }: { data: SmokeAnalysis }) {
   const y = (v: number) => M.top + (1 - v / max) * (H - M.top - M.bottom);
   return (
     <div className="ss-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Dg publicado sem envelhecimento e após 720 s, por material">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Published Dg, unaged and after 720 s, by material">
         {[0, 100, 200, 300, 400].map((t) => (
           <g key={t}>
             <line className="ss-grid" x1={M.left} x2={W - M.right} y1={y(t)} y2={y(t)} />
@@ -695,7 +696,7 @@ function AgingBars({ data }: { data: SmokeAnalysis }) {
                 const left = cx + (aged ? 3 : -bw - 3);
                 return (
                   <g key={String(aged)}>
-                    <title>{`${SHORT[id]} · ${row.agingLabel}: Dg ${row.Dg.value} nm (publicado)`}</title>
+                    <title>{`${SHORT[id]} · ${row.agingLabel}: Dg ${row.Dg.value} nm (published)`}</title>
                     <rect className={aged ? "ss-bar ss-bar-aged" : "ss-bar"} x={left} y={y(row.Dg.value!)} width={bw} height={y(0) - y(row.Dg.value!)} rx={3} />
                     <text className="ss-bar-label" x={left + bw / 2} y={y(row.Dg.value!) - 4} textAnchor="middle">
                       {row.Dg.value}
@@ -713,7 +714,7 @@ function AgingBars({ data }: { data: SmokeAnalysis }) {
           );
         })}
       </svg>
-      <p className="ss-chart-key">Barra cheia: sem envelhecimento · barra vazada: 720 s. Dois pontos publicados por material — sem curva de evolução.</p>
+      <p className="ss-chart-key">Filled bar: unaged · hollow bar: 720 s. Two published points per material — no evolution curve.</p>
     </div>
   );
 }
@@ -729,7 +730,7 @@ function MassConservation({ data }: { data: SmokeAnalysis }) {
   const y = (v: number) => M.top + (1 - (v - lo) / (hi - lo)) * (H - M.top - M.bottom);
   return (
     <div className="ss-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="DustTrak B na janela secundária dividido pela primária, testes de envelhecimento longo">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="DustTrak B secondary window divided by primary window, long-aging tests">
         {[0.6, 0.8, 1, 1.2, 1.4].map((t) => (
           <g key={t}>
             <line className={t === 1 ? "ss-ref" : "ss-grid"} x1={M.left} x2={W - M.right} y1={y(t)} y2={y(t)} />
@@ -739,11 +740,11 @@ function MassConservation({ data }: { data: SmokeAnalysis }) {
           </g>
         ))}
         <text className="ss-region-label" x={W - M.right} y={y(1) - 5} textAnchor="end">
-          1,0 = sinal de massa conservado
+          1.0 = conserved mass signal
         </text>
         {points.map((p, i) => (
           <g key={p.test} className={matClass(p.material)}>
-            <title>{`Teste ${p.test} · ${SHORT[p.material]}: DustTrak B secundário/primário ${fmt(p.dusttrakBSecondaryOverPrimary.value, 3)}; idade ${fmt(p.agePrimary_s.value, 0)} → ${fmt(p.ageSecondary_s.value, 0)} s (medido)`}</title>
+            <title>{`Test ${p.test} · ${SHORT[p.material]}: DustTrak B secondary/primary ${fmt(p.dusttrakBSecondaryOverPrimary.value, 3)}; age ${fmt(p.agePrimary_s.value, 0)} → ${fmt(p.ageSecondary_s.value, 0)} s (measured)`}</title>
             <circle className="ss-mark" cx={x(i)} cy={y(p.dusttrakBSecondaryOverPrimary.value!)} r={6} />
             <text className="ss-mark-label" x={x(i)} y={y(p.dusttrakBSecondaryOverPrimary.value!) - 10} textAnchor="middle">
               {fmt(p.dusttrakBSecondaryOverPrimary.value)}
@@ -763,23 +764,23 @@ function MassConservation({ data }: { data: SmokeAnalysis }) {
 
 function Aging({ data }: { data: SmokeAnalysis }) {
   return (
-    <Section id="aging" letter="D" title="Envelhecimento da fumaça" kinds={["published", "derived", "measured", "model_assumption", "unavailable"]}>
+    <Section id="aging" letter="D" title="Smoke aging" kinds={["published", "derived", "measured", "model_assumption", "unavailable"]}>
       <p className="ss-note ss-emph">{data.aging.note}</p>
       <div className="ss-two">
         <div className="ss-panel">
           <h4>
-            Tamanho: Dg publicado <KindTag kind="published" />
+            Size: published Dg <KindTag kind="published" />
           </h4>
           <AgingBars data={data} />
         </div>
         <div className="ss-panel">
           <h4>
-            Sinal de massa no envelhecimento longo <KindTag kind="measured" />
+            Mass signal during long aging <KindTag kind="measured" />
           </h4>
           <MassConservation data={data} />
           <p className="ss-note">
-            DustTrak B (janela secundária ÷ primária) nos testes com 570–1 653 s entre as janelas; abaixo de cada teste, a idade da
-            fumaça na janela secundária. {data.aging.shortSecondaryWindowsNote}
+            DustTrak B (secondary ÷ primary window) in tests with 570–1,653 s between windows; below each test, smoke age
+            in the secondary window. {data.aging.shortSecondaryWindowsNote}
           </p>
         </div>
       </div>
@@ -792,22 +793,22 @@ function Aging({ data }: { data: SmokeAnalysis }) {
                 Dg 720 s ÷ 0 s <KindTag kind="derived" />
               </th>
               <th>
-                D0,5 <KindTag kind="derived" />
+                D0.5 <KindTag kind="derived" />
               </th>
               <th>
-                D1,5 <KindTag kind="derived" />
+                D1.5 <KindTag kind="derived" />
               </th>
               <th>
                 Δσg <KindTag kind="derived" />
               </th>
               <th>
-                Número se M3 conservado <KindTag kind="model_assumption" />
+                Number if M3 is conserved <KindTag kind="model_assumption" />
               </th>
               <th>
-                B/A primária → secundária <KindTag kind="measured" />
+                B/A primary → secondary <KindTag kind="measured" />
               </th>
               <th>
-                Variação medida do número <KindTag kind="unavailable" />
+                Measured number change <KindTag kind="unavailable" />
               </th>
             </tr>
           </thead>
@@ -840,9 +841,9 @@ function Aging({ data }: { data: SmokeAnalysis }) {
         </table>
       </div>
       <p className="ss-note">
-        Leitura: todos os diâmetros publicados crescem e σg diminui após 720 s, enquanto o sinal de massa medido se conserva (0,84–1,20):
-        coerente com coagulação com poucas perdas nas paredes. A queda do número de partículas é uma consequência da hipótese (M3
-        conservado), não uma medição.
+        Interpretation: all published diameters increase and σg decreases after 720 s, while the measured mass signal is conserved (0.84–1.20):
+        consistent with coagulation with little wall loss. The decrease in particle number follows from the assumption (conserved
+        M3), not a measurement.
       </p>
     </Section>
   );
@@ -859,7 +860,7 @@ function RatioChart({ data }: { data: SmokeAnalysis }) {
   const y = (v: number) => M.top + (1 - (v - lo) / (hi - lo)) * (H - M.top - M.bottom);
   return (
     <div className="ss-scroll">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Razão DustTrak B/A por teste, média publicada e expectativa lognormal">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="DustTrak B/A ratio by test, published mean, and lognormal expectation">
         {[1, 1.4, 1.8, 2.2, 2.6].map((t) => (
           <g key={t}>
             <line className="ss-grid" x1={M.left} x2={W - M.right} y1={y(t)} y2={y(t)} />
@@ -879,13 +880,13 @@ function RatioChart({ data }: { data: SmokeAnalysis }) {
             <g key={id} className={matClass(id)}>
               {m.lognormalExpectation?.value != null && (
                 <g>
-                  <title>{`${SHORT[id]}: 1/(1 − fração de massa > 1 µm) da lognormal da Tabela 1 = ${fmt(m.lognormalExpectation.value, 2)} (hipótese de modelo)`}</title>
+                  <title>{`${SHORT[id]}: 1/(1 − mass fraction > 1 µm) from the Table 1 lognormal = ${fmt(m.lognormalExpectation.value, 2)} (model assumption)`}</title>
                   <line className="ss-model-line" x1={cx - half} x2={cx + half} y1={y(Math.min(m.lognormalExpectation.value, hi))} y2={y(Math.min(m.lognormalExpectation.value, hi))} />
                 </g>
               )}
               {m.published?.value != null && (
                 <g>
-                  <title>{`${SHORT[id]}: média publicada (08ICES-2089) = ${fmt(m.published.value)}`}</title>
+                  <title>{`${SHORT[id]}: published mean (08ICES-2089) = ${fmt(m.published.value)}`}</title>
                   <line className="ss-pub-line" x1={cx - half} x2={cx + half} y1={y(m.published.value)} y2={y(m.published.value)} />
                 </g>
               )}
@@ -893,7 +894,7 @@ function RatioChart({ data }: { data: SmokeAnalysis }) {
                 const px = cx + (k - (m.perTest.length - 1) / 2) * 13;
                 return (
                   <g key={p.test}>
-                    <title>{`Teste ${p.test} · ${SHORT[id]}: B/A = ${fmt(p.value.value, 3)} (medido, janela primária)`}</title>
+                    <title>{`Test ${p.test} · ${SHORT[id]}: B/A = ${fmt(p.value.value, 3)} (measured, primary window)`}</title>
                     <circle className="ss-mark" cx={px} cy={y(p.value.value!)} r={5.5} />
                   </g>
                 );
@@ -906,7 +907,7 @@ function RatioChart({ data }: { data: SmokeAnalysis }) {
         })}
       </svg>
       <p className="ss-chart-key">
-        ● teste de voo (medido) · ━ média publicada em 2008 · ┅ expectativa da lognormal da Tabela 1 (hipótese)
+        ● flight test (measured) · ━ mean published in 2008 · ┅ Table 1 lognormal expectation (assumption)
       </p>
     </div>
   );
@@ -915,9 +916,9 @@ function RatioChart({ data }: { data: SmokeAnalysis }) {
 function DetectorStrips({ data }: { data: SmokeAnalysis }) {
   const responses = data.detectors.responses;
   const panels: { key: "ionBDelta" | "issScatterDelta" | "stsDelta"; title: string; lo: number; hi: number }[] = [
-    { key: "ionBDelta", title: "Câmara de ionização B · Δ (V)", lo: 0, hi: 2.6 },
-    { key: "issScatterDelta", title: "Detector ISS (espalhamento) · Δ (V)", lo: -6.5, hi: 0 },
-    { key: "stsDelta", title: "Detector STS (ionização) · Δ (V)", lo: -1, hi: 0 },
+    { key: "ionBDelta", title: "Ionization chamber B · Δ (V)", lo: 0, hi: 2.6 },
+    { key: "issScatterDelta", title: "ISS detector (scattering) · Δ (V)", lo: -6.5, hi: 0 },
+    { key: "stsDelta", title: "STS detector (ionization) · Δ (V)", lo: -1, hi: 0 },
   ];
   const W = 300;
   const H = 190;
@@ -931,7 +932,7 @@ function DetectorStrips({ data }: { data: SmokeAnalysis }) {
         return (
           <div key={panel.key} className="ss-panel">
             <h4>{panel.title}</h4>
-            <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${panel.title} por teste, agrupado por material`}>
+            <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${panel.title} by test, grouped by material`}>
               {ticks.map((t) => (
                 <g key={t}>
                   <line className="ss-grid" x1={M.left} x2={W - M.right} y1={y(t)} y2={y(t)} />
@@ -942,7 +943,7 @@ function DetectorStrips({ data }: { data: SmokeAnalysis }) {
               ))}
               {panel.key === "issScatterDelta" && (
                 <text className="ss-region-label" x={W - M.right} y={y(-4.9)} textAnchor="end">
-                  saturação ≈ −6,25 V
+                  saturation ≈ −6.25 V
                 </text>
               )}
               {ORDER.map((id, index) => {
@@ -957,7 +958,7 @@ function DetectorStrips({ data }: { data: SmokeAnalysis }) {
                       const clipped = panel.key === "issScatterDelta" && r.issScatterDelta.clipped;
                       return (
                         <g key={r.test}>
-                          <title>{`Teste ${r.test} · ${SHORT[id]}: Δ ${signed(v.value, 2)} V${clipped ? " (saturado)" : ""} · DustTrak B ${fmt(r.dusttrakB.value, 1)} mg/m³ (medido)`}</title>
+                          <title>{`Test ${r.test} · ${SHORT[id]}: Δ ${signed(v.value, 2)} V${clipped ? " (saturated)" : ""} · DustTrak B ${fmt(r.dusttrakB.value, 1)} mg/m³ (measured)`}</title>
                           <circle
                             className={clipped ? "ss-mark ss-hollow" : "ss-mark"}
                             cx={cx + (k - (own.length - 1) / 2) * 7}
@@ -988,20 +989,20 @@ function DetectorStrips({ data }: { data: SmokeAnalysis }) {
 
 function Detection({ data }: { data: SmokeAnalysis }) {
   return (
-    <Section id="detect" letter="E" title="Instrumentos e detectores de fumaça" kinds={["measured", "published", "derived", "model_assumption", "unavailable"]}>
+    <Section id="detect" letter="E" title="Instruments and smoke detectors" kinds={["measured", "published", "derived", "model_assumption", "unavailable"]}>
       <div className="table-scroll ss-table-scroll">
         <table className="ss-table">
           <thead>
             <tr>
-              <th>Instrumento</th>
-              <th>Princípio</th>
-              <th>Momento associado</th>
-              <th>Unidade no arquivo</th>
-              <th>Faixa</th>
+              <th>Instrument</th>
+              <th>Principle</th>
+              <th>Associated moment</th>
+              <th>Unit in file</th>
+              <th>Range</th>
               <th>
-                Calibração <KindTag kind="unavailable" />
+                Calibration <KindTag kind="unavailable" />
               </th>
-              <th>Limitações</th>
+              <th>Limitations</th>
             </tr>
           </thead>
           <tbody>
@@ -1029,7 +1030,7 @@ function Detection({ data }: { data: SmokeAnalysis }) {
       </div>
       <div className="ss-panel">
         <h4>
-          Razão DustTrak B (10 µm) ÷ A (1 µm): massa acima de ~1 µm <KindTag kind="measured" />
+          DustTrak B (10 µm) ÷ A (1 µm) ratio: mass above ~1 µm <KindTag kind="measured" />
         </h4>
         <RatioChart data={data} />
         <div className="table-scroll ss-table-scroll">
@@ -1037,16 +1038,16 @@ function Detection({ data }: { data: SmokeAnalysis }) {
             <thead>
               <tr>
                 <th>Material</th>
-                <th>Testes</th>
+                <th>Tests</th>
                 <th>
-                  Média ± dp <KindTag kind="derived" />
+                  Mean ± SD <KindTag kind="derived" />
                 </th>
                 <th>
-                  Publicado <KindTag kind="published" />
+                  Published <KindTag kind="published" />
                 </th>
-                <th>Diferença</th>
+                <th>Difference</th>
                 <th>
-                  Abas NASA <KindTag kind="measured" />
+                  NASA sheets <KindTag kind="measured" />
                 </th>
                 <th>
                   Lognormal <KindTag kind="model_assumption" />
@@ -1077,36 +1078,36 @@ function Detection({ data }: { data: SmokeAnalysis }) {
           </table>
         </div>
         <p className="ss-note">
-          {data.dusttrakRatio.caveat} Janela: {data.dusttrakRatio.window}. DBP: DustTrak A quase zero (fumaça quase toda acima do corte de 1
-          µm, ou líquido retido no impactador); fora da Tabela 1.
+          {data.dusttrakRatio.caveat} Window: {data.dusttrakRatio.window}. DBP: DustTrak A near zero (smoke almost entirely above the 1
+          µm cutoff, or liquid retained in the impactor); outside Table 1.
         </p>
       </div>
       <div className="ss-panel">
         <h4>
-          Resposta dos detectores na janela primária <KindTag kind="measured" />
+          Detector responses in the primary window <KindTag kind="measured" />
         </h4>
         <DetectorStrips data={data} />
         <p className="ss-note">
-          Δ = mediana do platô − baseline, em volts de voo, sem calibração. No arquivo, a fumaça produz deflexão negativa nos detectores
-          ISS e STS. Círculos vazados: ISS saturado. "off": testes com o STS desligado (indisponível, nunca zero). Leitura: a ionização
-          responde a todos os materiais; o espalhamento ISS responde pouco à fumaça fina do Teflon e satura com silicone, lamp wick e DBP.{" "}
+          Δ = plateau median − baseline, in uncalibrated flight volts. In the file, smoke produces negative deflection in the
+          ISS and STS detectors. Hollow circles: saturated ISS. "off": tests with STS powered off (unavailable, never zero). Interpretation: ionization
+          responds to all materials; ISS scattering responds weakly to fine Teflon smoke and saturates with silicone, lamp wick, and DBP.{" "}
           {data.detectors.note}
         </p>
       </div>
       <details className="ss-details">
-        <summary>Tabela por teste ({data.detectors.responses.length} testes processados)</summary>
+        <summary>Per-test table ({data.detectors.responses.length} processed tests)</summary>
         <div className="table-scroll ss-table-scroll">
           <table className="ss-table ss-compact">
             <thead>
               <tr>
-                <th>Teste</th>
+                <th>Test</th>
                 <th>Material</th>
                 <th>DustTrak A / B (mg/m³)</th>
                 <th>Ion B Δ (V)</th>
-                <th>ISS espalh. Δ (V)</th>
+                <th>ISS scatter Δ (V)</th>
                 <th>ISS obsc. Δ (V)</th>
                 <th>STS Δ (V)</th>
-                <th>Idade no platô (s)</th>
+                <th>Age at plateau (s)</th>
               </tr>
             </thead>
             <tbody>
@@ -1126,7 +1127,7 @@ function Detection({ data }: { data: SmokeAnalysis }) {
                     {r.issScatterDelta.clipped ? " (sat.)" : ""}
                   </td>
                   <td className="mono">{signed(r.issObscurationDelta.value)}</td>
-                  <td className="mono">{r.stsDelta.kind === "unavailable" ? "desligado" : signed(r.stsDelta.value)}</td>
+                  <td className="mono">{r.stsDelta.kind === "unavailable" ? "off" : signed(r.stsDelta.value)}</td>
                   <td className="mono">{fmt(r.ageAtPlateauStart_s.value, 0)}</td>
                 </tr>
               ))}
@@ -1143,7 +1144,7 @@ function MomentMethod({ data }: { data: SmokeAnalysis }) {
   const mm = data.momentMethod;
   const v = mm.verification.value;
   return (
-    <Section id="moments" letter="F" title="Método dos momentos" kinds={["model_assumption", "derived", "unavailable"]}>
+    <Section id="moments" letter="F" title="Method of moments" kinds={["model_assumption", "derived", "unavailable"]}>
       <div className="ss-moment-notice" role="note">
         <TriangleAlert size={15} />
         <strong>{mm.notice}</strong>
@@ -1157,19 +1158,19 @@ function MomentMethod({ data }: { data: SmokeAnalysis }) {
         ))}
       </dl>
       <p className="ss-note">
-        <KindTag kind="model_assumption" /> Hipótese: {mm.hypothesis.value}. {mm.hypothesis.note} Com distribuições bimodais, a lognormal
-        ajustada reproduz os três momentos mas distribui errado a massa acima e abaixo de qualquer corte.
+        <KindTag kind="model_assumption" /> Assumption: {mm.hypothesis.value}. {mm.hypothesis.note} With bimodal distributions, the fitted lognormal
+        reproduces the three moments but incorrectly allocates mass above and below any cutoff.
       </p>
       {v && (
         <p className="ss-note">
-          <KindTag kind="derived" /> Verificação: Dg = {fmt(v.Dg_um, 1)} µm e σg = {fmt(v.sigmaG, 1)} dão D0,5 = {fmt(v.D05_um, 3)} µm e
-          D1,5 = {fmt(v.D15_um, 3)} µm, como na Fig. 3 do relatório. Fonte: {mm.source}.
+          <KindTag kind="derived" /> Verification: Dg = {fmt(v.Dg_um, 1)} µm and σg = {fmt(v.sigmaG, 1)} give D0.5 = {fmt(v.D05_um, 3)} µm and
+          D1.5 = {fmt(v.D15_um, 3)} µm, as in Fig. 3 of the report. Source: {mm.source}.
         </p>
       )}
       <div className="ss-three ss-columns">
         <div className="ss-panel">
           <h4>
-            Calculado matematicamente <KindTag kind="derived" />
+            Mathematically calculated <KindTag kind="derived" />
           </h4>
           <ul className="ss-list">
             {mm.calculated.map((item) => (
@@ -1179,7 +1180,7 @@ function MomentMethod({ data }: { data: SmokeAnalysis }) {
         </div>
         <div className="ss-panel">
           <h4>
-            Medido diretamente <KindTag kind="measured" />
+            Directly measured <KindTag kind="measured" />
           </h4>
           <ul className="ss-list">
             {mm.measured.map((item) => (
@@ -1189,14 +1190,14 @@ function MomentMethod({ data }: { data: SmokeAnalysis }) {
         </div>
         <div className="ss-panel">
           <h4>
-            Não reconstruível nos dados de voo <KindTag kind="unavailable" />
+            Not reconstructible from flight data <KindTag kind="unavailable" />
           </h4>
           <ul className="ss-list">
             {mm.notReconstructible.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <p className="ss-note">Falta:</p>
+          <p className="ss-note">Missing:</p>
           <ul className="ss-list">
             {mm.missing.map((item) => (
               <li key={item}>{item}</li>
@@ -1212,7 +1213,7 @@ function Unavailable({ data }: { data: SmokeAnalysis }) {
   return (
     <section className="ss-section" aria-labelledby="ss-unavailable">
       <div className="ss-section-heading">
-        <h3 id="ss-unavailable">Grandezas indisponíveis</h3>
+        <h3 id="ss-unavailable">Unavailable quantities</h3>
         <KindTag kind="unavailable" />
       </div>
       <ul className="ss-unavailable">
@@ -1223,7 +1224,7 @@ function Unavailable({ data }: { data: SmokeAnalysis }) {
           </li>
         ))}
       </ul>
-      <h4 className="ss-sources-title">Fontes</h4>
+      <h4 className="ss-sources-title">Sources</h4>
       <ul className="ss-sources">
         {data.sources.map((s) => (
           <li key={s.label}>

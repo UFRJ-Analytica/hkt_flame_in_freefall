@@ -16,6 +16,7 @@ import type { ExperimentTest, Investigation, NasaData } from "../types";
 import { CATEGORY_LABELS, number } from "../config";
 import { useModalFocus } from "../hooks/useModalFocus";
 import { RecordVideos } from "./research/RecordVideos";
+import { englishText } from "../i18n/english";
 import { SAME_INVESTIGATION_ID } from "./research/sameSmoke";
 
 // Loaded on request only: the SAME evidence module and its JSON stay out of the first render.
@@ -56,8 +57,8 @@ export function ExperimentExplorer({
     () =>
       (selected?.tests ?? []).filter((test) =>
         `${test.id} ${test.material ?? ""} ${test.label} ${JSON.stringify(test.raw)}`
-          .toLocaleLowerCase()
-          .includes(query.toLocaleLowerCase()),
+          .toLocaleLowerCase("en-US")
+          .includes(query.toLocaleLowerCase("en-US")),
       ),
     [selected, query],
   );
@@ -94,16 +95,16 @@ export function ExperimentExplorer({
     <div className="explorer">
       <div className="page-heading">
         <div>
-          <span className="eyebrow">CATÁLOGO NASA PSI</span>
-          <h1>Dados reais. Contexto preservado.</h1>
+          <span className="eyebrow">NASA PSI CATALOG</span>
+          <h1>Real data. Context preserved.</h1>
           <p>
-            Consulte os registros originais, suas unidades e o contexto de cada
-            investigação.
+            Explore original records, their units, and the context of each
+            investigation.
           </p>
         </div>
         <span className="source-badge">
           <Database size={14} />
-          Snapshot NASA PSI
+          NASA PSI snapshot
         </span>
       </div>
       <div className="category-filters">
@@ -116,7 +117,7 @@ export function ExperimentExplorer({
             setDetail(null);
           }}
         >
-          Todas as famílias
+          All families
         </button>
         {Object.entries(CATEGORY_LABELS)
           .filter(([id]) => data.investigations.some((i) => i.category === id))
@@ -139,19 +140,19 @@ export function ExperimentExplorer({
           {(category === "all" || category === "solid") && (
             <div className="evidence-group">
               <span className="evidence-group-label">
-                Evidência publicada · fora do PSI
+                Published evidence · outside PSI
               </span>
               <button
                 className="investigation-item evidence-item"
                 onClick={() => setSofieOpen(true)}
-                aria-label={`${SOFIE_GEL_TITLE}: abrir evidência (sem dataset PSI público)`}
+                aria-label={`${SOFIE_GEL_TITLE}: open evidence (no public PSI dataset)`}
               >
                 <div className="investigation-icon">
                   <BookOpen size={19} />
                 </div>
                 <span>
                   <strong>SoFIE-GEL</strong>
-                  <small>NASA · 5 casos publicados · sem dataset PSI</small>
+                  <small>NASA · 5 published cases · no PSI dataset</small>
                 </span>
                 <ChevronRight size={15} />
               </button>
@@ -171,12 +172,12 @@ export function ExperimentExplorer({
                 <Beaker size={19} />
               </div>
               <span>
-                <strong>{investigation.name}</strong>
+                <strong>{englishText(investigation.name)}</strong>
                 <small>
                   {investigation.id} ·{" "}
                   {investigation.testCount > 0
-                    ? `${investigation.testCount} registros`
-                    : "Metadados"}
+                    ? `${investigation.testCount} records`
+                    : "Metadata"}
                 </small>
               </span>
               <ChevronRight size={15} />
@@ -194,12 +195,12 @@ export function ExperimentExplorer({
                       {CATEGORY_LABELS[selected.category]}
                     </span>
                   </div>
-                  <h2>{selected.title || selected.name}</h2>
-                  <p>{selected.description}</p>
+                  <h2>{englishText(selected.title || selected.name)}</h2>
+                  <p>{englishText(selected.description)}</p>
                 </div>
                 <a
                   className="icon-button"
-                  title="Abrir investigação original NASA"
+                  title="Open original NASA investigation"
                   href={selected.sourceUrl}
                   target="_blank"
                   rel="noreferrer"
@@ -211,33 +212,33 @@ export function ExperimentExplorer({
                 <span>
                   <i className="dot green" />
                   {selected.status === "downloaded"
-                    ? "Tabela conectada"
+                    ? "Table connected"
                     : selected.status === "metadata-only"
-                      ? "Somente metadados"
-                      : "Dados indisponíveis"}
+                      ? "Metadata only"
+                      : "Data unavailable"}
                 </span>
-                <span>{selected.platform}</span>
+                <span>{englishText(selected.platform)}</span>
                 <span>
-                  {number(selected.testCount, 0)} registros importados
+                  {number(selected.testCount, 0)} imported records
                 </span>
               </div>
               {selected.recordGrain && (
                 <p className="record-grain">
-                  Unidade da tabela: {selected.recordGrain}.
+                  Table record unit: {englishText(selected.recordGrain)}.
                 </p>
               )}
               {selected.id === SAME_INVESTIGATION_ID && (
                 <div className="same-entry">
                   <div>
-                    <strong>Smoke &amp; Detection: evidência do SAME</strong>
+                    <strong>Smoke &amp; Detection: SAME evidence</strong>
                     <p>
-                      Fumaça de materiais superaquecidos (não propagação de
-                      chama): Tabela 1 agregada por material, envelhecimento,
-                      razão DustTrak B/A e resposta dos detectores da ISS e do
-                      Space Shuttle, com cada valor rotulado como publicado,
-                      medido, derivado, hipótese ou indisponível. Os 8 registros
-                      abaixo reproduzem a matriz de testes planejada, não os 47
-                      testes voados.
+                      Smoke from overheated materials (not flame spread):
+                      Table 1 aggregated by material, aging,
+                      DustTrak B/A ratio, and ISS and Space Shuttle
+                      detector responses, with each value labeled as published,
+                      measured, derived, an assumption, or unavailable. The 8 records
+                      below reproduce the planned test matrix, not the 47
+                      flight tests.
                     </p>
                   </div>
                   <button
@@ -245,17 +246,17 @@ export function ExperimentExplorer({
                     onClick={() => setSmokeOpen(true)}
                   >
                     <Wind size={15} />
-                    Abrir análise Smoke &amp; Detection
+                    Open Smoke &amp; Detection analysis
                   </button>
                 </div>
               )}
               <details className="data-notice">
                 <summary>
-                  Contexto e limites desta investigação (
+                  Context and limitations of this investigation (
                   {selected.limitations.length})
                 </summary>
                 {selected.limitations.map((limitation, index) => (
-                  <p key={index}>{limitation}</p>
+                  <p key={index}>{englishText(limitation)}</p>
                 ))}
               </details>
               {selected.tests.length > 0 ? (
@@ -264,8 +265,8 @@ export function ExperimentExplorer({
                     <label className="search-field">
                       <Search size={16} />
                       <input
-                        aria-label="Buscar experimento ou material"
-                        placeholder="Buscar teste, material ou condição…"
+                        aria-label="Search experiments or materials"
+                        placeholder="Search tests, materials, or conditions…"
                         value={query}
                         onChange={(e) => {
                           setQuery(e.target.value);
@@ -275,19 +276,19 @@ export function ExperimentExplorer({
                     </label>
                     <button className="button secondary" onClick={downloadRows}>
                       <ArrowDownToLine size={15} />
-                      Exportar dados
+                      Export data
                     </button>
                   </div>
                   <div className="table-scroll">
                     <table>
                       <thead>
                         <tr>
-                          <th>Registro</th>
-                          <th>Material / combustível</th>
-                          <th>O₂ inicial</th>
-                          <th>Pressão</th>
-                          <th>Fluxo</th>
-                          <th aria-label="Detalhes" />
+                          <th>Record</th>
+                          <th>Material / fuel</th>
+                          <th>Initial O₂</th>
+                          <th>Pressure</th>
+                          <th>Flow</th>
+                          <th aria-label="Details" />
                         </tr>
                       </thead>
                       <tbody>
@@ -306,15 +307,15 @@ export function ExperimentExplorer({
                                     setDetail(test);
                                   }}
                                 >
-                                  {test.label || test.id}
+                                  {englishText(test.label || test.id)}
                                 </button>
                                 {test.id === BASS_B1_RECORD_ID && (
-                                  <span className="tiny-tag b1-row-tag" title="Frente de chama medida no vídeo deste teste">
-                                    vídeo analisado
+                                  <span className="tiny-tag b1-row-tag" title="Flame front measured in this test's video">
+                                    analyzed video
                                   </span>
                                 )}
                               </td>
-                              <td>{test.material || "Não informado"}</td>
+                              <td>{englishText(test.material || "Not reported")}</td>
                               <td className="mono">
                                 {number(test.oxygenPct)}
                                 {test.oxygenPct != null ? "%" : ""}
@@ -336,15 +337,15 @@ export function ExperimentExplorer({
                     </table>
                     {filtered.length === 0 && (
                       <div className="empty-state">
-                        Nenhum teste corresponde à sua busca.
+                        No tests match your search.
                       </div>
                     )}
                   </div>
                   <div className="table-pagination">
                     <span>
                       {filtered.length ? safePage * pageSize + 1 : 0}–
-                      {Math.min((safePage + 1) * pageSize, filtered.length)} de{" "}
-                      {filtered.length} registros
+                      {Math.min((safePage + 1) * pageSize, filtered.length)} of{" "}
+                      {filtered.length} records
                     </span>
                     <div>
                       <button
@@ -352,14 +353,14 @@ export function ExperimentExplorer({
                         disabled={safePage === 0}
                         onClick={() => setPage(safePage - 1)}
                       >
-                        Anterior
+                        Previous
                       </button>
                       <button
                         className="button secondary small"
                         disabled={(safePage + 1) * pageSize >= filtered.length}
                         onClick={() => setPage(safePage + 1)}
                       >
-                        Próxima
+                        Next
                       </button>
                     </div>
                   </div>
@@ -367,11 +368,11 @@ export function ExperimentExplorer({
               ) : (
                 <div className="empty-state">
                   <Database size={26} />
-                  <h3>Investigação catalogada</h3>
+                  <h3>Cataloged investigation</h3>
                   <p>
-                    Não há tabela numérica importada neste snapshot. Acesse a
-                    fonte para documentos e mídias; não substituímos medições
-                    ausentes por dados sintéticos.
+                    No numerical table has been imported in this snapshot. Visit the
+                    source for documents and media; we do not replace missing
+                    measurements with synthetic data.
                   </p>
                   <a
                     href={selected.sourceUrl}
@@ -379,14 +380,14 @@ export function ExperimentExplorer({
                     rel="noreferrer"
                     className="text-link"
                   >
-                    Explorar na NASA <ArrowUpRight size={14} />
+                    Explore at NASA <ArrowUpRight size={14} />
                   </a>
                 </div>
               )}
             </>
           ) : (
             <div className="empty-state">
-              Nenhuma investigação nesta categoria.
+              No investigations in this category.
             </div>
           )}
         </section>
@@ -404,31 +405,31 @@ export function ExperimentExplorer({
             <div className="modal-heading">
               <div>
                 <span className="eyebrow">
-                  {detail.investigationId} · REGISTRO ORIGINAL
+                  {detail.investigationId} · ORIGINAL RECORD
                 </span>
-                <h2 id="test-detail-title">{detail.label || detail.id}</h2>
+                <h2 id="test-detail-title">{englishText(detail.label || detail.id)}</h2>
               </div>
               <button
                 className="icon-button"
-                aria-label="Fechar detalhes"
+                aria-label="Close details"
                 onClick={() => setDetail(null)}
               >
                 <X size={20} />
               </button>
             </div>
             <p className="muted">
-              Campos preservados da tabela NASA. Ausência de um valor não
-              significa zero ou extinção.
+              Fields preserved from the NASA table. A missing value does not
+              mean zero or extinction.
             </p>
             {detail.sourceFile && (
               <p className="record-origin">
-                {detail.sourceFile} · registro CSV {detail.sourceRow}
+                {detail.sourceFile} · CSV record {detail.sourceRow}
               </p>
             )}
             {detail.normalizationNotes &&
               detail.normalizationNotes.length > 0 && (
                 <div className="data-notice">
-                  {detail.normalizationNotes.join(" ")}
+                  {detail.normalizationNotes.map(englishText).join(" ")}
                 </div>
               )}
             <RecordVideos recordId={detail.id} investigationId={detail.investigationId} />
@@ -445,9 +446,9 @@ export function ExperimentExplorer({
             {detail.id === BASS_B1_RECORD_ID && (
               <div className="b1-entry">
                 <span>
-                  <strong>Observação experimental disponível.</strong> Frentes
-                  de chama medidas no vídeo deste teste (em pixels, sem escala
-                  física), com reprodução temporal, eventos e limitações.
+                  <strong>Experimental observation available.</strong> Flame
+                  fronts measured in this test's video (in pixels, without a physical
+                  scale), with temporal playback, events, and limitations.
                 </span>
                 <button
                   className="button secondary"
@@ -457,13 +458,13 @@ export function ExperimentExplorer({
                   }}
                 >
                   <Film size={15} />
-                  Abrir observação B1 (vídeo medido)
+                  Open B1 observation (video measurements)
                 </button>
               </div>
             )}
             <div className="data-notice">
-              Aplicar copia apenas condições numéricas disponíveis. O
-              experimento não é uma validação da cabine nem da animação.
+              Applying copies only available numerical conditions. The
+              experiment does not validate the cabin or animation.
             </div>
             <button
               className="button primary full"
@@ -476,7 +477,7 @@ export function ExperimentExplorer({
                 onApply(detail);
               }}
             >
-              Usar condições no laboratório <ChevronRight size={16} />
+              Use conditions in the laboratory <ChevronRight size={16} />
             </button>
           </section>
         </div>
@@ -485,7 +486,7 @@ export function ExperimentExplorer({
         <Suspense
           fallback={
             <div className="modal-backdrop">
-              <p className="same-loading">Carregando análise SAME…</p>
+              <p className="same-loading">Loading SAME analysis…</p>
             </div>
           }
         >
@@ -496,7 +497,7 @@ export function ExperimentExplorer({
         <Suspense
           fallback={
             <div className="modal-backdrop">
-              <p className="evidence-loading">Carregando evidência SoFIE-GEL…</p>
+              <p className="evidence-loading">Loading SoFIE-GEL evidence…</p>
             </div>
           }
         >
@@ -508,7 +509,7 @@ export function ExperimentExplorer({
           fallback={
             <div className="modal-backdrop">
               <div className="modal" role="status">
-                Carregando a observação B1…
+                Loading B1 observation…
               </div>
             </div>
           }
@@ -525,9 +526,9 @@ export function SourcesView({ data }: { data: NasaData }) {
     <div className="sources-page">
       <div className="page-heading">
         <div>
-          <span className="eyebrow">PROVENIÊNCIA & LIMITES</span>
-          <h1>Uma fonte para cada afirmação.</h1>
-          <p>O que foi importado, de onde veio e o que ainda não sabemos.</p>
+          <span className="eyebrow">PROVENANCE & LIMITATIONS</span>
+          <h1>A source for every claim.</h1>
+          <p>What was imported, where it came from, and what we still do not know.</p>
         </div>
       </div>
       <div className="provenance-banner">
@@ -535,20 +536,20 @@ export function SourcesView({ data }: { data: NasaData }) {
         <div>
           <strong>NASA Physical Sciences Informatics</strong>
           <p>
-            Snapshot recuperado em{" "}
-            {new Date(data.retrievedAt).toLocaleString("pt-BR")}. A aplicação
-            usa os arquivos locais importados, sem depender da disponibilidade
-            do portal durante a demonstração. As contagens representam registros
-            tabulares, incluindo resumos e referências, não ensaios
-            independentes.
+            Snapshot retrieved on{" "}
+            {new Date(data.retrievedAt).toLocaleString("en-US")}. The application
+            uses locally imported files, without depending on portal
+            availability during the demonstration. Counts represent tabular
+            records, including summaries and references, not independent
+            tests.
           </p>
           <a
             className="provenance-download"
             href={`${import.meta.env.BASE_URL}data/nasa-provenance.json`}
-            download="habitatfire-proveniencia.json"
+            download="habitatfire-provenance.json"
           >
             <ArrowDownToLine size={13} />
-            Baixar manifesto de origem e hashes SHA-256
+            Download provenance manifest and SHA-256 hashes
           </a>
         </div>
       </div>
@@ -558,30 +559,30 @@ export function SourcesView({ data }: { data: NasaData }) {
         ))}
       </div>
       <div className="limitations-panel">
-        <h2>Visualização não é certificação.</h2>
+        <h2>Visualization is not certification.</h2>
         <p>
-          A cabine é uma interpretação geométrica, não um modelo CAD oficial. A
-          animação é ilustrativa: não há CFD, propagação calibrada,
-          probabilidade de detecção ou eficácia de supressão calculadas nesta
-          versão.
+          The cabin is a geometric interpretation, not an official CAD model. The
+          animation is illustrative: this version does not calculate CFD,
+          calibrated spread, detection probability, or suppression
+          effectiveness.
         </p>
         <p>
-          Experimentos com sólidos, gotículas e gases são apresentados como
-          famílias diferentes. Não usamos seus resultados como rótulos
-          intercambiáveis de um único classificador. Condições da cabine e
-          resultados locais não herdam validação de um ensaio.
+          Solid, droplet, and gas experiments are presented as separate
+          families. Their results are not used as interchangeable labels
+          for a single classifier. Cabin conditions and local results
+          do not inherit validation from a test.
         </p>
         <p>
-          Materiais atribuídos à cabine são hipóteses editáveis do cenário, não
-          uma declaração da composição real da Orion ou da ISS.
+          Materials assigned to the cabin are editable scenario assumptions, not
+          a statement of the actual composition of Orion or the ISS.
         </p>
       </div>
       {data.errors.length > 0 && (
         <div className="limitations-panel">
-          <h3>Limitações da última sincronização</h3>
+          <h3>Limitations of the last synchronization</h3>
           {data.errors.map((e, n) => (
             <p key={`${e.id}-${n}`}>
-              {e.id}: {e.message}
+              {e.id}: {englishText(e.message)}
             </p>
           ))}
         </div>
@@ -595,27 +596,27 @@ function SourceCard({ investigation: i }: { investigation: Investigation }) {
       <div className="row between">
         <span className="source-id">{i.id}</span>
         <span className="tiny-tag">
-          {i.status === "downloaded" ? "Tabela importada" : "Metadados"}
+          {i.status === "downloaded" ? "Imported table" : "Metadata"}
         </span>
       </div>
-      <h2>{i.name}</h2>
-      <p>{i.title}</p>
+      <h2>{englishText(i.name)}</h2>
+      <p>{englishText(i.title)}</p>
       <div className="source-card-meta">
-        {CATEGORY_LABELS[i.category]} · {i.platform}
+        {CATEGORY_LABELS[i.category]} · {englishText(i.platform)}
       </div>
       <strong className="record-count">
         {i.testCount > 0
-          ? `${i.testCount} registros disponíveis`
-          : "Sem tabela numérica importada"}
+          ? `${i.testCount} records available`
+          : "No numerical table imported"}
       </strong>
       {i.doi && <small className="mono">DOI {i.doi}</small>}
       <div className="source-card-links">
         <a href={i.sourceUrl} target="_blank" rel="noreferrer">
-          Investigação NASA <ArrowUpRight size={14} />
+          NASA investigation <ArrowUpRight size={14} />
         </a>
         {i.dataUrl && (
           <a href={i.dataUrl} target="_blank" rel="noreferrer">
-            Arquivo original <ArrowUpRight size={14} />
+            Original file <ArrowUpRight size={14} />
           </a>
         )}
       </div>

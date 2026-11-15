@@ -1,10 +1,11 @@
 import type { Atmosphere, ExperimentTest } from "../types";
 import type { ResearchBundle, ResearchContext } from "./types";
+import { englishText } from "../i18n/english";
 
 export const CONDITION_FIELDS = [
   { key: "oxygen", record: "oxygenPct", label: "O₂", unit: "%", min: 15, max: 40 },
-  { key: "pressure", record: "pressureKpa", label: "Pressão", unit: "kPa", min: 35, max: 110 },
-  { key: "flow", record: "flowCmS", label: "Fluxo", unit: "cm/s", min: 0, max: 40 },
+  { key: "pressure", record: "pressureKpa", label: "Pressure", unit: "kPa", min: 35, max: 110 },
+  { key: "flow", record: "flowCmS", label: "Flow", unit: "cm/s", min: 0, max: 40 },
 ] as const;
 export interface FieldOrigin {
   kind: "initial-preset" | "preset" | "user" | "experiment";
@@ -16,22 +17,22 @@ export interface FieldOrigin {
 }
 export type ConditionOrigins = Record<keyof Atmosphere, FieldOrigin>;
 export function initialOrigins(): ConditionOrigins {
-  return Object.fromEntries(CONDITION_FIELDS.map(({ key }) => [key, { kind: "initial-preset", label: "Preset inicial · cabine nominal" }])) as ConditionOrigins;
+  return Object.fromEntries(CONDITION_FIELDS.map(({ key }) => [key, { kind: "initial-preset", label: "Initial preset · nominal cabin" }])) as ConditionOrigins;
 }
 export function originLabel(origin: FieldOrigin): string {
   return origin.kind === "experiment"
-    ? `${origin.investigationId} · ${origin.recordId} · ${origin.sourceFile ?? "arquivo não informado"} · linha ${origin.sourceRow ?? "não informada"}`
-    : origin.label;
+    ? `${origin.investigationId} · ${origin.recordId} · ${origin.sourceFile ?? "file not specified"} · row ${origin.sourceRow ?? "not specified"}`
+    : englishText(origin.label);
 }
 export function invalidConditions(test: ExperimentTest): string[] {
   return CONDITION_FIELDS.flatMap((f) => {
     const value = test[f.record];
     return value != null && (!Number.isFinite(value) || value < f.min || value > f.max)
-      ? [`${f.label}: ${value} ${f.unit} (controle: ${f.min}–${f.max})`] : [];
+      ? [`${f.label}: ${value} ${f.unit} (control: ${f.min}–${f.max})`] : [];
   });
 }
 export function applyConditions(test: ExperimentTest, current: Atmosphere, origins: ConditionOrigins) {
-  if (invalidConditions(test).length) throw new Error("Condições fora dos limites; valores originais preservados.");
+  if (invalidConditions(test).length) throw new Error("Conditions are outside the limits; original values preserved.");
   const atmosphere = { ...current };
   const nextOrigins = { ...origins };
   for (const field of CONDITION_FIELDS) {

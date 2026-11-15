@@ -5,13 +5,13 @@ import { contextKey } from "./provenance";
 async function readResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const detail = await response.text();
-    throw new Error(`Serviço de pesquisa: HTTP ${response.status}${detail && !detail.startsWith("<") ? ` · ${detail.slice(0, 200)}` : ""}`);
+    throw new Error(`Research service: HTTP ${response.status}${detail && !detail.startsWith("<") ? ` · ${detail.slice(0, 200)}` : ""}`);
   }
-  if (!response.headers.get("content-type")?.includes("application/json")) throw new Error("API não encontrada neste servidor.");
+  if (!response.headers.get("content-type")?.includes("application/json")) throw new Error("API not found on this server.");
   return response.json() as Promise<T>;
 }
 export function useResearch(context: ResearchContext) {
-  const [question, setQuestion] = useState("PMMA baixo fluxo");
+  const [question, setQuestion] = useState("PMMA low flow");
   const [intent, setIntent] = useState<ResearchIntent>("prevention");
   const [status, setStatus] = useState<ResearchStatus | null>(null);
   const [statusLoading, setStatusLoading] = useState(true);
@@ -35,10 +35,10 @@ export function useResearch(context: ResearchContext) {
       const next = await readResponse<ResearchStatus>(await fetch("/api/research/status", { signal: abort.signal }));
       if (!abort.signal.aborted) {
         setStatus(next);
-        setError(next.status === "ready" ? null : "Corpus de pesquisa indisponível.");
+        setError(next.status === "ready" ? null : "Research corpus unavailable.");
       }
     } catch (err) {
-      if (!abort.signal.aborted) { setStatus(null); setError(err instanceof Error ? err.message : "API indisponível."); }
+      if (!abort.signal.aborted) { setStatus(null); setError(err instanceof Error ? err.message : "API unavailable."); }
     } finally { if (!abort.signal.aborted) setStatusLoading(false); }
   }, []);
   useEffect(() => { void refreshStatus(); return () => { statusController.current?.abort(); controller.current?.abort(); }; }, [refreshStatus]);
@@ -77,11 +77,11 @@ export function useResearch(context: ResearchContext) {
       });
       const next = await readResponse<ResearchBundle>(response);
       if (abort.signal.aborted || generation !== sequence.current || activeKey.current !== submittedKey) return;
-      if (next.schemaVersion !== 1 || contextKey(next.context) !== contextKey(context) || next.question.trim() !== submittedQuestion.trim() || next.intent !== submittedIntent) throw new Error("Resposta de outro contexto rejeitada. Faça uma nova busca.");
+      if (next.schemaVersion !== 1 || contextKey(next.context) !== contextKey(context) || next.question.trim() !== submittedQuestion.trim() || next.intent !== submittedIntent) throw new Error("Response from a different context rejected. Run a new search.");
       setBundle(next);
       setAcceptedKey(submittedKey);
     } catch (err) {
-      if (!abort.signal.aborted && generation === sequence.current) setError(err instanceof Error ? err.message : "Falha ao consultar evidências.");
+      if (!abort.signal.aborted && generation === sequence.current) setError(err instanceof Error ? err.message : "Failed to retrieve evidence.");
     } finally { if (!abort.signal.aborted && generation === sequence.current) setBusy(false); }
   }
   return { question, setQuestion, intent, setIntent, status, statusLoading, refreshStatus, bundle,

@@ -53,51 +53,51 @@ const KINDS = ["char-front", "flame-base", "published-rate"];
 /** Full structural validation; returns the list of problems (empty = valid). */
 export function validateWorkspace(value: unknown): string[] {
   const p: string[] = [];
-  if (!isObj(value)) return ["raiz não é um objeto"];
+  if (!isObj(value)) return ["root is not an object"];
   if (value.schemaVersion !== 1) p.push("schemaVersion ≠ 1");
-  if (value.generatedBy !== "scripts/build_specialist_workspace.py") p.push("generatedBy inesperado");
-  if (!isObj(value.registry) || !isSha(value.registry.sha256)) p.push("registry.sha256 ausente ou inválido");
-  if (!Array.isArray(value.artifacts) || !value.artifacts.every((a) => isObj(a) && typeof a.path === "string" && isSha(a.sha256))) p.push("artifacts inválidos");
-  if (!Array.isArray(value.trials)) return [...p, "trials ausente"];
+  if (value.generatedBy !== "scripts/build_specialist_workspace.py") p.push("unexpected generatedBy");
+  if (!isObj(value.registry) || !isSha(value.registry.sha256)) p.push("registry.sha256 is missing or invalid");
+  if (!Array.isArray(value.artifacts) || !value.artifacts.every((a) => isObj(a) && typeof a.path === "string" && isSha(a.sha256))) p.push("invalid artifacts");
+  if (!Array.isArray(value.trials)) return [...p, "missing trials"];
   const ids = new Set<string>();
   value.trials.forEach((t, i) => {
     const at = `trials[${i}]`;
-    if (!isObj(t) || typeof t.id !== "string") { p.push(`${at}: sem id`); return; }
-    if (ids.has(t.id)) p.push(`${at}: id duplicado ${t.id}`);
+    if (!isObj(t) || typeof t.id !== "string") { p.push(`${at}: missing id`); return; }
+    if (ids.has(t.id)) p.push(`${at}: duplicate id ${t.id}`);
     ids.add(t.id);
     const c = t.conditions;
-    if (!isObj(c) || !isNumOrNull(c.oxygenPct) || !isNumOrNull(c.pressureKpa) || !isNumOrNull(c.flowCmS)) p.push(`${t.id}: condições inválidas`);
+    if (!isObj(c) || !isNumOrNull(c.oxygenPct) || !isNumOrNull(c.pressureKpa) || !isNumOrNull(c.flowCmS)) p.push(`${t.id}: invalid conditions`);
     if (!Array.isArray(t.observables) || !t.observables.length || !t.observables.every((o) => isObj(o) && KINDS.includes(o.kind as string) && isNum(o.speedMmS)))
-      p.push(`${t.id}: observáveis inválidos`);
+      p.push(`${t.id}: invalid observables`);
     const a = t.analysis;
-    if (!isObj(a)) { p.push(`${t.id}: analysis ausente`); return; }
-    if (!["review-required", "usable-with-limitations"].includes(a.reviewStatus as string)) p.push(`${t.id}: reviewStatus inválido`);
-    if (t.sample === "S2" && a.reviewStatus !== "review-required") p.push(`${t.id}: S2 deve permanecer em revisão`);
+    if (!isObj(a)) { p.push(`${t.id}: missing analysis`); return; }
+    if (!["review-required", "usable-with-limitations"].includes(a.reviewStatus as string)) p.push(`${t.id}: invalid reviewStatus`);
+    if (t.sample === "S2" && a.reviewStatus !== "review-required") p.push(`${t.id}: S2 must remain under review`);
     const tr = a.trajectory;
-    if (!isObj(tr) || !Array.isArray(tr.points)) { p.push(`${t.id}: trajectory inválida`); return; }
+    if (!isObj(tr) || !Array.isArray(tr.points)) { p.push(`${t.id}: invalid trajectory`); return; }
     if (tr.status === "available") {
       let last = -Infinity;
       for (const pt of tr.points as unknown[]) {
-        if (!isObj(pt) || !isNum(pt.timeS) || !isNum(pt.observedMm) || !isNumOrNull(pt.simulatedMm)) { p.push(`${t.id}: ponto de curva inválido`); break; }
-        if (pt.timeS <= last) { p.push(`${t.id}: tempos da curva não crescentes`); break; }
+        if (!isObj(pt) || !isNum(pt.timeS) || !isNum(pt.observedMm) || !isNumOrNull(pt.simulatedMm)) { p.push(`${t.id}: invalid curve point`); break; }
+        if (pt.timeS <= last) { p.push(`${t.id}: curve times are not increasing`); break; }
         last = pt.timeS;
       }
-      if (!["same-model", "baseline-not-registered-model"].includes(tr.relationToRegisteredModel as string)) p.push(`${t.id}: relação curva/modelo ausente`);
-    } else if ((tr.points as unknown[]).length) p.push(`${t.id}: curva indisponível com pontos`);
-    if (isObj(a.validationSummary) && a.validationSummary.independentExternalValidation !== false) p.push(`${t.id}: validação externa declarada`);
+      if (!["same-model", "baseline-not-registered-model"].includes(tr.relationToRegisteredModel as string)) p.push(`${t.id}: missing curve/model relationship`);
+    } else if ((tr.points as unknown[]).length) p.push(`${t.id}: unavailable curve contains points`);
+    if (isObj(a.validationSummary) && a.validationSummary.independentExternalValidation !== false) p.push(`${t.id}: external validation claimed`);
   });
-  if (!Array.isArray(value.comparisons)) p.push("comparisons ausente");
+  if (!Array.isArray(value.comparisons)) p.push("missing comparisons");
   else value.comparisons.forEach((c, i) => {
-    if (!isObj(c) || !Array.isArray(c.trialIds) || c.trialIds.length !== 2) { p.push(`comparisons[${i}] inválida`); return; }
-    if (c.interpretation !== "descriptive-not-causal") p.push(`comparisons[${i}]: interpretação causal`);
-    if (!c.observableCompatible && c.speedDeltaMmS !== null) p.push(`comparisons[${i}]: delta entre observáveis incompatíveis`);
+    if (!isObj(c) || !Array.isArray(c.trialIds) || c.trialIds.length !== 2) { p.push(`comparisons[${i}] is invalid`); return; }
+    if (c.interpretation !== "descriptive-not-causal") p.push(`comparisons[${i}]: causal interpretation`);
+    if (!c.observableCompatible && c.speedDeltaMmS !== null) p.push(`comparisons[${i}]: delta between incompatible observables`);
   });
   return p;
 }
 
 export function readWorkspace(value: unknown): Workspace {
   const problems = validateWorkspace(value);
-  if (problems.length) throw new Error(`specialist-workspace.json inválido: ${problems.slice(0, 4).join("; ")}`);
+  if (problems.length) throw new Error(`Invalid specialist-workspace.json: ${problems.slice(0, 4).join("; ")}`);
   return value as Workspace;
 }
 
@@ -126,10 +126,10 @@ export interface Dossier {
 }
 
 export function buildDossier(ws: Workspace, selection: string[], codeVersion: string): Dossier {
-  if (!selection.length || new Set(selection).size !== selection.length) throw new Error("Seleção vazia ou com IDs repetidos.");
+  if (!selection.length || new Set(selection).size !== selection.length) throw new Error("Selection is empty or contains duplicate IDs.");
   const trials = selection.map((id) => {
     const t = ws.trials.find((x) => x.id === id);
-    if (!t) throw new Error(`Ensaio desconhecido: ${id}`);
+    if (!t) throw new Error(`Unknown trial: ${id}`);
     return t;
   });
   const used = new Set<string>([ws.registry.path]);
@@ -160,30 +160,31 @@ export function dossierCsv(d: Dossier): string {
     return [t.id, t.campaign, t.sample, t.material, o.kind, o.speedMmS, m?.observedMmS, m?.simulatedMmS, m?.signedErrorPct,
       m?.positionMaeReportedMm, c.oxygenPct, c.oxygenRangePct?.join("–"), c.pressureKpa, c.flowCmS, c.flowDirection,
       t.analysis.reviewStatus, t.model.validation,
-      t.analysis.trajectory.status === "available" ? t.analysis.trajectory.relationToRegisteredModel : "indisponível",
+      t.analysis.trajectory.status === "available" ? t.analysis.trajectory.relationToRegisteredModel : "unavailable",
       t.model.artifact, t.model.artifactSha256].map(csvCell).join(",");
   });
   return [cols.join(","), ...rows].join("\n") + "\n";
 }
 
-export function dossierMarkdown(d: Dossier): string {
+// Inject display-only localization; keep this module import-free and the dossier unchanged.
+export function dossierMarkdown(d: Dossier, displayText: (value: string) => string = (value) => value): string {
   const n = (v: number | null | undefined, k = 2) => v === null || v === undefined ? "—" : v.toFixed(k);
-  const lines = ["# HabitatFire — dossiê do especialista", "", `Código: ${d.codeVersion} · registro sha256 ${d.workspace.registrySha256}`, "",
-    "## Limites", ...d.limitations.map((l) => `- ${l}`), "", "## Ensaios", "",
-    "| Ensaio | Material | Observável | Taxa (mm/s) | Obs./sim. (mm/s) | Erro | Revisão |", "|---|---|---|---|---|---|---|"];
+  const lines = ["# HabitatFire — Specialist workspace dossier", "", `Code: ${d.codeVersion} · registry sha256 ${d.workspace.registrySha256}`, "",
+    "## Limitations", ...d.limitations.map((l) => `- ${displayText(l)}`), "", "## Trials", "",
+    "| Trial | Material | Observable | Rate (mm/s) | Obs./sim. (mm/s) | Error | Review |", "|---|---|---|---|---|---|---|"];
   for (const t of d.trials) {
     const m = t.analysis.speedComparison;
-    lines.push(`| ${t.id} | ${t.material} | ${t.observables[0].kind} | ${n(t.observables[0].speedMmS)} | ${m ? `${n(m.observedMmS)} / ${n(m.simulatedMmS)}` : "—"} | ${m?.signedErrorPct != null ? `${n(m.signedErrorPct, 1)}%` : "—"} | ${t.analysis.reviewStatus} |`);
+    lines.push(`| ${t.id} | ${displayText(t.material)} | ${t.observables[0].kind} | ${n(t.observables[0].speedMmS)} | ${m ? `${n(m.observedMmS)} / ${n(m.simulatedMmS)}` : "—"} | ${m?.signedErrorPct != null ? `${n(m.signedErrorPct, 1)}%` : "—"} | ${t.analysis.reviewStatus} |`);
   }
   for (const t of d.trials) {
-    lines.push("", `### ${t.id}`, `- Condições: ${JSON.stringify(t.conditions)}`, `- Modelo: ${t.model.artifact} (${t.model.kind}, ${t.model.validation}) sha256 ${t.model.artifactSha256}`,
-      `- Curva: ${t.analysis.trajectory.note}`, ...t.conditionSources.map((s) => `- Fonte ${s.field}: ${s.label}${s.url ? ` — ${s.url}` : ""}`),
-      ...[...t.conflicts, ...t.analysis.warnings].map((w) => `- Ressalva: ${w}`));
+    lines.push("", `### ${t.id}`, `- Conditions: ${JSON.stringify(t.conditions)}`, `- Model: ${t.model.artifact} (${t.model.kind}, ${t.model.validation}) sha256 ${t.model.artifactSha256}`,
+      `- Curve: ${displayText(t.analysis.trajectory.note)}`, ...t.conditionSources.map((s) => `- Source ${s.field}: ${displayText(s.label)}${s.url ? ` — ${s.url}` : ""}`),
+      ...[...t.conflicts, ...t.analysis.warnings].map((w) => `- Caveat: ${displayText(w)}`));
   }
   if (d.comparisons.length) {
-    lines.push("", "## Comparações descritivas (não causais)", "", "| Par | Δ velocidade | Condições diferentes | Desconhecidas |", "|---|---|---|---|");
+    lines.push("", "## Descriptive comparisons (not causal)", "", "| Pair | Δ speed | Different conditions | Unknown conditions |", "|---|---|---|---|");
     for (const c of d.comparisons) {
-      lines.push(`| ${c.trialIds.join(" × ")} | ${c.speedDeltaMmS === null ? "observáveis incompatíveis" : `${n(c.speedDeltaMmS)} mm/s (${n(c.speedDeltaPct, 1)}%)`} | ${c.conditionDiffs.filter((x) => x.status === "different").map((x) => x.field).join(", ") || "—"} | ${c.conditionDiffs.filter((x) => x.status === "unknown").map((x) => x.field).join(", ") || "—"} |`);
+      lines.push(`| ${c.trialIds.join(" × ")} | ${c.speedDeltaMmS === null ? "incompatible observables" : `${n(c.speedDeltaMmS)} mm/s (${n(c.speedDeltaPct, 1)}%)`} | ${c.conditionDiffs.filter((x) => x.status === "different").map((x) => x.field).join(", ") || "—"} | ${c.conditionDiffs.filter((x) => x.status === "unknown").map((x) => x.field).join(", ") || "—"} |`);
     }
   }
   return lines.join("\n") + "\n";
@@ -193,29 +194,29 @@ export function dossierMarkdown(d: Dossier): string {
  *  to restore and every mismatch; malformed files are rejected with reasons. */
 export function checkDossier(value: unknown, ws: Workspace, codeVersion: string):
   { ok: false; errors: string[] } | { ok: true; selection: string[]; mismatches: string[] } {
-  if (!isObj(value)) return { ok: false, errors: ["não é um objeto JSON"] };
+  if (!isObj(value)) return { ok: false, errors: ["not a JSON object"] };
   const errors: string[] = [];
-  if (value.kind !== "habitatfire-specialist-dossier" || value.dossierSchemaVersion !== 1) errors.push("não é um dossiê HabitatFire v1");
-  if (!Array.isArray(value.selection) || !value.selection.length || !value.selection.every((s) => typeof s === "string")) errors.push("seleção ausente ou inválida");
-  else if (new Set(value.selection).size !== value.selection.length) errors.push("seleção com IDs repetidos");
-  if (!Array.isArray(value.artifacts) || !value.artifacts.every((a) => isObj(a) && typeof a.path === "string" && isSha(a.sha256))) errors.push("lista de artefatos inválida");
-  if (!isObj(value.workspace) || !isSha(value.workspace.registrySha256)) errors.push("hash do registro ausente");
-  if (!Array.isArray(value.trials)) errors.push("ensaios ausentes");
+  if (value.kind !== "habitatfire-specialist-dossier" || value.dossierSchemaVersion !== 1) errors.push("not a HabitatFire v1 dossier");
+  if (!Array.isArray(value.selection) || !value.selection.length || !value.selection.every((s) => typeof s === "string")) errors.push("missing or invalid selection");
+  else if (new Set(value.selection).size !== value.selection.length) errors.push("selection contains duplicate IDs");
+  if (!Array.isArray(value.artifacts) || !value.artifacts.every((a) => isObj(a) && typeof a.path === "string" && isSha(a.sha256))) errors.push("invalid artifact list");
+  if (!isObj(value.workspace) || !isSha(value.workspace.registrySha256)) errors.push("missing registry hash");
+  if (!Array.isArray(value.trials)) errors.push("missing trials");
   if (errors.length) return { ok: false, errors };
   const selection = value.selection as string[];
   const unknown = selection.filter((id) => !ws.trials.some((t) => t.id === id));
-  if (unknown.length) return { ok: false, errors: [`ensaios inexistentes no workspace atual: ${unknown.join(", ")}`] };
+  if (unknown.length) return { ok: false, errors: [`trials not found in the current workspace: ${unknown.join(", ")}`] };
   const mismatches: string[] = [];
-  if (value.codeVersion !== codeVersion) mismatches.push(`código ${String(value.codeVersion)} ≠ ${codeVersion}`);
-  if ((value.workspace as Record<string, unknown>).registrySha256 !== ws.registry.sha256) mismatches.push("registro de ensaios com bytes diferentes");
+  if (value.codeVersion !== codeVersion) mismatches.push(`code ${String(value.codeVersion)} ≠ ${codeVersion}`);
+  if ((value.workspace as Record<string, unknown>).registrySha256 !== ws.registry.sha256) mismatches.push("trial registry has different bytes");
   for (const a of value.artifacts as { path: string; sha256: string }[]) {
     const now = ws.artifacts.find((x) => x.path === a.path);
-    if (!now) mismatches.push(`${a.path} ausente no workspace atual`);
-    else if (now.sha256 !== a.sha256) mismatches.push(`${a.path}: sha256 diferente`);
+    if (!now) mismatches.push(`${a.path} is missing from the current workspace`);
+    else if (now.sha256 !== a.sha256) mismatches.push(`${a.path}: different sha256`);
   }
   for (const t of value.trials as WsTrial[]) {
     const now = ws.trials.find((x) => x.id === t?.id);
-    if (now && JSON.stringify(now.analysis?.speedComparison) !== JSON.stringify(t.analysis?.speedComparison)) mismatches.push(`${t.id}: métricas diferentes das atuais`);
+    if (now && JSON.stringify(now.analysis?.speedComparison) !== JSON.stringify(t.analysis?.speedComparison)) mismatches.push(`${t.id}: metrics differ from the current values`);
   }
   return { ok: true, selection, mismatches };
 }

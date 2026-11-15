@@ -13,17 +13,17 @@ export class SceneBoundary extends Component<
       return (
         <div className="scene-fallback">
           <Box size={42} />
-          <h3>A visualização 3D não pôde iniciar.</h3>
+          <h3>The 3D view could not start.</h3>
           <p>
-            Ative a aceleração gráfica do navegador. Os experimentos e controles
-            continuam disponíveis.
+            Enable browser graphics acceleration. Experiments and controls
+            remain available.
           </p>
           <button
             className="button secondary"
             onClick={() => this.setState({ failed: false })}
           >
             <RotateCcw size={15} />
-            Tentar novamente
+            Try again
           </button>
         </div>
       );

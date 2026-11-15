@@ -7,7 +7,7 @@ export interface PublishedCase {
 
 export const SAFFIRE_PUBLISHED_CASES = {
   "saffire-iv": { sample: "IV-1", material: "SIBAL" },
-  "saffire-v": { sample: "V-2", material: "Algodão jersey" },
+  "saffire-v": { sample: "V-2", material: "Cotton jersey" },
   "saffire-vi": { sample: "VI-2", material: "SIBAL" },
 } satisfies Record<string, PublishedCase>;
 
@@ -79,7 +79,7 @@ export function readPublishedModel(value: unknown, experimentId: string): Publis
         (!Number.isFinite(validation.positionMaeMm) || !Number.isFinite(validation.observedSpeedMmS) ||
           !Array.isArray(validation.digitization?.points) || validation.digitization.points.length < 3)) ||
       (validation.kind !== "same-trial-curve" && validation.kind !== "numerical-speed-only")) {
-    throw new Error("Os parâmetros publicados deste ensaio SAFFIRE estão incompletos ou inconsistentes.");
+    throw new Error("The published parameters for this SAFFIRE trial are incomplete or inconsistent.");
   }
   return model as PublishedModel;
 }

@@ -5,6 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from backend.research import ResearchService, validate_request
+from backend.providers import ProviderError
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT = {"vehicle": "orion", "surfaceId": "console_main", "surfaceName": "Console de comando", "structureKind": "Equipamento", "material": "PMMA", "oxygenPct": 21, "pressureKpa": 101.3, "flowCmS": 2, "gravityG": 0}
@@ -49,7 +50,7 @@ class ResearchChecks(unittest.TestCase):
 
     def test_lunar_transfer_is_a_gap_not_a_prediction(self):
         result = self.service.search(question("Este material serve para habitat lunar?"))
-        self.assertTrue(any("gravidade" in gap.lower() for gap in result["gaps"]))
+        self.assertTrue(any("gravity" in gap.lower() for gap in result["gaps"]))
         self.assertFalse(result["visualization"]["replayAvailable"])
         self.assertNotIn("riskProbability", result)
 
@@ -77,6 +78,17 @@ class ResearchChecks(unittest.TestCase):
         result = service.search(question("PMMA"), synthesize=True)
         self.assertEqual(result["synthesisMode"], "extractive")
         self.assertTrue(result["warnings"])
+
+    def test_certification_guard_requires_direct_negation(self):
+        sources = {"source": {"text": "Published experimental evidence."}}
+        def generated(summary):
+            return {"summary": summary, "findings": [{"text": "Published experimental evidence.", "sourceIds": ["source"]}]}
+        for summary in ["Not assessed; certified safe.", "No data. Certified safe.", "Not a prediction, but certified safe.", "Não avaliado; certificado seguro."]:
+            with self.subTest(summary=summary), self.assertRaises(ProviderError):
+                ResearchService._validate_generation(generated(summary), sources)
+        for summary in ["Not certified.", "Not intended for certification.", "No certification.", "Não certificado.", "Sem certificação."]:
+            with self.subTest(summary=summary):
+                ResearchService._validate_generation(generated(summary), sources)
 
     def test_injected_valid_generation_and_vectors_execute_real_branches(self):
         class ConfiguredProvider:

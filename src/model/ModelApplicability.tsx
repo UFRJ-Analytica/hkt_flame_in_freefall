@@ -4,17 +4,18 @@ import {
   assessSaffireS1, PARTIAL_GRAVITY_SOURCES, rankComparables, readModelingTargets,
   type Criterion, type ModelingTargets, type Scenario, type Status, type TargetRecord,
 } from "./domain";
+import { englishText } from "../i18n/english";
 import "./model.css";
 
 const STATUS_TITLE: Record<Status, string> = {
-  ok: "Dentro do domínio medido",
-  warn: "Próximo do domínio, com ressalvas",
-  out: "Fora do domínio medido",
+  ok: "Within the measured domain",
+  warn: "Near the domain, with caveats",
+  out: "Outside the measured domain",
 };
 const STATUS_ICON = { ok: CheckCircle2, warn: AlertTriangle, out: CircleSlash };
 const OUTCOME_CLASS: Record<string, string> = { sustained: "sustained", "no-sustained": "none", anchored: "anchored", "not-ignited": "none" };
 const num = (n: number | null | undefined, digits = 1) =>
-  n == null || !Number.isFinite(n) ? "—" : n.toLocaleString("pt-BR", { maximumFractionDigits: digits });
+  n == null || !Number.isFinite(n) ? "—" : n.toLocaleString("en-US", { maximumFractionDigits: digits });
 
 function useModelingTargets() {
   const [targets, setTargets] = useState<ModelingTargets | null>(null);
@@ -22,9 +23,9 @@ function useModelingTargets() {
   useEffect(() => {
     const request = new AbortController();
     fetch(`${import.meta.env.BASE_URL}data/modeling-targets.json`, { signal: request.signal })
-      .then((response) => { if (!response.ok) throw new Error("Alvos de modelagem indisponíveis."); return response.json(); })
+      .then((response) => { if (!response.ok) throw new Error("Modeling targets unavailable."); return response.json(); })
       .then((value) => setTargets(readModelingTargets(value)))
-      .catch((reason: unknown) => { if (!request.signal.aborted) setError(reason instanceof Error ? reason.message : "Erro ao carregar."); });
+      .catch((reason: unknown) => { if (!request.signal.aborted) setError(reason instanceof Error ? englishText(reason.message) : "Error loading data."); });
     return () => request.abort();
   }, []);
   return { targets, error };
@@ -41,17 +42,17 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
   const Icon = STATUS_ICON[assessment.status];
   const partialGravity = scenario.gravityG >= 0.01;
   return (
-    <section className="applicability-panel" aria-label="Aplicabilidade de modelos calibrados">
+    <section className="applicability-panel" aria-label="Calibrated model applicability">
       <header className="applicability-head">
         <div>
-          <span className="eyebrow">PREVISÃO PARA ESTE CENÁRIO</span>
+          <span className="eyebrow">PREDICTION FOR THIS SCENARIO</span>
           <h2 className={`status-${assessment.status}`}><Icon size={15} /> {STATUS_TITLE[assessment.status]}</h2>
           <p>
-            Modelo calibrado disponível: <strong>avanço da frente · SAFFIRE I S1</strong>. Comparado com {surfaceName.toLowerCase()} em {scenario.material}.
+            Available calibrated model: <strong>front advance · SAFFIRE I S1</strong>. Compared with {englishText(surfaceName).toLowerCase()} in {englishText(scenario.material)}.
           </p>
         </div>
         <button className="button secondary" onClick={onOpenModel}>
-          {assessment.status === "out" ? "Ver o ensaio de referência" : "Abrir o modelo"} <ArrowRight size={14} />
+          {assessment.status === "out" ? "View the reference trial" : "Open the model"} <ArrowRight size={14} />
         </button>
       </header>
 
@@ -63,11 +64,11 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
         <div className="gravity-callout" role="note">
           <AlertTriangle size={15} />
           <div>
-            <strong>Gravidade parcial não tem ensaio no PSI.</strong>
+            <strong>No partial-gravity trial is available in PSI.</strong>
             <p>
-              Em 1/6 g o empuxo volta a induzir escoamento, mas sem o <em>blowoff</em> de 1 g. Ensaios em centrífuga e voo
-              parabólico (LUCI) indicam que alguns materiais queimam com menos O₂ na gravidade lunar do que na Terra; o tecido SIBAL
-              queima para baixo em 1/6 g e se extingue em 1 g. Ensaios em centrífuga (ICES-2025-392) mostram que o efeito depende do material: materiais de maior temperatura de pirólise podem ficar menos inflamáveis. O FM² vai medir na superfície lunar. Nem µg nem 1 g são limites conservadores universais.
+              At 1/6 g, buoyancy again induces flow, but without the <em>blowoff</em> seen at 1 g. Centrifuge tests and
+              parabolic flights (LUCI) indicate that some materials burn with less O₂ in lunar gravity than on Earth; SIBAL fabric
+              burns downward at 1/6 g and extinguishes at 1 g. Centrifuge tests (ICES-2025-392) show that the effect depends on the material: materials with higher pyrolysis temperatures may become less flammable. FM² will measure on the lunar surface. Neither µg nor 1 g is a universal conservative bound.
             </p>
             <span className="gravity-links">
               <a href={PARTIAL_GRAVITY_SOURCES.fm2} target="_blank" rel="noreferrer">FM² · NASA Glenn <ArrowUpRight size={11} /></a>
@@ -78,10 +79,10 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
       )}
 
       <div className="comparables-head">
-        <h3><FlaskConical size={14} /> Ensaios medidos mais próximos</h3>
+        <h3><FlaskConical size={14} /> Nearest measured trials</h3>
         {targets && (
           <span className="comparables-actions">
-            <a className="text-link subtle" href={`${import.meta.env.BASE_URL}data/modeling-targets.json`} download="habitatfire-alvos-modelagem.json">
+            <a className="text-link subtle" href={`${import.meta.env.BASE_URL}data/modeling-targets.json`} download="habitatfire-modeling-targets.json">
               <ArrowDownToLine size={12} /> JSON
             </a>
             <button className="text-link subtle" onClick={() => downloadCsv(targets.records)}><ArrowDownToLine size={12} /> CSV</button>
@@ -89,34 +90,34 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
         )}
       </div>
       {error && <p className="model-muted">{error}</p>}
-      {!targets && !error && <p className="model-muted">Carregando alvos de modelagem…</p>}
+      {!targets && !error && <p className="model-muted">Loading modeling targets…</p>}
       <ol className="comparables">
         {comparables.map(({ record, mismatches }) => (
           <li key={record.id}>
             <details>
               <summary>
                 <span className="cmp-id">{record.campaign} · {record.sample}</span>
-                <span className="cmp-material">{record.materialDetail}{record.thicknessMm ? ` · ${num(record.thicknessMm, 2)} mm` : ""}</span>
+                <span className="cmp-material">{englishText(record.materialDetail)}{record.thicknessMm ? ` · ${num(record.thicknessMm, 2)} mm` : ""}</span>
                 <span className="cmp-conditions">
-                  {record.flowCmS} cm/s {record.flowDirection === "concurrent" ? "concorrente" : "oposto"} ·{" "}
-                  {record.oxygenPct ? `${record.oxygenApproximate ? "~" : ""}${num(record.oxygenPct[0])}${record.oxygenPct[1] !== record.oxygenPct[0] ? `–${num(record.oxygenPct[1])}` : ""}% O₂` : "O₂ não tabulado"} · µg
+                  {record.flowCmS} cm/s {record.flowDirection === "concurrent" ? "concurrent" : "opposed"} ·{" "}
+                  {record.oxygenPct ? `${record.oxygenApproximate ? "~" : ""}${num(record.oxygenPct[0])}${record.oxygenPct[1] !== record.oxygenPct[0] ? `–${num(record.oxygenPct[1])}` : ""}% O₂` : "O₂ not tabulated"} · µg
                 </span>
                 <span className="cmp-result">
                   {record.outcome
-                    ? <span className={`outcome ${OUTCOME_CLASS[record.outcome]}`}>{targets?.outcomeLabels[record.outcome]}</span>
-                    : <span className="outcome unknown">Desfecho não tabulado</span>}
+                    ? <span className={`outcome ${OUTCOME_CLASS[record.outcome]}`}>{englishText(targets?.outcomeLabels[record.outcome] ?? record.outcome)}</span>
+                    : <span className="outcome unknown">Outcome not tabulated</span>}
                   {record.spreadRateMmS !== null && <strong>{num(record.spreadRateMmS)} mm/s</strong>}
                 </span>
                 {mismatches.length > 0 && <span className="cmp-chips">{mismatches.map((m) => <i key={m}>{m}</i>)}</span>}
               </summary>
               <div className="cmp-detail">
-                {record.notes.map((note) => <p key={note}>{note}</p>)}
-                {record.spreadRateSource && <p>Taxa: {record.spreadRateSource.label}.</p>}
+                {record.notes.map((note) => <p key={note}>{englishText(note)}</p>)}
+                {record.spreadRateSource && <p>Rate: {englishText(record.spreadRateSource.label)}.</p>}
                 {record.onegComparison?.burnLength && (
-                  <p>Mesmo material em 1 g: comprimento queimado "{record.onegComparison.burnLength}", taxa "{record.onegComparison.spreadRate}".</p>
+                  <p>Same material at 1 g: burned length "{englishText(record.onegComparison.burnLength)}", rate "{englishText(record.onegComparison.spreadRate ?? "—")}".</p>
                 )}
                 <p className="cmp-source">
-                  {record.source.file}, linha {record.source.row} · frames {record.framesStatus === "processed" ? "processados" : record.framesStatus === "available" ? "disponíveis, não processados" : "não publicados no PSI"} ·{" "}
+                  {record.source.file}, row {record.source.row} · frames {record.framesStatus === "processed" ? "processed" : record.framesStatus === "available" ? "available, not processed" : "not published in PSI"} ·{" "}
                   <a href={record.source.url} target="_blank" rel="noreferrer">{record.investigation} <ArrowUpRight size={10} /></a>
                 </p>
               </div>
@@ -124,7 +125,7 @@ export function ModelApplicability({ scenario, surfaceName, onOpenModel }: {
           </li>
         ))}
       </ol>
-      {targets && <p className="model-caption">{targets.limits.join(" ")}</p>}
+      {targets && <p className="model-caption">{targets.limits.map(englishText).join(" ")}</p>}
     </section>
   );
 }
@@ -135,7 +136,7 @@ function CriterionRow({ criterion }: { criterion: Criterion }) {
     <li className={`criterion ${criterion.status}`}>
       <Icon size={13} aria-label={STATUS_TITLE[criterion.status]} />
       <span className="crit-label">{criterion.label}</span>
-      <span className="crit-values"><strong>{criterion.scenario}</strong> <small>ensaio: {criterion.domain}</small></span>
+      <span className="crit-values"><strong>{englishText(criterion.scenario)}</strong> <small>trial: {criterion.domain}</small></span>
       <span className="crit-note">{criterion.note}</span>
     </li>
   );
@@ -156,7 +157,7 @@ function downloadCsv(records: TargetRecord[]) {
   const url = URL.createObjectURL(new Blob([[columns.join(","), ...rows].join("\n")], { type: "text/csv" }));
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "habitatfire-alvos-modelagem.csv";
+  anchor.download = "habitatfire-modeling-targets.csv";
   anchor.click();
   URL.revokeObjectURL(url);
 }

@@ -28,7 +28,7 @@ class MediaResolver:
 
     def resolve(self, accession, filename):
         if filename not in self.allowed.get(accession, set()):
-            raise LookupError("Vídeo não indexado para esta investigação.")
+            raise LookupError("Video is not indexed for this investigation.")
         key = (accession, filename)
         with self._lock:
             hit = self._cache.get(key)
@@ -39,10 +39,10 @@ class MediaResolver:
             with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "HabitatFire/1"}), timeout=20) as response:
                 signed = response.read(8192).decode("utf-8").strip()
         except (urllib.error.URLError, OSError, TimeoutError):
-            raise ConnectionError("NASA PSI indisponível.") from None
+            raise ConnectionError("NASA PSI is unavailable.") from None
         parts = urlsplit(signed)
         if parts.scheme != "https" or parts.hostname not in ALLOWED_HOSTS:
-            raise ConnectionError("Resposta inesperada do NASA PSI.")
+            raise ConnectionError("Unexpected response from NASA PSI.")
         with self._lock:
             self._cache[key] = (time.monotonic() + TTL_SECONDS, signed)
         return signed

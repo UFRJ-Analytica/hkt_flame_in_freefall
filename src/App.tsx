@@ -55,16 +55,18 @@ import { GRAVITY_ENVIRONMENTS, gravityOf, SURFACE_PRESETS, type GravityId } from
 import { HabitatLab } from "./habitat/HabitatLab";
 import { SpecialistWorkspace } from "./specialist/SpecialistWorkspace";
 import "./habitat/habitat.css";
+import { englishText } from "./i18n/english";
 type LabMode = "habitat" | "workspace" | "cabin" | SaffireMission;
 const LAB_TABS: { id: "habitat" | "workspace" | "saffire" | "cabin"; label: string; hint: string }[] = [
-  { id: "habitat", label: "Habitat lunar · simulação 3D", hint: "cenários exploratórios e alternativas A/B" },
-  { id: "workspace", label: "Bancada do especialista", hint: "galeria, comparação e dossiê dos 9 ensaios" },
-  { id: "saffire", label: "Ensaios SAFFIRE I a VI", hint: "calibração e validação por ensaio" },
-  { id: "cabin", label: "Cabine e evidências", hint: "busca, catálogo e aplicabilidade" },
+  { id: "habitat", label: "Lunar habitat · 3D simulation", hint: "exploratory scenarios and A/B alternatives" },
+  { id: "workspace", label: "Specialist workspace", hint: "gallery, comparison and dossier for 9 trials" },
+  { id: "saffire", label: "SAFFIRE I–VI trials", hint: "calibration and validation by trial" },
+  { id: "cabin", label: "Cabin and evidence", hint: "search, catalog and applicability" },
 ];
 import {
   INITIAL_MATERIALS,
   MATERIALS,
+  MATERIAL_LABELS,
   PRESETS,
   SURFACES,
   number,
@@ -79,9 +81,9 @@ const CabinScene = lazy(() => import("./components/CabinScene"));
 const SaffireScene = lazy(() => import("./components/SaffireScene"));
 type Page = "lab" | "experiments" | "sources";
 const OVERLAYS = [
-  { id: "materials", label: "Materiais", icon: Layers3 },
-  { id: "thermal", label: "Térmico", icon: Thermometer },
-  { id: "airflow", label: "Ventilação", icon: Wind },
+  { id: "materials", label: "Materials", icon: Layers3 },
+  { id: "thermal", label: "Thermal", icon: Thermometer },
+  { id: "airflow", label: "Ventilation", icon: Wind },
 ] as const;
 
 export default function App() {
@@ -92,7 +94,7 @@ export default function App() {
   const [loadedLocal, setLocalized] = useState<SaffireIILocalized | null>(null);
   const [sample, setSample] = useState<SaffireIICase>(SAFFIRE_II_CASES[4]);
   const [opposed, setOpposed] = useState<OpposedModel>({ status: "unavailable" });
-  const [saffireStatus, setSaffireStatus] = useState("Carregando dados do ensaio…");
+  const [saffireStatus, setSaffireStatus] = useState("Loading trial data…");
   const mission = labMode === "cabin" || labMode === "habitat" || labMode === "workspace" ? null : SAFFIRE_MISSIONS[labMode];
   const [habitatAnchor, setHabitatAnchor] = useState<{ id: string; nonce: number } | null>(null);
   const isSaffire = mission !== null;
@@ -118,24 +120,24 @@ export default function App() {
     const request = new AbortController();
     setSaffire(null);
     setLocalized(null);
-    setOpposed({ status: "unavailable", reason: "Carregando análise de S2…" });
-    setSaffireStatus("Carregando dados do ensaio…");
+    setOpposed({ status: "unavailable", reason: "Loading S2 analysis…" });
+    setSaffireStatus("Loading trial data…");
     const base = `${import.meta.env.BASE_URL}data/saffire/${mission.accession.toLowerCase()}`;
     const s2 = iiCase || publishedCase ? null : fetch(`${base}-s2-neighbors.json`, { signal: request.signal })
       .then(response => {
-        if (!response.ok) throw new Error("Resultado de S2 indisponível.");
+        if (!response.ok) throw new Error("S2 result unavailable.");
         return response.json();
       })
       .then(value => readOpposedModel(value, `${mission.accession}:t0:r3`))
       .catch((error: unknown): OpposedModel => ({
-        status: "unavailable", reason: error instanceof Error ? error.message : "Resultado de S2 indisponível.",
+        status: "unavailable", reason: error instanceof Error ? error.message : "S2 result unavailable.",
       }));
     const file = publishedCase ? `${base}.json`
       : iiCase ? `${base}-ii${iiCase.sample}${isLocalized ? "-board" : ""}.json` : `${base}-s1-neighbors.json`;
     fetch(file, { signal: request.signal })
       .then((response) => {
         if (!response.ok || !response.headers.get("content-type")?.includes("json")) {
-          throw new Error("O resultado do processamento SAFFIRE ainda não está disponível.");
+          throw new Error("The SAFFIRE processing result is not yet available.");
         }
         return response.json();
       })
@@ -149,7 +151,7 @@ export default function App() {
         }
       })
       .catch((error: unknown) => {
-        if (!request.signal.aborted) setSaffireStatus(error instanceof Error ? error.message : "Dados indisponíveis.");
+        if (!request.signal.aborted) setSaffireStatus(error instanceof Error ? error.message : "Data unavailable.");
       });
     return () => request.abort();
   }, [mission, iiCase, isLocalized, experimentId, publishedCase]);
@@ -242,7 +244,7 @@ export default function App() {
         if (next[key] !== atmosphere[key] || presetLabel) {
           updated[key] = presetLabel
             ? { kind: "preset", label: `Preset · ${presetLabel}` }
-            : { kind: "user", label: "Ajuste manual do usuário" };
+            : { kind: "user", label: "Manual user adjustment" };
         }
       }
       return updated;
@@ -262,7 +264,7 @@ export default function App() {
     if (!isSaffire) setOverlay("thermal");
   }
   const modeSwitch = (
-    <div className="lab-mode-tabs" role="group" aria-label="Modo do laboratório">
+    <div className="lab-mode-tabs" role="group" aria-label="Laboratory mode">
       {LAB_TABS.map((tab) => (
         <button key={tab.id} type="button"
           aria-pressed={tab.id === "saffire" ? isSaffire : labMode === tab.id}
@@ -283,12 +285,12 @@ export default function App() {
     const invalid = invalidConditions(test);
     if (invalid.length) {
       setNotice(
-        `Aplicação recusada: ${invalid.join("; ")}. Valores originais preservados, sem ajuste aos controles.`,
+        `Application rejected: ${invalid.map(englishText).join("; ")}. Original values preserved without adjustment to the controls.`,
       );
       return;
     }
     if (CONDITION_FIELDS.every((f) => test[f.record] == null)) {
-      setNotice("Este registro não possui O₂, pressão ou fluxo normalizados para aplicar.");
+      setNotice("This record has no normalized O₂, pressure or flow values to apply.");
       return;
     }
     setPendingTest(test);
@@ -305,8 +307,8 @@ export default function App() {
     setTime(0);
     const fieldsApplied = [
       test.oxygenPct !== null ? "O₂" : null,
-      test.pressureKpa !== null ? "pressão" : null,
-      test.flowCmS !== null ? "fluxo" : null,
+      test.pressureKpa !== null ? "pressure" : null,
+      test.flowCmS !== null ? "flow" : null,
     ].filter((field): field is string => field !== null);
     setSourceExperiment({
       id: test.id,
@@ -321,7 +323,7 @@ export default function App() {
     setPendingTest(null);
     setPage("lab");
     setNotice(
-      `${test.investigationId} · ${test.label}: ${fieldsApplied.join(", ")} aplicado(s). Campos ausentes foram mantidos; não é validação da cabine.`,
+      `${test.investigationId} · ${englishText(test.label)}: applied ${fieldsApplied.join(", ")}. Missing fields were left unchanged; this does not validate the cabin.`,
     );
   }
   function exportScenario() {
@@ -337,7 +339,7 @@ export default function App() {
       visualization: { mode: iiCase || published ? "saffire-edge-ignition" : "saffire-central-ignition", timeSeconds: time,
         ...(iiCase || published ? { grid: published?.grid ?? SAFFIRE_II_BOARD } : {}) },
       model: saffire,
-      opposed: iiCase || published ? { status: "unavailable", reason: "Sem estimativa contra o fluxo para este ensaio." } : opposed,
+      opposed: iiCase || published ? { status: "unavailable", reason: "No opposed-flow estimate for this trial." } : opposed,
     } : {
       product: "HabitatFire",
       version: 2,
@@ -362,7 +364,7 @@ export default function App() {
         bundle: research.bundle,
       } : null,
       limitations:
-        "Geometria aproximada. Sem previsão validada de propagação, detecção ou supressão. Materiais são hipóteses do cenário.",
+        "Approximate geometry. No validated prediction of spread, detection or suppression. Materials are scenario assumptions.",
     };
     const url = URL.createObjectURL(
       new Blob([JSON.stringify(payload, null, 2)], {
@@ -375,10 +377,10 @@ export default function App() {
     anchor.click();
     URL.revokeObjectURL(url);
     setNotice(
-      localized ? "Observações de borda exportadas com os tempos e a fonte."
-      : published ? "Modelo de velocidade publicada exportado com evidências e limites."
-      : isSaffire ? "Modelo SAFFIRE exportado com a fonte e a checagem temporal."
-        : "Cenário exportado com condições, hipóteses e referência do snapshot NASA.",
+      localized ? "Edge observations exported with timestamps and source."
+      : published ? "Published-speed model exported with evidence and limitations."
+      : isSaffire ? "SAFFIRE model exported with its source and temporal check."
+        : "Scenario exported with conditions, assumptions and NASA snapshot reference.",
     );
   }
   return (
@@ -388,7 +390,7 @@ export default function App() {
           className="brand"
           href="#laboratorio"
           onClick={() => setPage("lab")}
-          aria-label="HabitatFire início"
+          aria-label="HabitatFire home"
         >
           <span className="brand-symbol">
             <Flame size={23} strokeWidth={1.6} />
@@ -398,20 +400,20 @@ export default function App() {
             <small>MICROGRAVITY RESEARCH LAB</small>
           </span>
         </a>
-        <nav className="main-nav" aria-label="Navegação principal">
+        <nav className="main-nav" aria-label="Main navigation">
           <button
             onClick={() => setPage("lab")}
             className={page === "lab" ? "active" : ""}
           >
             <Box size={15} />
-            Laboratório
+            Laboratory
           </button>
           <button
             onClick={() => setPage("experiments")}
             className={page === "experiments" ? "active" : ""}
           >
             <Beaker size={15} />
-            Experimentos
+            Experiments
             {allTests > 0 && <span className="nav-count">{allTests}</span>}
           </button>
           <button
@@ -419,21 +421,21 @@ export default function App() {
             className={page === "sources" ? "active" : ""}
           >
             <BookOpen size={15} />
-            Fontes
+            Sources
           </button>
         </nav>
         <div className="header-right">
           <span className="connection-status">
             <i className={`dot ${data ? "green" : "amber"}`} />
             {loading
-              ? "Carregando NASA"
+              ? "Loading NASA data"
               : data
-                ? "NASA PSI · snapshot local"
-                : "Dados indisponíveis"}
+                ? "NASA PSI · local snapshot"
+                : "Data unavailable"}
           </span>
           <button
             className="icon-button"
-            aria-label="Como usar o laboratório"
+            aria-label="How to use the laboratory"
             onClick={() => setHelp(true)}
           >
             <CircleHelp size={18} />
@@ -449,7 +451,7 @@ export default function App() {
           <span>{notice}</span>
           <button
             className="icon-button"
-            aria-label="Dispensar aviso"
+            aria-label="Dismiss notice"
             onClick={() => setNotice(null)}
           >
             <X size={15} />
@@ -460,10 +462,10 @@ export default function App() {
         <div className="error-banner" role="alert">
           <Info size={16} />
           <span>
-            {error} Execute npm run data:sync para recuperar o snapshot público,
-            ou tente carregar novamente.
+            {englishText(error)} Run npm run data:sync to retrieve the public snapshot,
+            or try loading it again.
           </span>
-          <button onClick={reload}>Tentar novamente</button>
+          <button onClick={reload}>Try again</button>
         </div>
       )}
       {page === "lab" ? (
@@ -472,17 +474,17 @@ export default function App() {
             <div>
               <div className="breadcrumb">
                 WORKSPACE <ChevronRight size={11} /> HABITATFIRE{" "}
-                <span className="workspace-tag">EXPLORATÓRIO</span>
+                <span className="workspace-tag">EXPLORATORY</span>
               </div>
-              <h1>O fogo muda. A sua perspectiva também.</h1>
+              <h1>Fire changes. So does your perspective.</h1>
               <p>
                 {labMode === "workspace"
-                  ? "Compare os ensaios SAFFIRE da NASA: condições, fontes, modelo, velocidades e curvas, com exportação de dossiê."
+                  ? "Compare NASA SAFFIRE trials: conditions, sources, model, speeds and curves, with dossier export."
                   : labMode === "habitat"
-                  ? "Simule a propagação de um incêndio nas superfícies de um habitat lunar, com o modelo calibrado em imagens da NASA."
+                  ? "Simulate fire spread across lunar habitat surfaces with a model calibrated using NASA images."
                   : isSaffire
-                  ? `Explore as medições e o modelo de propagação do ${mission.label}.`
-                  : "Explore uma cabine em microgravidade e conecte suas perguntas à ciência da NASA."}
+                  ? `Explore measurements and the spread model for ${mission.label}.`
+                  : "Explore a microgravity cabin and connect your questions to NASA science."}
               </p>
             </div>
             {labMode !== "habitat" && labMode !== "workspace" && <button
@@ -491,7 +493,7 @@ export default function App() {
               disabled={unavailable}
             >
               <ArrowDownToLine size={15} />
-              Exportar cenário
+              Export scenario
             </button>}
           </div>
           {labMode === "workspace" ? (
@@ -500,71 +502,71 @@ export default function App() {
           ) : labMode === "habitat" ? (
             <HabitatLab modeSwitch={modeSwitch} requestedAnchor={habitatAnchor} onOpenCalibration={() => { changeLabMode("saffire"); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
           ) : <main className="workbench">
-            <aside className="scenario-panel" aria-label="Configurar cenário">
+            <aside className="scenario-panel" aria-label="Configure scenario">
               <div className="panel-title">
                 <Settings2 size={15} />
-                <h2>Seu cenário</h2>
+                <h2>Your scenario</h2>
                 <span className="tiny-tag">{isSaffire ? "µg" : gravityEnv.short}</span>
               </div>
               <section className="control-section">{modeSwitch}</section>
               {isSaffire && <section className="control-section">
                 <label className="preset-select">
-                  <select aria-label="Ensaio SAFFIRE" value={labMode}
+                  <select aria-label="SAFFIRE trial" value={labMode}
                     onChange={(event) => changeLabMode(event.target.value as SaffireMission)}>
-                    <option value="saffire">SAFFIRE I · Ignição central</option>
+                    <option value="saffire">SAFFIRE I · Central ignition</option>
                     <option value="saffire-ii">SAFFIRE II</option>
-                    <option value="saffire-iii">SAFFIRE III · Ignição central</option>
+                    <option value="saffire-iii">SAFFIRE III · Central ignition</option>
                     {Object.entries(SAFFIRE_PUBLISHED_CASES).map(([mode, item]) => (
-                      <option key={mode} value={mode}>{SAFFIRE_MISSIONS[mode as SaffireMission].label} · {item.material}</option>
+                      <option key={mode} value={mode}>{englishText(SAFFIRE_MISSIONS[mode as SaffireMission].label)} · {englishText(item.material)}</option>
                     ))}
                   </select>
                   <ChevronDown size={14} />
                 </label>
                 {iiCase && <label className="preset-select">
-                  <select aria-label="Amostra do SAFFIRE II" value={iiCase.sample} onChange={event => {
+                  <select aria-label="SAFFIRE II sample" value={iiCase.sample} onChange={event => {
                     const selected = SAFFIRE_II_CASES.find(item => item.sample === Number(event.target.value));
                     if (selected) {
                       setSample(selected);
                       changeLabMode("saffire-ii");
                     }
                   }}>
-                    {SAFFIRE_II_CASES.map(item => <option key={item.sample} value={item.sample}>2-{item.sample} · {item.material}</option>)}
+                    {SAFFIRE_II_CASES.map(item => <option key={item.sample} value={item.sample}>2-{item.sample} · {englishText(item.material)}</option>)}
                   </select>
                   <ChevronDown size={14} />
                 </label>}
               </section>}
               {isSaffire ? (
                 <section className="control-section">
-                  <h3>Amostra {publishedCase?.material ?? iiCase?.material ?? "SIBAL"}</h3>
+                  <h3>Sample {englishText(publishedCase?.material ?? iiCase?.material ?? "SIBAL")}</h3>
                   {publishedCase ? <>
-                    <p>Placa visual de 50 × 40,6 cm</p>
+                    <p>50 × 40.6 cm visual board</p>
                     {published?.measuredGeometry.widthApproximate &&
-                      <p>Largura publicada de cerca de {number(published.measuredGeometry.widthMm / 10, 0)} cm</p>}
-                  </> : <p>{iiCase ? `29 × 5 cm${iiCase.thickness ? ` · ${iiCase.thickness} de espessura` : ""}` : `94 × 40,6 cm${labMode === "saffire" ? " · 0,37 mm de espessura" : ""}`}</p>}
-                  {iiCase && <p>Placa visual de 29 × 40,6 cm · largura extrapolada</p>}
-                  <p>Fluxo de referência de {published?.conditions.flowCmS ?? iiCase?.flow ?? mission.flow} cm/s · O₂ {published ? `${number(published.conditions.oxygenPct, 1)}%` : iiCase?.oxygen ?? mission.oxygen}
+                      <p>Published width of approximately {number(published.measuredGeometry.widthMm / 10, 0)} cm</p>}
+                  </> : <p>{iiCase ? `29 × 5 cm${iiCase.thickness ? ` · ${englishText(iiCase.thickness)} thick` : ""}` : `94 × 40.6 cm${labMode === "saffire" ? " · 0.37 mm thick" : ""}`}</p>}
+                  {iiCase && <p>29 × 40.6 cm visual board · extrapolated width</p>}
+                  <p>Reference flow of {number(published?.conditions.flowCmS ?? iiCase?.flow ?? mission.flow)} cm/s · O₂ {published ? `${number(published.conditions.oxygenPct, 1)}%` : englishText(iiCase?.oxygen ?? mission.oxygen)}
                     {published && ` · ${number(published.conditions.pressureKpa, 1)} kPa`}</p>
-                  <p>{publishedCase ? "Ignição na borda a montante · avanço a favor do fluxo" : iiCase ? `Ensaio ${iiCase.direction} do fluxo` : "Ignição central ilustrativa"}</p>
+                  <p>{publishedCase ? "Upstream edge ignition · concurrent-flow spread" : iiCase ? `${englishText(iiCase.direction)} flow trial` : "Illustrative central ignition"}</p>
                 </section>
               ) : <>
               <section className="control-section">
                 <div className="step-label">
                   <span>01</span>
-                  <h3>Ambiente</h3>
+                  <h3>Environment</h3>
                 </div>
                 <div className="vehicle-options">
                   {(
                     [
                       {
                         id: "orion",
-                        title: "Cápsula Orion",
-                        subtitle: "Tripulação · 4 lugares",
+                        title: "Orion capsule",
+                        subtitle: "Crew · 4 seats",
                         icon: Box,
                       },
                       {
                         id: "iss",
-                        title: "Módulo orbital",
-                        subtitle: "Inspirado na ISS",
+                        title: "Orbital module",
+                        subtitle: "Inspired by the ISS",
                         icon: Layers3,
                       },
                     ] as const
@@ -593,66 +595,66 @@ export default function App() {
                   ))}
                 </div>
                 <p className="microcopy">
-                  Geometria aproximada, não é CAD oficial.
+                  Approximate geometry, not official CAD.
                 </p>
               </section>
               <section className="control-section">
                 <div className="step-label">
                   <span>02</span>
-                  <h3>Atmosfera & ventilação</h3>
+                  <h3>Atmosphere & ventilation</h3>
                   <Wind size={14} />
                 </div>
 
                 <label className="preset-select">
                   <select
-                    aria-label="Preset de atmosfera"
+                    aria-label="Atmosphere preset"
                     value={preset}
                     onChange={(e) => {
                       const surfacePreset = SURFACE_PRESETS.find((p) => p.id === e.target.value);
                       const p = surfacePreset ?? PRESETS.find((p) => p.id === e.target.value);
                       if (p) {
                         setPreset(p.id);
-                        changeConditions({ ...p.atmosphere }, p.label);
+                        changeConditions({ ...p.atmosphere }, englishText(p.label));
                         if (surfacePreset) setGravity(surfacePreset.gravity);
                       }
                     }}
                   >
                     <option value="custom" disabled>
-                      Condições personalizadas
+                      Custom conditions
                     </option>
                     <option value="experiment" disabled>
-                      Condições de experimento
+                      Experiment conditions
                     </option>
-                    <optgroup label="Órbita">
+                    <optgroup label="Orbit">
                       {PRESETS.map((p) => (
                         <option key={p.id} value={p.id}>
-                          {p.label}
+                          {englishText(p.label)}
                         </option>
                       ))}
                     </optgroup>
-                    <optgroup label="Superfície">
-                      {SURFACE_PRESETS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+                    <optgroup label="Surface">
+                      {SURFACE_PRESETS.map((p) => <option key={p.id} value={p.id}>{englishText(p.label)}</option>)}
                     </optgroup>
                   </select>
                   <ChevronDown size={14} />
                 </label>
                 {SURFACE_PRESETS.find((p) => p.id === preset) && (
-                  <p className="preset-note">{SURFACE_PRESETS.find((p) => p.id === preset)!.note}</p>
+                  <p className="preset-note">{englishText(SURFACE_PRESETS.find((p) => p.id === preset)!.note)}</p>
                 )}
-                <div className="gravity-select" role="group" aria-label="Gravidade do ambiente">
+                <div className="gravity-select" role="group" aria-label="Environmental gravity">
                   {GRAVITY_ENVIRONMENTS.map((env) => (
                     <button key={env.id} type="button" aria-pressed={gravity === env.id}
                       onClick={() => { setGravity(env.id); setPlaying(false); setRunId(0); setTime(0); setIgnitionSurface(null); }}>
-                      {env.label}<small>{env.short}</small>
+                      {englishText(env.label)}<small>{englishText(env.short)}</small>
                     </button>
                   ))}
                 </div>
                 <details className="condition-origins">
-                  <summary>Origem de cada condição</summary>
-                  {CONDITION_FIELDS.map((field) => <p key={field.key}><strong>{field.label} · {number(atmosphere[field.key])} {field.unit}</strong><br />{originLabel(origins[field.key])}</p>)}
+                  <summary>Source of each condition</summary>
+                  {CONDITION_FIELDS.map((field) => <p key={field.key}><strong>{englishText(field.label)} · {number(atmosphere[field.key])} {field.unit}</strong><br />{englishText(originLabel(origins[field.key]))}</p>)}
                 </details>
                 <RangeControl
-                  label="Oxigênio"
+                  label="Oxygen"
                   value={atmosphere.oxygen}
                   unit="%"
                   min={15}
@@ -664,7 +666,7 @@ export default function App() {
                   }}
                 />
                 <RangeControl
-                  label="Pressão"
+                  label="Pressure"
                   value={atmosphere.pressure}
                   unit="kPa"
                   min={35}
@@ -676,7 +678,7 @@ export default function App() {
                   }}
                 />
                 <RangeControl
-                  label="Ventilação"
+                  label="Ventilation"
                   value={atmosphere.flow}
                   unit="cm/s"
                   min={0}
@@ -688,7 +690,7 @@ export default function App() {
                   }}
                 />
                 <div className="partial-pressure">
-                  <span>Pressão parcial de O₂</span>
+                  <span>O₂ partial pressure</span>
                   <strong>
                     {number((atmosphere.pressure * atmosphere.oxygen) / 100)}{" "}
                     <small>kPa</small>
@@ -698,11 +700,11 @@ export default function App() {
               <section className="control-section material-section">
                 <div className="step-label">
                   <span>03</span>
-                  <h3>Superfície & material</h3>
+                  <h3>Surface & material</h3>
                   <MousePointer2 size={13} />
                 </div>
                 <p className="section-description">
-                  Selecione na cabine ou na lista.
+                  Select in the cabin or from the list.
                 </p>
                 <div className="surface-list">
                   {SURFACES.map((s) => (
@@ -719,14 +721,14 @@ export default function App() {
                         className={`material-dot material-${assignments[s.id].toLowerCase().replace("í", "i")}`}
                       />
                       <span>{s.name}</span>
-                      <small>{assignments[s.id]}</small>
+                      <small>{MATERIAL_LABELS[assignments[s.id]] ?? assignments[s.id]}</small>
                     </button>
                   ))}
                 </div>
                 <label className="material-select-label">
-                  Material da superfície selecionada
+                  Selected surface material
                   <select
-                    aria-label="Material da superfície"
+                    aria-label="Surface material"
                     value={assignments[selectedSurface]}
                     onChange={(e) => {
                       setAssignments((a) => ({
@@ -740,22 +742,22 @@ export default function App() {
                     }}
                   >
                     {MATERIALS.map((m) => (
-                      <option key={m}>{m}</option>
+                      <option key={m} value={m}>{MATERIAL_LABELS[m] ?? m}</option>
                     ))}
                   </select>
                 </label>
                 <p className="microcopy">
-                  Atribuições hipotéticas, não materiais reais do veículo.
+                  Hypothetical assignments, not the vehicle's actual materials.
                 </p>
               </section>
               </>}
               <div className="scenario-footer">
                 <span>
                   <ShieldCheck size={14} />
-                  Hipóteses explícitas. Fontes abertas.
+                  Explicit assumptions. Open sources.
                 </span>
                 <button onClick={() => setLimits(true)}>
-                  Ver limites <ArrowUpRight size={12} />
+                  View limitations <ArrowUpRight size={12} />
                 </button>
               </div>
             </aside>
@@ -765,13 +767,13 @@ export default function App() {
                   <div className="scene-title">
                     <i className="dot amber" />
                     <span>
-                      {mission ? `${mission.label} / ${publishedCase ? "IGNIÇÃO NA BORDA" : iiCase ? `2-${iiCase.sample}` : "IGNIÇÃO CENTRAL"}` : vehicle === "orion"
+                      {mission ? `${mission.label} / ${publishedCase ? "EDGE IGNITION" : iiCase ? `2-${iiCase.sample}` : "CENTRAL IGNITION"}` : vehicle === "orion"
                         ? "ORION / CREW CABIN"
                         : "ORBITAL / LAB MODULE"}
                     </span>
                   </div>
                   <span className="scene-scale">
-                    {isSaffire ? "3D · MICROGRAVIDADE · ENSAIO" : `3D · ${gravity === "orbit" ? "MICROGRAVIDADE" : `${gravityEnv.label.toUpperCase()} ${gravityEnv.short}`} · ILUSTRATIVO`}
+                    {isSaffire ? "3D · MICROGRAVITY · TRIAL" : `3D · ${gravity === "orbit" ? "MICROGRAVITY" : `${englishText(gravityEnv.label).toUpperCase()} ${englishText(gravityEnv.short)}`} · ILLUSTRATIVE`}
                   </span>
                 </div>
                 <div className="scene-canvas">
@@ -780,7 +782,7 @@ export default function App() {
                       fallback={
                         <div className="scene-loading">
                           <LoaderCircle size={24} className="spin" />
-                          <span>Carregando cena…</span>
+                          <span>Loading scene…</span>
                         </div>
                       }
                     >
@@ -794,7 +796,7 @@ export default function App() {
                         <SaffireScene model={{ grid: SAFFIRE_II_BOARD }} grid={localizedGrid}
                           resetCameraKey={resetCameraKey} />
                       ) : (
-                        <div className="scene-fallback" role="status"><p>{saffireStatus}</p></div>
+                        <div className="scene-fallback" role="status"><p>{englishText(saffireStatus)}</p></div>
                       ) : <CabinScene
                         vehicle={vehicle}
                         cutaway={cutaway}
@@ -815,8 +817,8 @@ export default function App() {
                 <div className="scene-left-tools">
                   {!isSaffire && <button
                     className={`tool-button ${cutaway ? "active" : ""}`}
-                    title="Alternar vista em corte"
-                    aria-label="Alternar vista em corte"
+                    title="Toggle cutaway view"
+                    aria-label="Toggle cutaway view"
                     aria-pressed={cutaway}
                     onClick={() => setCutaway((v) => !v)}
                   >
@@ -824,16 +826,16 @@ export default function App() {
                   </button>}
                   <button
                     className="tool-button"
-                    title="Restaurar câmera"
-                    aria-label="Restaurar câmera"
+                    title="Reset camera"
+                    aria-label="Reset camera"
                     onClick={() => setResetCameraKey((k) => k + 1)}
                   >
                     <Focus size={17} />
                   </button>
                   <button
                     className="tool-button"
-                    title="Tela cheia"
-                    aria-label="Tela cheia"
+                    title="Fullscreen"
+                    aria-label="Fullscreen"
                     onClick={() => {
                       if (document.fullscreenElement)
                         void document.exitFullscreen();
@@ -842,7 +844,7 @@ export default function App() {
                           ?.requestFullscreen()
                           .catch(() =>
                             setNotice(
-                              "Tela cheia não está disponível neste navegador.",
+                              "Fullscreen is not available in this browser.",
                             ),
                           );
                     }}
@@ -864,20 +866,20 @@ export default function App() {
                 </div>}
                 <div className="scene-bottom">
                   <div className="scene-legend">
-                    {isLocalized ? <><span className="heat-legend" /> Luminosidade na borda · observação</> : isSaffire ? <><span className="heat-legend" /> {publishedCase ? "Frente longitudinal simulada" : "Frente de pirólise simulada"}</> : overlay === "thermal" ? (
+                    {isLocalized ? <><span className="heat-legend" /> Edge luminosity · observation</> : isSaffire ? <><span className="heat-legend" /> {publishedCase ? "Simulated longitudinal front" : "Simulated pyrolysis front"}</> : overlay === "thermal" ? (
                       <>
                         <span className="heat-legend" />
-                        Intensidade visual · ilustrativa
+                        Visual intensity · illustrative
                       </>
                     ) : overlay === "airflow" ? (
                       <>
                         <span className="flow-legend" />
-                        Direção de fluxo · ilustrativa
+                        Flow direction · illustrative
                       </>
                     ) : (
                       <>
                         <span className="selection-legend" />
-                        Superfície selecionada
+                        Selected surface
                       </>
                     )}
                   </div>
@@ -889,23 +891,23 @@ export default function App() {
                 </div>
                 <div className="scene-instructions">
                   <MousePointer2 size={12} />
-                  Arraste para orbitar<span>·</span>Role para aproximar
-                  {!isSaffire && <><span>·</span>Clique para selecionar</>}
+                  Drag to orbit<span>·</span>Scroll to zoom
+                  {!isSaffire && <><span>·</span>Click to select</>}
                 </div>
               </div>
               <section className="playback-panel">
                 <div className="playback-header">
                   <div>
-                    <span className="eyebrow">{mission?.label ?? "EXPLORAR UM CENÁRIO"}</span>
+                    <span className="eyebrow">{mission?.label ?? "EXPLORE A SCENARIO"}</span>
                     <h2>
-                      {isLocalized ? `Comportamento de borda · ${iiCase.material}` : isSaffire ? `Propagação sobre ${publishedCase?.material ?? "SIBAL"}` : ignitionSurface
-                        ? `Ignição em ${SURFACES.find((s) => s.id === ignitionSurface)?.name.toLowerCase()}`
-                        : "Como o ambiente influencia a chama?"}
+                      {isLocalized ? `Edge behavior · ${englishText(iiCase.material)}` : isSaffire ? `Spread across ${englishText(publishedCase?.material ?? "SIBAL")}` : ignitionSurface
+                        ? `Ignition on ${SURFACES.find((s) => s.id === ignitionSurface)?.name.toLowerCase()}`
+                        : "How does the environment influence the flame?"}
                     </h2>
                   </div>
                   <span className="illustrative-pill">
                     <Info size={12} />
-                    Ilustrativo
+                    Illustrative
                   </span>
                 </div>
                 <div className="timeline">
@@ -913,7 +915,7 @@ export default function App() {
                     className="play-button"
                     disabled={unavailable}
                     aria-label={
-                      playing ? "Pausar animação" : "Reproduzir animação"
+                      playing ? "Pause animation" : "Play animation"
                     }
                     onClick={() => {
                       if (!runId) run();
@@ -931,7 +933,7 @@ export default function App() {
                   </button>
                   <div className="timeline-track">
                     <input
-                      aria-label={isSaffire ? "Tempo da reprodução em segundos" : "Progresso da animação ilustrativa"}
+                      aria-label={isSaffire ? "Playback time in seconds" : "Illustrative animation progress"}
                       type="range"
                       min={0}
                       max={duration}
@@ -957,11 +959,11 @@ export default function App() {
                   </div>
                   <div className="time-readout">
                     <strong>{isSaffire ? `${number(saffireStepIndex * (saffire?.stepSeconds ?? 2), 0)} s` : `${number((time / 90) * 100, 0)}%`}</strong>
-                    <span>{isSaffire ? `passo ${saffireStepIndex} · desde o início da janela` : "animação"}</span>
+                    <span>{isSaffire ? `step ${saffireStepIndex} · from the start of the window` : "animation"}</span>
                   </div>
                   <button
                     className="speed-button"
-                    aria-label="Alterar velocidade da animação"
+                    aria-label="Change animation speed"
                     onClick={() =>
                       setSpeed((s) => (s === 1 ? 2 : s === 2 ? 4 : 1))
                     }
@@ -970,34 +972,34 @@ export default function App() {
                   </button>
                 </div>
                 {isSaffire && !iiCase && !publishedCase ? (
-                  <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
-                    <button aria-pressed="true" title="Frentes medidas nas câmeras dos dois ensaios do voo">Observação reconstruída</button>
-                    <button aria-pressed="true" title="Avanço condicionado à ignição, nas condições do ensaio">Previsão condicional · domínio do ensaio</button>
-                    <button disabled title="A ignição central combina os ajustes de S1 e S2 em uma cena ilustrativa">Ignição central ilustrativa</button>
+                  <div className="fidelity-mode-controls" aria-label="Visualization fidelity">
+                    <button aria-pressed="true" title="Fronts measured by the cameras in both flight trials">Reconstructed observation</button>
+                    <button aria-pressed="true" title="Spread conditional on ignition under the trial conditions">Conditional prediction · trial domain</button>
+                    <button disabled title="Central ignition combines S1 and S2 fits in an illustrative scene">Illustrative central ignition</button>
                   </div>
                 ) : !isSaffire && (
-                  <div className="fidelity-mode-controls" aria-label="Fidelidade da visualização">
-                    <button aria-pressed="true" onClick={() => setNotice("Modo ilustrativo: o progresso não representa tempo físico de incêndio.")}>Ilustrativo</button>
-                    <button disabled title="Replay medido disponível nos modos SAFFIRE">Replay medido: modos SAFFIRE</button>
-                    <button disabled title="Veja a aplicabilidade do modelo calibrado abaixo">Previsão: ver aplicabilidade</button>
+                  <div className="fidelity-mode-controls" aria-label="Visualization fidelity">
+                    <button aria-pressed="true" onClick={() => setNotice("Illustrative mode: progress does not represent physical fire time.")}>Illustrative</button>
+                    <button disabled title="Measured replay available in SAFFIRE modes">Measured replay: SAFFIRE modes</button>
+                    <button disabled title="See calibrated model applicability below">Prediction: see applicability</button>
                   </div>
                 )}
                 <div className="playback-footer">
                   <p>
                     <Info size={12} />
-                    {isLocalized ? "A grade marca a atividade observada na borda. Probabilidade de avanço indisponível."
-                      : publishedCase ? "Avanço longitudinal calibrado por velocidade publicada."
-                      : iiCase ? "Simulação longitudinal com a taxa medida em 5 cm aplicada à largura visual de 40,6 cm."
+                    {isLocalized ? "The grid marks observed edge activity. Spread probability unavailable."
+                      : publishedCase ? "Longitudinal spread calibrated using published speed."
+                      : iiCase ? "Longitudinal simulation with the rate measured across 5 cm applied to the 40.6 cm visual width."
                       : isSaffire
                       ? saffireBlocked
-                        ? `${saffireBlocked} tentativas de transição sem estimativa foram suspensas nesta reprodução.`
-                        : "Simulação por vizinhança, com checagem temporal no mesmo ensaio."
-                      : "Animação de hipótese. Sem previsão validada de propagação."}
+                        ? `${saffireBlocked} transition attempts without estimates were suspended in this playback.`
+                        : "Neighborhood simulation with a temporal check within the same trial."
+                      : "Scenario animation. No validated spread prediction."}
                   </p>
                   <button className="button primary" onClick={run} disabled={unavailable}>
                     <Flame size={15} />
-                    {isLocalized ? (runId ? "Reiniciar cenário" : "Visualizar ensaio")
-                      : isSaffire ? (runId ? "Reiniciar simulação" : "Simular avanço") : (runId ? "Reiniciar cenário" : "Visualizar ignição")}
+                    {isLocalized ? (runId ? "Restart scenario" : "View trial")
+                      : isSaffire ? (runId ? "Restart simulation" : "Simulate spread") : (runId ? "Restart scenario" : "View ignition")}
                     <ArrowRight size={15} />
                   </button>
                 </div>
@@ -1034,22 +1036,22 @@ export default function App() {
             </span>
             <span>
               NASA Space Apps · Flame in Freefall
-              <span className="footer-divider">/</span>Não destinado à
-              certificação
+              <span className="footer-divider">/</span>Not intended for
+              certification
             </span>
             <a
               href="https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/"
               target="_blank"
               rel="noreferrer"
             >
-              O desafio <ArrowUpRight size={12} />
+              The challenge <ArrowUpRight size={12} />
             </a>
           </footer>
         </>
       ) : loading ? (
         <div className="page-loading">
           <LoaderCircle className="spin" />
-          Carregando catálogo NASA…
+          Loading NASA catalog…
         </div>
       ) : data ? (
         page === "experiments" ? (
@@ -1060,14 +1062,14 @@ export default function App() {
       ) : (
         <div className="empty-state">
           <Database size={32} />
-          <h2>O catálogo ainda não foi carregado.</h2>
+          <h2>The catalog has not loaded yet.</h2>
           <p>
-            Sincronize os dados NASA e tente novamente. A cabine continua
-            disponível no laboratório.
+            Sync NASA data and try again. The cabin remains
+            available in the laboratory.
           </p>
           <button className="button secondary" onClick={reload}>
             <RefreshCw size={15} />
-            Recarregar
+            Reload
           </button>
         </div>
       )}
@@ -1084,18 +1086,18 @@ export default function App() {
             <div className="modal-heading">
               <div>
                 <span className="eyebrow">
-                  {limits ? "TRANSPARÊNCIA CIENTÍFICA" : "SEU PRIMEIRO CENÁRIO"}
+                  {limits ? "SCIENTIFIC TRANSPARENCY" : "YOUR FIRST SCENARIO"}
                 </span>
                 <h2 id="help-title">
                   {limits
-                    ? "O que esta versão pode dizer?"
-                    : "Da pergunta ao experimento."}
+                    ? "What can this version tell you?"
+                    : "From question to experiment."}
                 </h2>
               </div>
               <button
                 autoFocus
                 className="icon-button"
-                aria-label="Fechar"
+                aria-label="Close"
                 onClick={closeDialog}
               >
                 <X size={20} />
@@ -1104,35 +1106,35 @@ export default function App() {
             {limits ? (
               <>
                 <p>
-                  A biblioteca apresenta medições reais importadas do NASA PSI,
-                  com campos originais e fontes. A cabine e suas atribuições de
-                  materiais são aproximações para explorar cenários.
+                  The library presents real measurements imported from NASA PSI,
+                  with original fields and sources. The cabin and its material
+                  assignments are approximations for exploring scenarios.
                 </p>
                 <div className="help-step">
                   <Database />
                   <div>
-                    <strong>Medição ≠ previsão.</strong>
+                    <strong>Measurement ≠ prediction.</strong>
                     <p>
-                      Não há um modelo treinado e validado de propagação nesta
-                      versão. O tempo da animação não estima o tempo de um
-                      incêndio real.
+                      This version has no trained and validated spread model.
+                      Animation time does not estimate the duration of a
+                      real fire.
                     </p>
                   </div>
                 </div>
                 <div className="help-step">
                   <Wind />
                   <div>
-                    <strong>Sem transporte de fumaça calculado.</strong>
+                    <strong>No calculated smoke transport.</strong>
                     <p>
-                      Fluxo, chama e resposta visual são ilustrações. Não
-                      calculamos tempo de alarme, detecção ou eficácia de
-                      extintores.
+                      Flow, flame and visual response are illustrations. We do
+                      not calculate alarm time, detection or extinguisher
+                      effectiveness.
                     </p>
                   </div>
                 </div>
                 <p className="data-notice">
-                  Não usar para decisões operacionais, seleção certificada de
-                  materiais ou segurança de tripulação.
+                  Do not use for operational decisions, certified material
+                  selection or crew safety.
                 </p>
                 <button
                   className="button primary full"
@@ -1141,7 +1143,7 @@ export default function App() {
                     setPage("sources");
                   }}
                 >
-                  Consultar fontes e limitações <ArrowRight size={15} />
+                  View sources and limitations <ArrowRight size={15} />
                 </button>
               </>
             ) : (
@@ -1149,35 +1151,35 @@ export default function App() {
                 <div className="help-step">
                   <Box />
                   <div>
-                    <strong>1. Entre na cabine</strong>
+                    <strong>1. Enter the cabin</strong>
                     <p>
-                      Escolha o ambiente. Arraste para orbitar e clique em um
-                      componente para selecionar sua superfície.
+                      Choose the environment. Drag to orbit and click a
+                      component to select its surface.
                     </p>
                   </div>
                 </div>
                 <div className="help-step">
                   <Settings2 />
                   <div>
-                    <strong>2. Formule uma hipótese</strong>
+                    <strong>2. Form a hypothesis</strong>
                     <p>
-                      Ajuste atmosfera, ventilação e materiais. Visualize uma
-                      ignição ilustrativa sem confundi-la com uma previsão.
+                      Adjust atmosphere, ventilation and materials. View an
+                      illustrative ignition without mistaking it for a prediction.
                     </p>
                   </div>
                 </div>
                 <div className="help-step">
                   <Beaker />
                   <div>
-                    <strong>3. Volte à evidência</strong>
+                    <strong>3. Return to the evidence</strong>
                     <p>
-                      Explore os registros NASA, abra os campos originais e
-                      aplique condições disponíveis ao seu cenário.
+                      Explore NASA records, open the original fields and
+                      apply available conditions to your scenario.
                     </p>
                   </div>
                 </div>
                 <button className="button primary full" onClick={closeDialog}>
-                  Explorar o laboratório <ArrowRight size={15} />
+                  Explore the laboratory <ArrowRight size={15} />
                 </button>
               </>
             )}
@@ -1243,43 +1245,43 @@ function RangeControl({
 function SaffirePublishedEvidence({ sample, model }: { sample: PublishedCase; model: PublishedModel | null }) {
   const check = model?.validation;
   return (
-    <aside className="evidence-panel" aria-label={`Evidência ${sample.sample}`}>
-      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+    <aside className="evidence-panel" aria-label={`Evidence ${sample.sample}`}>
+      <div className="panel-title"><BookOpen size={15} /><h2>Reference trial</h2></div>
       <section className="evidence-card featured">
         <div className="evidence-card-title">
-          <h3>{sample.sample} · {sample.material}</h3>
-          {model && <a href={model.calibration.source.url} target="_blank" rel="noreferrer" aria-label={model.calibration.source.label}>
+          <h3>{sample.sample} · {englishText(sample.material)}</h3>
+          {model && <a href={model.calibration.source.url} target="_blank" rel="noreferrer" aria-label={englishText(model.calibration.source.label)}>
             <ArrowUpRight size={17} />
           </a>}
         </div>
         {model && <>
           <div className="evidence-numbers">
-            <div><strong>{number(model.probability * 100, 0)}%</strong><span>Chance derivada por 2 s</span></div>
-            <div><strong>{number(model.calibration.speedMmS, 2)} mm/s</strong><span>Velocidade publicada</span></div>
+            <div><strong>{number(model.probability * 100, 0)}%</strong><span>Derived probability per 2 s</span></div>
+            <div><strong>{number(model.calibration.speedMmS, 2)} mm/s</strong><span>Published speed</span></div>
           </div>
-          <p>Calibrado por velocidade publicada. Cada faixa sorteia o avanço de uma célula de 10 mm por passo de 2 s.</p>
-          <p>Avanço lateral e contra o fluxo sem estimativa. A variação entre faixas vem dos sorteios do modelo.</p>
+          <p>Calibrated using published speed. Each strip randomly samples a one-cell advance of 10 mm per 2 s step.</p>
+          <p>No estimate for lateral or opposed-flow spread. Variation between strips comes from the model's random draws.</p>
         </>}
         {check?.kind === "same-trial-curve" && <>
-          <h4>Checagem por curva no mesmo ensaio</h4>
-          <p>{check.variable}, de {check.digitization.intervalSeconds.join(" a ")} s na Figura 8.
-            Inclinação de {number(check.observedSpeedMmS, 2)} mm/s no gráfico e {number(check.simulatedSpeedMmS, 2)} mm/s
-            na média de {check.seedCount} sementes. Erro médio de posição de {number(check.positionMaeMm, 1)} mm.</p>
-          {sample.sample === "V-2" && <p>A checagem termina antes de o tecido enrolar. A cena segue até o horizonte estimado de travessia.</p>}
+          <h4>Curve check within the same trial</h4>
+          <p>{englishText(check.variable)}, from {check.digitization.intervalSeconds.map(value => number(value)).join(" to ")} s in Figure 8.
+            Slope of {number(check.observedSpeedMmS, 2)} mm/s in the plot and {number(check.simulatedSpeedMmS, 2)} mm/s
+            averaged across {check.seedCount} seeds. Mean position error of {number(check.positionMaeMm, 1)} mm.</p>
+          {sample.sample === "V-2" && <p>The check ends before the fabric rolls up. The scene continues to the estimated crossing horizon.</p>}
         </>}
         {check?.kind === "numerical-speed-only" && <>
-          <h4>Trajetória experimental indisponível</h4>
-          <p>{check.reason} A checagem numérica obteve {number(check.simulatedSpeedMmS, 2)} mm/s na média de {check.seedCount} sementes.</p>
+          <h4>Experimental trajectory unavailable</h4>
+          <p>{englishText(check.reason)} The numerical check obtained {number(check.simulatedSpeedMmS, 2)} mm/s averaged across {check.seedCount} seeds.</p>
         </>}
       </section>
       {model?.relatedEvidence.map(item => (
         <section className="evidence-card" key={item.id}>
           <div className="evidence-card-title">
-            <h3>{item.id} · {item.material}</h3>
-            <a href={item.source.url} target="_blank" rel="noreferrer" aria-label={item.source.label}><ArrowUpRight size={17} /></a>
+            <h3>{item.id} · {englishText(item.material)}</h3>
+            <a href={item.source.url} target="_blank" rel="noreferrer" aria-label={englishText(item.source.label)}><ArrowUpRight size={17} /></a>
           </div>
-          <p>{item.outcome}</p>
-          <p>Simulação indisponível.</p>
+          <p>{englishText(item.outcome)}</p>
+          <p>Simulation unavailable.</p>
         </section>
       ))}
     </aside>
@@ -1290,26 +1292,26 @@ function SaffireIIEvidence({ sample, model, localized }: {
   sample: SaffireIICase; model: SaffireII5Model | null; localized: SaffireIILocalized | null;
 }) {
   return (
-    <aside className="evidence-panel" aria-label="Evidência SAFFIRE II">
-      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+    <aside className="evidence-panel" aria-label="SAFFIRE II evidence">
+      <div className="panel-title"><BookOpen size={15} /><h2>Reference trial</h2></div>
       <section className="evidence-card featured">
         <div className="evidence-card-title">
-          <h3>II-{sample.sample} · {sample.material}</h3>
-          <a href="https://psi.nasa.gov/physci/repo/data/investigations/PSI-99" target="_blank" rel="noreferrer" aria-label="Abrir investigação na NASA">
+          <h3>II-{sample.sample} · {englishText(sample.material)}</h3>
+          <a href="https://psi.nasa.gov/physci/repo/data/investigations/PSI-99" target="_blank" rel="noreferrer" aria-label="Open NASA investigation">
             <ArrowUpRight size={17} />
           </a>
         </div>
         {model && <>
           <div className="evidence-numbers">
-            <div><strong>{number(model.probability * 100, 1)}%</strong><span>Chance de avanço em 2 s</span></div>
-            <div><strong>{model.train.transitions}/{model.train.exposures}</strong><span>Avanços por exposições</span></div>
+            <div><strong>{number(model.probability * 100, 1)}%</strong><span>Spread probability in 2 s</span></div>
+            <div><strong>{model.train.transitions}/{model.train.exposures}</strong><span>Advances per exposure</span></div>
           </div>
-          <p>Taxa medida em {model.sampling.acceptedFrames} quadros da câmera {model.camera}. A cena aplica essa taxa às 21 faixas da placa visual, com sorteios próprios.</p>
-          <p>Nas {model.validation.comparableRows} de 3 faixas acompanhadas durante todo o trecho reservado, a frente avançou a {number(model.validation.observedSpeedMmS, 2)} mm/s nas imagens e {number(model.validation.simulatedSpeedMmS, 2)} mm/s na média de {model.validation.seedCount} simulações.</p>
+          <p>Rate measured in {model.sampling.acceptedFrames} frames from camera {model.camera}. The scene applies this rate to the 21 strips of the visual board with independent random draws.</p>
+          <p>In {model.validation.comparableRows} of the 3 strips tracked throughout the held-out segment, the front advanced at {number(model.validation.observedSpeedMmS, 2)} mm/s in the images and {number(model.validation.simulatedSpeedMmS, 2)} mm/s averaged across {model.validation.seedCount} simulations.</p>
         </>}
-        {sample.model ? <p>Avanço contra o fluxo e efeito lateral · sem estimativa aplicada.</p> : <>
-          <p>{sample.outcome}</p>
-          {localized && <p>{localized.observations.length} quadros da câmera {localized.camera} analisados para marcar a luminosidade na borda. Essa medida inclui o ignitor e não identifica uma frente de pirólise em avanço.</p>}
+        {sample.model ? <p>Opposed-flow spread and lateral effect · no estimate applied.</p> : <>
+          <p>{englishText(sample.outcome)}</p>
+          {localized && <p>{localized.observations.length} frames from camera {localized.camera} analyzed to mark edge luminosity. This measurement includes the igniter and does not identify an advancing pyrolysis front.</p>}
         </>}
       </section>
     </aside>
@@ -1322,70 +1324,70 @@ function SaffireEvidence({ model, opposed, accession }: {
   const forwardCheck = model?.contiguousValidation;
   const opposedCheck = opposed.contiguousValidation;
   return (
-    <aside className="evidence-panel" aria-label="Evidência SAFFIRE">
-      <div className="panel-title"><BookOpen size={15} /><h2>Ensaio de referência</h2></div>
+    <aside className="evidence-panel" aria-label="SAFFIRE evidence">
+      <div className="panel-title"><BookOpen size={15} /><h2>Reference trial</h2></div>
       <section className="evidence-card featured">
         <div className="evidence-card-title">
-          <h3>A favor da ventilação · S1</h3>
-          <a href={`https://psi.nasa.gov/physci/repo/data/investigations/${accession}`} target="_blank" rel="noreferrer" aria-label="Abrir investigação na NASA">
+          <h3>Concurrent with ventilation · S1</h3>
+          <a href={`https://psi.nasa.gov/physci/repo/data/investigations/${accession}`} target="_blank" rel="noreferrer" aria-label="Open NASA investigation">
             <ArrowUpRight size={17} />
           </a>
         </div>
-        <p>Frente de pirólise observada nas duas câmeras do ensaio.</p>
+        <p>Pyrolysis front observed by both trial cameras.</p>
         {model && <>
           <div className="evidence-numbers">
             <div>
               <strong>{number(forwardCheck?.positionMaeMm ?? model.comparison.neighborhood.positionMaeMm.mean)} mm</strong>
-              <span>Erro médio de posição</span>
+              <span>Mean position error</span>
             </div>
             <div>
               <strong>{number(model.comparison.baseline.positionMaeMm.mean)} mm</strong>
-              <span>Erro médio do modelo anterior</span>
+              <span>Previous model mean error</span>
             </div>
           </div>
-          <p>Probabilidade de avanço em 2 s na borda de cada faixa. Os vizinhos laterais modificam essa chance quando há dados suficientes. Para combinações sem estimativa, aplica-se a média longitudinal do ensaio.</p>
+          <p>Probability of spread in 2 s at the edge of each strip. Lateral neighbors modify this probability when sufficient data are available. Combinations without estimates use the trial's longitudinal average.</p>
           <div className="saffire-probabilities">
             {Object.entries(model.combinations).filter(([key]) => key.startsWith("1")).map(([key, value]) => (
               <p key={key}>
-                <strong>{[key[0] === "1" && "Montante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}</strong>
-                {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
+                <strong>{[key[0] === "1" && "Upstream", key[1] === "1" && "Above", key[2] === "1" && "Below"].filter(Boolean).join(" + ")}</strong>
+                {" · "}{value.probability === null ? "No estimate" : `${number(value.probability * 100, 1)}%`}
                 {" · "}{number(value.transitions, 0)}/{number(value.exposures, 0)}
-                {value.exposures > 0 && value.exposures < 100 ? " · poucos dados" : ""}
-                {value.probability !== null && value.transitions < 5 ? " · poucos avanços" : ""}
+                {value.exposures > 0 && value.exposures < 100 ? " · limited data" : ""}
+                {value.probability !== null && value.transitions < 5 ? " · few advances" : ""}
               </p>
             ))}
           </div>
           <div className="domain-note">
             <Info size={14} />
             <span>
-              Em {forwardCheck?.seedCount ?? model.comparison.seedCount} simulações do trecho reservado, a velocidade média foi
+              Across {forwardCheck?.seedCount ?? model.comparison.seedCount} simulations of the held-out segment, the mean speed was
               {" "}{number(forwardCheck?.simulatedSpeedMmS ?? model.comparison.neighborhood.simulatedSpeedMmS.mean, 2)} mm/s
-              e nas imagens {number(forwardCheck?.observedSpeedMmS ?? model.comparison.observedSpeedMmS, 2)} mm/s. As taxas representam associações observadas.
+              versus {number(forwardCheck?.observedSpeedMmS ?? model.comparison.observedSpeedMmS, 2)} mm/s in the images. These rates represent observed associations.
             </span>
           </div>
         </>}
       </section>
       <section className="evidence-card">
-        <h3>Contra a ventilação · S2</h3>
-        <p className="s2-review-note">Revisão S2: quantização da grade e ausência de pixels do ignitor impedem aprovar estas taxas fisicamente; use como registro exploratório. <a href="https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/develop/docs/research/S2_REVIEW.md" target="_blank" rel="noreferrer">S2_REVIEW.md</a></p>
-        <p>{opposed.status === "ready" ? `Calibração pela câmera ${opposed.camera ?? "S2"}.`
-          : opposed.reason ?? "Avanço contra a ventilação indisponível."}</p>
+        <h3>Opposed to ventilation · S2</h3>
+        <p className="s2-review-note">S2 review: grid quantization and missing igniter pixels prevent physical approval of these rates; use as an exploratory record. <a href="https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/develop/docs/research/S2_REVIEW.md" target="_blank" rel="noreferrer">S2_REVIEW.md</a></p>
+        <p>{opposed.status === "ready" ? `Calibration using camera ${opposed.camera ?? "S2"}.`
+          : englishText(opposed.reason ?? "Opposed-ventilation spread unavailable.")}</p>
         {opposed.status === "ready" && opposed.longitudinal && <>
           <p>
-            Média longitudinal · {number((opposed.longitudinal.probability ?? 0) * 100, 1)}% por passo de 2 s
+            Longitudinal average · {number((opposed.longitudinal.probability ?? 0) * 100, 1)}% per 2 s step
             {" · "}{opposed.longitudinal.transitions}/{opposed.longitudinal.exposures}
           </p>
-          <p>Em S2, os casos com vizinhos laterais ficaram abaixo do mínimo de exposições. Nesses casos se aplica a média longitudinal.</p>
+          <p>In S2, cases with lateral neighbors fell below the minimum exposure count. These cases use the longitudinal average.</p>
           {opposedCheck && <p>
-            Velocidade no trecho reservado · {number(opposedCheck.observedSpeedMmS, 2)} mm/s observados
-            {" · "}{number(opposedCheck.simulatedSpeedMmS, 2)} mm/s simulados
-            {" · "}{number(opposedCheck.positionMaeMm, 1)} mm de erro médio
+            Speed in the held-out segment · {number(opposedCheck.observedSpeedMmS, 2)} mm/s observed
+            {" · "}{number(opposedCheck.simulatedSpeedMmS, 2)} mm/s simulated
+            {" · "}{number(opposedCheck.positionMaeMm, 1)} mm mean error
           </p>}
         </>}
         {opposed.status === "ready" && Object.entries(opposed.combinations ?? {}).filter(([key]) => key.startsWith("1")).map(([key, value]) => (
           <p key={key}>
-            {[key[0] === "1" && "Jusante", key[1] === "1" && "Acima", key[2] === "1" && "Abaixo"].filter(Boolean).join(" + ")}
-            {" · "}{value.probability === null ? "Sem estimativa" : `${number(value.probability * 100, 1)}%`}
+            {[key[0] === "1" && "Downstream", key[1] === "1" && "Above", key[2] === "1" && "Below"].filter(Boolean).join(" + ")}
+            {" · "}{value.probability === null ? "No estimate" : `${number(value.probability * 100, 1)}%`}
             {" · "}{value.transitions}/{value.exposures}
           </p>
         ))}

@@ -4,6 +4,7 @@ import { Pause, Play, RotateCcw, TriangleAlert, X } from "lucide-react";
 import { useModalFocus } from "../../hooks/useModalFocus";
 import { BASS_B1_REPLAY_PATH } from "./bassB1";
 import "./bass-b1.css";
+import { englishDisplayData } from "../../i18n/english";
 
 /* ------------------------------------------------------------------ data contract (b1-replay.json) */
 type Band = "upper" | "lower";
@@ -118,16 +119,16 @@ function isReplay(value: unknown): value is B1Replay {
 /* ------------------------------------------------------------------ helpers */
 const BANDS: Band[] = ["upper", "lower"];
 const BAND_CLASS: Record<Band, string> = { upper: "b1-upper", lower: "b1-lower" };
-const BAND_SHORT: Record<Band, string> = { upper: "Superior", lower: "Inferior" };
+const BAND_SHORT: Record<Band, string> = { upper: "Upper", lower: "Lower" };
 const SPEEDS = [1, 2, 4];
 const KIND_LABEL: Record<ReplayEvent["kind"], string> = {
   visual: "visual",
-  telemetry: "telemetria",
-  inference: "inferência",
-  window: "janela",
+  telemetry: "telemetry",
+  inference: "inference",
+  window: "window",
 };
 const fmt = (value: number, digits = 2) =>
-  value.toLocaleString("pt-BR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  value.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 const signed = (value: number, digits = 2) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value), digits)}`;
 
 /** Index of the last sample with t <= value (the series is strictly increasing). */
@@ -170,10 +171,10 @@ export default function BassB1Observation({ onClose }: { onClose: () => void }) 
     const controller = new AbortController();
     fetch(`${import.meta.env.BASE_URL}${BASS_B1_REPLAY_PATH}`, { signal: controller.signal, cache: "no-cache" })
       .then(async (response) => {
-        if (!response.ok) throw new Error("O arquivo da observação B1 não está disponível nesta instalação.");
+        if (!response.ok) throw new Error("The B1 observation file is unavailable in this installation.");
         const value: unknown = await response.json();
-        if (!isReplay(value)) throw new Error("O arquivo da observação B1 não corresponde ao contrato esperado.");
-        setData(value);
+        if (!isReplay(value)) throw new Error("The B1 observation file does not match the expected contract.");
+        setData(englishDisplayData(value));
       })
       .catch((reason: Error) => {
         if (reason.name !== "AbortError") setError(reason.message);
@@ -192,15 +193,15 @@ export default function BassB1Observation({ onClose }: { onClose: () => void }) 
       >
         <div className="modal-heading">
           <div>
-            <span className="eyebrow">NASA BASS-II · PSI-25 · OBSERVAÇÃO EXPERIMENTAL MEDIDA EM VÍDEO</span>
-            <h2 id="b1-title">Teste B1 · frente de chama em filme de PMMA de 100 µm</h2>
+            <span className="eyebrow">NASA BASS-II · PSI-25 · EXPERIMENTAL OBSERVATION MEASURED IN VIDEO</span>
+            <h2 id="b1-title">Test B1 · flame front in 100 µm PMMA film</h2>
           </div>
-          <button className="icon-button" onClick={onClose} aria-label="Fechar observação B1">
+          <button className="icon-button" onClick={onClose} aria-label="Close B1 observation">
             <X size={20} />
           </button>
         </div>
         {error && <div className="data-notice" role="alert">{error}</div>}
-        {!data && !error && <p className="muted">Carregando a observação B1…</p>}
+        {!data && !error && <p className="muted">Loading B1 observation…</p>}
         {data && <Observation data={data} />}
       </section>
     </div>
@@ -262,27 +263,27 @@ function Observation({ data }: { data: B1Replay }) {
 
       <section className="b1-panel" aria-labelledby="b1-chart-title">
         <div className="b1-panel-heading">
-          <h3 id="b1-chart-title">Trajetórias medidas das duas lâminas luminosas</h3>
+          <h3 id="b1-chart-title">Measured trajectories of the two luminous sheets</h3>
           <div className="b1-toggles">
             <label>
-              <input type="checkbox" checked={showFits} onChange={(e) => setShowFits(e.target.checked)} /> Regressões lineares
+              <input type="checkbox" checked={showFits} onChange={(e) => setShowFits(e.target.checked)} /> Linear regressions
             </label>
             <label>
-              <input type="checkbox" checked={showReference} onChange={(e) => setShowReference(e.target.checked)} /> Referência preliminar
+              <input type="checkbox" checked={showReference} onChange={(e) => setShowReference(e.target.checked)} /> Preliminary reference
             </label>
           </div>
         </div>
         <TrajectoryChart data={data} index={index} onSeek={seek} showFits={showFits} showReference={showReference} />
         <div className="b1-controls">
           <div className="b1-buttons">
-            <button className="button secondary small" onClick={togglePlay} aria-label={playing ? "Pausar" : "Reproduzir"}>
+            <button className="button secondary small" onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
               {playing ? <Pause size={14} /> : <Play size={14} />}
-              {playing ? "Pausar" : "Reproduzir"}
+              {playing ? "Pause" : "Play"}
             </button>
-            <button className="button secondary small" onClick={restart} aria-label="Reiniciar">
-              <RotateCcw size={14} /> Reiniciar
+            <button className="button secondary small" onClick={restart} aria-label="Restart">
+              <RotateCcw size={14} /> Restart
             </button>
-            <div className="b1-speed" role="group" aria-label="Velocidade de reprodução">
+            <div className="b1-speed" role="group" aria-label="Playback speed">
               {SPEEDS.map((value) => (
                 <button
                   key={value}
@@ -303,21 +304,21 @@ function Observation({ data }: { data: B1Replay }) {
             step={1}
             value={index}
             style={{ "--range-progress": `${(index / last) * 100}%` } as CSSProperties}
-            aria-label="Instante da série medida"
-            aria-valuetext={`${fmt(t)} s, quadro ${series.frame[index]}`}
+            aria-label="Measured series time"
+            aria-valuetext={`${fmt(t)} s, frame ${series.frame[index]}`}
             onChange={(e) => seek(Number(e.target.value))}
           />
           <dl className="b1-readout" aria-live="off">
             <div>
-              <dt>Tempo</dt>
+              <dt>Time</dt>
               <dd className="mono">{signed(t)} s</dd>
             </div>
             <div>
-              <dt>Relógio do vídeo</dt>
+              <dt>Video clock</dt>
               <dd className="mono">{series.clock[index]}</dd>
             </div>
             <div>
-              <dt>Quadro</dt>
+              <dt>Frame</dt>
               <dd className="mono">{series.frame[index]}</dd>
             </div>
             {BANDS.map((band) => {
@@ -326,11 +327,11 @@ function Observation({ data }: { data: B1Replay }) {
               return (
                 <div key={band}>
                   <dt>
-                    <i className={`b1-swatch ${BAND_CLASS[band]}`} /> Frente {BAND_SHORT[band].toLowerCase()}
+                    <i className={`b1-swatch ${BAND_CLASS[band]}`} /> {BAND_SHORT[band]} front
                   </dt>
                   <dd className="mono">
                     {value == null ? <span className="b1-missing">{series.qualityCodes[quality]}</span> : `${fmt(value, 0)} px`}
-                    {value != null && quality === "low" && <small> · baixa confiança</small>}
+                    {value != null && quality === "low" && <small> · low confidence</small>}
                   </dd>
                 </div>
               );
@@ -346,29 +347,29 @@ function Observation({ data }: { data: B1Replay }) {
       </div>
 
       <details className="b1-panel b1-method">
-        <summary>Método, qualidade e proveniência</summary>
+        <summary>Method, quality, and provenance</summary>
         <p>
-          <strong>Definição de frente:</strong> {data.method.description}. {data.method.tracking}.
+          <strong>Front definition:</strong> {data.method.description}. {data.method.tracking}.
         </p>
         <p>
-          <strong>Escolha do método:</strong> {data.method.selectionRule}. Entre as {data.method.candidates} definições comparadas, a
-          velocidade na janela inteira varia de {fmt(data.method.methodSpread_px_s.upper.fullWindow[0])} a{" "}
-          {fmt(data.method.methodSpread_px_s.upper.fullWindow[1])} px/s (superior) e de{" "}
-          {fmt(data.method.methodSpread_px_s.lower.fullWindow[0])} a {fmt(data.method.methodSpread_px_s.lower.fullWindow[1])} px/s
-          (inferior); na segunda metade da janela, de {fmt(data.method.methodSpread_px_s.upper.secondHalf[0])} a{" "}
-          {fmt(data.method.methodSpread_px_s.upper.secondHalf[1])} e de {fmt(data.method.methodSpread_px_s.lower.secondHalf[0])} a{" "}
+          <strong>Method selection:</strong> {data.method.selectionRule}. Across the {data.method.candidates} definitions compared,
+          full-window velocity ranges from {fmt(data.method.methodSpread_px_s.upper.fullWindow[0])} to{" "}
+          {fmt(data.method.methodSpread_px_s.upper.fullWindow[1])} px/s (upper) and from{" "}
+          {fmt(data.method.methodSpread_px_s.lower.fullWindow[0])} to {fmt(data.method.methodSpread_px_s.lower.fullWindow[1])} px/s
+          (lower); in the second half of the window, from {fmt(data.method.methodSpread_px_s.upper.secondHalf[0])} to{" "}
+          {fmt(data.method.methodSpread_px_s.upper.secondHalf[1])} and from {fmt(data.method.methodSpread_px_s.lower.secondHalf[0])} to{" "}
           {fmt(data.method.methodSpread_px_s.lower.secondHalf[1])} px/s.
         </p>
         <p>
-          <strong>Eixos:</strong> {data.axes.time}. Posição: {data.axes.position}.
+          <strong>Axes:</strong> {data.axes.time}. Position: {data.axes.position}.
         </p>
         <p>
-          <strong>Referência visual:</strong> {data.referenceAnnotations.note}.
+          <strong>Visual reference:</strong> {data.referenceAnnotations.note}.
         </p>
         <p>
-          <strong>Fonte:</strong> vídeo {data.provenance.sourceVideo.kind.toUpperCase()} original (sha256{" "}
-          <span className="mono">{data.provenance.sourceVideo.sha256.slice(0, 12)}…</span>); gerado por{" "}
-          <span className="mono">{data.provenance.generator}</span>; relatório <span className="mono">{data.provenance.report}</span>.
+          <strong>Source:</strong> original {data.provenance.sourceVideo.kind.toUpperCase()} video (sha256{" "}
+          <span className="mono">{data.provenance.sourceVideo.sha256.slice(0, 12)}…</span>); generated by{" "}
+          <span className="mono">{data.provenance.generator}</span>; report <span className="mono">{data.provenance.report}</span>.
         </p>
       </details>
     </div>
@@ -379,7 +380,7 @@ function Notices({ data }: { data: B1Replay }) {
   return (
     <section className="b1-notices" aria-labelledby="b1-notices-title">
       <h3 id="b1-notices-title">
-        <TriangleAlert size={15} /> Leia antes de interpretar
+        <TriangleAlert size={15} /> Read before interpreting
       </h3>
       <p className="b1-statement">{data.statement}</p>
       <ul>
@@ -394,14 +395,14 @@ function Notices({ data }: { data: B1Replay }) {
 function Identification({ data }: { data: B1Replay }) {
   const e = data.experiment;
   return (
-    <section className="b1-identity" aria-label="Identificação do experimento">
+    <section className="b1-identity" aria-label="Experiment identification">
       <dl className="b1-facts">
         <div>
-          <dt>Programa</dt>
+          <dt>Program</dt>
           <dd>{e.program}</dd>
         </div>
         <div>
-          <dt>Registro</dt>
+          <dt>Record</dt>
           <dd className="mono">
             {e.investigationId} · {e.test} · {e.recordId}
           </dd>
@@ -413,26 +414,26 @@ function Identification({ data }: { data: B1Replay }) {
           </dd>
         </div>
         <div>
-          <dt>Plataforma</dt>
+          <dt>Platform</dt>
           <dd>{e.platform}</dd>
         </div>
         <div>
-          <dt>Data · amostra</dt>
+          <dt>Date · sample</dt>
           <dd>
-            {e.date} · nº {e.sample} · PI {e.principalInvestigator}
+            {e.date} · no. {e.sample} · PI {e.principalInvestigator}
           </dd>
         </div>
         {e.conditions.map((condition) => (
           <div key={condition.label}>
             <dt>{condition.label}</dt>
             <dd>
-              {condition.value ?? <span className="b1-missing">Não informado</span>}
+              {condition.value ?? <span className="b1-missing">Not reported</span>}
               {condition.note && <small>{condition.note}</small>}
             </dd>
           </div>
         ))}
       </dl>
-      <p className="b1-source">Condições: {e.catalogueSource}.</p>
+      <p className="b1-source">Conditions: {e.catalogueSource}.</p>
     </section>
   );
 }
@@ -509,14 +510,14 @@ function TrajectoryChart({
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="img"
-        aria-label={`Posição em pixels das frentes superior e inferior em função do tempo, de ${fmt(t0, 0)} a ${fmt(t1, 0)} s`}
+        aria-label={`Upper and lower front positions in pixels over time, from ${fmt(t0, 0)} to ${fmt(t1, 0)} s`}
       >
         {/* Regions documented in P2/P3 */}
         <rect className="b1-window" x={sx(data.window.t_s[0])} y={M.top} width={sx(data.window.t_s[1]) - sx(data.window.t_s[0])} height={H - M.top - M.bottom} />
         {ignition && <rect className="b1-ignition" x={sx(ignition.t_s)} y={M.top} width={sx(ignition.tEnd_s) - sx(ignition.t_s)} height={H - M.top - M.bottom} />}
         {fanDrop && fanFloor && <rect className="b1-fanramp" x={sx(fanDrop.t_s)} y={M.top} width={sx(fanFloor.t_s) - sx(fanDrop.t_s)} height={H - M.top - M.bottom} />}
         <text className="b1-region-label" x={sx(data.window.t_s[0]) + 4} y={M.top + 12}>
-          janela de análise (FAN constante)
+          analysis window (constant FAN)
         </text>
         {/* Grid and axes */}
         {ticksY.map((v) => (
@@ -534,10 +535,10 @@ function TrajectoryChart({
         ))}
         <line className="b1-axis" x1={M.left} x2={W - M.right} y1={H - M.bottom} y2={H - M.bottom} />
         <text className="b1-axis-label" x={(M.left + W - M.right) / 2} y={H - 6} textAnchor="middle">
-          tempo experimental (s) desde o quadro {data.tOrigin.frame} · {data.tOrigin.clock}
+          experimental time (s) from frame {data.tOrigin.frame} · {data.tOrigin.clock}
         </text>
         <text className="b1-axis-label" transform={`translate(13 ${(M.top + H - M.bottom) / 2}) rotate(-90)`} textAnchor="middle">
-          posição da frente (px)
+          front position (px)
         </text>
         {/* Events: numbered markers, explained in the event list */}
         {pointEvents.map((event, n) => (
@@ -614,7 +615,7 @@ function TrajectoryChart({
       {hover != null && (
         <div className="b1-tooltip" style={{ left: `${(tooltipX / W) * 100}%` }}>
           <strong className="mono">
-            {signed(series.t_s[hover])} s · {series.clock[hover]} · quadro {series.frame[hover]}
+            {signed(series.t_s[hover])} s · {series.clock[hover]} · frame {series.frame[hover]}
           </strong>
           {BANDS.map((band) => {
             const value = series.fronts[band].x_px[hover];
@@ -625,23 +626,23 @@ function TrajectoryChart({
               </span>
             );
           })}
-          <small>clique ou arraste para posicionar</small>
+          <small>click or drag to seek</small>
         </div>
       )}
       <div className="b1-legend">
         {BANDS.map((band) => (
           <span key={band}>
-            <i className={`b1-swatch ${BAND_CLASS[band]}`} /> Frente {data.series.fronts[band].label} (medida)
+            <i className={`b1-swatch ${BAND_CLASS[band]}`} /> {data.series.fronts[band].label} front (measured)
           </span>
         ))}
         <span>
-          <i className="b1-swatch b1-dashed" /> Regressão na janela de análise
+          <i className="b1-swatch b1-dashed" /> Regression over the analysis window
         </span>
         <span>
-          <i className="b1-swatch b1-ring" /> Referência visual preliminar (32 quadros)
+          <i className="b1-swatch b1-ring" /> Preliminary visual reference (32 frames)
         </span>
         <span>
-          <i className="b1-swatch b1-ign" /> Ignição · <i className="b1-swatch b1-ramp" /> Rampa de FAN
+          <i className="b1-swatch b1-ign" /> Ignition · <i className="b1-swatch b1-ramp" /> FAN ramp
         </span>
       </div>
     </div>
@@ -675,7 +676,7 @@ function TelemetryStrips({ data, index }: { data: B1Replay; index: number }) {
         <span className="b1-strip-label">
           {label} <strong className="mono">{current?.[key] ?? "—"}</strong> <small>{unit}</small>
         </span>
-        <svg viewBox={`0 0 ${W} ${h}`} role="img" aria-label={`${label} entre ${fmt(t0, 0)} e ${fmt(t1, 0)} s, de ${lo} a ${hi}`}>
+        <svg viewBox={`0 0 ${W} ${h}`} role="img" aria-label={`${label} between ${fmt(t0, 0)} and ${fmt(t1, 0)} s, from ${lo} to ${hi}`}>
           <path className="b1-strip-line" d={path} />
           <text className="b1-tick" x={M.left - 6} y={sy(hi) + 3} textAnchor="end">
             {hi}
@@ -689,10 +690,10 @@ function TelemetryStrips({ data, index }: { data: B1Replay; index: number }) {
     );
   };
   return (
-    <div className="b1-telemetry" aria-label="Telemetria complementar">
+    <div className="b1-telemetry" aria-label="Supplementary telemetry">
       <div className="b1-scroll">
-        {strip("fan", "FAN (display)", "×0,1 V · não é velocidade")}
-        {strip("air", "AIR (display)", "cm/s · transdutor lento")}
+        {strip("fan", "FAN (display)", "×0.1 V · not velocity")}
+        {strip("air", "AIR (display)", "cm/s · slow transducer")}
       </div>
       <p className="b1-note">
         {data.telemetry.fanNote} {data.telemetry.airNote}
@@ -706,48 +707,48 @@ function Results({ data }: { data: B1Replay }) {
   const l = data.velocities.lower;
   return (
     <section className="b1-panel" aria-labelledby="b1-results-title">
-      <h3 id="b1-results-title">Resultados quantitativos</h3>
+      <h3 id="b1-results-title">Quantitative results</h3>
       <div className="b1-table-scroll">
       <table className="b1-table">
         <thead>
           <tr>
-            <th scope="col">Indicador</th>
-            <th scope="col">Resultado</th>
+            <th scope="col">Metric</th>
+            <th scope="col">Result</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Velocidade superior</th>
+            <th scope="row">Upper velocity</th>
             <td className="mono">{fmt(u.value_px_s)} px/s</td>
           </tr>
           <tr>
-            <th scope="row">IC 95% superior</th>
+            <th scope="row">Upper 95% CI</th>
             <td className="mono">
               {fmt(u.ci95_px_s[0])}–{fmt(u.ci95_px_s[1])} px/s
             </td>
           </tr>
           <tr>
-            <th scope="row">Velocidade inferior</th>
+            <th scope="row">Lower velocity</th>
             <td className="mono">{fmt(l.value_px_s)} px/s</td>
           </tr>
           <tr>
-            <th scope="row">IC 95% inferior</th>
+            <th scope="row">Lower 95% CI</th>
             <td className="mono">
               {fmt(l.ci95_px_s[0])}–{fmt(l.ci95_px_s[1])} px/s
             </td>
           </tr>
           <tr>
-            <th scope="row">Escala espacial</th>
-            <td>Não determinada <small className="mono">({data.spatialScale.status})</small></td>
+            <th scope="row">Spatial scale</th>
+            <td>Undetermined <small className="mono">({data.spatialScale.status})</small></td>
           </tr>
           <tr>
-            <th scope="row">Velocidade física</th>
-            <td>Não disponível <small className="mono">({data.physicalVelocity.status})</small></td>
+            <th scope="row">Physical velocity</th>
+            <td>Unavailable <small className="mono">({data.physicalVelocity.status})</small></td>
           </tr>
           <tr>
-            <th scope="row">Referência NASA publicada</th>
+            <th scope="row">Published NASA reference</th>
             <td>
-              {fmt(data.nasaReference.value_mm_s, 1)} mm/s · <strong>não comparada</strong>{" "}
+              {fmt(data.nasaReference.value_mm_s, 1)} mm/s · <strong>not compared</strong>{" "}
               <small className="mono">({data.nasaReference.comparisonStatus})</small>
             </td>
           </tr>
@@ -756,14 +757,14 @@ function Results({ data }: { data: B1Replay }) {
       </div>
       <div className="b1-table-scroll">
       <table className="b1-table b1-quality">
-        <caption>Qualidade do ajuste na janela de análise ({data.velocities.upper.ciMethod})</caption>
+        <caption>Fit quality over the analysis window ({data.velocities.upper.ciMethod})</caption>
         <thead>
           <tr>
-            <th scope="col">Lâmina</th>
+            <th scope="col">Sheet</th>
             <th scope="col">R²</th>
-            <th scope="col">Resíduo (DP)</th>
-            <th scope="col">Cobertura</th>
-            <th scope="col">Início +3 s</th>
+            <th scope="col">Residual (SD)</th>
+            <th scope="col">Coverage</th>
+            <th scope="col">Start +3 s</th>
           </tr>
         </thead>
         <tbody>
@@ -785,8 +786,8 @@ function Results({ data }: { data: B1Replay }) {
       </table>
       </div>
       <p className="b1-note">
-        Fonte de {data.window.clockFirst} a {data.window.clockLast} (quadros {data.window.frameFirst}–{data.window.frameLast}). A
-        incerteza dominante é a definição da frente, não a estatística (ver “Método”).
+        Source from {data.window.clockFirst} to {data.window.clockLast} (frames {data.window.frameFirst}–{data.window.frameLast}). The
+        dominant uncertainty is the front definition, not statistics (see “Method”).
       </p>
     </section>
   );
@@ -798,7 +799,7 @@ function Events({ data, index, onSeek }: { data: B1Replay; index: number; onSeek
   const analysisWindow = data.events.find((e) => e.kind === "window");
   return (
     <section className="b1-panel" aria-labelledby="b1-events-title">
-      <h3 id="b1-events-title">Eventos experimentais</h3>
+      <h3 id="b1-events-title">Experimental events</h3>
       <ol className="b1-events">
         {pointEvents.map((event, n) => (
           <li key={event.id} className={now >= event.t_s ? "past" : ""}>
@@ -807,7 +808,7 @@ function Events({ data, index, onSeek }: { data: B1Replay; index: number; onSeek
               <span className="b1-event-text">
                 <strong>{event.label}</strong>
                 <small>
-                  {signed(event.t_s)} s · {event.clock} · quadro {event.frameFirst}
+                  {signed(event.t_s)} s · {event.clock} · frame {event.frameFirst}
                   {event.frameLast !== event.frameFirst ? `–${event.frameLast}` : ""} · {KIND_LABEL[event.kind]}
                 </small>
               </span>
@@ -817,8 +818,8 @@ function Events({ data, index, onSeek }: { data: B1Replay; index: number; onSeek
       </ol>
       {analysisWindow && (
         <p className="b1-note">
-          {analysisWindow.label}: quadros {analysisWindow.frameFirst}–{analysisWindow.frameLast} ({signed(analysisWindow.t_s)} a {signed(analysisWindow.tEnd_s)} s). Fonte dos
-          eventos: fase P2 (telemetria e leitura visual); o marcador “frente estável” é uma inferência da fase P3.
+          {analysisWindow.label}: frames {analysisWindow.frameFirst}–{analysisWindow.frameLast} ({signed(analysisWindow.t_s)} to {signed(analysisWindow.tEnd_s)} s). Event
+          source: phase P2 (telemetry and visual reading); the “stable front” marker is an inference from phase P3.
         </p>
       )}
     </section>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Copy, GitCompareArrows, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import { gravityOf } from "../model/domain";
 import type { EnsembleResult } from "./engine";
-import { DEFAULT_ZONES, CELL, GRID } from "./habitatModel";
+import { DEFAULT_ZONES, CELL, GRID, MATERIAL_INFO } from "./habitatModel";
 import {
   computeMetrics, fieldFingerprint, prepareRun, quantiles, SEEDS, STEPS, validateInputs, type ScenarioInputs,
 } from "./scenarioRun";
@@ -15,9 +15,11 @@ interface AltResult {
   zones: { id: string; name: string; probability: number; medianTimeS: number | null; kind: "chegada" | "contato" | "inerte" }[];
 }
 
+const EVENT_LABEL = { chegada: "arrival", contato: "contact", inerte: "inert" } as const;
+
 const STORAGE = "habitatfire.alternatives.v1";
-const num = (n: number | null | undefined, d = 2) => n === null || n === undefined || !Number.isFinite(n) ? "—" : n.toLocaleString("pt-BR", { maximumFractionDigits: d });
-const fmt = (s: number | null) => s === null ? "—" : s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")}`;
+const num = (n: number | null | undefined, d = 2) => n === null || n === undefined || !Number.isFinite(n) ? "—" : n.toLocaleString("en-US", { maximumFractionDigits: d });
+const fmt = (s: number | null) => s === null ? "—" : s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s`;
 
 function loadStored(): Alternative[] {
   try {
@@ -41,13 +43,13 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
   useEffect(() => { try { localStorage.setItem(STORAGE, JSON.stringify(items)); } catch { /* storage unavailable: list stays in memory */ } }, [items]);
   useEffect(() => () => workerRef.current?.terminate(), []);
 
-  const nextName = () => `Alternativa ${String.fromCharCode(65 + (items.length % 26))}`;
+  const nextName = () => `Alternative ${String.fromCharCode(65 + (items.length % 26))}`;
   const save = () => {
     const alt = { id: crypto.randomUUID(), name: nextName(), inputs: structuredClone(current) };
     setItems((l) => [...l, alt]);
     setSelected((s) => [...s, alt.id]);
   };
-  const duplicate = (a: Alternative) => setItems((l) => [...l, { id: crypto.randomUUID(), name: `${a.name} (cópia)`, inputs: structuredClone(a.inputs) }]);
+  const duplicate = (a: Alternative) => setItems((l) => [...l, { id: crypto.randomUUID(), name: `${a.name} (copy)`, inputs: structuredClone(a.inputs) }]);
   const update = (a: Alternative) => setItems((l) => l.map((x) => x.id === a.id ? { ...x, inputs: structuredClone(current) } : x));
   const remove = (id: string) => { setItems((l) => l.filter((x) => x.id !== id)); setSelected((s) => s.filter((x) => x !== id)); };
   const rename = (id: string, name: string) => setItems((l) => l.map((x) => x.id === id ? { ...x, name } : x));
@@ -97,37 +99,37 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
   const chosen = items.filter((a) => selected.includes(a.id) && results[a.id]);
   const base = chosen[0] ? results[chosen[0].id] : null;
   return (
-    <section className="alternatives" aria-label="Alternativas A/B">
+    <section className="alternatives" aria-label="A/B alternatives">
       <header>
         <div>
-          <span className="eyebrow">ALTERNATIVAS DE PROJETO</span>
-          <h2>Cenários A/B</h2>
+          <span className="eyebrow">DESIGN ALTERNATIVES</span>
+          <h2>A/B scenarios</h2>
         </div>
-        <button className="button secondary" onClick={save} disabled={!ready}><Plus size={13} /> Salvar cenário atual</button>
+        <button className="button secondary" onClick={save} disabled={!ready}><Plus size={13} /> Save current scenario</button>
       </header>
       {items.length === 0 ? (
-        <p className="model-caption">Salve o cenário atual como alternativa, duplique, mude materiais, foco ou atmosfera e compare. Todas rodam com as mesmas {SEEDS.length} sementes e o mesmo horizonte de {STEPS * CELL.stepSeconds / 60} min.</p>
+        <p className="model-caption">Save the current scenario as an alternative, duplicate it, change materials, ignition, or atmosphere, and compare. All run with the same {SEEDS.length} seeds and the same {STEPS * CELL.stepSeconds / 60} min horizon.</p>
       ) : (
         <ul className="alt-list">
           {items.map((a) => (
             <li key={a.id} className={selected.includes(a.id) ? "on" : ""}>
-              <label className="alt-check"><input type="checkbox" checked={selected.includes(a.id)} aria-label={`Comparar ${a.name}`}
+              <label className="alt-check"><input type="checkbox" checked={selected.includes(a.id)} aria-label={`Compare ${a.name}`}
                 onChange={() => setSelected((s) => s.includes(a.id) ? s.filter((x) => x !== a.id) : [...s, a.id])} /></label>
               <div className="alt-body">
                 {editing === a.id
-                  ? <input className="alt-name-input" autoFocus defaultValue={a.name} aria-label="Nome da alternativa"
+                  ? <input className="alt-name-input" autoFocus defaultValue={a.name} aria-label="Alternative name"
                       onBlur={(e) => { rename(a.id, e.target.value.trim() || a.name); setEditing(null); }}
                       onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }} />
                   : <strong>{a.name}</strong>}
-                <span>{num(a.inputs.oxygen, 1)}% O₂ · {num(a.inputs.pressure, 1)} kPa · {num(a.inputs.flow, 1)} cm/s · {gravityOf(a.inputs.gravity).label} · foco ({a.inputs.ignition.col}, {a.inputs.ignition.row})</span>
-                <span className="alt-mats">{a.inputs.zones.map((z) => z.material).join(" · ")}</span>
+                <span>{num(a.inputs.oxygen, 1)}% O₂ · {num(a.inputs.pressure, 1)} kPa · {num(a.inputs.flow, 1)} cm/s · {gravityOf(a.inputs.gravity).label} · ignition ({a.inputs.ignition.col}, {a.inputs.ignition.row})</span>
+                <span className="alt-mats">{a.inputs.zones.map((z) => MATERIAL_INFO[z.material].label).join(" · ")}</span>
               </div>
               <div className="alt-actions">
-                <button title="Carregar para editar" onClick={() => onLoad(a.inputs, a.name)}>Abrir</button>
-                <button title="Substituir pelo cenário atual" onClick={() => update(a)}>Atualizar</button>
-                <button title="Renomear" aria-label="Renomear" onClick={() => setEditing(a.id)}><Pencil size={12} /></button>
-                <button title="Duplicar" aria-label="Duplicar" onClick={() => duplicate(a)}><Copy size={12} /></button>
-                <button title="Excluir" aria-label="Excluir" onClick={() => remove(a.id)}><Trash2 size={12} /></button>
+                <button title="Load for editing" onClick={() => onLoad(a.inputs, a.name)}>Open</button>
+                <button title="Replace with current scenario" onClick={() => update(a)}>Update</button>
+                <button title="Rename" aria-label="Rename" onClick={() => setEditing(a.id)}><Pencil size={12} /></button>
+                <button title="Duplicate" aria-label="Duplicate" onClick={() => duplicate(a)}><Copy size={12} /></button>
+                <button title="Delete" aria-label="Delete" onClick={() => remove(a.id)}><Trash2 size={12} /></button>
               </div>
             </li>
           ))}
@@ -136,35 +138,35 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
       {items.length > 0 && (
         <div className="alt-run">
           <button className="button primary" disabled={!ready || selected.length < 2 || running !== null} onClick={compare}>
-            {running ? <><LoaderCircle size={13} className="spin" /> Rodando {running}…</> : <><GitCompareArrows size={13} /> Comparar {selected.length} alternativas</>}
+            {running ? <><LoaderCircle size={13} className="spin" /> Running {running}…</> : <><GitCompareArrows size={13} /> Compare {selected.length} alternatives</>}
           </button>
-          <span className="model-caption">Mesmas sementes ({SEEDS[0]}–{SEEDS[SEEDS.length - 1]}) e horizonte; diferenças vêm das entradas, não de incerteza experimental.</span>
+          <span className="model-caption">Same seeds ({SEEDS[0]}–{SEEDS[SEEDS.length - 1]}) and horizon; differences come from the inputs, not experimental uncertainty.</span>
         </div>
       )}
       {chosen.length >= 2 && base && (
         <div className="alt-table-wrap">
           <table className="alt-table">
-            <thead><tr><th>Métrica</th>{chosen.map((a) => <th key={a.id}>{a.name}</th>)}</tr></thead>
+            <thead><tr><th>Metric</th>{chosen.map((a) => <th key={a.id}>{a.name}</th>)}</tr></thead>
             <tbody>
-              <tr><th>Nível</th>{chosen.map((a) => <td key={a.id} className={results[a.id].level}>{LEVEL_LABEL[results[a.id].level]}</td>)}</tr>
-              <tr><th>Ensaio de referência</th>{chosen.map((a) => <td key={a.id}>{results[a.id].anchorId ?? "—"}</td>)}</tr>
-              <tr><th>Células acesas no foco</th>{chosen.map((a) => <td key={a.id} className={results[a.id].litCells ? "" : "extrapolation"}>{results[a.id].litCells || "0 · foco em material que não propaga"}</td>)}</tr>
-              <tr><th>Área ao fim (m²)</th>{chosen.map((a) => {
+              <tr><th>Level</th>{chosen.map((a) => <td key={a.id} className={results[a.id].level}>{LEVEL_LABEL[results[a.id].level]}</td>)}</tr>
+              <tr><th>Reference trial</th>{chosen.map((a) => <td key={a.id}>{results[a.id].anchorId ?? "—"}</td>)}</tr>
+              <tr><th>Cells lit at ignition</th>{chosen.map((a) => <td key={a.id} className={results[a.id].litCells ? "" : "extrapolation"}>{results[a.id].litCells || "0 · ignition on non-propagating material"}</td>)}</tr>
+              <tr><th>Final area (m²)</th>{chosen.map((a) => {
                 const r = results[a.id], d = r.areaEnd.median - base.areaEnd.median;
                 return <td key={a.id}>{num(r.areaEnd.median)} <small>({num(r.areaEnd.min)}–{num(r.areaEnd.max)})</small>{a.id !== chosen[0].id && <em>{d >= 0 ? "+" : ""}{num(d)}</em>}</td>;
               })}</tr>
-              <tr><th>Velocidade da frente (mm/s)</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].speedMmS)}</td>)}</tr>
-              <tr><th>Realizações com contato sem evidência</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].unknownContactFraction * 100, 0)}%</td>)}</tr>
+              <tr><th>Front speed (mm/s)</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].speedMmS)}</td>)}</tr>
+              <tr><th>Realizations with contact without evidence</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].unknownContactFraction * 100, 0)}%</td>)}</tr>
               {DEFAULT_ZONES.map((z, i) => (
                 <tr key={z.id}><th>{z.name}</th>{chosen.map((a) => {
                   const zr = results[a.id].zones[i];
-                  return <td key={a.id}>{zr.kind === "inerte" ? "inerte" : `${num(zr.probability * 100, 0)}% ${zr.kind}${zr.medianTimeS !== null ? ` · ${fmt(zr.medianTimeS)}` : ""}`}</td>;
+                  return <td key={a.id}>{zr.kind === "inerte" ? "inert" : `${num(zr.probability * 100, 0)}% ${EVENT_LABEL[zr.kind]}${zr.medianTimeS !== null ? ` · ${fmt(zr.medianTimeS)}` : ""}`}</td>;
                 })}</tr>
               ))}
-              <tr><th>Impressão do campo</th>{chosen.map((a) => <td key={a.id} className="mono">{results[a.id].fingerprint}</td>)}</tr>
+              <tr><th>Field fingerprint</th>{chosen.map((a) => <td key={a.id} className="mono">{results[a.id].fingerprint}</td>)}</tr>
             </tbody>
           </table>
-          <p className="model-caption">"Contato" é a frente encostando em material que não propaga no modelo: não é barreira comprovada. Faixas entre parênteses são a dispersão entre sementes, não incerteza experimental. Cada alternativa mantém o próprio ensaio de referência e nível.</p>
+          <p className="model-caption">"Contact" is the front touching a material that does not propagate in the model: not a proven barrier. Ranges in parentheses are dispersion across seeds, not experimental uncertainty. Each alternative retains its own reference trial and level.</p>
         </div>
       )}
     </section>

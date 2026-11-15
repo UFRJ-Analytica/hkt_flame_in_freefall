@@ -70,19 +70,19 @@ def make_handler(service, root=ROOT):
                 self.end_headers()
                 return
             if path.startswith("/api/"):
-                self._send(404, {"error": "Endpoint desconhecido."})
+                self._send(404, {"error": "Unknown endpoint."})
                 return
             if any(part.startswith(".") for part in Path(path).parts if part not in {"/", "\\"}):
-                self._send(404, {"error": "Recurso não encontrado."})
+                self._send(404, {"error": "Resource not found."})
                 return
             target = (dist / path.lstrip("/\\")).resolve()
             if not target.is_relative_to(dist):
-                self._send(404, {"error": "Recurso não encontrado."})
+                self._send(404, {"error": "Resource not found."})
                 return
             if path in {"/", "/design", "/experiments", "/sources"}:
                 target = dist / "index.html"
             if not target.is_file():
-                self._send(404, {"error": "Recurso não encontrado. Use npm run dev ou gere dist com npm run build."})
+                self._send(404, {"error": "Resource not found. Use npm run dev or generate dist with npm run build."})
                 return
             content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
             if target.suffix == ".js":
@@ -92,17 +92,17 @@ def make_handler(service, root=ROOT):
         def do_POST(self):
             path = urlsplit(self.path).path
             if path not in {"/api/research/search", "/api/research/synthesize"}:
-                self._send(404, {"error": "Endpoint desconhecido."})
+                self._send(404, {"error": "Unknown endpoint."})
                 return
             origin = self.headers.get("Origin")
             host = self.headers.get("Host", "")
             if origin and urlsplit(origin).netloc != host:
-                self._send(403, {"error": "Requisições devem usar a mesma origem da aplicação."})
+                self._send(403, {"error": "Requests must use the same origin as the application."})
                 return
             try:
                 size = int(self.headers.get("Content-Length", "0"))
                 if not 0 < size <= MAX_BODY:
-                    self._send(413, {"error": "Corpo JSON ausente ou acima do limite."})
+                    self._send(413, {"error": "JSON body is missing or exceeds the limit."})
                     return
                 if self.headers.get("Content-Type", "").split(";")[0].strip() != "application/json":
                     self._send(415, {"error": "Use Content-Type application/json."})
@@ -113,7 +113,7 @@ def make_handler(service, root=ROOT):
             except (ValueError, UnicodeDecodeError) as exc:
                 self._send(400, {"error": str(exc)[:200]})
             except Exception:
-                self._send(500, {"error": "Falha interna de pesquisa. O catálogo e o cenário ilustrativo permanecem disponíveis."})
+                self._send(500, {"error": "Internal research failure. The catalog and illustrative scenario remain available."})
 
     return Handler
 
@@ -126,14 +126,14 @@ def main():
     server = ThreadingHTTPServer((host, port), make_handler(service))
     server.daemon_threads = True
     status = service.status()
-    print(f"HabitatFire API http://{host}:{port} — {status['investigationCount']} investigações, {status['documentCount']} documentos; geração {status['generationModel'] or 'desativada'}; embeddings {status['embeddingModel'] or 'desativados'} ({status['vectorStore'] or 'sem índice vetorial'})", flush=True)
+    print(f"HabitatFire API http://{host}:{port} — {status['investigationCount']} investigations, {status['documentCount']} documents; generation {status['generationModel'] or 'disabled'}; embeddings {status['embeddingModel'] or 'disabled'} ({status['vectorStore'] or 'no vector index'})", flush=True)
 
     def warm():
         try:
             service.warm_up()
-            print(f"[HabitatFire] Índice vetorial pronto ({service.status()['vectorStore']}).", flush=True)
+            print(f"[HabitatFire] Vector index ready ({service.status()['vectorStore']}).", flush=True)
         except Exception as exc:
-            print(f"[HabitatFire] Índice vetorial indisponível ({type(exc).__name__}); busca lexical segue ativa.", flush=True)
+            print(f"[HabitatFire] Vector index unavailable ({type(exc).__name__}); lexical search remains active.", flush=True)
 
     threading.Thread(target=warm, daemon=True).start()
     try:

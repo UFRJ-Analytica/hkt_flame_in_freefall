@@ -39,9 +39,9 @@ export interface Trial {
 export interface TrialRegistry { schemaVersion: 1; generatedBy: string; trials: Trial[] }
 
 export const OBSERVABLE_LABEL: Record<ObservableKind, string> = {
-  "char-front": "Frente carbonizada (imagens)",
-  "flame-base": "Base da chama (publicada)",
-  "published-rate": "Taxa publicada",
+  "char-front": "Char front (images)",
+  "flame-base": "Flame base (published)",
+  "published-rate": "Published rate",
 };
 
 const NTRS_I = "https://ntrs.nasa.gov/api/citations/20170008805/downloads/20170008805.pdf";
@@ -57,22 +57,22 @@ const trial = (t: Omit<Trial, "conflicts" | "notes"> & Partial<Pick<Trial, "conf
  *  artefacts and docs/research/SAFFIRE_*.md, each with its source. */
 export const FALLBACK_REGISTRY: TrialRegistry = {
   schemaVersion: 1,
-  generatedBy: "fallback embutido no frontend (registro ainda não publicado)",
+  generatedBy: "fallback embedded in the frontend (registry not yet published)",
   trials: [
     trial({
       id: "SAFFIRE-I-S1", campaign: "SAFFIRE I", sample: "S1", investigation: "PSI-98", material: "SIBAL", thicknessMm: 0.37,
       geometry: { lengthMm: 940, widthMm: 406 },
       conditions: { oxygenPct: 21.6, oxygenRangePct: [21.5, 21.7], pressureKpa: null, flowCmS: 20, flowDirection: "concurrent", gravity: "microgravity" },
       conditionSources: [
-        { field: "oxygenPct", label: "Tabela PSI-98", url: "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" },
-        { field: "flowCmS", label: "Tabela PSI-98", url: "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" },
+        { field: "oxygenPct", label: "PSI-98 table", url: "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" },
+        { field: "flowCmS", label: "PSI-98 table", url: "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" },
       ],
       observables: [
-        { kind: "char-front", speedMmS: 1.95, window: "trecho reservado (30%), câmeras C1+C2", uncertainty: null, source: { label: "psi-98-s1-neighbors.json", url: null }, artifact: "public/data/saffire/psi-98-s1-neighbors.json" },
-        { kind: "published-rate", speedMmS: 1.8, window: "média do ensaio", uncertainty: null, source: { label: "NTRS 20170008805", url: NTRS_I }, artifact: null },
+        { kind: "char-front", speedMmS: 1.95, window: "held-out segment (30%), cameras C1+C2", uncertainty: null, source: { label: "psi-98-s1-neighbors.json", url: null }, artifact: "public/data/saffire/psi-98-s1-neighbors.json" },
+        { kind: "published-rate", speedMmS: 1.8, window: "trial average", uncertainty: null, source: { label: "NTRS 20170008805", url: NTRS_I }, artifact: null },
       ],
       model: { artifact: "public/data/saffire/psi-98-s1-neighbors.json", kind: "image-neighborhood", validation: "temporal-holdout-same-trial", artifactSha256: null },
-      notes: ["Pressão de cabine não tabulada."],
+      notes: ["Cabin pressure not tabulated."],
     }),
     trial({
       id: "SAFFIRE-III-S1", campaign: "SAFFIRE III", sample: "S1", investigation: "PSI-100", material: "SIBAL", thicknessMm: null,
@@ -83,37 +83,37 @@ export const FALLBACK_REGISTRY: TrialRegistry = {
         { field: "flowCmS", label: "Combustion and Flame 199 (2018)", url: CF_2018 },
       ],
       observables: [
-        { kind: "char-front", speedMmS: 2.43, window: "trecho reservado (30%), câmeras C1+C2", uncertainty: null, source: { label: "psi-100-s1-neighbors.json", url: null }, artifact: "public/data/saffire/psi-100-s1-neighbors.json" },
-        { kind: "char-front", speedMmS: 2.2, window: "janela inteira, só câmera 1", uncertainty: null, source: { label: "crosstrial-i-iii.json", url: null }, artifact: "public/data/saffire/crosstrial-i-iii.json" },
+        { kind: "char-front", speedMmS: 2.43, window: "held-out segment (30%), cameras C1+C2", uncertainty: null, source: { label: "psi-100-s1-neighbors.json", url: null }, artifact: "public/data/saffire/psi-100-s1-neighbors.json" },
+        { kind: "char-front", speedMmS: 2.2, window: "full window, camera 1 only", uncertainty: null, source: { label: "crosstrial-i-iii.json", url: null }, artifact: "public/data/saffire/crosstrial-i-iii.json" },
       ],
       model: { artifact: "public/data/saffire/crosstrial-i-iii.json", kind: "image-neighborhood", validation: "cross-trial", artifactSha256: null },
-      conflicts: ["Tabela PSI-100 registra 30 cm/s; artigo da equipe, 25 cm/s."],
+      conflicts: ["PSI-100 table lists 30 cm/s; the team's paper, 25 cm/s."],
     }),
     trial({
       id: "SAFFIRE-IV-1", campaign: "SAFFIRE IV", sample: "IV-1", investigation: null, material: "SIBAL", thicknessMm: null,
       geometry: { lengthMm: 500, widthMm: 406 },
       conditions: { oxygenPct: 23.1, oxygenRangePct: null, pressureKpa: 99, flowCmS: 20, flowDirection: "concurrent", gravity: "microgravity" },
-      conditionSources: [{ field: "oxygenPct", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }, { field: "pressureKpa", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }, { field: "flowCmS", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }],
-      observables: [{ kind: "flame-base", speedMmS: 3.6, window: "base da chama, 32–110 s", uncertainty: null, source: { label: "Combustion and Flame (2022)", url: CF_2022 }, artifact: "public/data/saffire/saffire-iv-1.json" }],
+      conditionSources: [{ field: "oxygenPct", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }, { field: "pressureKpa", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }, { field: "flowCmS", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }],
+      observables: [{ kind: "flame-base", speedMmS: 3.6, window: "flame base, 32–110 s", uncertainty: null, source: { label: "Combustion and Flame (2022)", url: CF_2022 }, artifact: "public/data/saffire/saffire-iv-1.json" }],
       model: { artifact: "public/data/saffire/saffire-iv-1.json", kind: "published-speed-longitudinal", validation: "published-curve-consistency", artifactSha256: null },
     }),
     trial({
       id: "SAFFIRE-V-2", campaign: "SAFFIRE V", sample: "V-2", investigation: null, material: "Algodão", thicknessMm: null,
       geometry: { lengthMm: 500, widthMm: 406 },
       conditions: { oxygenPct: 26.9, oxygenRangePct: null, pressureKpa: 76, flowCmS: 20, flowDirection: "concurrent", gravity: "microgravity" },
-      conditionSources: [{ field: "oxygenPct", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }, { field: "pressureKpa", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }, { field: "flowCmS", label: "Combustion and Flame (2022), Tabela 1", url: CF_2022 }],
-      observables: [{ kind: "flame-base", speedMmS: 3.4, window: "base da chama, 32–92 s", uncertainty: null, source: { label: "Combustion and Flame (2022)", url: CF_2022 }, artifact: "public/data/saffire/saffire-v-2.json" }],
+      conditionSources: [{ field: "oxygenPct", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }, { field: "pressureKpa", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }, { field: "flowCmS", label: "Combustion and Flame (2022), Table 1", url: CF_2022 }],
+      observables: [{ kind: "flame-base", speedMmS: 3.4, window: "flame base, 32–92 s", uncertainty: null, source: { label: "Combustion and Flame (2022)", url: CF_2022 }, artifact: "public/data/saffire/saffire-v-2.json" }],
       model: { artifact: "public/data/saffire/saffire-v-2.json", kind: "published-speed-longitudinal", validation: "published-curve-consistency", artifactSha256: null },
-      notes: ["Algodão jersey encolhe e enrola após ~100 s."],
+      notes: ["Cotton jersey shrinks and curls after ~100 s."],
     }),
     trial({
       id: "SAFFIRE-VI-2", campaign: "SAFFIRE VI", sample: "VI-2", investigation: null, material: "SIBAL", thicknessMm: null,
       geometry: { lengthMm: 500, widthMm: 400 },
       conditions: { oxygenPct: 31.0, oxygenRangePct: null, pressureKpa: 54.1, flowCmS: 20, flowDirection: "concurrent", gravity: "microgravity" },
-      conditionSources: [{ field: "oxygenPct", label: "ICES-2024-365, Tabela 1, p3", url: ICES_VI }, { field: "pressureKpa", label: "ICES-2024-365, Tabela 1, p3", url: ICES_VI }, { field: "flowCmS", label: "ICES-2024-365, Tabela 1, p3", url: ICES_VI }],
-      observables: [{ kind: "published-rate", speedMmS: 4.05, window: "taxa do estudo de calor e fumaça", uncertainty: null, source: { label: "Heat and Smoke Emission… SAFFIRE IV–VI", url: HEAT_SMOKE }, artifact: "public/data/saffire/saffire-vi-2.json" }],
+      conditionSources: [{ field: "oxygenPct", label: "ICES-2024-365, Table 1, p3", url: ICES_VI }, { field: "pressureKpa", label: "ICES-2024-365, Table 1, p3", url: ICES_VI }, { field: "flowCmS", label: "ICES-2024-365, Table 1, p3", url: ICES_VI }],
+      observables: [{ kind: "published-rate", speedMmS: 4.05, window: "rate from the heat and smoke study", uncertainty: null, source: { label: "Heat and Smoke Emission… SAFFIRE IV–VI", url: HEAT_SMOKE }, artifact: "public/data/saffire/saffire-vi-2.json" }],
       model: { artifact: "public/data/saffire/saffire-vi-2.json", kind: "published-speed-longitudinal", validation: "none", artifactSha256: null },
-      notes: ["Sem trajetória experimental disponível para checagem."],
+      notes: ["No experimental trajectory available for checking."],
     }),
   ],
 };
@@ -134,12 +134,12 @@ export interface Scenario { material: string; oxygen: number; pressure: number; 
 export type DiffStatus = "match" | "untabulated" | "differs";
 export interface Diff { field: string; label: string; scenario: string; trial: string; status: DiffStatus }
 
-const f = (n: number, d = 1) => n.toLocaleString("pt-BR", { maximumFractionDigits: d });
+const f = (n: number, d = 1) => n.toLocaleString("en-US", { maximumFractionDigits: d });
 
 /** ACCEPTANCE_CRITERIA §C: a condition matches only its documented nominal value or documented
  *  range; no tolerance is invented around it. EPS only absorbs floating-point noise. */
 const EPS = 1e-6;
-export const HABITAT_GEOMETRY = "parede curva do habitat, 4,0 × 5,0 m";
+export const HABITAT_GEOMETRY = "curved habitat wall, 4.0 × 5.0 m";
 
 export function compareToTrial(t: Trial, s: Scenario): Diff[] {
   const c = t.conditions;
@@ -147,25 +147,25 @@ export function compareToTrial(t: Trial, s: Scenario): Diff[] {
   diffs.push({ field: "material", label: "Material", scenario: s.material, trial: t.material, status: s.material === t.material ? "match" : "differs" });
   const [lo, hi] = c.oxygenRangePct ?? (c.oxygenPct !== null ? [c.oxygenPct, c.oxygenPct] : [NaN, NaN]);
   diffs.push({
-    field: "oxygen", label: "O₂", scenario: `${f(s.oxygen)}%`, trial: Number.isFinite(lo) ? (lo === hi ? `${f(lo)}%` : `${f(lo)}–${f(hi)}%`) : "não tabulado",
+    field: "oxygen", label: "O₂", scenario: `${f(s.oxygen)}%`, trial: Number.isFinite(lo) ? (lo === hi ? `${f(lo)}%` : `${f(lo)}–${f(hi)}%`) : "not tabulated",
     status: !Number.isFinite(lo) ? "untabulated" : s.oxygen >= lo - EPS && s.oxygen <= hi + EPS ? "match" : "differs",
   });
   diffs.push({
-    field: "pressure", label: "Pressão", scenario: `${f(s.pressure)} kPa`, trial: c.pressureKpa === null ? "não tabulada" : `${f(c.pressureKpa)} kPa`,
+    field: "pressure", label: "Pressure", scenario: `${f(s.pressure)} kPa`, trial: c.pressureKpa === null ? "not tabulated" : `${f(c.pressureKpa)} kPa`,
     status: c.pressureKpa === null ? "untabulated" : Math.abs(s.pressure - c.pressureKpa) <= EPS ? "match" : "differs",
   });
   diffs.push({
-    field: "flow", label: "Escoamento", scenario: `${f(s.flow)} cm/s`, trial: c.flowCmS === null ? "não tabulado" : `${f(c.flowCmS)} cm/s`,
+    field: "flow", label: "Flow", scenario: `${f(s.flow)} cm/s`, trial: c.flowCmS === null ? "not tabulated" : `${f(c.flowCmS)} cm/s`,
     status: c.flowCmS === null ? "untabulated" : Math.abs(s.flow - c.flowCmS) <= EPS ? "match" : "differs",
   });
   diffs.push({
-    field: "gravity", label: "Gravidade", scenario: s.gravityG < 0.01 ? "microgravidade" : `${f(s.gravityG, 2)} g`, trial: "microgravidade",
+    field: "gravity", label: "Gravity", scenario: s.gravityG < 0.01 ? "microgravity" : `${f(s.gravityG, 2)} g`, trial: "microgravity",
     status: s.gravityG < 0.01 ? "match" : "differs",
   });
   const g = t.geometry;
   diffs.push({
-    field: "geometry", label: "Geometria", scenario: HABITAT_GEOMETRY,
-    trial: g.lengthMm && g.widthMm ? `placa ${f(g.lengthMm / 10, 1)} × ${f(g.widthMm / 10, 1)} cm` : "placa do ensaio",
+    field: "geometry", label: "Geometry", scenario: HABITAT_GEOMETRY,
+    trial: g.lengthMm && g.widthMm ? `specimen ${f(g.lengthMm / 10, 1)} × ${f(g.widthMm / 10, 1)} cm` : "test specimen",
     status: "differs",
   });
   return diffs;
@@ -281,7 +281,7 @@ export function buildAnchorKernels(model: SaffireModel, cross: CrossTrial | null
     const target = targetObservable(t);
     if (t.id === "SAFFIRE-I-S1") {
       out[t.id] = { trialId: t.id, base: shape, factor: cross?.speedMatch.saffireI.factor ?? 1, target, borrowed: [],
-        simulatedAtTrialMmS: stripSpeed(shape), description: "Vizinhança ajustada nas imagens do SAFFIRE I, fator de intensidade calibrado por simulação." };
+        simulatedAtTrialMmS: stripSpeed(shape), description: "Neighborhood fitted to SAFFIRE I images, intensity factor calibrated by simulation." };
       continue;
     }
     if (t.id === "SAFFIRE-III-S1" && cross) {
@@ -290,13 +290,13 @@ export function buildAnchorKernels(model: SaffireModel, cross: CrossTrial | null
       const borrowed = kernelFrom(own).flatMap((v, k) => v === null && shape[k] !== null ? [k.toString(2).padStart(3, "0")] : []);
       const camera1 = t.observables.find((o) => o.artifact?.includes("crosstrial")) ?? target;
       out[t.id] = { trialId: t.id, base, factor: cross.speedMatch.saffireIII.factor, target: camera1, borrowed,
-        simulatedAtTrialMmS: stripSpeed(base), description: "Vizinhança ajustada nas imagens do SAFFIRE III (câmera 1), fator calibrado por simulação." };
+        simulatedAtTrialMmS: stripSpeed(base), description: "Neighborhood fitted to SAFFIRE III images (camera 1), factor calibrated by simulation." };
       continue;
     }
     const { factor, simulatedMmS } = matchFactor(shape, target.speedMmS);
-    out[t.id] = { trialId: t.id, base: scaleKernel(shape, factor), factor, target, borrowed: ["forma de vizinhança do SAFFIRE I"],
+    out[t.id] = { trialId: t.id, base: scaleKernel(shape, factor), factor, target, borrowed: ["SAFFIRE I neighborhood shape"],
       simulatedAtTrialMmS: simulatedMmS,
-      description: `Forma de vizinhança do SAFFIRE I, intensidade calibrada por simulação para a taxa ${target.kind === "flame-base" ? "da base da chama" : "publicada"} deste ensaio.` };
+      description: `SAFFIRE I neighborhood shape, intensity calibrated by simulation to this trial’s ${target.kind === "flame-base" ? "flame-base rate" : "published rate"}.` };
   }
   return out;
 }
@@ -305,9 +305,9 @@ export function buildAnchorKernels(model: SaffireModel, cross: CrossTrial | null
  *  exploratory at the trial's conditions; only the plate simulation is conditioned on the trial. */
 export type RunLevel = "trial-conditions" | "interpolated" | "extrapolation";
 export const LEVEL_LABEL: Record<RunLevel, string> = {
-  "trial-conditions": "Exploratório · condições do ensaio",
-  interpolated: "Exploratório · interpolado entre ensaios",
-  extrapolation: "Extrapolação",
+  "trial-conditions": "Exploratory · trial conditions",
+  interpolated: "Exploratory · interpolated between trials",
+  extrapolation: "Extrapolation",
 };
 
 export interface ScenarioKernel {
@@ -328,7 +328,7 @@ export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKern
   const flowDiffers = diffs.some((d) => d.field === "flow" && d.status === "differs");
   if (s.flow < 2) {
     return { p: base.map((v) => v === null ? null : 0), level: "extrapolation", quench: true,
-      flowRule: "Abaixo de 2 cm/s: propagação suprimida (ramo de extinção radiativa para combustível fino, mapa de Olson). Hipótese de fechamento, não medida nestes ensaios." };
+      flowRule: "Below 2 cm/s: spread suppressed (radiative extinction branch for thin fuel, Olson map). Closure assumption, not measured in these trials." };
   }
   const i = kernels["SAFFIRE-I-S1"], iii = kernels["SAFFIRE-III-S1"];
   const sibalPair = anchor.material === "SIBAL" && (anchor.id === "SAFFIRE-I-S1" || anchor.id === "SAFFIRE-III-S1") && i && iii;
@@ -343,7 +343,7 @@ export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKern
     });
     const atEnd = Math.abs(s.flow - (anchor.conditions.flowCmS ?? 20)) <= EPS;
     return { p, quench: false, level: nonFlowDiffers ? "extrapolation" : atEnd ? "trial-conditions" : "interpolated",
-      flowRule: `Hazard interpolado em escala log entre SAFFIRE I (20 cm/s) e III (25 cm/s), peso ${f(w, 2)} para III.` };
+      flowRule: `Hazard interpolated on a log scale between SAFFIRE I (20 cm/s) and III (25 cm/s), weight ${f(w, 2)} for III.` };
   }
   const beta = cross?.comparisonWithSaffireI.beta ?? 1;
   const u0 = anchor.conditions.flowCmS ?? 20;
@@ -352,7 +352,7 @@ export function scenarioKernel(anchor: Trial, kernels: Record<string, AnchorKern
     p: scaleKernel(base, factor), quench: false,
     level: nonFlowDiffers || flowDiffers ? "extrapolation" : "trial-conditions",
     flowRule: flowDiffers
-      ? `Hazard × ${f(factor, 2)} = (u/${f(u0)})^${f(beta, 2)}; expoente ${cross ? "medido entre SAFFIRE I e III" : "linear (ensaio III indisponível)"}. Fator limitado em 40 cm/s; blowoff não modelado.`
-      : "Escoamento do próprio ensaio: sem escalonamento.",
+      ? `Hazard × ${f(factor, 2)} = (u/${f(u0)})^${f(beta, 2)}; exponent ${cross ? "measured between SAFFIRE I and III" : "linear (trial III unavailable)"}. Factor capped at 40 cm/s; blowoff not modeled.`
+      : "Trial flow: no scaling.",
   };
 }

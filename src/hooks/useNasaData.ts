@@ -19,7 +19,7 @@ export function useNasaData() {
           !response.headers.get("content-type")?.includes("application/json")
         )
           throw new Error(
-            "O snapshot NASA ainda não está disponível nesta instalação.",
+            "The NASA snapshot is not available in this installation yet.",
           );
         return response.json();
       })
@@ -48,7 +48,7 @@ export function useNasaData() {
           )
         )
           throw new Error(
-            "O arquivo de dados não corresponde ao contrato esperado.",
+            "The data file does not match the expected contract.",
           );
         setData(value);
       })

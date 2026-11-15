@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { englishText } from '../src/i18n/english.ts';
 import {
   buildDossier, checkDossier, dossierCsv, dossierMarkdown, pairDelta, readWorkspace, validateWorkspace,
 } from '../src/specialist/workspace.ts';
@@ -31,7 +32,7 @@ test('validation rejects malformed or overclaiming workspaces', { skip }, () => 
   const curve = clone(ws);
   const withCurve = curve.trials.find((t) => t.analysis.trajectory.status === 'available');
   withCurve.analysis.trajectory.points.reverse();
-  assert.match(validateWorkspace(curve).join(), /crescentes/);
+  assert.match(validateWorkspace(curve).join(), /increasing/);
   assert.throws(() => readWorkspace({ schemaVersion: 2 }));
 });
 
@@ -79,7 +80,11 @@ test('CSV and Markdown carry hashes, review state and non-causal wording', { ski
   assert.equal(csv.length, 4);
   assert.match(csv[2], /review-required/);
   assert.ok(d.trials.every((t) => dossierCsv(d).includes(t.model.artifactSha256)));
-  const md = dossierMarkdown(d);
-  assert.match(md, /não causais/);
-  assert.match(md, /observáveis incompatíveis/);
+  const before = JSON.stringify(d);
+  const md = dossierMarkdown(d, englishText);
+  assert.match(md, /not causal/);
+  assert.match(md, /incompatible observables/);
+  assert.match(md, /Cross-trial comparisons are descriptive/);
+  assert.doesNotMatch(md, /Comparações|Trajetória|Curva do baseline/);
+  assert.equal(JSON.stringify(d), before);
 });

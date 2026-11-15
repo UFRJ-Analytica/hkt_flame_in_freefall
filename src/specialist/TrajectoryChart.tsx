@@ -1,9 +1,10 @@
 import type { WsTrial } from "./workspace";
+import { englishText } from "../i18n/english";
 
 export const SERIES_COLORS = ["#f4a467", "#5de6e3", "#b39bff", "#8ec9ac", "#f08aa4", "#e6cf8c", "#7fb2ff", "#c9c9c9", "#ff8c5a"];
 const ORIGIN_LABEL: Record<string, string> = {
-  "relative-validation-window-start": "t = 0 no início da janela de validação",
-  "published-figure-clock": "relógio da figura publicada",
+  "relative-validation-window-start": "t = 0 at the start of the validation window",
+  "published-figure-clock": "published figure clock",
 };
 
 /** Position vs time for the trials that actually carry a stored curve. Observed = solid,
@@ -24,7 +25,7 @@ export function TrajectoryChart({ trials, height = 240 }: { trials: { trial: WsT
   const ticks = (max: number, n: number) => Array.from({ length: n + 1 }, (_, i) => (max * i) / n);
   return (
     <figure className="traj-chart">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Posição da frente em mm ao longo do tempo para ${series.length} ensaios`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Front position in mm over time for ${series.length} trials`}>
         {ticks(xMax, 4).map((v) => <g key={`y${v}`}><line x1={L} x2={W - R} y1={y(v)} y2={y(v)} className="tc-grid" /><text x={L - 6} y={y(v) + 3} textAnchor="end" className="tc-tick">{v}</text></g>)}
         {ticks(tMax, 5).map((v) => <text key={`x${v}`} x={x(v)} y={H - 10} textAnchor="middle" className="tc-tick">{v} s</text>)}
         <text x={10} y={T + 6} className="tc-tick" transform={`rotate(-90 10 ${T + 6})`} textAnchor="end">mm</text>
@@ -46,12 +47,12 @@ export function TrajectoryChart({ trials, height = 240 }: { trials: { trial: WsT
           const tr = trial.analysis.trajectory;
           return (
             <span key={trial.id}>
-              <i style={{ background: color }} />{trial.campaign} · {trial.sample}
-              <small>{tr.relationToRegisteredModel === "baseline-not-registered-model" ? "simulado = baseline longitudinal (não é o modelo por vizinhança)" : "simulado = mesmo modelo do registro"} · {ORIGIN_LABEL[tr.timeOrigin ?? ""] ?? tr.timeOrigin}</small>
+              <i style={{ background: color }} />{englishText(trial.campaign)} · {englishText(trial.sample)}
+              <small>{tr.relationToRegisteredModel === "baseline-not-registered-model" ? "simulated = longitudinal baseline (not the neighborhood model)" : "simulated = the same model as in the registry"} · {ORIGIN_LABEL[tr.timeOrigin ?? ""] ?? englishText(tr.timeOrigin ?? "")}</small>
             </span>
           );
         })}
-        <em>Linha cheia: observado · tracejada: modelo · pontilhada: baseline longitudinal. As séries têm origens de tempo próprias; sobreposição não alinha eventos físicos.</em>
+        <em>Solid line: observed · dashed: model · dotted: longitudinal baseline. Each series has its own time origin; overlaying them does not align physical events.</em>
       </figcaption>
     </figure>
   );

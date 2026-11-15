@@ -86,34 +86,34 @@ def expanded_query(question, intent, material):
 
 def validate_request(value):
     if not isinstance(value, dict):
-        raise ValueError("Envie um objeto JSON.")
+        raise ValueError("Send a JSON object.")
     question = value.get("question")
     intent = value.get("intent")
     context = value.get("context")
     if not isinstance(question, str) or not question.strip() or len(question) > 2500:
-        raise ValueError("A pergunta deve ter de 1 a 2500 caracteres.")
+        raise ValueError("The question must contain 1 to 2500 characters.")
     if intent not in INTENTS:
-        raise ValueError("Intenção de pesquisa inválida.")
+        raise ValueError("Invalid research intent.")
     if not isinstance(context, dict):
-        raise ValueError("Contexto do cenário ausente.")
+        raise ValueError("Scenario context is missing.")
     clean = {}
     for name in ["vehicle", "surfaceId", "surfaceName", "structureKind", "material"]:
         field = context.get(name)
         if not isinstance(field, str) or not field.strip() or len(field) > 180:
-            raise ValueError(f"Campo de contexto inválido: {name}.")
+            raise ValueError(f"Invalid context field: {name}.")
         clean[name] = field.strip()
     if clean["vehicle"] not in {"orion", "iss"}:
-        raise ValueError("Ambiente desconhecido.")
+        raise ValueError("Unknown environment.")
     if clean["surfaceId"] not in {"console_main", "crew_seats", "wall_panels", "cable_run", "floor"}:
-        raise ValueError("Estrutura desconhecida.")
+        raise ValueError("Unknown structure.")
     for name, low, high in [("oxygenPct", 0, 100), ("pressureKpa", 0.001, 1000), ("flowCmS", 0, 1000), ("gravityG", 0, 1)]:
         field = context.get(name)
         if isinstance(field, bool) or not isinstance(field, (int, float)) or not math.isfinite(field) or not low <= field <= high:
-            raise ValueError(f"Condição ou unidade inválida: {name}.")
+            raise ValueError(f"Invalid condition or unit: {name}.")
         clean[name] = field
     limit = value.get("limit", 6)
     if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 10:
-        raise ValueError("Limite deve estar entre 1 e 10 investigações.")
+        raise ValueError("Limit must be between 1 and 10 investigations.")
     return {"question": question.strip(), "intent": intent, "context": clean, "limit": limit}
 
 
@@ -145,7 +145,7 @@ class ResearchService:
         source_bytes = (self.root / "public/data/nasa-experiments.json").read_bytes()
         snapshot = json.loads(source_bytes)
         if snapshot.get("schemaVersion") != 1 or not isinstance(snapshot.get("investigations"), list):
-            raise ValueError("Snapshot PSI inválido.")
+            raise ValueError("Invalid PSI snapshot.")
         self.investigations = snapshot["investigations"]
         corpus_path = self.root / "public/data/research-corpus.json"
         corpus_bytes = corpus_path.read_bytes() if corpus_path.exists() else b'{}'
@@ -159,22 +159,23 @@ class ResearchService:
         self.records = {row["id"]: row.get("tests", []) for row in self.investigations}
         for investigation in self.investigations:
             material_names = list(dict.fromkeys(record["material"] for record in investigation.get("tests", []) if record.get("material")))
-            text = f"{investigation['name']}. {investigation.get('title', '')}. {investigation.get('description', '')} Materiais tabulares: {'; '.join(material_names[:45])}"
-            source = {"id": f"{investigation['id']}:metadata", "title": investigation["title"], "url": investigation["sourceUrl"], "location": "Metadados PSI; objetivo e inventário tabular, não desfecho medido", "text": text, "investigationIds": [investigation["id"]], "topics": [], "kind": "metadata"}
+            text = f"{investigation['name']}. {investigation.get('title', '')}. {investigation.get('description', '')} Tabulated materials: {'; '.join(material_names[:45])}"
+            source = {"id": f"{investigation['id']}:metadata", "title": investigation["title"], "url": investigation["sourceUrl"], "location": "PSI metadata; objective and tabulated inventory, not a measured outcome", "text": text, "investigationIds": [investigation["id"]], "topics": [], "kind": "metadata"}
             self.metadata_sources[investigation["id"]] = source
-            self.entries.append(source)
+            # Keep the indexed metadata bytes stable; translate only its API presentation.
+            self.entries.append(source | {"text": text.replace("Tabulated materials:", "Materiais tabulares:")})
         for document in self.documents:
             for passage in document.get("passages", []):
                 if not isinstance(passage.get("text"), str) or not passage["text"].strip():
                     continue
-                self.entries.append({"id": passage["id"], "title": document["title"], "url": document["url"], "location": passage.get("location", "Documento original"), "text": passage["text"], "investigationIds": document.get("investigationIds", []), "topics": document.get("topics", []), "kind": "document"})
+                self.entries.append({"id": passage["id"], "title": document["title"], "url": document["url"], "location": passage.get("location", "Original document"), "text": passage["text"], "investigationIds": document.get("investigationIds", []), "topics": document.get("topics", []), "kind": "document"})
         self.index = LexicalIndex(self.entries)
         self._vectors = None
         self._vector_lock = threading.Lock()
         self._hybrid_ready = False
 
     def status(self):
-        return {"status": "ready", "corpusVersion": self.corpus_version, "investigationCount": len(self.investigations), "recordCount": sum(len(rows) for rows in self.records.values()), "documentCount": len(self.documents), "passageCount": sum(row["kind"] == "document" for row in self.entries), "generationConfigured": bool(self.provider.generation_configured), "embeddingsConfigured": bool(self.provider.embeddings_configured), "generationModel": getattr(self.provider, "generation_model", None) if self.provider.generation_configured else None, "embeddingModel": getattr(self.provider, "embedding_model", None) if self.provider.embeddings_configured else None, "vectorStore": ("mongodb-atlas" if self.store.search_ready else "mongodb-atlas (índice em preparo)") if self.store else ("memory" if self.provider.embeddings_configured else None), "retrievalMode": "hybrid" if self._hybrid_ready or self._vectors is not None else "lexical-structured"}
+        return {"status": "ready", "corpusVersion": self.corpus_version, "investigationCount": len(self.investigations), "recordCount": sum(len(rows) for rows in self.records.values()), "documentCount": len(self.documents), "passageCount": sum(row["kind"] == "document" for row in self.entries), "generationConfigured": bool(self.provider.generation_configured), "embeddingsConfigured": bool(self.provider.embeddings_configured), "generationModel": getattr(self.provider, "generation_model", None) if self.provider.generation_configured else None, "embeddingModel": getattr(self.provider, "embedding_model", None) if self.provider.embeddings_configured else None, "vectorStore": ("mongodb-atlas" if self.store.search_ready else "mongodb-atlas (index preparing)") if self.store else ("memory" if self.provider.embeddings_configured else None), "retrievalMode": "hybrid" if self._hybrid_ready or self._vectors is not None else "lexical-structured"}
 
     def _ensure_vectors(self):
         """Load corpus vectors from MongoDB when present; otherwise embed once and persist."""
@@ -193,7 +194,7 @@ class ResearchService:
             chunk = missing[offset:offset + 24]
             vectors = self.provider.embed([entry["text"] for entry in chunk], "RETRIEVAL_DOCUMENT")
             if len(vectors) != len(chunk):
-                raise ProviderError("Quantidade de embeddings divergente.")
+                raise ProviderError("Embedding count mismatch.")
             known.update({entry["id"]: vector for entry, vector in zip(chunk, vectors)})
             if self.store:
                 try:
@@ -202,7 +203,7 @@ class ResearchService:
                     pass  # Persistence is an optimisation; in-memory ranking stays valid.
         vectors = [known[entry["id"]] for entry in self.entries]
         if not vectors or any(len(row) != len(vectors[0]) for row in vectors):
-            raise ProviderError("Dimensões de índice inválidas.")
+            raise ProviderError("Invalid index dimensions.")
         if self.store:
             try:
                 self.store.prune(model, self.entries)
@@ -224,13 +225,13 @@ class ResearchService:
             self._ensure_vectors()
             query_vectors = self.provider.embed([query], "RETRIEVAL_QUERY")
             if len(query_vectors) != 1:
-                raise ProviderError("Dimensões de índice inválidas.")
+                raise ProviderError("Invalid index dimensions.")
             vector = query_vectors[0]
             if not vector or len(vector) != len(self._vectors[0]):
                 self._vectors = None
-                raise ProviderError("Modelo/indexação incompatíveis.")
+                raise ProviderError("Incompatible model/index.")
             if any(not math.isfinite(v) for v in vector):
-                raise ProviderError("Vetor não finito.")
+                raise ProviderError("Non-finite vector.")
             positions = {}
             for index, entry in enumerate(self.entries):
                 positions.setdefault(text_hash(entry["text"]), index)
@@ -264,7 +265,7 @@ class ResearchService:
         if named_materials:
             material = named_materials[0]
             if material != canonical_material(context["material"]):
-                warnings.append("A pergunta menciona outro material; a atribuição da cena foi preservada.")
+                warnings.append("The question mentions another material; the scene assignment has been preserved.")
         query = expanded_query(question, intent, material)
         # The user's own words outweigh the intent vocabulary and the scene material.
         asked = self.index.scores(question_query(question))
@@ -280,19 +281,19 @@ class ResearchService:
                     fused[index] = fused.get(index, 0) + 1 / (61 + rank)
                 mode = "hybrid"
             except Exception:
-                warnings.append("Embeddings indisponíveis; esta resposta usa busca lexical e condições estruturadas, sem vetores simulados.")
+                warnings.append("Embeddings are unavailable; this response uses lexical search and structured conditions, with no simulated vectors.")
         requested_ids = set(re.findall(r"\bPSI-\d+\b", question.upper()))
         known = {row["id"] for row in self.investigations}
         if requested_ids - known:
-            gaps.append("Identificador solicitado não está no snapshot local: " + ", ".join(sorted(requested_ids - known)) + ". Isso não prova ausência no PSI completo.")
+            gaps.append("The requested identifier is not in the local snapshot: " + ", ".join(sorted(requested_ids - known)) + ". This does not establish its absence from the full PSI archive.")
         lunar = bool(re.search(r"\b(lua|lunar|moon|marte|mars)\b|1\s*/\s*6", fold(question))) or context["gravityG"] not in (0, 1)
         if lunar:
-            gaps.append("Transferência para gravidade parcial/lunar não validada neste snapshot; 0 g não é um limite superior conservador garantido.")
+            gaps.append("Transfer to partial/lunar gravity is not validated in this snapshot; 0 g is not a guaranteed conservative upper bound.")
         if not self.documents:
-            gaps.append("Corpus científico indisponível; apenas metadados e tabelas estão disponíveis.")
+            gaps.append("The scientific corpus is unavailable; only metadata and tables are available.")
         has_material = any(canonical_material(row.get("material") or "") == material for records in self.records.values() for row in records)
         if not has_material:
-            gaps.append(f"Nenhum registro tabular com correspondência explícita ao material {context['material']} foi encontrado; referências relacionadas não substituem medições desse material.")
+            gaps.append(f"No tabulated record explicitly matching the material {context['material']} was found; related references do not replace measurements of that material.")
         entry_rank = sorted(fused, key=lambda index: (-fused[index], self.entries[index]["id"]))
         document_hits = []
         per_document = Counter()
@@ -328,34 +329,34 @@ class ResearchService:
                 continue
             reasons, mismatches = [], []
             if matched:
-                reasons.append("Correspondência nominal de material nos registros originais; composição e geometria ainda precisam ser verificadas.")
+                reasons.append("Nominal material match in the original records; composition and geometry still need to be checked.")
             if CATEGORY_INTENT[intent].get(category, 0):
-                reasons.append("Família de investigação pertinente à intenção selecionada.")
+                reasons.append("Investigation family relevant to the selected intent.")
             if associated:
-                reasons.append("Documentação científica relacionada recuperada com localização na fonte.")
+                reasons.append("Related scientific documentation retrieved with source location.")
             if requested_ids:
-                reasons.append("Identificador explicitamente solicitado, sem ampliação silenciosa da busca.")
+                reasons.append("Explicitly requested identifier, with no silent broadening of the search.")
             if category in {"droplet", "gas"} and canonical_material(context["material"]) in MATERIALS:
-                mismatches.append("Combustível/arranjo não equivale à superfície sólida selecionada; não transferir parâmetros para a cabine.")
+                mismatches.append("The fuel/configuration is not equivalent to the selected solid surface; do not transfer parameters to the cabin.")
             if not matched:
-                mismatches.append("Sem correspondência nominal de material neste conjunto de registros; tratar como contexto/análogo.")
+                mismatches.append("No nominal material match in this record set; treat as context or an analogy.")
             selected_records = (matched or record_list)[:6]
-            unknowns = ["Geometria, espessura e escala da estrutura não foram equiparadas à amostra; nenhuma compatibilidade física completa é afirmada."]
-            for field, title in [("oxygenPct", "Oxigênio"), ("pressureKpa", "Pressão"), ("flowCmS", "Velocidade calibrada do fluxo")]:
+            unknowns = ["The structure geometry, thickness and scale have not been matched to the sample; no full physical compatibility is claimed."]
+            for field, title in [("oxygenPct", "Oxygen"), ("pressureKpa", "Pressure"), ("flowCmS", "Calibrated flow velocity")]:
                 if not selected_records or any(record.get(field) is None for record in selected_records):
-                    unknowns.append(f"{title}: há valores ausentes nos registros exibidos; não foram preenchidos com o cenário.")
+                    unknowns.append(f"{title}: values are missing in the displayed records; they have not been filled in from the scenario.")
             if selected_records:
                 nearest = selected_records[0]
-                for field, title, unit in [("oxygenPct", "O₂", "%"), ("pressureKpa", "Pressão", "kPa"), ("flowCmS", "Fluxo", "cm/s")]:
+                for field, title, unit in [("oxygenPct", "O₂", "%"), ("pressureKpa", "Pressure", "kPa"), ("flowCmS", "Flow", "cm/s")]:
                     value = nearest.get(field)
                     if value is not None and not math.isclose(value, context[field], rel_tol=1e-6, abs_tol=1e-6):
-                        mismatches.append(f"{title} do primeiro registro: {value:g} {unit}; cenário: {context[field]:g} {unit}. Comparação, não equivalência.")
+                        mismatches.append(f"{title} in the first record: {value:g} {unit}; scenario: {context[field]:g} {unit}. Comparison, not equivalence.")
             visible = {key: deepcopy(value) for key, value in investigation.items() if key != "tests"}
-            results.append({"investigation": visible, "score": round(score, 4), "relevance": "related" if matched and not category in {"gas", "droplet"} else "analog" if selected_records else "context", "reasons": reasons or ["Relação lexical com a pergunta e o contexto informado."], "mismatches": mismatches, "unknowns": unknowns, "records": deepcopy(selected_records), "sources": deepcopy(associated + [self.metadata_sources[identity]])})
+            results.append({"investigation": visible, "score": round(score, 4), "relevance": "related" if matched and not category in {"gas", "droplet"} else "analog" if selected_records else "context", "reasons": reasons or ["Lexical relation to the question and supplied context."], "mismatches": mismatches, "unknowns": unknowns, "records": deepcopy(selected_records), "sources": deepcopy(associated + [self.metadata_sources[identity]])})
         results.sort(key=lambda row: (-row["score"], row["investigation"]["id"]))
         results = results[:request["limit"]]
         if not results:
-            gaps.append("Nenhuma investigação corresponde às restrições no snapshot local. Revise o identificador ou amplie a pergunta explicitamente.")
+            gaps.append("No investigation matches the constraints in the local snapshot. Check the identifier or explicitly broaden the question.")
         sources = {row["id"]: deepcopy(row) for row in document_hits}
         for result in results:
             for source in result["sources"]:
@@ -364,10 +365,10 @@ class ResearchService:
         if not findings:
             findings = [{"text": self.metadata_sources[result["investigation"]["id"]]["text"], "sourceIds": [self.metadata_sources[result["investigation"]["id"]]["id"]]} for result in results[:3]]
         context_key = hashlib.sha256(json.dumps(request | {"corpusVersion": self.corpus_version}, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
-        bundle = {"schemaVersion": 1, "requestId": str(uuid.uuid4()), "contextKey": context_key, "corpusVersion": self.corpus_version, "question": question, "intent": intent, "context": context, "retrievalMode": mode, "synthesisMode": "extractive", "summary": f"{len(results)} investigações relacionadas recuperadas. Compare as condições e consulte os trechos originais; o ranking indica relevância, não risco ou validação da cabine.", "findings": findings, "investigations": results, "sources": list(sources.values()), "gaps": gaps, "warnings": warnings, "visualization": {"mode": "illustrative", "label": "Cenário ilustrativo — hipóteses visuais, não previsão validada", "replayAvailable": False, "predictionAvailable": False, "reasons": ["O snapshot tabular não fornece uma trajetória temporal de cabine.", "Nenhum preditor físico foi calibrado/validado; métricas de alarme, temperatura e contenção estão indisponíveis."]}}
+        bundle = {"schemaVersion": 1, "requestId": str(uuid.uuid4()), "contextKey": context_key, "corpusVersion": self.corpus_version, "question": question, "intent": intent, "context": context, "retrievalMode": mode, "synthesisMode": "extractive", "summary": f"{len(results)} related investigations retrieved. Compare conditions and consult the original passages; the ranking indicates relevance, not risk or cabin validation.", "findings": findings, "investigations": results, "sources": list(sources.values()), "gaps": gaps, "warnings": warnings, "visualization": {"mode": "illustrative", "label": "Illustrative scenario — visual assumptions, not a validated prediction", "replayAvailable": False, "predictionAvailable": False, "reasons": ["The tabular snapshot does not provide a cabin time history.", "No physical predictor has been calibrated/validated; alarm, temperature and containment metrics are unavailable."]}}
         if synthesize:
             if not self.provider.generation_configured:
-                bundle["warnings"].append("IA generativa não configurada; os trechos e a síntese continuam extrativos.")
+                bundle["warnings"].append("Generative AI is not configured; passages and synthesis remain extractive.")
             else:
                 # Numbers the user supplied (question/scenario) and source identifiers may be restated.
                 allowed = " ".join([question, json.dumps(context, ensure_ascii=False), *gaps, *sources.keys(), *(row["title"] for row in sources.values())])
@@ -380,39 +381,46 @@ class ResearchService:
                         generated = self.provider.generate(request_bundle)
                         self._validate_generation(generated, sources, allowed)
                         bundle.update(summary=generated["summary"], findings=generated["findings"], synthesisMode="claude")
-                        bundle["warnings"].append("Síntese gerada por modelo, com referências verificadas por ID; revisar o suporte científico no texto-fonte.")
+                        bundle["warnings"].append("Model-generated synthesis, with references verified by ID; review the scientific support in the source text.")
                         break
                     except ProviderError as exc:
-                        feedback = f"A tentativa anterior foi rejeitada pela validação: {exc} Corrija e responda novamente."
+                        feedback = f"The previous attempt was rejected by validation: {exc} Correct it and respond again in English."
                     except Exception:
                         break
                 if bundle["synthesisMode"] != "claude":
-                    bundle["warnings"].append("Síntese generativa indisponível ou rejeitada por validação; preservamos o resultado extrativo real.")
+                    bundle["warnings"].append("Generative synthesis is unavailable or was rejected by validation; the actual extractive result has been preserved.")
         return bundle
 
     @staticmethod
     def _validate_generation(value, sources, allowed=""):
         if not isinstance(value, dict) or not isinstance(value.get("summary"), str) or not 1 <= len(value["summary"]) <= 2400:
-            raise ProviderError("Resumo inválido.")
+            raise ProviderError("Invalid summary.")
         findings = value.get("findings")
         if not isinstance(findings, list) or not 1 <= len(findings) <= 4:
-            raise ProviderError("Achados inválidos.")
+            raise ProviderError("Invalid findings.")
         for finding in findings:
             if not isinstance(finding, dict) or not isinstance(finding.get("text"), str) or not 1 <= len(finding["text"]) <= 5000:
-                raise ProviderError("Achado inválido.")
+                raise ProviderError("Invalid finding.")
             ids = finding.get("sourceIds")
             if not isinstance(ids, list) or not ids or any(not isinstance(identity, str) or identity not in sources for identity in ids):
-                raise ProviderError("Citação não recuperada.")
+                raise ProviderError("Citation was not retrieved.")
         text = fold(value["summary"] + " " + " ".join(row["text"] for row in findings))
-        if re.search(r"garant(?:e|ia|ido).*segur|risco zero|desligue|desative|aplique o extintor", text):
-            raise ProviderError("Alegação operacional não permitida.")
-        for match in re.finditer(r"certific", text):
-            # "não é certificado" is a legitimate limitation; an affirmative certification claim is not.
-            if not re.search(r"\b(nao|nem|sem|nenhum|nenhuma)\b", text[max(0, match.start() - 25):match.start()]):
-                raise ProviderError("Alegação de certificação não permitida.")
+        if re.search(r"garant(?:e|ia|ido).*segur|risco zero|desligue|desative|aplique o extintor|guarantee[ds]?.*safe|zero risk|risk[- ]free|turn off|shut down|disable|apply the extinguisher|use the extinguisher", text):
+            raise ProviderError("Operational claim is not permitted.")
+        for match in re.finditer(r"certific|certified", text):
+            # Only direct negation qualifies; unrelated negations in another
+            # clause must not authorize an affirmative safety claim.
+            prefix = text[max(0, match.start() - 100):match.start()]
+            direct_negation = re.search(
+                r"(?:\b(?:not|never|nao|nem)\s+(?:(?:a|an|any|um|uma|intended|meant|for|para|de|be|been|being)\s+){0,4}"
+                r"|\b(?:no|without|sem|nenhum|nenhuma)\s+(?:(?:a|any|um|uma)\s+)?|\bnon[- ])$",
+                prefix,
+            )
+            if not direct_negation:
+                raise ProviderError("Certification claim is not permitted.")
         # Reject new numerical quantities; keep cited experimental text intact.
         reference = " ".join(row["text"] for row in sources.values()) + " " + allowed
         reference_numbers = {number.replace(",", ".") for number in re.findall(r"\d+(?:[.,]\d+)?", reference)}
         for number in re.findall(r"\d+(?:[.,]\d+)?", value["summary"] + " ".join(row["text"] for row in findings)):
             if number.replace(",", ".") not in reference_numbers and number not in reference:
-                raise ProviderError(f"Quantidade '{number}' não encontrada nas evidências.")
+                raise ProviderError(f"Quantity '{number}' not found in the evidence.")

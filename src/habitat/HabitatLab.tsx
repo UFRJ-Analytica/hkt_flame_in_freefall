@@ -19,27 +19,28 @@ import type { ViewMode } from "./HabitatScene";
 import { ModelInUse, TrialList } from "./ModelPanels";
 import { Alternatives } from "./Alternatives";
 import { computeMetrics, DURATION_S, fieldFingerprint, quantiles, SEED_COUNT, SEEDS, STEPS, validateInputs, type ScenarioInputs } from "./scenarioRun";
+import { englishText } from "../i18n/english";
 import "./habitat.css";
 
 const HabitatScene = lazy(() => import("./HabitatScene"));
 const SPEEDS = [15, 30, 60];
 
 const PRESETS: { id: string; label: string; note: string; oxygen: number; pressure: number; flow: number; gravity: GravityId }[] = [
-  { id: "lunar", label: "Habitat lunar · atmosfera de exploração", note: "56,5 kPa (8,2 psia) e 34% O₂, a atmosfera estudada pela NASA para encurtar o prebreathe de EVA. Ventilação hipotética.", oxygen: 34, pressure: 56.5, flow: 10, gravity: "moon" },
-  { id: "saffire", label: "Condições do ensaio SAFFIRE I", note: "21,6% O₂, ~1 atm, 20 cm/s, microgravidade: o único ponto calibrado.", oxygen: 21.6, pressure: 101.3, flow: 20, gravity: "orbit" },
-  { id: "station", label: "Estação orbital · ar nominal", note: "21% O₂, 101,3 kPa, ventilação típica de cabine (hipotética).", oxygen: 21, pressure: 101.3, flow: 10, gravity: "orbit" },
+  { id: "lunar", label: "Lunar habitat · exploration atmosphere", note: "56.5 kPa (8.2 psia) and 34% O₂, the atmosphere studied by NASA to shorten EVA prebreathe. Hypothetical ventilation.", oxygen: 34, pressure: 56.5, flow: 10, gravity: "moon" },
+  { id: "saffire", label: "SAFFIRE I test conditions", note: "21.6% O₂, ~1 atm, 20 cm/s, microgravity: the only calibrated point.", oxygen: 21.6, pressure: 101.3, flow: 20, gravity: "orbit" },
+  { id: "station", label: "Orbital station · nominal air", note: "21% O₂, 101.3 kPa, typical cabin ventilation (hypothetical).", oxygen: 21, pressure: 101.3, flow: 10, gravity: "orbit" },
 ];
 
 const TIER_STYLE: Record<Tier, { label: string; className: string }> = {
-  calibrated: { label: "Calibrado", className: "ok" },
-  exploratory: { label: "Exploratório", className: "warn" },
-  "measured-no-spread": { label: "Sem propagação medida", className: "measured" },
-  unknown: { label: "Sem evidência", className: "unknown" },
-  inert: { label: "Inerte (premissa)", className: "inert" },
+  calibrated: { label: "Calibrated", className: "ok" },
+  exploratory: { label: "Exploratory", className: "warn" },
+  "measured-no-spread": { label: "Measured no spread", className: "measured" },
+  unknown: { label: "No evidence", className: "unknown" },
+  inert: { label: "Inert (assumption)", className: "inert" },
 };
 
 const num = (n: number | null | undefined, digits = 1) =>
-  n == null || !Number.isFinite(n) ? "—" : n.toLocaleString("pt-BR", { maximumFractionDigits: digits });
+  n == null || !Number.isFinite(n) ? "—" : n.toLocaleString("en-US", { maximumFractionDigits: digits });
 const fmtTime = (s: number) => s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s`;
 
 const LEVEL_STYLE: Record<RunLevel, string> = { "trial-conditions": "neutral", interpolated: "neutral", extrapolation: "warn" };
@@ -68,14 +69,14 @@ function useSaffire() {
         setLoaded((current) => [...current.filter((x) => x.path !== path), { path: `public/${path}`, role, sha256: digest }]);
         return JSON.parse(text) as unknown;
       });
-    load("data/saffire/psi-98-s1-neighbors.json", "núcleo de vizinhança SAFFIRE I")
-      .then((v) => { if (!v) throw new Error("Modelo SAFFIRE indisponível."); setModel(readSaffireModel(v)); })
-      .catch((e: unknown) => { if (!request.signal.aborted) setError(e instanceof Error ? e.message : "Erro ao carregar o modelo."); });
+    load("data/saffire/psi-98-s1-neighbors.json", "SAFFIRE I neighborhood kernel")
+      .then((v) => { if (!v) throw new Error("SAFFIRE model unavailable."); setModel(readSaffireModel(v)); })
+      .catch((e: unknown) => { if (!request.signal.aborted) setError(e instanceof Error ? englishText(e.message) : "Error loading the model."); });
     // Optional: without it, flow scaling falls back to the linear hypothesis and III is never labelled.
-    load("data/saffire/crosstrial-i-iii.json", "núcleo SAFFIRE III e expoente de escoamento")
+    load("data/saffire/crosstrial-i-iii.json", "SAFFIRE III kernel and flow exponent")
       .then((v) => setSecond(readCrossTrial(v))).catch(() => undefined);
     // Trial registry from scripts/build_trial_registry.py; the embedded fallback is used until it exists.
-    load("data/saffire/trial-registry.json", "registro de ensaios")
+    load("data/saffire/trial-registry.json", "trial registry")
       .then((v) => { const parsed = readRegistry(v); if (parsed) setRegistry(parsed); }).catch(() => undefined);
     return () => request.abort();
   }, []);
@@ -112,7 +113,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
   useEffect(() => {
     if (!requestedAnchor) return;
     setAnchorChoice(requestedAnchor.id);
-    setNotice(`Ensaio de referência escolhido na bancada: ${requestedAnchor.id}. Use “Rodar nas condições do ensaio” para reproduzir suas condições.`);
+    setNotice(`Reference trial selected in the workbench: ${requestedAnchor.id}. Use “Run at trial conditions” to reproduce its conditions.`);
   }, [requestedAnchor]);
   const conditions = useMemo(() => ({ oxygen, pressure, flow, gravityG: gravityOf(gravity).g }), [oxygen, pressure, flow, gravity]);
   const grid = useMemo(() => buildGrid(zones, conditions), [zones, conditions]);
@@ -222,13 +223,13 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
   function ignite(col: number, row: number) {
     const zone = zones[grid.zoneIndex[row * GRID.cols + col]];
     if (materialRule(zone.material, conditions).behavior !== 1) {
-      setNotice(`${zone.name}: ${zone.material} não propaga no modelo nestas condições. O foco só pode ser imposto em material que propaga.`);
+      setNotice(`${zone.name}: ${MATERIAL_INFO[zone.material].label} does not propagate in the model under these conditions. Ignition can only be imposed on a propagating material.`);
       return;
     }
     setIgnition({ col, row });
     setStep(0);
     setPlaying(true);
-    setNotice(`Foco imposto em ${zone.name.toLowerCase()}. A ignição não é prevista; o modelo propaga a partir dela.`);
+    setNotice(`Ignition imposed on ${zone.name.toLowerCase()}. Ignition is not predicted; the model propagates from it.`);
   }
 
   function runAtTrialConditions() {
@@ -241,37 +242,37 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
     setPreset("custom");
     setAnchorChoice(anchor.id);
     restart();
-    setNotice(`Condições de ${anchor.campaign} ${anchor.sample}.${c.pressureKpa === null ? " Pressão não tabulada no ensaio: o controle de pressão não é usado pelo modelo nem atribuído ao ensaio." : ""}`);
+    setNotice(`Conditions from ${anchor.campaign} ${anchor.sample}.${c.pressureKpa === null ? " Pressure not tabulated in the trial: the pressure control is neither used by the model nor attributed to the trial." : ""}`);
   }
   async function importScenario(file: File) {
     let data: Record<string, unknown>;
-    try { data = JSON.parse(await file.text()); } catch { setNotice("Arquivo inválido: não é JSON."); return; }
+    try { data = JSON.parse(await file.text()); } catch { setNotice("Invalid file: not JSON."); return; }
     if (data.exportSchemaVersion !== 1 || data.mode !== "lunar-habitat-surface-spread") {
-      setNotice("Arquivo não é uma exportação do habitat lunar (exportSchemaVersion 1)."); return;
+      setNotice("File is not a lunar habitat export (exportSchemaVersion 1)."); return;
     }
     const issues: string[] = [];
-    if (data.codeVersion !== __APP_COMMIT__) issues.push(`código ${String(data.codeVersion)} ≠ ${__APP_COMMIT__}`);
+    if (data.codeVersion !== __APP_COMMIT__) issues.push(`code ${String(data.codeVersion)} ≠ ${__APP_COMMIT__}`);
     for (const art of (data.artifacts as Loaded[] | undefined) ?? []) {
       const now = loaded.find((x) => x.path === art.path);
-      if (!now) issues.push(`${art.path} não carregado`);
-      else if (now.sha256 !== art.sha256) issues.push(`${art.path}: bytes diferentes (sha256)`);
+      if (!now) issues.push(`${art.path} not loaded`);
+      else if (now.sha256 !== art.sha256) issues.push(`${art.path}: different bytes (sha256)`);
     }
     const inputs = data.scenarioInputs as ScenarioInputs | undefined;
     const problems = validateInputs(inputs);
     const expectedField = (data.results as { arrivalFieldSha256?: unknown } | null)?.arrivalFieldSha256;
     if (problems.length || typeof expectedField !== "string" || !/^[0-9a-f]{64}$/.test(expectedField)) {
       setReplay({ expectedField: null, status: "rejected", scenarioId: String(data.scenarioId ?? "?"),
-        issues: [...problems, ...(typeof expectedField === "string" ? [] : ["impressão do campo de chegada ausente"])] });
+        issues: [...problems, ...(typeof expectedField === "string" ? [] : ["missing arrival-field fingerprint"])] });
       return;
     }
-    if (inputs!.anchorChoice !== "auto" && !registry.trials.some((t) => t.id === inputs!.anchorChoice)) issues.push(`ensaio ${inputs!.anchorChoice} ausente do registro`);
+    if (inputs!.anchorChoice !== "auto" && !registry.trials.some((t) => t.id === inputs!.anchorChoice)) issues.push(`trial ${inputs!.anchorChoice} missing from registry`);
     loadInputs(inputs!, null);
     setEnsemble(null); setRerunKey((k) => k + 1);
     setReplay({ expectedField, issues, status: "pending", scenarioId: String(data.scenarioId) });
   }
 
   async function exportScenario() {
-    if (!fieldHash) { setNotice("Aguarde o cálculo terminar para exportar."); return; }
+    if (!fieldHash) { setNotice("Wait for the calculation to finish before exporting."); return; }
     const inputs = { conditions: { oxygenPct: oxygen, pressureKpa: pressure, flowCmS: flow, gravity, gravityG: conditions.gravityG },
       zones: zones.map((z) => ({ id: z.id, material: z.material, cols: z.cols, rows: z.rows })), ignition, anchorTrialId: anchor?.id ?? null, seeds: SEEDS };
     const payload = {
@@ -279,41 +280,41 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
       scenarioId: (await sha256(JSON.stringify(inputs))).slice(0, 16),
       product: "HabitatFire", mode: "lunar-habitat-surface-spread", codeVersion: __APP_COMMIT__, exportedAt: new Date().toISOString(),
       scientificMode: { level, label: LEVEL_LABEL[level],
-        meaning: "Resultado na parede do habitat: no máximo exploratório (geometria diferente da placa do ensaio). Só a simulação na placa do ensaio é condicionada ao ensaio." },
+        meaning: "Result on the habitat wall: exploratory at best (geometry differs from the test specimen). Only the test-specimen simulation is conditioned on the trial." },
       gate: { anchorTrialId: anchor?.id ?? null, conditionDiffs: diffs,
-        rule: "Correspondência apenas no valor nominal ou faixa documentada; não tabulado permanece desconhecido (ACCEPTANCE_CRITERIA §C)." },
+        rule: "Matches only the nominal value or documented range; untabulated conditions remain unknown (ACCEPTANCE_CRITERIA §C)." },
       requestedConditions: inputs.conditions,
       scenarioInputs: currentInputs,
       trialConditions: anchor?.conditions ?? null, trialConditionSources: anchor?.conditionSources ?? [], trialConflicts: anchor?.conflicts ?? [],
       observed: anchor?.observables ?? [],
       geometry: { liner: { lengthM: 4.0, arcM: 5.02, cols: GRID.cols, rows: GRID.rows, cellMm: [CELL.alongMm, CELL.acrossMm] },
-        connectivity: "montante + faixas laterais; sem radiação entre superfícies separadas", thicknessMm: null },
+        connectivity: "upstream + lateral strips; no radiation between separate surfaces", thicknessMm: null },
       zones: zones.map((z) => ({ ...z, rule: materialRule(z.material, conditions) })),
-      ignition: { ...ignition, widthMm: 400, note: "Foco imposto; a ignição não é prevista. Só acende células de material que propaga." },
-      algorithm: { engine: "autômato estocástico por fronteira (src/habitat/engine.ts)", stepSeconds: CELL.stepSeconds, horizonSteps: STEPS,
-        rng: "LCG 32 bits (a=1664525, c=1013904223), uma semente por realização", seeds: SEEDS },
+      ignition: { ...ignition, widthMm: 400, note: "Imposed ignition; ignition is not predicted. Only cells of propagating material are lit." },
+      algorithm: { engine: "stochastic frontier automaton (src/habitat/engine.ts)", stepSeconds: CELL.stepSeconds, horizonSteps: STEPS,
+        rng: "32-bit LCG (a=1664525, c=1013904223), one seed per realization", seeds: SEEDS },
       kernel: kernel && anchor ? { scenarioProbabilities2s: kernel.p, flowRule: kernel.flowRule, quench: kernel.quench,
         anchor: anchorKernels[anchor.id], fallbacks: anchorKernels[anchor.id]?.borrowed ?? [] } : null,
       crossTrial: second ? { beta: second.comparisonWithSaffireI.beta, prediction: second.prediction } : null,
       artifacts: loaded, registry: { generatedBy: registry.generatedBy, sha256: loaded.find((x) => x.path.endsWith("trial-registry.json"))?.sha256 ?? null },
       uncertainty: {
-        observational: "não quantificada no app (registro, segmentação, câmeras)",
-        parameters: "não propagada (fator de intensidade e expoente fixos)",
-        betweenTrials: "dois ensaios a favor do fluxo para o escoamento; um ponto por atmosfera",
-        seedSpread: "variabilidade do próprio modelo com parâmetros fixos, não incerteza experimental",
+        observational: "not quantified in the app (registration, segmentation, cameras)",
+        parameters: "not propagated (fixed intensity factor and exponent)",
+        betweenTrials: "two concurrent-flow trials for flow dependence; one point per atmosphere",
+        seedSpread: "variability of the model itself with fixed parameters, not experimental uncertainty",
       },
       results: metrics ? { frontSpeedMmS: metrics.speedMmS, areaAtEndM2: quantiles(metrics.area.map((c) => c[STEPS])),
-        arrivalFieldSha256: fieldHash, fieldHashCovers: "chegada e contato de todas as realizações (Int16, ordem das sementes)" } : null,
-      reproduction: "Importar este arquivo restaura scenarioInputs, confere commit e sha256 dos artefatos, recalcula e compara o sha256 do campo de chegada inteiro.",
+        arrivalFieldSha256: fieldHash, fieldHashCovers: "arrival and contact for all realizations (Int16, seed order)" } : null,
+      reproduction: "Importing this file restores scenarioInputs, checks the commit and artifact sha256 values, recalculates, and compares the sha256 of the entire arrival field.",
       limitations: [
-        "Propagação superficial; não é CFD nem combustão volumétrica.",
-        "Sem correção de O₂, pressão ou gravidade além do ensaio de referência.",
-        "Contato com material sem propagação no modelo não é barreira demonstrada.",
+        "Surface spread; neither CFD nor volumetric combustion.",
+        "No O₂, pressure, or gravity correction beyond the reference trial.",
+        "Contact with a material that does not propagate in the model is not a demonstrated barrier.",
       ],
     };
     const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
     const a = document.createElement("a");
-    a.href = url; a.download = "habitatfire-habitat-lunar.json"; a.click();
+    a.href = url; a.download = "habitatfire-lunar-habitat.json"; a.click();
     URL.revokeObjectURL(url);
   }
 
@@ -323,23 +324,23 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
 
   return (
     <main className="workbench habitat-workbench">
-      <aside className="scenario-panel" aria-label="Configurar habitat">
+      <aside className="scenario-panel" aria-label="Configure habitat">
         <div className="panel-title">
           <Settings2 size={15} />
-          <h2>Seu habitat</h2>
+          <h2>Your habitat</h2>
           <span className="tiny-tag">{gravityEnv.short}</span>
         </div>
         <section className="control-section">{modeSwitch}</section>
         <section className="control-section">
-          <div className="step-label"><span>01</span><h3>Atmosfera e gravidade</h3><Wind size={14} /></div>
+          <div className="step-label"><span>01</span><h3>Atmosphere and gravity</h3><Wind size={14} /></div>
           <label className="preset-select">
-            <select aria-label="Preset de ambiente" value={preset} onChange={(e) => applyPreset(e.target.value)}>
-              <option value="custom" disabled>Condições personalizadas</option>
+            <select aria-label="Environment preset" value={preset} onChange={(e) => applyPreset(e.target.value)}>
+              <option value="custom" disabled>Custom conditions</option>
               {PRESETS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
             </select>
           </label>
           {PRESETS.find((p) => p.id === preset) && <p className="preset-note">{PRESETS.find((p) => p.id === preset)!.note}</p>}
-          <div className="gravity-select" role="group" aria-label="Gravidade">
+          <div className="gravity-select" role="group" aria-label="Gravity">
             {GRAVITY_ENVIRONMENTS.map((env) => (
               <button key={env.id} type="button" aria-pressed={gravity === env.id}
                 onClick={() => { setGravity(env.id); setPreset("custom"); restart(); }}>
@@ -347,19 +348,19 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
               </button>
             ))}
           </div>
-          <Range label="Oxigênio" unit="%" value={oxygen} min={15} max={40} step={0.1} onChange={(v) => { setOxygen(v); setPreset("custom"); restart(); }} />
-          <Range label="Pressão" unit="kPa" value={pressure} min={35} max={110} step={0.1} onChange={(v) => { setPressure(v); setPreset("custom"); restart(); }} />
-          <Range label="Ventilação ao longo do módulo" unit="cm/s" value={flow} min={0} max={40} step={0.5} onChange={(v) => { setFlow(v); setPreset("custom"); restart(); }} />
-          <div className="partial-pressure"><span>Pressão parcial de O₂</span><strong>{num((pressure * oxygen) / 100)} <small>kPa</small></strong></div>
+          <Range label="Oxygen" unit="%" value={oxygen} min={15} max={40} step={0.1} onChange={(v) => { setOxygen(v); setPreset("custom"); restart(); }} />
+          <Range label="Pressure" unit="kPa" value={pressure} min={35} max={110} step={0.1} onChange={(v) => { setPressure(v); setPreset("custom"); restart(); }} />
+          <Range label="Ventilation along the module" unit="cm/s" value={flow} min={0} max={40} step={0.5} onChange={(v) => { setFlow(v); setPreset("custom"); restart(); }} />
+          <div className="partial-pressure"><span>O₂ partial pressure</span><strong>{num((pressure * oxygen) / 100)} <small>kPa</small></strong></div>
           <div className="control-physics" role="note">
-            <p><b>O₂, pressão e gravidade</b> escolhem o ensaio de referência e classificam a extrapolação; o motor não tem correção física validada para eles.</p>
-            <p><b>Ventilação</b> tem resposta modelada: interpolação entre SAFFIRE I e III e expoente medido fora disso.</p>
-            <p><b>Materiais</b> seguem regras por evidência; material sem dados para a frente, mas não é barreira comprovada.</p>
-            <p><b>Chama e fumaça</b> na cena são ilustrativas; a aparência muda com a gravidade sem mudar o cálculo.</p>
+            <p><b>O₂, pressure, and gravity</b> select the reference trial and classify extrapolation; the engine has no validated physical correction for them.</p>
+            <p><b>Ventilation</b> has a modeled response: interpolation between SAFFIRE I and III and a measured exponent outside that range.</p>
+            <p><b>Materials</b> follow evidence-based rules; material without data stops the front but is not a proven barrier.</p>
+            <p><b>Flame and smoke</b> in the scene are illustrative; appearance changes with gravity without changing the calculation.</p>
           </div>
         </section>
         <section className="control-section">
-          <div className="step-label"><span>02</span><h3>Materiais por zona</h3></div>
+          <div className="step-label"><span>02</span><h3>Materials by zone</h3></div>
           <div className="zone-list">
             {zones.map((zone, i) => {
               const rule = tiers[i].rule;
@@ -367,58 +368,58 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
                 <label key={zone.id} className="zone-row">
                   <span className="zone-swatch" style={{ background: `rgb(${MATERIAL_INFO[zone.material].color.join(",")})` }} />
                   <span className="zone-name">{zone.name}<small>{zone.hint}</small></span>
-                  <select aria-label={`Material de ${zone.name}`} value={zone.material} onChange={(e) => changeZone(i, e.target.value as MaterialId)}>
-                    {MATERIAL_IDS.map((m) => <option key={m} value={m}>{m}</option>)}
+                  <select aria-label={`Material for ${zone.name}`} value={zone.material} onChange={(e) => changeZone(i, e.target.value as MaterialId)}>
+                    {MATERIAL_IDS.map((m) => <option key={m} value={m}>{MATERIAL_INFO[m].label}</option>)}
                   </select>
                   <i className={`tier-dot ${TIER_STYLE[rule.tier].className}`} title={`${TIER_STYLE[rule.tier].label}: ${rule.evidence}`} />
                 </label>
               );
             })}
           </div>
-          <p className="microcopy">Disposição e materiais são hipóteses de projeto editáveis, não um habitat real.</p>
+          <p className="microcopy">Layout and materials are editable design assumptions, not a real habitat.</p>
         </section>
         <section className="control-section">
-          <div className="step-label"><span>03</span><h3>Foco de ignição</h3><MousePointer2 size={14} /></div>
-          <p className="preset-note">Clique em qualquer parede na cena. O foco é uma linha de 40 cm, como o fio de ignição do SAFFIRE I.</p>
+          <div className="step-label"><span>03</span><h3>Ignition location</h3><MousePointer2 size={14} /></div>
+          <p className="preset-note">Click any wall in the scene. Ignition is a 40 cm line, like the SAFFIRE I igniter wire.</p>
         </section>
       </aside>
 
       <div className="visualization-column">
         <div className="scene-container habitat-scene">
           <div className="scene-topbar">
-            <div className="scene-title"><i className="dot amber" /><span>HABITAT DE SUPERFÍCIE · MÓDULO 6,4 × Ø4 M</span></div>
+            <div className="scene-title"><i className="dot amber" /><span>SURFACE HABITAT · 6.4 × Ø4 M MODULE</span></div>
             <span className="scene-scale">3D · {gravityEnv.label.toUpperCase()} {gravityEnv.short} · {LEVEL_LABEL[level].toUpperCase()}{anchor ? ` · ${anchor.campaign} ${anchor.sample}` : ""}</span>
           </div>
           <div className="scene-canvas">
             <SceneBoundary>
-              <Suspense fallback={<div className="scene-loading"><LoaderCircle size={24} className="spin" /><span>Montando o módulo…</span></div>}>
+              <Suspense fallback={<div className="scene-loading"><LoaderCircle size={24} className="spin" /><span>Assembling the module…</span></div>}>
                 {model ? (
                   <HabitatScene material={grid.material} behavior={grid.behavior} ensemble={ensemble} step={step} run={run}
                     view={view} ignition={ignition} flow={flow} gravityG={conditions.gravityG} onIgnite={ignite} resetCameraKey={resetCameraKey} />
-                ) : <div className="scene-fallback" role="status"><p>{error ?? "Carregando o modelo calibrado…"}</p></div>}
+                ) : <div className="scene-fallback" role="status"><p>{error ?? "Loading the calibrated model…"}</p></div>}
               </Suspense>
             </SceneBoundary>
           </div>
           <div className="scene-left-tools">
-            <button className="tool-button" title="Restaurar câmera" aria-label="Restaurar câmera" onClick={() => setResetCameraKey((k) => k + 1)}><RotateCcw size={16} /></button>
+            <button className="tool-button" title="Reset camera" aria-label="Reset camera" onClick={() => setResetCameraKey((k) => k + 1)}><RotateCcw size={16} /></button>
           </div>
-          <div className="scene-overlay-controls view-toggle" role="group" aria-label="Modo de visualização">
-            <button className={view === "run" ? "active" : ""} onClick={() => setView("run")}>Uma realização</button>
-            <button className={view === "probability" ? "active" : ""} onClick={() => setView("probability")}>Probabilidade ({SEED_COUNT})</button>
+          <div className="scene-overlay-controls view-toggle" role="group" aria-label="View mode">
+            <button className={view === "run" ? "active" : ""} onClick={() => setView("run")}>One realization</button>
+            <button className={view === "probability" ? "active" : ""} onClick={() => setView("probability")}>Probability ({SEED_COUNT})</button>
           </div>
           {notice && <div className="habitat-notice" role="status">{notice}</div>}
-          {computing && <div className="habitat-computing"><LoaderCircle size={12} className="spin" /> calculando {SEED_COUNT} realizações</div>}
+          {computing && <div className="habitat-computing"><LoaderCircle size={12} className="spin" /> calculating {SEED_COUNT} realizations</div>}
           <div className="scene-bottom">
             <div className="scene-legend habitat-legend">
               {view === "run" ? <>
-                <span><i className="lg front" />frente</span>
-                <span><i className="lg char" />alcançado</span>
+                <span><i className="lg front" />front</span>
+                <span><i className="lg char" />reached</span>
               </> : <>
-                <span className="prob-ramp"><i /> P(alcançado até t) 0 → 1</span>
+                <span className="prob-ramp"><i /> P(reached by t) 0 → 1</span>
               </>}
-              <span><i className="lg unknown" />contato sem evidência</span>
-              <span><i className="lg measured" />contato: não propagou em ensaio</span>
-              <span><i className="lg flow" />ventilação</span>
+              <span><i className="lg unknown" />contact without evidence</span>
+              <span><i className="lg measured" />contact: no spread in trial</span>
+              <span><i className="lg flow" />ventilation</span>
             </div>
           </div>
         </div>
@@ -426,64 +427,64 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
         <section className="playback-panel">
           <div className="playback-header">
             <div>
-              <span className="eyebrow">PROPAGAÇÃO NA SUPERFÍCIE · TEMPO FÍSICO{scenarioName ? ` · ${scenarioName.toUpperCase()}` : ""}</span>
-              <h2>{view === "run" ? `Realização ${run + 1} de ${SEED_COUNT}` : `Probabilidade sobre ${SEED_COUNT} realizações`}</h2>
+              <span className="eyebrow">SURFACE SPREAD · PHYSICAL TIME{scenarioName ? ` · ${scenarioName.toUpperCase()}` : ""}</span>
+              <h2>{view === "run" ? `Realization ${run + 1} of ${SEED_COUNT}` : `Probability over ${SEED_COUNT} realizations`}</h2>
             </div>
             <span className={`illustrative-pill tier-pill ${LEVEL_STYLE[level]}`}><Info size={12} />{LEVEL_LABEL[level]}</span>
           </div>
           <div className="timeline">
-            <button className="play-button" aria-label={playing ? "Pausar" : "Reproduzir"} disabled={!ensemble}
+            <button className="play-button" aria-label={playing ? "Pause" : "Play"} disabled={!ensemble}
               onClick={() => { if (step >= STEPS) setStep(0); setPlaying((p) => !p); }}>
               {playing ? <Pause size={17} fill="currentColor" /> : <Play size={17} fill="currentColor" />}
             </button>
             <div className="timeline-track">
-              <input type="range" aria-label="Tempo desde a ignição imposta" min={0} max={STEPS} step={1} value={step}
+              <input type="range" aria-label="Time since imposed ignition" min={0} max={STEPS} step={1} value={step}
                 onChange={(e) => { setPlaying(false); setStep(Number(e.target.value)); }}
                 style={{ "--range-progress": `${(step / STEPS) * 100}%` } as React.CSSProperties} />
               <div className="timeline-ticks"><span>0</span><span>5 min</span><span>10 min</span><span>15 min</span><span>20 min</span></div>
             </div>
-            <div className="time-readout"><strong>{fmtTime(time)}</strong><span>desde a ignição · {speed}×</span></div>
-            <button className="speed-button" aria-label="Velocidade de reprodução" onClick={() => setSpeed((s) => SPEEDS[(SPEEDS.indexOf(s) + 1) % SPEEDS.length])}>{speed}×</button>
+            <div className="time-readout"><strong>{fmtTime(time)}</strong><span>since ignition · {speed}×</span></div>
+            <button className="speed-button" aria-label="Playback speed" onClick={() => setSpeed((s) => SPEEDS[(SPEEDS.indexOf(s) + 1) % SPEEDS.length])}>{speed}×</button>
           </div>
           <div className="playback-footer">
-            <p><Info size={12} />Passo de {CELL.stepSeconds} s e células de {CELL.alongMm} × {CELL.acrossMm} mm, a mesma grade da calibração.</p>
-            <button className="button secondary" onClick={exportScenario} disabled={!ensemble} title="Condições, zonas, foco, ensaio de referência, núcleo e resultados">
-              <ArrowDownToLine size={14} />Exportar
+            <p><Info size={12} />{CELL.stepSeconds} s steps and {CELL.alongMm} × {CELL.acrossMm} mm cells, the same grid used in calibration.</p>
+            <button className="button secondary" onClick={exportScenario} disabled={!ensemble} title="Conditions, zones, ignition, reference trial, kernel, and results">
+              <ArrowDownToLine size={14} />Export
             </button>
-            <button className="button secondary" onClick={() => importRef.current?.click()} title="Reimporta uma exportação e verifica se o resultado se reproduz">
-              <ArrowUpFromLine size={14} />Importar
+            <button className="button secondary" onClick={() => importRef.current?.click()} title="Reimport an export and check whether the result is reproduced">
+              <ArrowUpFromLine size={14} />Import
             </button>
             <input ref={importRef} type="file" accept="application/json,.json" hidden
               onChange={(e) => { const f = e.target.files?.[0]; if (f) void importScenario(f); e.target.value = ""; }} />
             <button className="button primary" disabled={!ensemble} onClick={() => { setRun((r) => (r + 1) % SEED_COUNT); setView("run"); setStep(0); setPlaying(true); }}>
-              <Flame size={15} />Outra realização<ArrowRight size={15} />
+              <Flame size={15} />Another realization<ArrowRight size={15} />
             </button>
           </div>
         </section>
-        {model && <Alternatives current={currentInputs} onLoad={(i, name) => { loadInputs(i, name); setNotice(`${name} aberta para edição. Use “Atualizar” na lista para salvar mudanças.`); }}
+        {model && <Alternatives current={currentInputs} onLoad={(i, name) => { loadInputs(i, name); setNotice(`${name} opened for editing. Use “Update” in the list to save changes.`); }}
           registry={registry} anchorKernels={anchorKernels} second={second} ready={!!kernel} />}
       </div>
 
-      <aside className="evidence-panel model-panel habitat-panel" aria-label="Leitura científica">
-        <div className="panel-title"><BookOpen size={15} /><h2>Leitura do cenário</h2>
+      <aside className="evidence-panel model-panel habitat-panel" aria-label="Scientific interpretation">
+        <div className="panel-title"><BookOpen size={15} /><h2>Scenario interpretation</h2>
           <span className={`model-badge ${LEVEL_STYLE[level]}`}>{LEVEL_LABEL[level]}</span></div>
         <div className="model-panel-body">
           {replay && (
             <section className={`replay-card ${replay.status}`} role="status">
               <strong>
-                {replay.status === "pending" ? "Reproduzindo o cenário importado…"
-                  : replay.status === "identical" ? "Reprodução idêntica"
-                  : replay.status === "different" ? "Resultado diferente do exportado"
-                  : replay.status === "rejected" ? "Arquivo rejeitado"
-                  : "Reprodução não exata"}
+                {replay.status === "pending" ? "Replaying the imported scenario…"
+                  : replay.status === "identical" ? "Identical replay"
+                  : replay.status === "different" ? "Result differs from export"
+                  : replay.status === "rejected" ? "File rejected"
+                  : "Non-exact replay"}
               </strong>
-              <p>Cenário {replay.scenarioId}. {replay.status === "identical" ? "Mesmo código, mesmos bytes dos artefatos e mesmas sementes: o campo de chegada e contato de todas as realizações é idêntico (sha256)."
-                : replay.status === "different" ? "Mesmas dependências, mas o campo de chegada recalculado difere do exportado."
-                : replay.status === "not-exact" ? "Estado restaurado, mas as dependências não são as mesmas; o resultado não é comparado como reprodução exata."
-                : replay.status === "rejected" ? "Entradas inválidas ou incompletas: nada foi alterado no cenário atual."
-                : "Aguardando o cálculo das realizações."}</p>
+              <p>Scenario {replay.scenarioId}. {replay.status === "identical" ? "Same code, identical artifact bytes, and the same seeds: the arrival and contact fields for all realizations are identical (sha256)."
+                : replay.status === "different" ? "Same dependencies, but the recalculated arrival field differs from the exported field."
+                : replay.status === "not-exact" ? "State restored, but dependencies differ; the result is not compared as an exact replay."
+                : replay.status === "rejected" ? "Invalid or incomplete inputs: nothing was changed in the current scenario."
+                : "Waiting for the realizations to finish calculating."}</p>
               {replay.issues.length > 0 && <ul>{replay.issues.map((i) => <li key={i}>{i}</li>)}</ul>}
-              <button className="text-link subtle" onClick={() => setReplay(null)}>Fechar</button>
+              <button className="text-link subtle" onClick={() => setReplay(null)}>Close</button>
             </section>
           )}
           {anchor && <ModelInUse anchor={anchor} level={level} diffs={diffs} kernel={anchorKernels[anchor.id]}
@@ -492,14 +493,14 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
             onSelect={(id: string) => { setAnchorChoice(id); restart(); }} registrySource={registry.generatedBy} />
           <section className="habitat-kpis">
             <div>
-              <span>Área alcançada em {fmtTime(time)}</span>
+              <span>Area reached at {fmtTime(time)}</span>
               <strong>{areaNow ? num(areaNow.median, 2) : "—"} <small>m²</small></strong>
-              <em>{areaNow ? `${num(areaNow.min, 2)}–${num(areaNow.max, 2)} m² entre ${SEED_COUNT} realizações` : "calculando…"}</em>
+              <em>{areaNow ? `${num(areaNow.min, 2)}–${num(areaNow.max, 2)} m² across ${SEED_COUNT} realizations` : "calculating…"}</em>
             </div>
             <div>
-              <span>Velocidade da frente · {LEVEL_LABEL[level].toLowerCase()}</span>
+              <span>Front speed · {LEVEL_LABEL[level].toLowerCase()}</span>
               <strong>{metrics ? num(metrics.speedMmS, 2) : "—"} <small>mm/s</small></strong>
-              <em>mediana entre faixas da linha de ignição, como nos ensaios</em>
+              <em>median across ignition-line strips, as in the trials</em>
             </div>
           </section>
           {metrics && <AreaChart curves={metrics.area} step={step} />}
@@ -507,7 +508,7 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
           {second && <CrossTrial second={second} />}
 
           <section>
-            <h3 className="model-h">Até onde o fogo chega</h3>
+            <h3 className="model-h">How far the fire reaches</h3>
             <ul className="reach-list">
               {zones.map((zone, z) => {
                 const events = metrics?.zoneEvents[z] ?? [];
@@ -515,37 +516,38 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
                 const all = events.filter((e) => e >= 0).map((e) => e * CELL.stepSeconds).sort((a, b) => a - b);
                 const rule = tiers[z].rule;
                 const kind = rule.behavior === 1 ? "chegada" : rule.behavior === 0 ? "" : "contato";
+                const kindLabel = kind === "chegada" ? "arrival" : kind === "contato" ? "contact" : "";
                 return (
                   <li key={zone.id} className={TIER_STYLE[rule.tier].className}>
                     <span className="reach-zone">{zone.name}<small>{MATERIAL_INFO[zone.material].label}</small></span>
-                    {rule.behavior === 0 ? <span className="reach-value muted">inerte</span> : (
+                    {rule.behavior === 0 ? <span className="reach-value muted">inert</span> : (
                       <span className="reach-value">
                         <strong>{num((happened / SEED_COUNT) * 100, 0)}%</strong>
-                        <small>{all.length ? `${kind} em ${fmtTime(all[all.length >> 1])} (mediana)` : `sem ${kind} em ${DURATION_S / 60} min`}</small>
+                        <small>{all.length ? `${kindLabel} at ${fmtTime(all[all.length >> 1])} (median)` : `no ${kindLabel} within ${DURATION_S / 60} min`}</small>
                       </span>
                     )}
                   </li>
                 );
               })}
             </ul>
-            <p className="model-caption">Porcentagem de realizações em que o evento já ocorreu no instante atual. "Contato" significa que a frente chegou a um material que não propaga no modelo; a simulação para ali.</p>
+            <p className="model-caption">Percentage of realizations in which the event has already occurred at the current time. "Contact" means the front reached a material that does not propagate in the model; the simulation stops there.</p>
           </section>
 
           <section>
-            <h3 className="model-h">Evidência por material</h3>
+            <h3 className="model-h">Evidence by material</h3>
             <ul className="evidence-list">
               {[...new Map(zones.map((z) => [z.material, z])).values()].map((zone) => {
                 const base = materialRule(zone.material, conditions);
                 const rule = zone.material === "SIBAL" && anchor && anchorKernels[anchor.id]
                   ? { ...base, tier: (level === "extrapolation" ? "exploratory" : "calibrated") as Tier, title: LEVEL_LABEL[level],
-                      evidence: `${anchorKernels[anchor.id].description} Ensaio de referência: ${anchor.campaign} ${anchor.sample}.` }
+                      evidence: `${anchorKernels[anchor.id].description} Reference trial: ${anchor.campaign} ${anchor.sample}.` }
                   : base;
                 const Icon = rule.tier === "calibrated" ? CheckCircle2 : rule.tier === "unknown" ? HelpCircle : rule.tier === "inert" ? CircleSlash : AlertTriangle;
                 return (
                   <li key={zone.material} className={TIER_STYLE[rule.tier].className}>
                     <Icon size={14} />
                     <div>
-                      <strong>{zone.material} · {rule.title}</strong>
+                      <strong>{MATERIAL_INFO[zone.material].label} · {rule.title}</strong>
                       <p>{rule.evidence}</p>
                       {rule.bias && <p className="bias">{rule.bias}</p>}
                     </div>
@@ -559,8 +561,8 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
             <div className="gravity-callout" role="note">
               <AlertTriangle size={15} />
               <div>
-                <strong>{gravityEnv.label}: nenhum ensaio de propagação no PSI.</strong>
-                <p>Em gravidade parcial o empuxo volta a induzir escoamento. Ensaios em centrífuga (ICES-2025-392) mostram efeito dependente do material: alguns ficam mais inflamáveis que em 1 g (o SIBAL queima para baixo em 1/6 g e se extingue em 1 g), materiais de maior temperatura de pirólise podem ficar menos. Não há multiplicador lunar universal; esta simulação não aplica correção de gravidade. O FM² vai medir na Lua.</p>
+                <strong>{gravityEnv.label}: no spread trial in PSI.</strong>
+                <p>In partial gravity, buoyancy again induces flow. Centrifuge tests (ICES-2025-392) show a material-dependent effect: some become more flammable than at 1 g (SIBAL burns downward at 1/6 g and extinguishes at 1 g); materials with higher pyrolysis temperatures may become less flammable. There is no universal lunar multiplier; this simulation applies no gravity correction. FM² will measure on the Moon.</p>
                 <span className="gravity-links">
                   <a href={PARTIAL_GRAVITY_SOURCES.fm2} target="_blank" rel="noreferrer">FM² · NASA</a>
                   <a href={PARTIAL_GRAVITY_SOURCES.luci} target="_blank" rel="noreferrer">LUCI · NTRS</a>
@@ -571,19 +573,19 @@ export function HabitatLab({ modeSwitch, onOpenCalibration, requestedAnchor = nu
           )}
 
           <section>
-            <h3 className="model-h">Premissas do modelo</h3>
+            <h3 className="model-h">Model assumptions</h3>
             <ul className="assumptions">
-              <li>{anchor && anchorKernels[anchor.id] ? anchorKernels[anchor.id].description : "Regra de vizinhança do SAFFIRE I."} Grade original de 10 × 20 mm e passo de 2 s.</li>
+              <li>{anchor && anchorKernels[anchor.id] ? anchorKernels[anchor.id].description : "SAFFIRE I neighborhood rule."} Original 10 × 20 mm grid and 2 s time step.</li>
               <li>{kernel?.flowRule}</li>
-              <li>O₂, pressão e gravidade do cenário não corrigem o núcleo: qualquer diferença em relação ao ensaio de referência torna o resultado uma extrapolação.</li>
-              <li>O avanço ocorre a jusante da ventilação e lateralmente. Propagação contra o escoamento não entra no habitat (amostras S2 em revisão).</li>
-              <li>Zonas contíguas do mesmo material são tratadas como uma folha contínua; não há transferência por radiação entre superfícies separadas.</li>
-              <li>Não modela fumaça, CO, calor liberado, detecção ou supressão. A faixa entre realizações é a variabilidade do próprio modelo, não incerteza experimental.</li>
+              <li>Scenario O₂, pressure, and gravity do not correct the kernel: any difference from the reference trial makes the result an extrapolation.</li>
+              <li>Spread occurs downstream of ventilation and laterally. Opposed-flow spread is not included in the habitat (S2 samples under review).</li>
+              <li>Adjacent zones of the same material are treated as a continuous sheet; there is no radiative transfer between separate surfaces.</li>
+              <li>Does not model smoke, CO, heat release, detection, or suppression. The range across realizations is the model's own variability, not experimental uncertainty.</li>
             </ul>
           </section>
 
           <button className="button secondary calibration-link" onClick={onOpenCalibration}>
-            Ver a calibração no ensaio SAFFIRE I · S1 <ArrowRight size={14} />
+            View calibration on the SAFFIRE I · S1 trial <ArrowRight size={14} />
           </button>
         </div>
       </aside>
@@ -606,15 +608,15 @@ function Range({ label, unit, value, min, max, step, onChange }: { label: string
 function CrossTrial({ second }: { second: CrossTrial }) {
   const observed = second.observed.speedMmS;
   const rows = [
-    { label: "SAFFIRE I, sem ajuste", value: second.prediction.unscaledSpeedMmS },
-    { label: "SAFFIRE I, escala linear", value: second.prediction.linearFlowSpeedMmS },
-    { label: "Observado no SAFFIRE-III", value: observed, observed: true },
+    { label: "SAFFIRE I, unscaled", value: second.prediction.unscaledSpeedMmS },
+    { label: "SAFFIRE I, linear scaling", value: second.prediction.linearFlowSpeedMmS },
+    { label: "Observed in SAFFIRE III", value: observed, observed: true },
   ];
   const max = Math.max(...rows.map((r) => r.value)) * 1.08;
   return (
     <section className="cross-trial">
-      <h3 className="model-h">Comparação entre ensaios <span className="model-badge">retrospectiva</span></h3>
-      <p className="model-caption">O núcleo original do SAFFIRE I (20 cm/s), sem dados do III, previu a velocidade da frente no SAFFIRE-III (25 cm/s, mesmo tecido). Depois o III entrou na calibração do habitat; por isso esta comparação não é teste externo do modelo final.</p>
+      <h3 className="model-h">Cross-trial comparison <span className="model-badge">retrospective</span></h3>
+      <p className="model-caption">The original SAFFIRE I kernel (20 cm/s), without III data, predicted front speed in SAFFIRE III (25 cm/s, same fabric). III was later included in habitat calibration, so this comparison is not an external test of the final model.</p>
       <div className="ct-bars">
         {rows.map((row) => (
           <div key={row.label} className={`ct-row ${row.observed ? "observed" : ""}`}>
@@ -625,8 +627,8 @@ function CrossTrial({ second }: { second: CrossTrial }) {
         ))}
       </div>
       <p className="model-caption">
-        Medido: {num(second.comparisonWithSaffireI.saffireIObservedSpeedMmS, 2)} mm/s a 20 cm/s e {num(observed, 2)} mm/s a 25 cm/s (erro padrão OLS iid {num(second.observed.standardErrorMmS, 3)}, ignora autocorrelação) (câmera 1; 2,43 mm/s com as duas câmeras),
-        v ∝ u<sup>{num(second.comparisonWithSaffireI.beta, 2)}</sup>. A simulação usa esse expoente, não a hipótese linear. Dois ensaios não fixam a forma da curva; espessura (0,33 × 0,37 mm) e O₂ (21,2 × 21,6%) não são idênticos; a tabela PSI registra 30 cm/s, o artigo da equipe 25 cm/s.
+        Measured: {num(second.comparisonWithSaffireI.saffireIObservedSpeedMmS, 2)} mm/s at 20 cm/s and {num(observed, 2)} mm/s at 25 cm/s (iid OLS standard error {num(second.observed.standardErrorMmS, 3)}, ignores autocorrelation) (camera 1; 2.43 mm/s with both cameras),
+        v ∝ u<sup>{num(second.comparisonWithSaffireI.beta, 2)}</sup>. The simulation uses this exponent, not the linear hypothesis. Two trials do not determine the curve shape; thickness (0.33 × 0.37 mm) and O₂ (21.2 × 21.6%) are not identical; the PSI table lists 30 cm/s, the team's paper 25 cm/s.
       </p>
     </section>
   );
@@ -648,13 +650,13 @@ function AreaChart({ curves, step }: { curves: Float32Array[]; step: number }) {
   const band = `M${points.map((p) => `${x(p.t)},${y(p.max)}`).join("L")}L${[...points].reverse().map((p) => `${x(p.t)},${y(p.min)}`).join("L")}Z`;
   const line = points.map((p, i) => `${i ? "L" : "M"}${x(p.t)},${y(p.med)}`).join("");
   return (
-    <svg className="front-chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Área alcançada ao longo do tempo, mediana e faixa entre realizações">
+    <svg className="front-chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Area reached over time, median and range across realizations">
       {[0, 0.5, 1].map((f) => <g key={f}><line x1={L} x2={W - R} y1={y(yMax * f)} y2={y(yMax * f)} className="fc-grid" /><text x={L - 4} y={y(yMax * f) + 3} className="fc-tick" textAnchor="end">{num(yMax * f, 1)}</text></g>)}
       {[0, 0.25, 0.5, 0.75, 1].map((f) => <text key={f} x={x(steps * f)} y={H - 5} className="fc-tick" textAnchor="middle">{num((steps * f * CELL.stepSeconds) / 60, 0)}′</text>)}
       <path d={band} className="fc-band" />
       <path d={line} className="fc-sim" />
       <line x1={x(step)} x2={x(step)} y1={T} y2={H - B} className="fc-now" />
-      <text x={L + 4} y={T + 9} className="fc-label">área alcançada (m²)</text>
+      <text x={L + 4} y={T + 9} className="fc-label">area reached (m²)</text>
     </svg>
   );
 }
