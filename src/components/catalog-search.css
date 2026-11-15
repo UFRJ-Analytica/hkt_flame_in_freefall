@@ -1,0 +1,26 @@
+.catalog-search { margin: 0 0 16px; padding: 14px 16px; border: 1px solid #f4a46744; border-radius: 12px; background: linear-gradient(160deg, #f4a4670d, #ffffff03); display: grid; gap: 9px; }
+.catalog-search form { display: flex; gap: 8px; align-items: center; }
+.catalog-search .cs-mark { color: #f4a467; flex-shrink: 0; }
+.catalog-search input { flex: 1; min-width: 0; background: #0e1218; color: var(--text); border: 1px solid var(--line-strong); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; }
+.catalog-search input:focus { outline: none; border-color: #f4a467aa; }
+.catalog-search form .button { white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
+.cs-note { margin: 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }
+.cs-note b { color: #f2c9a4; font-weight: 600; }
+.cs-note i { color: var(--text); font-style: normal; text-decoration: underline; text-decoration-color: #f4a46788; }
+.cs-mode { font-family: var(--mono); font-size: 10.5px; color: #a6e3c4; }
+.cs-examples { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 11.5px; color: var(--faint); }
+.cs-examples button { font-size: 11.5px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--line-strong); background: transparent; color: var(--muted); cursor: pointer; }
+.cs-examples button:hover { color: var(--text); border-color: #f4a46788; }
+.cs-error { margin: 0; font-size: 12px; color: var(--warn); }
+.cs-results { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.cs-results li > button { width: 100%; height: 100%; text-align: left; display: grid; gap: 7px; align-content: start; padding: 11px 12px; border: 1px solid var(--line); border-radius: 9px; background: #0f141b; color: inherit; cursor: pointer; }
+.cs-results li > button:hover { border-color: #f4a46788; background: #f4a4670a; }
+.cs-head { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.cs-head strong { font-size: 12.5px; color: #eef1f4; font-weight: 550; flex: 1 1 100%; }
+.cs-head small { font: 10.5px var(--mono); color: var(--faint); }
+.cs-badge { font-style: normal; font-size: 9.5px; padding: 1px 7px; border-radius: 10px; color: #a6e3c4; background: #8ec9ac1f; }
+.cs-text { font-size: 11.5px; line-height: 1.5; color: #b9c3ce; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.cs-text mark { background: #f4a46733; color: #fff1e4; border-radius: 3px; padding: 0 2px; }
+.cs-open { font-size: 11px; color: #f2c9a4; display: inline-flex; gap: 4px; align-items: center; }
+.cs-empty { font-size: 12px; color: var(--muted); }
+@media (max-width: 650px) { .catalog-search form { flex-wrap: wrap; } .catalog-search form .button { width: 100%; justify-content: center; } }

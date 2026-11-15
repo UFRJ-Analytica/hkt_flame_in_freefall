@@ -18,6 +18,7 @@ import type { ExperimentTest, Investigation, NasaData } from "../types";
 import { CATEGORY_LABELS, number } from "../config";
 import { useModalFocus } from "../hooks/useModalFocus";
 import { RecordVideos } from "./research/RecordVideos";
+import { CatalogSearch } from "./CatalogSearch";
 import { englishText } from "../i18n/english";
 import { SAME_INVESTIGATION_ID } from "./research/sameSmoke";
 import { SIPanel } from "../si/SIPanel";
@@ -139,6 +140,7 @@ export function ExperimentExplorer({
             title="SI · catalog assistant"
             intro="Ask about the 24 PSI combustion investigations and their 2,001 records. SI reads investigation metadata, queries records and opens the investigation it is talking about."
             suggestions={[
+              "Which experiments should I pull to analyze flame spread over cabin fabrics at elevated oxygen?",
               "Which investigations tested Kapton, and under what oxygen levels?",
               "What does BASS-II record for each test, and which columns matter for modeling?",
               "Which investigations have no public data table, and why does that matter?",
@@ -149,6 +151,7 @@ export function ExperimentExplorer({
           />
         </aside>
       )}
+      <CatalogSearch onOpen={(id) => { openInvestigation(id); requestAnimationFrame(() => document.querySelector(".explorer-layout")?.scrollIntoView({ behavior: "smooth", block: "start" })); }} />
       <div className="category-filters">
         <SlidersHorizontal size={15} />
         <button

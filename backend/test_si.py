@@ -4,7 +4,9 @@ import unittest
 from unittest.mock import patch
 
 from backend.research import ResearchService
-from backend.si import RateLimiter, ScienceIntelligence, validate
+import tempfile
+
+from backend.si import AnswerCache, RateLimiter, ScienceIntelligence, validate
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -80,6 +82,24 @@ class SIChecks(unittest.TestCase):
         state = self.state()
         state["outputs"].append('{"pressureKpa": 71.8693}')
         self.assertEqual(self.si.audit("Pressure was 71.87 kPa.", "q", state)["unverifiedNumbers"], [])
+
+    def test_answer_cache_replays_only_clean_answers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = AnswerCache(tmp)
+            request = validate({"question": "Which  tests burned SIBAL?", "stage": "identify", "environment": "lunar-habitat"})
+            same = validate({"question": "which tests burned sibal?", "stage": "identify", "environment": "lunar-habitat"})
+            other = validate({"question": "which tests burned sibal?", "stage": "catalog"})
+            key = cache.key(request, "v1")
+            self.assertEqual(key, cache.key(same, "v1"))
+            self.assertNotEqual(key, cache.key(other, "v1"))
+            self.assertNotEqual(key, cache.key(request, "v2"))
+            cache.put(key, "q", [{"type": "text", "delta": "x"}, {"type": "error", "message": "boom"}])
+            self.assertIsNone(cache.get(key))
+            events = [{"type": "step", "label": "s"}, {"type": "text", "delta": "Hello"}, {"type": "done", "cited": []}]
+            cache.put(key, "q", events)
+            replayed = []
+            cache.replay(cache.get(key), replayed.append, sleep=lambda _: None)
+            self.assertEqual(replayed, events)
 
     def test_rate_limiter(self):
         limiter = RateLimiter(limit=2, window=60)

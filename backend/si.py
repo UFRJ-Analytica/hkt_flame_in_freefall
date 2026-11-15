@@ -11,6 +11,7 @@ search as it happens instead of waiting for the whole answer.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -18,6 +19,7 @@ import re
 import threading
 import time
 from collections import defaultdict, deque
+from pathlib import Path
 
 from backend.research import canonical_material, fold
 
@@ -162,11 +164,60 @@ def validate(payload):
     return {"question": question, "stage": stage, "history": history, "environment": environment, "facets": facets, "investigation": selected}
 
 
+class AnswerCache:
+    """Completed SI answers, replayed for the same question on the same page and corpus.
+
+    An answer is stored only when it finished cleanly (no error, refusal or cut-off), so a hit
+    returns exactly what SI produced earlier, with its audit. Saves latency and API cost for the
+    suggested questions that most visitors click."""
+
+    PACE = {"step": 0.35, "ranking": 0.25, "action": 0.25, "text": 0.012}
+
+    def __init__(self, directory, max_entries=400):
+        self.dir = Path(directory)
+        self.max_entries = max_entries
+
+    @staticmethod
+    def key(request, corpus_version):
+        norm = re.sub(r"\s+", " ", request["question"].strip().lower())
+        body = {"q": norm, "stage": request["stage"], "env": request["environment"], "inv": request["investigation"],
+                "facets": {k: sorted(v) for k, v in request["facets"].items()}, "history": request["history"],
+                "corpus": corpus_version, "model": MODEL}
+        return hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:32]
+
+    def get(self, key):
+        try:
+            data = json.loads((self.dir / f"{key}.json").read_text(encoding="utf-8"))
+            return data["events"] if isinstance(data.get("events"), list) else None
+        except (OSError, ValueError, KeyError):
+            return None
+
+    def put(self, key, question, events):
+        if not events or events[-1].get("type") != "done" or any(e.get("type") in {"error", "notice"} for e in events):
+            return
+        try:
+            self.dir.mkdir(parents=True, exist_ok=True)
+            files = sorted(self.dir.glob("*.json"), key=lambda f: f.stat().st_mtime)
+            for old in files[: max(0, len(files) - self.max_entries + 1)]:
+                old.unlink(missing_ok=True)
+            tmp = self.dir / f"{key}.tmp"
+            tmp.write_text(json.dumps({"question": question, "savedAt": time.time(), "events": events}, ensure_ascii=False), encoding="utf-8")
+            tmp.replace(self.dir / f"{key}.json")
+        except OSError:
+            pass
+
+    def replay(self, events, emit, sleep=time.sleep):
+        for event in events:
+            sleep(self.PACE.get(event.get("type"), 0))
+            emit(event)
+
+
 class ScienceIntelligence:
-    def __init__(self, service, provider):
+    def __init__(self, service, provider, cache_dir=None):
         self.service = service
         self.provider = provider
         self.limiter = RateLimiter()
+        self.cache = AnswerCache(cache_dir or os.environ.get("HABITATFIRE_SI_CACHE") or Path(__file__).resolve().parents[1] / "data" / "cache" / "si")
         self._client = None
         self.investigations = {row["id"]: row for row in service.investigations}
 
@@ -312,8 +363,23 @@ class ScienceIntelligence:
     # ---- loop ----------------------------------------------------------
     def ask(self, payload, emit):
         request = validate(payload)
+        key = self.cache.key(request, getattr(self.service, "corpus_version", ""))
+        cached = self.cache.get(key)
+        if cached:
+            self.cache.replay(cached, emit)
+            return
         if not self.configured:
             raise RuntimeError("SI is not configured on this server.")
+        events = []
+
+        def record(event):
+            events.append(event)
+            emit(event)
+
+        self._ask_live(request, record)
+        self.cache.put(key, request["question"], events)
+
+    def _ask_live(self, request, emit):
         import anthropic
 
         state = {"stage": request["stage"], "environment": request["environment"], "facets": request["facets"], "sources": {}, "records": set(), "retrieval": None, "outputs": []}
