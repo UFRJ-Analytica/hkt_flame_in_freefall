@@ -1,0 +1,4795 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/build_specialist_workspace.py",
+  "analysisCode": {
+    "path": "scripts/build_specialist_workspace.py",
+    "sha256": "205793d7eab552ecc65815293529aa0eb34e38617fc36665f03e50e72849954d",
+    "hashConvention": "UTF-8 source bytes; CRLF normalized to LF"
+  },
+  "registry": {
+    "path": "public/data/saffire/trial-registry.json",
+    "sha256": "6bb38690668fac890942399ddfe3d4ee04f229322f6f96b5c799c19e8e715691"
+  },
+  "artifacts": [
+    {
+      "path": "public/data/saffire/crosstrial-i-iii.json",
+      "sha256": "eeae838323cb8731218351ac072a1bbc230e873d1b9e161f8dbd7dcf60d94bdc"
+    },
+    {
+      "path": "public/data/saffire/psi-100-s1-neighbors.json",
+      "sha256": "fc5cce59f0c122ff834515e70ee2f00f9fc9ce22e0aba64bdfcb7bfa5c572e97"
+    },
+    {
+      "path": "public/data/saffire/psi-100-s2-neighbors.json",
+      "sha256": "6582f3f4f91250c332f9ea352ae8a0954354df97fb9ca9d00d1bad9ed4900b03"
+    },
+    {
+      "path": "public/data/saffire/psi-98-s1-neighbors.json",
+      "sha256": "ef2511736924bfe9025e552694df631b962e367f9949b7a93bf2c51d15f11fe8"
+    },
+    {
+      "path": "public/data/saffire/psi-98-s2-neighbors.json",
+      "sha256": "4c614561f45fab7d2e3c9197db4b9df785b9cfbf7268e005a3cf1eb0a68b6c50"
+    },
+    {
+      "path": "public/data/saffire/psi-99-ii5.json",
+      "sha256": "e0f5c8f82cd85c4385f7eef611f0746ee6633757bc597eae3641e31e2c81481e"
+    },
+    {
+      "path": "public/data/saffire/psi-99-ii6.json",
+      "sha256": "ff96f346cac0f2950b46b7987a2419d1ec78c6464ce4566e9036c5ae3f7a3564"
+    },
+    {
+      "path": "public/data/saffire/saffire-iv-1.json",
+      "sha256": "76b4bf79c54721ec82fafb49f02f116bedc1b76c941a9b714801e9382e3f8090"
+    },
+    {
+      "path": "public/data/saffire/saffire-v-2.json",
+      "sha256": "5cc42f6b68fdf5a1b42af722eab8831005f8bb945787d657cfb6b0b6d2b2e729"
+    },
+    {
+      "path": "public/data/saffire/saffire-vi-2.json",
+      "sha256": "cb3199ee11c147a68bfcc6235b4062ce41a0b0b85e47065387b98c42d2600c65"
+    },
+    {
+      "path": "public/data/saffire/trial-registry.json",
+      "sha256": "6bb38690668fac890942399ddfe3d4ee04f229322f6f96b5c799c19e8e715691"
+    }
+  ],
+  "trials": [
+    {
+      "id": "SAFFIRE-I-S1",
+      "campaign": "SAFFIRE I",
+      "sample": "S1",
+      "investigation": "PSI-98",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": null,
+        "oxygenRangePct": [
+          21.5,
+          21.7
+        ],
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenRangePct",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/oxygenPct",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowCmS",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "public/data/saffire/psi-98-s1-neighbors.json, conditions/flowDirection",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-98-s1-neighbors.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.9502572898799264,
+          "window": "Trecho reservado do mesmo ensaio; S1C1/S1C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+          },
+          "artifact": "public/data/saffire/psi-98-s1-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-98-s1-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "ef2511736924bfe9025e552694df631b962e367f9949b7a93bf2c51d15f11fe8"
+      },
+      "conflicts": [],
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
+        "oxygenPct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": true,
+          "pairedTrajectory": true,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 1.9502572898799264,
+          "simulatedMmS": 1.8447255574614023,
+          "signedErrorPct": -5.411169744942805,
+          "absoluteErrorMmS": 0.1055317324185241,
+          "positionMaeReportedMm": 14.517683465959328,
+          "sourceField": "contiguousValidation"
+        },
+        "trajectory": {
+          "status": "available",
+          "observableKind": "char-front",
+          "modelKind": "image-longitudinal",
+          "relationToRegisteredModel": "baseline-not-registered-model",
+          "timeOrigin": "relative-validation-window-start",
+          "sourceFields": [
+            "public/data/saffire/psi-98-s1-neighbors.json#/validation/trajectory"
+          ],
+          "points": [
+            {
+              "timeS": 0,
+              "observedMm": 610.0,
+              "simulatedMm": 610.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 2,
+              "observedMm": 610.0,
+              "simulatedMm": 610.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 4,
+              "observedMm": 620.0,
+              "simulatedMm": 610.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 6,
+              "observedMm": 620.0,
+              "simulatedMm": 610.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 8,
+              "observedMm": 620.0,
+              "simulatedMm": 620.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 10,
+              "observedMm": 630.0,
+              "simulatedMm": 620.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 12,
+              "observedMm": 630.0,
+              "simulatedMm": 620.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 14,
+              "observedMm": 630.0,
+              "simulatedMm": 630.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 16,
+              "observedMm": 640.0,
+              "simulatedMm": 630.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 18,
+              "observedMm": 640.0,
+              "simulatedMm": 630.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 20,
+              "observedMm": 640.0,
+              "simulatedMm": 630.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 22,
+              "observedMm": 650.0,
+              "simulatedMm": 640.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 24,
+              "observedMm": 650.0,
+              "simulatedMm": 640.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 26,
+              "observedMm": 660.0,
+              "simulatedMm": 650.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 28,
+              "observedMm": 660.0,
+              "simulatedMm": 650.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 30,
+              "observedMm": 660.0,
+              "simulatedMm": 660.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 32,
+              "observedMm": 670.0,
+              "simulatedMm": 660.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 34,
+              "observedMm": 670.0,
+              "simulatedMm": 670.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 36,
+              "observedMm": 680.0,
+              "simulatedMm": 680.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 38,
+              "observedMm": 680.0,
+              "simulatedMm": 690.0,
+              "residualMm": 10.0
+            },
+            {
+              "timeS": 40,
+              "observedMm": 680.0,
+              "simulatedMm": 690.0,
+              "residualMm": 10.0
+            },
+            {
+              "timeS": 42,
+              "observedMm": 690.0,
+              "simulatedMm": 690.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 44,
+              "observedMm": 690.0,
+              "simulatedMm": 690.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 46,
+              "observedMm": 690.0,
+              "simulatedMm": 690.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 48,
+              "observedMm": 700.0,
+              "simulatedMm": 690.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 50,
+              "observedMm": 700.0,
+              "simulatedMm": 700.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 52,
+              "observedMm": 710.0,
+              "simulatedMm": 700.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 54,
+              "observedMm": 710.0,
+              "simulatedMm": 700.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 56,
+              "observedMm": 720.0,
+              "simulatedMm": 710.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 58,
+              "observedMm": 720.0,
+              "simulatedMm": 710.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 60,
+              "observedMm": 730.0,
+              "simulatedMm": 720.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 62,
+              "observedMm": 730.0,
+              "simulatedMm": 720.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 64,
+              "observedMm": 730.0,
+              "simulatedMm": 720.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 66,
+              "observedMm": 740.0,
+              "simulatedMm": 730.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 68,
+              "observedMm": 740.0,
+              "simulatedMm": 730.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 70,
+              "observedMm": 740.0,
+              "simulatedMm": 730.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 72,
+              "observedMm": 750.0,
+              "simulatedMm": 740.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 74,
+              "observedMm": 750.0,
+              "simulatedMm": 750.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 76,
+              "observedMm": 750.0,
+              "simulatedMm": 750.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 78,
+              "observedMm": 760.0,
+              "simulatedMm": 750.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 80,
+              "observedMm": 760.0,
+              "simulatedMm": 750.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 82,
+              "observedMm": 770.0,
+              "simulatedMm": 755.0,
+              "residualMm": -15.0
+            },
+            {
+              "timeS": 84,
+              "observedMm": 770.0,
+              "simulatedMm": 760.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 86,
+              "observedMm": 770.0,
+              "simulatedMm": 760.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 88,
+              "observedMm": 780.0,
+              "simulatedMm": 760.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 90,
+              "observedMm": 780.0,
+              "simulatedMm": 760.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 92,
+              "observedMm": 790.0,
+              "simulatedMm": 770.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 94,
+              "observedMm": 790.0,
+              "simulatedMm": 770.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 96,
+              "observedMm": 790.0,
+              "simulatedMm": 770.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 98,
+              "observedMm": 800.0,
+              "simulatedMm": 780.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 100,
+              "observedMm": 800.0,
+              "simulatedMm": 790.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 102,
+              "observedMm": 810.0,
+              "simulatedMm": 790.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 104,
+              "observedMm": 810.0,
+              "simulatedMm": 800.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 106,
+              "observedMm": 810.0,
+              "simulatedMm": 800.0,
+              "residualMm": -10.0
+            }
+          ],
+          "metrics": {
+            "pointCount": 54,
+            "pairedPointCount": 54,
+            "timeSpanS": 106,
+            "positionMaeMm": 8.981481481481481,
+            "positionRmseMm": 10.822644299321198,
+            "positionBiasMm": -8.24074074074074,
+            "observedOlsSpeedMmS": 1.9502572898799313,
+            "simulatedOlsSpeedMmS": 1.837335620354488,
+            "note": "Diagnósticos da curva armazenada; não equivalem ao MAE espacial entre faixas nem a incerteza experimental."
+          },
+          "note": "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        },
+        "missingData": [
+          "pressureKpa",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-I-S2",
+      "campaign": "SAFFIRE I",
+      "sample": "S2",
+      "investigation": "PSI-98",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 21.5,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "opposed",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "modeling-targets.json, PSI-98:S2/oxygenPct",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "modeling-targets.json, PSI-98:S2/flowCmS",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-98, amostra S2, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.9999999999999998,
+          "window": "Trecho reservado do mesmo ensaio; S2C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+          },
+          "artifact": "public/data/saffire/psi-98-s2-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-98-s2-neighbors.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "4c614561f45fab7d2e3c9197db4b9df785b9cfbf7268e005a3cf1eb0a68b6c50"
+      },
+      "conflicts": [],
+      "notes": [
+        "Cabeçalho da tabela indica cm para espessura e troca comprimento/largura; adotado 0,37 mm, 940 × 406 mm conforme NTRS 20170008805, Tabela 1.",
+        "Potência de ignição: 182 W na tabela PSI e na p. 31 do NTRS; a p. 23 do mesmo documento cita 165 W. Divergência mantida, sem média.",
+        "Desfecho não tabulado; a tabela registra 70 s de queima. Frames públicos ainda não processados.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar.",
+        "Geometria nominal da folha, não extensão disponível de combustível: S2 reutiliza o remanescente após S1; consultar S2_REVIEW.md e NTRS 20170008805, Tabela I."
+      ],
+      "analysis": {
+        "reviewStatus": "review-required",
+        "capabilities": {
+          "observedTrajectory": false,
+          "pairedTrajectory": false,
+          "habitatAnchor": false
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 1.9999999999999998,
+          "simulatedMmS": 1.4875000000000005,
+          "signedErrorPct": -25.62499999999997,
+          "absoluteErrorMmS": 0.5124999999999993,
+          "positionMaeReportedMm": 3.7083333333333335,
+          "sourceField": "contiguousValidation"
+        },
+        "trajectory": {
+          "status": "unavailable",
+          "observableKind": "char-front",
+          "modelKind": null,
+          "relationToRegisteredModel": null,
+          "timeOrigin": null,
+          "sourceFields": [],
+          "points": [],
+          "metrics": null,
+          "note": "Trajetória experimental pareada não disponível; nenhuma curva foi sintetizada."
+        },
+        "missingData": [
+          "pressureKpa",
+          "pairedExperimentalTrajectory",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "S2 em revisão: quantização/janela/ignitor não resolvidos; consultar S2_REVIEW.md."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-II-5",
+      "campaign": "SAFFIRE II",
+      "sample": "2-5",
+      "investigation": "PSI-99",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 290,
+        "widthMm": 50
+      },
+      "conditions": {
+        "oxygenPct": 22.1,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/oxygenPctApprox",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-99-ii5.json, conditions/flowCmS",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii5.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-5/flowDirection",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.053571428571429,
+          "window": "Trecho reservado do mesmo ensaio; S5C1; janela [22, 114]; reserva desde 86 s",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+          },
+          "artifact": "public/data/saffire/psi-99-ii5.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-99-ii5.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "e0f5c8f82cd85c4385f7eef611f0746ee6633757bc597eae3641e31e2c81481e"
+      },
+      "conflicts": [],
+      "notes": [
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm, o mesmo tecido do SAFFIRE-I.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": false,
+          "pairedTrajectory": false,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 2.053571428571429,
+          "simulatedMmS": 2.2883928571428584,
+          "signedErrorPct": 11.434782608695702,
+          "absoluteErrorMmS": 0.23482142857142962,
+          "positionMaeReportedMm": 10.0,
+          "sourceField": "validation"
+        },
+        "trajectory": {
+          "status": "unavailable",
+          "observableKind": "char-front",
+          "modelKind": null,
+          "relationToRegisteredModel": null,
+          "timeOrigin": null,
+          "sourceFields": [],
+          "points": [],
+          "metrics": null,
+          "note": "Trajetória experimental pareada não disponível; nenhuma curva foi sintetizada."
+        },
+        "missingData": [
+          "pressureKpa",
+          "pairedExperimentalTrajectory",
+          "independentExternalValidation"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "SAFFIRE-II-6",
+      "campaign": "SAFFIRE II",
+      "sample": "2-6",
+      "investigation": "PSI-99",
+      "material": "SIBAL",
+      "thicknessMm": 0.37,
+      "geometry": {
+        "lengthMm": 290,
+        "widthMm": 50
+      },
+      "conditions": {
+        "oxygenPct": 22.1,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/oxygenPctApprox",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
+        },
+        {
+          "field": "flowCmS",
+          "label": "public/data/saffire/psi-99-ii6.json, conditions/flowCmS",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/saffire/psi-99-ii6.json"
+        },
+        {
+          "field": "flowDirection",
+          "label": "modeling-targets.json, PSI-99:2-6/flowDirection",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.4313186813186842,
+          "window": "Trecho reservado do mesmo ensaio; S6C1; janela [22, 98]; reserva desde 74 s",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+          },
+          "artifact": "public/data/saffire/psi-99-ii6.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-99-ii6.json",
+        "kind": "image-longitudinal",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "ff96f346cac0f2950b46b7987a2419d1ec78c6464ce4566e9036c5ae3f7a3564"
+      },
+      "conflicts": [
+        "Artefato II-6 registra 25 cm/s; curadoria PSI-99 registra 20 cm/s. Preservado o valor do modelo, sem resolver a divergência."
+      ],
+      "notes": [
+        "Célula de material vazia; interpretada como continuação da linha anterior (SIBAL).",
+        "Espessura registrada como \"037 mm\"; interpretada como 0,37 mm.",
+        "O₂ derivado da produção de CO₂ medida e referenciado ao O₂ inicial informado pela ISS (nota 1 da tabela).",
+        "As colunas \"?-g\" da tabela original são os resultados em microgravidade (símbolo µ perdido na codificação).",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "Oxigênio aproximado na fonte; não é valor exato nem tolerância validada.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": false,
+          "pairedTrajectory": false,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 2.4313186813186842,
+          "simulatedMmS": 2.725961538461541,
+          "signedErrorPct": 12.11864406779658,
+          "absoluteErrorMmS": 0.29464285714285676,
+          "positionMaeReportedMm": 10.711538461538462,
+          "sourceField": "validation"
+        },
+        "trajectory": {
+          "status": "unavailable",
+          "observableKind": "char-front",
+          "modelKind": null,
+          "relationToRegisteredModel": null,
+          "timeOrigin": null,
+          "sourceFields": [],
+          "points": [],
+          "metrics": null,
+          "note": "Trajetória experimental pareada não disponível; nenhuma curva foi sintetizada."
+        },
+        "missingData": [
+          "pressureKpa",
+          "pairedExperimentalTrajectory",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Artefato II-6 registra 25 cm/s; curadoria PSI-99 registra 20 cm/s. Preservado o valor do modelo, sem resolver a divergência."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-III-S1",
+      "campaign": "SAFFIRE III",
+      "sample": "S1",
+      "investigation": "PSI-100",
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 21.2,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Condição adotada em public/data/saffire/psi-100-s1-neighbors.json, conditions/oxygenPct, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Condição adotada em public/data/saffire/psi-100-s1-neighbors.json, conditions/flowCmS, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-100, amostra S1, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 2.4319943622269244,
+          "window": "Trecho reservado do mesmo ensaio; S1C1 + S1C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/psi-100-s1-neighbors.json"
+        },
+        {
+          "kind": "char-front",
+          "speedMmS": 2.20403409693066,
+          "window": "Câmera 1, janela completa selecionada do cross-trial; não é a janela reservada das duas câmeras",
+          "uncertainty": {
+            "kind": "ols-se-iid",
+            "value": 0.01023696779603607,
+            "note": "Erro padrão OLS sob independência; não inclui autocorrelação, registro ou incerteza total."
+          },
+          "source": {
+            "label": "OLS da frente de contraste, crosstrial-i-iii.json",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/crosstrial-i-iii.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-100-s1-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "fc5cce59f0c122ff834515e70ee2f00f9fc9ce22e0aba64bdfcb7bfa5c572e97"
+      },
+      "conflicts": [
+        "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+        "Espessura literal .33 cm não confirmada: thicknessMm permanece null."
+      ],
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
+        "O₂ e desfecho não tabulados. Frames da câmera 1 processados (ver derivado).",
+        "Desfecho \"propagação sustentada\" observado nos frames (frente atravessa todo o campo da câmera 1), não tabulado pela NASA.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar.",
+        "Estimativas das duas câmeras e da câmera 1 têm janelas distintas; não formam intervalo de confiança."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": true,
+          "pairedTrajectory": true,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 2.4319943622269244,
+          "simulatedMmS": 2.1934637068358045,
+          "signedErrorPct": -9.808026658939399,
+          "absoluteErrorMmS": 0.23853065539111995,
+          "positionMaeReportedMm": 14.839816933638446,
+          "sourceField": "contiguousValidation"
+        },
+        "trajectory": {
+          "status": "available",
+          "observableKind": "char-front",
+          "modelKind": "image-longitudinal",
+          "relationToRegisteredModel": "baseline-not-registered-model",
+          "timeOrigin": "relative-validation-window-start",
+          "sourceFields": [
+            "public/data/saffire/psi-100-s1-neighbors.json#/validation/trajectory"
+          ],
+          "points": [
+            {
+              "timeS": 0,
+              "observedMm": 580.0,
+              "simulatedMm": 580.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 2,
+              "observedMm": 590.0,
+              "simulatedMm": 580.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 4,
+              "observedMm": 590.0,
+              "simulatedMm": 590.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 6,
+              "observedMm": 600.0,
+              "simulatedMm": 590.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 8,
+              "observedMm": 600.0,
+              "simulatedMm": 600.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 10,
+              "observedMm": 610.0,
+              "simulatedMm": 610.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 12,
+              "observedMm": 610.0,
+              "simulatedMm": 610.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 14,
+              "observedMm": 610.0,
+              "simulatedMm": 620.0,
+              "residualMm": 10.0
+            },
+            {
+              "timeS": 16,
+              "observedMm": 620.0,
+              "simulatedMm": 620.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 18,
+              "observedMm": 620.0,
+              "simulatedMm": 630.0,
+              "residualMm": 10.0
+            },
+            {
+              "timeS": 20,
+              "observedMm": 630.0,
+              "simulatedMm": 630.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 22,
+              "observedMm": 630.0,
+              "simulatedMm": 630.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 24,
+              "observedMm": 640.0,
+              "simulatedMm": 640.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 26,
+              "observedMm": 640.0,
+              "simulatedMm": 640.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 28,
+              "observedMm": 650.0,
+              "simulatedMm": 650.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 30,
+              "observedMm": 650.0,
+              "simulatedMm": 650.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 32,
+              "observedMm": 660.0,
+              "simulatedMm": 650.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 34,
+              "observedMm": 660.0,
+              "simulatedMm": 660.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 36,
+              "observedMm": 670.0,
+              "simulatedMm": 660.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 38,
+              "observedMm": 670.0,
+              "simulatedMm": 670.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 40,
+              "observedMm": 680.0,
+              "simulatedMm": 670.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 42,
+              "observedMm": 680.0,
+              "simulatedMm": 680.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 44,
+              "observedMm": 690.0,
+              "simulatedMm": 690.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 46,
+              "observedMm": 690.0,
+              "simulatedMm": 690.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 48,
+              "observedMm": 700.0,
+              "simulatedMm": 690.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 50,
+              "observedMm": 700.0,
+              "simulatedMm": 690.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 52,
+              "observedMm": 710.0,
+              "simulatedMm": 690.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 54,
+              "observedMm": 710.0,
+              "simulatedMm": 700.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 56,
+              "observedMm": 720.0,
+              "simulatedMm": 710.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 58,
+              "observedMm": 720.0,
+              "simulatedMm": 710.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 60,
+              "observedMm": 730.0,
+              "simulatedMm": 710.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 62,
+              "observedMm": 730.0,
+              "simulatedMm": 720.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 64,
+              "observedMm": 740.0,
+              "simulatedMm": 720.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 66,
+              "observedMm": 750.0,
+              "simulatedMm": 730.0,
+              "residualMm": -20.0
+            },
+            {
+              "timeS": 68,
+              "observedMm": 750.0,
+              "simulatedMm": 740.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 70,
+              "observedMm": 760.0,
+              "simulatedMm": 750.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 72,
+              "observedMm": 760.0,
+              "simulatedMm": 750.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 74,
+              "observedMm": 760.0,
+              "simulatedMm": 750.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 76,
+              "observedMm": 770.0,
+              "simulatedMm": 745.0,
+              "residualMm": -25.0
+            },
+            {
+              "timeS": 78,
+              "observedMm": 770.0,
+              "simulatedMm": 740.0,
+              "residualMm": -30.0
+            },
+            {
+              "timeS": 80,
+              "observedMm": 770.0,
+              "simulatedMm": 740.0,
+              "residualMm": -30.0
+            },
+            {
+              "timeS": 82,
+              "observedMm": 780.0,
+              "simulatedMm": 750.0,
+              "residualMm": -30.0
+            },
+            {
+              "timeS": 84,
+              "observedMm": 780.0,
+              "simulatedMm": 755.0,
+              "residualMm": -25.0
+            },
+            {
+              "timeS": 86,
+              "observedMm": 780.0,
+              "simulatedMm": 760.0,
+              "residualMm": -20.0
+            }
+          ],
+          "metrics": {
+            "pointCount": 44,
+            "pairedPointCount": 44,
+            "timeSpanS": 86,
+            "positionMaeMm": 9.318181818181818,
+            "positionRmseMm": 13.185736094872988,
+            "positionBiasMm": -8.409090909090908,
+            "observedOlsSpeedMmS": 2.4319943622269204,
+            "simulatedOlsSpeedMmS": 2.1215644820295987,
+            "note": "Diagnósticos da curva armazenada; não equivalem ao MAE espacial entre faixas nem a incerteza experimental."
+          },
+          "note": "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        },
+        "missingData": [
+          "thicknessMm",
+          "pressureKpa",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+          "Espessura literal .33 cm não confirmada: thicknessMm permanece null.",
+          "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-III-S2",
+      "campaign": "SAFFIRE III",
+      "sample": "S2",
+      "investigation": "PSI-100",
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 940,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 21.2,
+        "oxygenRangePct": null,
+        "pressureKpa": null,
+        "flowCmS": 25,
+        "flowDirection": "opposed",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Condição adotada em public/data/saffire/psi-100-s2-neighbors.json, conditions/oxygenPct, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Condição adotada em public/data/saffire/psi-100-s2-neighbors.json, conditions/flowCmS, atribuída ao artigo da equipe; conflito PSI preservado",
+          "url": "https://doi.org/10.1016/j.combustflame.2018.10.012"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Tabela PSI-100, amostra S2, Flow Direction",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+        },
+        {
+          "field": "gravity",
+          "label": "modeling-targets.json, gravity e platform do ensaio",
+          "url": "https://github.com/UFRJ-Analytica/hkt_flame_in_freefall/blob/d47b2baee4d98a68a84fff1bce6d9f1fbc5937eb/public/data/modeling-targets.json"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "char-front",
+          "speedMmS": 1.0454545454545454,
+          "window": "Trecho reservado do mesmo ensaio; S2C2",
+          "uncertainty": null,
+          "source": {
+            "label": "Frente de contraste/carbonizada reconstruída, não base luminosa da chama",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+          },
+          "artifact": "public/data/saffire/psi-100-s2-neighbors.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/psi-100-s2-neighbors.json",
+        "kind": "image-neighborhood",
+        "validation": "temporal-holdout-same-trial",
+        "artifactSha256": "6582f3f4f91250c332f9ea352ae8a0954354df97fb9ca9d00d1bad9ed4900b03"
+      },
+      "conflicts": [
+        "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+        "Espessura literal .33 cm não confirmada: thicknessMm permanece null."
+      ],
+      "notes": [
+        "Espessura registrada como \".33 cm\"; unidade não confirmada por fonte primária nesta curadoria.",
+        "Escoamento: a tabela PSI-100 registra 30 cm/s; adotado 25 cm/s e 21,2% O₂ do artigo da equipe (Combustion and Flame 199, 2018, doi:10.1016/j.combustflame.2018.10.012).",
+        "O₂ e desfecho não tabulados. Frames públicos disponíveis e ainda não processados.",
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "pressureKpa: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Validação temporal no mesmo ensaio; não valida transferência para habitat ou gravidade lunar."
+      ],
+      "analysis": {
+        "reviewStatus": "review-required",
+        "capabilities": {
+          "observedTrajectory": true,
+          "pairedTrajectory": true,
+          "habitatAnchor": false
+        },
+        "validationSummary": {
+          "kind": "temporal-holdout-same-trial",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 1.0454545454545454,
+          "simulatedMmS": 0.7590909090909095,
+          "signedErrorPct": -27.391304347826047,
+          "absoluteErrorMmS": 0.28636363636363593,
+          "positionMaeReportedMm": 7.023809523809524,
+          "sourceField": "contiguousValidation"
+        },
+        "trajectory": {
+          "status": "available",
+          "observableKind": "char-front",
+          "modelKind": "image-longitudinal",
+          "relationToRegisteredModel": "baseline-not-registered-model",
+          "timeOrigin": "relative-validation-window-start",
+          "sourceFields": [
+            "public/data/saffire/psi-100-s2-neighbors.json#/validation/trajectory"
+          ],
+          "points": [
+            {
+              "timeS": 0,
+              "observedMm": 70.0,
+              "simulatedMm": 70.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 2,
+              "observedMm": 70.0,
+              "simulatedMm": 70.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 4,
+              "observedMm": 80.0,
+              "simulatedMm": 70.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 6,
+              "observedMm": 80.0,
+              "simulatedMm": 70.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 8,
+              "observedMm": 80.0,
+              "simulatedMm": 70.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 10,
+              "observedMm": 80.0,
+              "simulatedMm": 80.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 12,
+              "observedMm": 80.0,
+              "simulatedMm": 80.0,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 14,
+              "observedMm": 90.0,
+              "simulatedMm": 80.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 16,
+              "observedMm": 90.0,
+              "simulatedMm": 80.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 18,
+              "observedMm": 90.0,
+              "simulatedMm": 80.0,
+              "residualMm": -10.0
+            },
+            {
+              "timeS": 20,
+              "observedMm": 90.0,
+              "simulatedMm": 90.0,
+              "residualMm": 0.0
+            }
+          ],
+          "metrics": {
+            "pointCount": 11,
+            "pairedPointCount": 11,
+            "timeSpanS": 20,
+            "positionMaeMm": 5.454545454545454,
+            "positionRmseMm": 7.385489458759964,
+            "positionBiasMm": -5.454545454545454,
+            "observedOlsSpeedMmS": 1.0454545454545454,
+            "simulatedOlsSpeedMmS": 0.9090909090909091,
+            "note": "Diagnósticos da curva armazenada; não equivalem ao MAE espacial entre faixas nem a incerteza experimental."
+          },
+          "note": "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        },
+        "missingData": [
+          "thicknessMm",
+          "pressureKpa",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Tabela PSI-100 registra 30 cm/s; artigo da equipe adota 25 cm/s e 21,2% O₂ (doi:10.1016/j.combustflame.2018.10.012).",
+          "Espessura literal .33 cm não confirmada: thicknessMm permanece null.",
+          "S2 em revisão: quantização/janela/ignitor não resolvidos; consultar S2_REVIEW.md.",
+          "Curva do baseline longitudinal armazenado; NÃO representa o modelo por vizinhança."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-IV-1",
+      "campaign": "SAFFIRE IV",
+      "sample": "IV-1",
+      "investigation": null,
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 23.1,
+        "oxygenRangePct": null,
+        "pressureKpa": 99,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.6,
+          "window": "Taxa publicada; não estimada novamente dos frames",
+          "uncertainty": null,
+          "source": {
+            "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+            "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+          },
+          "artifact": "public/data/saffire/saffire-iv-1.json"
+        },
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.655274725274725,
+          "window": "Curva digitalizada, [32, 110] s; mesmo ensaio",
+          "uncertainty": null,
+          "source": {
+            "label": "Manuscrito aceito, Figura 8, p. 15 do PDF",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf"
+          },
+          "artifact": "public/data/saffire/saffire-iv-1.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-iv-1.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "published-curve-consistency",
+        "artifactSha256": "76b4bf79c54721ec82fafb49f02f116bedc1b76c941a9b714801e9382e3f8090"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"oxygenPct\": 22, \"pressureKpa\": 100}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 23, \"pressureKpa\": 98}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": true,
+          "pairedTrajectory": true,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "published-curve-consistency",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 3.655274725274725,
+          "simulatedMmS": 3.619849991278562,
+          "signedErrorPct": -0.9691401237563722,
+          "absoluteErrorMmS": 0.03542473399616286,
+          "positionMaeReportedMm": 3.764468864468867,
+          "sourceField": "validation"
+        },
+        "trajectory": {
+          "status": "available",
+          "observableKind": "flame-base",
+          "modelKind": "published-speed-longitudinal",
+          "relationToRegisteredModel": "same-model",
+          "timeOrigin": "published-figure-clock",
+          "sourceFields": [
+            "public/data/saffire/saffire-iv-1.json#/validation/digitization/points",
+            "public/data/saffire/saffire-iv-1.json#/validation/simulatedMeanPositionsMm"
+          ],
+          "points": [
+            {
+              "timeS": 32,
+              "observedMm": 106.5,
+              "simulatedMm": 106.5,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 38,
+              "observedMm": 127.8,
+              "simulatedMm": 128.57142857142858,
+              "residualMm": 0.7714285714285865
+            },
+            {
+              "timeS": 44,
+              "observedMm": 152.6,
+              "simulatedMm": 150.59523809523813,
+              "residualMm": -2.004761904761864
+            },
+            {
+              "timeS": 50,
+              "observedMm": 172.2,
+              "simulatedMm": 172.04761904761907,
+              "residualMm": -0.15238095238092342
+            },
+            {
+              "timeS": 56,
+              "observedMm": 197.7,
+              "simulatedMm": 193.40476190476193,
+              "residualMm": -4.295238095238062
+            },
+            {
+              "timeS": 62,
+              "observedMm": 218.2,
+              "simulatedMm": 215.04761904761904,
+              "residualMm": -3.152380952380952
+            },
+            {
+              "timeS": 68,
+              "observedMm": 242,
+              "simulatedMm": 236.45238095238096,
+              "residualMm": -5.547619047619037
+            },
+            {
+              "timeS": 74,
+              "observedMm": 264.2,
+              "simulatedMm": 257.95238095238096,
+              "residualMm": -6.247619047619025
+            },
+            {
+              "timeS": 80,
+              "observedMm": 285.5,
+              "simulatedMm": 280.23809523809524,
+              "residualMm": -5.261904761904759
+            },
+            {
+              "timeS": 86,
+              "observedMm": 306.8,
+              "simulatedMm": 301.88095238095235,
+              "residualMm": -4.91904761904766
+            },
+            {
+              "timeS": 92,
+              "observedMm": 329,
+              "simulatedMm": 323.90476190476187,
+              "residualMm": -5.09523809523813
+            },
+            {
+              "timeS": 98,
+              "observedMm": 352,
+              "simulatedMm": 345.6190476190476,
+              "residualMm": -6.380952380952408
+            },
+            {
+              "timeS": 104,
+              "observedMm": 370.7,
+              "simulatedMm": 367.7619047619047,
+              "residualMm": -2.9380952380952863
+            },
+            {
+              "timeS": 110,
+              "observedMm": 386.9,
+              "simulatedMm": 389.07142857142856,
+              "residualMm": 2.171428571428578
+            }
+          ],
+          "metrics": {
+            "pointCount": 14,
+            "pairedPointCount": 14,
+            "timeSpanS": 78,
+            "positionMaeMm": 3.4955782312925194,
+            "positionRmseMm": 4.09479609226797,
+            "positionBiasMm": -3.07517006802721,
+            "observedOlsSpeedMmS": 3.655274725274726,
+            "simulatedOlsSpeedMmS": 3.6198499912785627,
+            "note": "Diagnósticos da curva armazenada; não equivalem ao MAE espacial entre faixas nem a incerteza experimental."
+          },
+          "note": "Curva digitalizada do mesmo ensaio usado na calibração; não é holdout externo."
+        },
+        "missingData": [
+          "thicknessMm",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Outra condição reportada, sem média: {\"oxygenPct\": 22, \"pressureKpa\": 100}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+          "Outra condição reportada, sem média: {\"oxygenPct\": 23, \"pressureKpa\": 98}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments)."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-V-2",
+      "campaign": "SAFFIRE V",
+      "sample": "V-2",
+      "investigation": null,
+      "material": "Algodão jersey",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 406
+      },
+      "conditions": {
+        "oxygenPct": 26.9,
+        "oxygenRangePct": null,
+        "pressureKpa": 76,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowCmS",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "flowDirection",
+          "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+          "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.4,
+          "window": "Antes de 100 s e de 300 mm, antes do enrolamento",
+          "uncertainty": null,
+          "source": {
+            "label": "Estudo de propagação em tecidos, Tabela 1 e Figura 8",
+            "url": "https://doi.org/10.1016/j.combustflame.2022.112559"
+          },
+          "artifact": "public/data/saffire/saffire-v-2.json"
+        },
+        {
+          "kind": "flame-base",
+          "speedMmS": 3.35060606060606,
+          "window": "Curva digitalizada, [32, 92] s; mesmo ensaio",
+          "uncertainty": null,
+          "source": {
+            "label": "Manuscrito aceito, Figura 8, p. 15 do PDF",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10164340/1/SIBAL-cotton%20revised%20Sept%20per%20review%20track%20changes%20accepted.pdf"
+          },
+          "artifact": "public/data/saffire/saffire-v-2.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-v-2.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "published-curve-consistency",
+        "artifactSha256": "5cc42f6b68fdf5a1b42af722eab8831005f8bb945787d657cfb6b0b6d2b2e729"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"oxygenPct\": 26.2, \"pressureKpa\": 70.7}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 28, \"pressureKpa\": 74.1}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments).",
+        "Outra condição reportada, sem média: {\"oxygenPct\": 26.5, \"pressureKpa\": null}; Cronologia do SAFFIRE V, Tabela 1 (https://ntrs.nasa.gov/citations/20240008602)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": true,
+          "pairedTrajectory": true,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "published-curve-consistency",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": {
+          "observedMmS": 3.35060606060606,
+          "simulatedMmS": 3.410101010101009,
+          "signedErrorPct": 1.775647402851869,
+          "absoluteErrorMmS": 0.05949494949494882,
+          "positionMaeReportedMm": 3.656666666666659,
+          "sourceField": "validation"
+        },
+        "trajectory": {
+          "status": "available",
+          "observableKind": "flame-base",
+          "modelKind": "published-speed-longitudinal",
+          "relationToRegisteredModel": "same-model",
+          "timeOrigin": "published-figure-clock",
+          "sourceFields": [
+            "public/data/saffire/saffire-v-2.json#/validation/digitization/points",
+            "public/data/saffire/saffire-v-2.json#/validation/simulatedMeanPositionsMm"
+          ],
+          "points": [
+            {
+              "timeS": 32,
+              "observedMm": 83.5,
+              "simulatedMm": 83.5,
+              "residualMm": 0.0
+            },
+            {
+              "timeS": 38,
+              "observedMm": 99.5,
+              "simulatedMm": 104.33333333333333,
+              "residualMm": 4.833333333333329
+            },
+            {
+              "timeS": 44,
+              "observedMm": 121.7,
+              "simulatedMm": 125.26190476190474,
+              "residualMm": 3.561904761904742
+            },
+            {
+              "timeS": 50,
+              "observedMm": 147.4,
+              "simulatedMm": 145.5952380952381,
+              "residualMm": -1.8047619047619037
+            },
+            {
+              "timeS": 56,
+              "observedMm": 165.2,
+              "simulatedMm": 165.78571428571428,
+              "residualMm": 0.585714285714289
+            },
+            {
+              "timeS": 62,
+              "observedMm": 188.3,
+              "simulatedMm": 186.19047619047618,
+              "residualMm": -2.109523809523836
+            },
+            {
+              "timeS": 68,
+              "observedMm": 209.6,
+              "simulatedMm": 206.52380952380952,
+              "residualMm": -3.076190476190476
+            },
+            {
+              "timeS": 74,
+              "observedMm": 222,
+              "simulatedMm": 226.73809523809524,
+              "residualMm": 4.738095238095241
+            },
+            {
+              "timeS": 80,
+              "observedMm": 241.5,
+              "simulatedMm": 247.8095238095238,
+              "residualMm": 6.309523809523796
+            },
+            {
+              "timeS": 86,
+              "observedMm": 261.1,
+              "simulatedMm": 267.90476190476187,
+              "residualMm": 6.804761904761847
+            },
+            {
+              "timeS": 92,
+              "observedMm": 285.9,
+              "simulatedMm": 288.6428571428571,
+              "residualMm": 2.742857142857133
+            }
+          ],
+          "metrics": {
+            "pointCount": 11,
+            "pairedPointCount": 11,
+            "timeSpanS": 60,
+            "positionMaeMm": 3.3242424242424176,
+            "positionRmseMm": 3.9271691056135665,
+            "positionBiasMm": 2.053246753246742,
+            "observedOlsSpeedMmS": 3.3506060606060606,
+            "simulatedOlsSpeedMmS": 3.41010101010101,
+            "note": "Diagnósticos da curva armazenada; não equivalem ao MAE espacial entre faixas nem a incerteza experimental."
+          },
+          "note": "Curva digitalizada do mesmo ensaio usado na calibração; não é holdout externo."
+        },
+        "missingData": [
+          "thicknessMm",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Outra condição reportada, sem média: {\"oxygenPct\": 26.2, \"pressureKpa\": 70.7}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981).",
+          "Outra condição reportada, sem média: {\"oxygenPct\": 28, \"pressureKpa\": 74.1}; Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1 (https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments).",
+          "Outra condição reportada, sem média: {\"oxygenPct\": 26.5, \"pressureKpa\": null}; Cronologia do SAFFIRE V, Tabela 1 (https://ntrs.nasa.gov/citations/20240008602)."
+        ]
+      }
+    },
+    {
+      "id": "SAFFIRE-VI-2",
+      "campaign": "SAFFIRE VI",
+      "sample": "VI-2",
+      "investigation": null,
+      "material": "SIBAL",
+      "thicknessMm": null,
+      "geometry": {
+        "lengthMm": 500,
+        "widthMm": 400
+      },
+      "conditions": {
+        "oxygenPct": 31,
+        "oxygenRangePct": null,
+        "pressureKpa": 54.1,
+        "flowCmS": 20,
+        "flowDirection": "concurrent",
+        "gravity": "microgravity"
+      },
+      "conditionSources": [
+        {
+          "field": "oxygenPct",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "pressureKpa",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "flowCmS",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "flowDirection",
+          "label": "ICES-2024-365, Tabela 1, p3 (conferida visualmente)",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        },
+        {
+          "field": "gravity",
+          "label": "ICES-2024-365, p1: ensaios na Cygnus em órbita",
+          "url": "https://ntrs.nasa.gov/api/citations/20240002981/downloads/Saffire-ICES-2024-ICES-365-accepted%20final.pdf"
+        }
+      ],
+      "observables": [
+        {
+          "kind": "published-rate",
+          "speedMmS": 4.05,
+          "window": "Taxa publicada; não estimada novamente dos frames",
+          "uncertainty": null,
+          "source": {
+            "label": "Heat and Smoke Emission from Tests on the SAFFIRE IV–VI Experiments, Tabela 1",
+            "url": "https://www.researchgate.net/publication/410245330_Heat_and_Smoke_Emission_from_Tests_on_the_SAFFIRE_IV-VI_Experiments"
+          },
+          "artifact": "public/data/saffire/saffire-vi-2.json"
+        }
+      ],
+      "model": {
+        "artifact": "public/data/saffire/saffire-vi-2.json",
+        "kind": "published-speed-longitudinal",
+        "validation": "none",
+        "artifactSha256": "cb3199ee11c147a68bfcc6235b4062ce41a0b0b85e47065387b98c42d2600c65"
+      },
+      "conflicts": [
+        "Outra condição reportada, sem média: {\"lengthMm\": 500, \"widthMm\": 410}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981)."
+      ],
+      "notes": [
+        "oxygenRangePct: não disponível; nenhum valor presumido.",
+        "thicknessMm: espessura não confirmada; não transferida de outro ensaio.",
+        "Checagem numérica da velocidade imposta não é validação experimental; trajetória observada indisponível.",
+        "Taxa publicada parametriza o propagador; sorteios não são incerteza experimental nem probabilidade física medida."
+      ],
+      "analysis": {
+        "reviewStatus": "usable-with-limitations",
+        "capabilities": {
+          "observedTrajectory": false,
+          "pairedTrajectory": false,
+          "habitatAnchor": true
+        },
+        "validationSummary": {
+          "kind": "none",
+          "independentExternalValidation": false,
+          "note": "Classificação do artefato existente; não é uma nova validação nem transferência lunar."
+        },
+        "speedComparison": null,
+        "trajectory": {
+          "status": "unavailable",
+          "observableKind": "published-rate",
+          "modelKind": null,
+          "relationToRegisteredModel": null,
+          "timeOrigin": null,
+          "sourceFields": [],
+          "points": [],
+          "metrics": null,
+          "note": "Trajetória experimental pareada não disponível; nenhuma curva foi sintetizada."
+        },
+        "missingData": [
+          "thicknessMm",
+          "pairedExperimentalTrajectory",
+          "independentExternalValidation"
+        ],
+        "warnings": [
+          "Outra condição reportada, sem média: {\"lengthMm\": 500, \"widthMm\": 410}; Resultados preliminares de SAFFIRE VI, Tabela 1 (https://ntrs.nasa.gov/citations/20240002981)."
+        ]
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-I-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.04974271012007336,
+      "speedDeltaPct": 2.5505716798595293,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "opposed",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-II-5"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.10331413869150241,
+      "speedDeltaPct": 5.297461992712934,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 290,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 50,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-II-6"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.4810613914387578,
+      "speedDeltaPct": 24.66656035257665,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 290,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 50,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-III-S1"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.48173707234699803,
+      "speedDeltaPct": 24.70120608428325,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-III-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -0.904802744425381,
+      "speedDeltaPct": -46.39401934916433,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "opposed",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S1",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": null,
+            "rangePct": [
+              21.5,
+              21.7
+            ]
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-II-5"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.05357142857142905,
+      "speedDeltaPct": 2.678571428571453,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 290,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 50,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-II-6"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.43131868131868445,
+      "speedDeltaPct": 21.565934065934226,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 290,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 50,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-III-S1"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.43199436222692467,
+      "speedDeltaPct": 21.599718111346235,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-III-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -0.9545454545454544,
+      "speedDeltaPct": -47.72727272727273,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "opposed",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-I-S2",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.5,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-II-6"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.3777472527472554,
+      "speedDeltaPct": 18.394648829431564,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": 0.37,
+          "status": "same"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 290,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 50,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "status": "same"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-III-S1"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.3784229336554956,
+      "speedDeltaPct": 18.427551551919784,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 940,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-III-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -1.0081168831168834,
+      "speedDeltaPct": -49.0909090909091,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 940,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 25,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "opposed",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-5",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-6",
+        "SAFFIRE-III-S1"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": 0.0006756809082402171,
+      "speedDeltaPct": 0.027790717581857485,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 940,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 25,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-6",
+        "SAFFIRE-III-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -1.3858641358641388,
+      "speedDeltaPct": -57.00051361068316,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 940,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 25,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "opposed",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-6",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-6",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 406,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-II-6",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": 0.37,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 290,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 50,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 22.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S1",
+        "SAFFIRE-III-S2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -1.386539816772379,
+      "speedDeltaPct": -57.01246015647645,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 940,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "status": "same"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 25,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "opposed",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S1",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S1",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S1",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S2",
+        "SAFFIRE-IV-1"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 99,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S2",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 76,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-III-S2",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 940,
+          "right": 500,
+          "status": "different"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 21.2,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": null,
+          "right": 54.1,
+          "status": "unknown"
+        },
+        {
+          "field": "flowCmS",
+          "left": 25,
+          "right": 20,
+          "status": "different"
+        },
+        {
+          "field": "flowDirection",
+          "left": "opposed",
+          "right": "concurrent",
+          "status": "different"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados.",
+        "Inclui S2: revisão científica pendente; não usar como âncora do habitat."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-IV-1",
+        "SAFFIRE-V-2"
+      ],
+      "observableCompatible": true,
+      "speedDeltaMmS": -0.20000000000000018,
+      "speedDeltaPct": -5.55555555555556,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "Algodão jersey",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 500,
+          "right": 500,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 406,
+          "status": "same"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": 99,
+          "right": 76,
+          "status": "different"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-IV-1",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "SIBAL",
+          "right": "SIBAL",
+          "status": "same"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 500,
+          "right": 500,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 23.1,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": 99,
+          "right": 54.1,
+          "status": "different"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    },
+    {
+      "trialIds": [
+        "SAFFIRE-V-2",
+        "SAFFIRE-VI-2"
+      ],
+      "observableCompatible": false,
+      "speedDeltaMmS": null,
+      "speedDeltaPct": null,
+      "conditionDiffs": [
+        {
+          "field": "material",
+          "left": "Algodão jersey",
+          "right": "SIBAL",
+          "status": "different"
+        },
+        {
+          "field": "thicknessMm",
+          "left": null,
+          "right": null,
+          "status": "unknown"
+        },
+        {
+          "field": "lengthMm",
+          "left": 500,
+          "right": 500,
+          "status": "same"
+        },
+        {
+          "field": "widthMm",
+          "left": 406,
+          "right": 400,
+          "status": "different"
+        },
+        {
+          "field": "oxygen",
+          "left": {
+            "pointPct": 26.9,
+            "rangePct": null
+          },
+          "right": {
+            "pointPct": 31,
+            "rangePct": null
+          },
+          "status": "different"
+        },
+        {
+          "field": "pressureKpa",
+          "left": 76,
+          "right": 54.1,
+          "status": "different"
+        },
+        {
+          "field": "flowCmS",
+          "left": 20,
+          "right": 20,
+          "status": "same"
+        },
+        {
+          "field": "flowDirection",
+          "left": "concurrent",
+          "right": "concurrent",
+          "status": "same"
+        },
+        {
+          "field": "gravity",
+          "left": "microgravity",
+          "right": "microgravity",
+          "status": "same"
+        }
+      ],
+      "interpretation": "descriptive-not-causal",
+      "warnings": [
+        "Mesma espécie de observável não garante mesma janela, câmera ou método.",
+        "Diferença de velocidade não isola o efeito de uma condição.",
+        "Observáveis incompatíveis: deltas de velocidade não calculados."
+      ]
+    }
+  ],
+  "limitations": [
+    "Comparações entre ensaios são descritivas, não efeitos causais isolados.",
+    "Validação temporal no mesmo ensaio não é validação externa independente.",
+    "Taxa publicada usada no ajuste não é observação independente do modelo ajustado.",
+    "Nenhuma correção física validada para O₂, pressão, gravidade lunar, fumaça ou supressão.",
+    "Sorteios do modelo não representam incerteza experimental.",
+    "Curvas do baseline longitudinal não são curvas do modelo por vizinhança."
+  ]
+}
