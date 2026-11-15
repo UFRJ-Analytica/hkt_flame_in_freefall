@@ -3,7 +3,7 @@
 
 import { gravityOf, type GravityId } from "../model/domain";
 import type { EngineInput, EnsembleResult } from "./engine";
-import { buildGrid, CELL, CELL_AREA_M2, DEFAULT_ZONES, GRID, ignitionMask, MATERIAL_IDS, type MaterialId } from "./habitatModel";
+import { buildGrid, CELL, CELL_AREA_M2, GRID, ignitionMask, MAX_PIECES, PIECE_KINDS, PIECE_LIMITS, piecesToZones, type Piece, type Zone } from "./habitatModel";
 import {
   compareToTrial, rankTrials, scenarioKernel,
   type AnchorKernel, type CrossTrial, type RunLevel, type Trial, type TrialRegistry,
@@ -17,7 +17,7 @@ const GRAVITIES: GravityId[] = ["orbit", "moon", "mars"];
 
 export interface ScenarioInputs {
   oxygen: number; pressure: number; flow: number; gravity: GravityId;
-  zones: { id: string; material: MaterialId }[];
+  pieces: Piece[];
   ignition: { col: number; row: number };
   anchorChoice: string;
 }
@@ -32,8 +32,10 @@ export function validateInputs(v: unknown): string[] {
   if (!num(o.pressure, 35, 110)) p.push("pressure outside 35–110 kPa");
   if (!num(o.flow, 0, 40)) p.push("flow outside 0–40 cm/s");
   if (!GRAVITIES.includes(o.gravity as GravityId)) p.push("unknown gravity");
-  if (!Array.isArray(o.zones) || o.zones.length !== DEFAULT_ZONES.length ||
-    !o.zones.every((z) => z && DEFAULT_ZONES.some((d) => d.id === z.id) && MATERIAL_IDS.includes(z.material))) p.push("invalid zones");
+  const inRange = (x: unknown, [lo, hi]: readonly [number, number]) => num(x, lo, hi);
+  if (!Array.isArray(o.pieces) || o.pieces.length < 1 || o.pieces.length > MAX_PIECES ||
+    !o.pieces.every((q) => q && typeof q.id === "string" && q.kind in PIECE_KINDS && Number.isInteger(q.col) && Number.isInteger(q.row) &&
+      inRange(q.lengthMm, PIECE_LIMITS.lengthMm) && inRange(q.widthMm, PIECE_LIMITS.widthMm))) p.push("invalid fabric items");
   if (!o.ignition || !Number.isInteger(o.ignition.col) || !Number.isInteger(o.ignition.row) ||
     o.ignition.col < 0 || o.ignition.col >= GRID.cols || o.ignition.row < 0 || o.ignition.row >= GRID.rows) p.push("ignition outside the wall");
   if (typeof o.anchorChoice !== "string") p.push("missing reference trial");
@@ -42,6 +44,7 @@ export function validateInputs(v: unknown): string[] {
 
 export interface PreparedRun {
   conditions: { oxygen: number; pressure: number; flow: number; gravityG: number };
+  zones: Zone[];
   grid: ReturnType<typeof buildGrid>;
   anchor: Trial | undefined;
   diffs: ReturnType<typeof compareToTrial>;
@@ -52,7 +55,7 @@ export interface PreparedRun {
 
 export function prepareRun(inputs: ScenarioInputs, registry: TrialRegistry, anchorKernels: Record<string, AnchorKernel>, second: CrossTrial | null): PreparedRun {
   const conditions = { oxygen: inputs.oxygen, pressure: inputs.pressure, flow: inputs.flow, gravityG: gravityOf(inputs.gravity).g };
-  const zones = DEFAULT_ZONES.map((z) => ({ ...z, material: inputs.zones.find((x) => x.id === z.id)?.material ?? z.material }));
+  const zones = piecesToZones(inputs.pieces);
   const grid = buildGrid(zones, conditions);
   const scenario = { material: "SIBAL", ...conditions };
   const ranked = rankTrials(registry, scenario);
@@ -60,7 +63,7 @@ export function prepareRun(inputs: ScenarioInputs, registry: TrialRegistry, anch
   const diffs = anchor ? compareToTrial(anchor, scenario) : [];
   const kernel = anchor && anchorKernels[anchor.id] ? scenarioKernel(anchor, anchorKernels, second, scenario, diffs) : null;
   return {
-    conditions, grid, anchor, diffs, kernel, level: kernel?.level ?? "extrapolation",
+    conditions, zones, grid, anchor, diffs, kernel, level: kernel?.level ?? "extrapolation",
     engineInput: kernel ? { cols: GRID.cols, rows: GRID.rows, behavior: grid.behavior,
       ignition: ignitionMask(inputs.ignition.col, inputs.ignition.row), kernel: kernel.p, steps: STEPS } : null,
   };

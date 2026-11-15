@@ -2,22 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import { Copy, GitCompareArrows, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import { gravityOf } from "../model/domain";
 import type { EnsembleResult } from "./engine";
-import { DEFAULT_ZONES, CELL, GRID, MATERIAL_INFO } from "./habitatModel";
+import { CELL, MAX_PIECES, PIECE_KINDS } from "./habitatModel";
 import {
   computeMetrics, fieldFingerprint, prepareRun, quantiles, SEEDS, STEPS, validateInputs, type ScenarioInputs,
 } from "./scenarioRun";
-import { LEVEL_LABEL, type AnchorKernel, type CrossTrial, type RunLevel, type TrialRegistry } from "./trials";
+import { type AnchorKernel, type CrossTrial, type RunLevel, type TrialRegistry } from "./trials";
 
 export interface Alternative { id: string; name: string; inputs: ScenarioInputs }
 interface AltResult {
   level: RunLevel; anchorId: string | null; areaEnd: { min: number; median: number; max: number };
-  speedMmS: number; unknownContactFraction: number; fingerprint: string; litCells: number;
-  zones: { id: string; name: string; probability: number; medianTimeS: number | null; kind: "chegada" | "contato" | "inerte" }[];
+  speedMmS: number; fingerprint: string; litCells: number;
+  pieces: { name: string; probability: number; medianTimeS: number | null }[];
 }
 
-const EVENT_LABEL = { chegada: "arrival", contato: "contact", inerte: "inert" } as const;
-
-const STORAGE = "habitatfire.alternatives.v1";
+const STORAGE = "habitatfire.alternatives.v2";
 const num = (n: number | null | undefined, d = 2) => n === null || n === undefined || !Number.isFinite(n) ? "—" : n.toLocaleString("en-US", { maximumFractionDigits: d });
 const fmt = (s: number | null) => s === null ? "—" : s < 60 ? `${num(s, 0)} s` : `${Math.floor(s / 60)} min ${String(Math.round(s % 60)).padStart(2, "0")} s`;
 
@@ -69,17 +67,15 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
       worker.addEventListener("message", handler);
       worker.postMessage({ id, input: prepared.engineInput, seeds: SEEDS });
     });
-    const m = computeMetrics(ensemble, prepared.grid.zoneIndex, prepared.grid.behavior, DEFAULT_ZONES.length, a.inputs.ignition.row);
+    const m = computeMetrics(ensemble, prepared.grid.zoneIndex, prepared.grid.behavior, prepared.zones.length, a.inputs.ignition.row);
     return {
       level: prepared.level, anchorId: prepared.anchor?.id ?? null,
-      areaEnd: quantiles(m.area.map((c) => c[STEPS])), speedMmS: m.speedMmS, unknownContactFraction: m.unknownContactFraction,
+      areaEnd: quantiles(m.area.map((c) => c[STEPS])), speedMmS: m.speedMmS,
       fingerprint: (await fieldFingerprint(ensemble)).slice(0, 12),
       litCells: ensemble.arrivals[0].reduce((n, a) => n + (a === 0 ? 1 : 0), 0),
-      zones: DEFAULT_ZONES.map((z, i) => {
-        const b = prepared.grid.behavior[(z.rows[0] + 1) * GRID.cols + z.cols[0] + 1];
-        const events = m.zoneEvents[i].filter((e) => e >= 0).map((e) => e * CELL.stepSeconds).sort((x, y) => x - y);
-        return { id: z.id, name: z.name, probability: events.length / SEEDS.length, medianTimeS: events.length ? events[events.length >> 1] : null,
-          kind: b === 0 ? "inerte" : b === 1 ? "chegada" : "contato" };
+      pieces: prepared.zones.slice(1).map((z, k) => {
+        const events = m.zoneEvents[k + 1].filter((e) => e >= 0).map((e) => e * CELL.stepSeconds).sort((x, y) => x - y);
+        return { name: z.name, probability: events.length / SEEDS.length, medianTimeS: events.length ? events[events.length >> 1] : null };
       }),
     };
   }
@@ -108,7 +104,7 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
         <button className="button secondary" onClick={save} disabled={!ready}><Plus size={13} /> Save current scenario</button>
       </header>
       {items.length === 0 ? (
-        <p className="model-caption">Save the current scenario as an alternative, duplicate it, change materials, ignition, or atmosphere, and compare. All run with the same {SEEDS.length} seeds and the same {STEPS * CELL.stepSeconds / 60} min horizon.</p>
+        <p className="model-caption">Save the current layout, change an item's size or position, the ignition point or the atmosphere, save again and compare. Every alternative runs with the same {SEEDS.length} seeds over {STEPS * CELL.stepSeconds / 60} min.</p>
       ) : (
         <ul className="alt-list">
           {items.map((a) => (
@@ -122,7 +118,7 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
                       onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }} />
                   : <strong>{a.name}</strong>}
                 <span>{num(a.inputs.oxygen, 1)}% O₂ · {num(a.inputs.pressure, 1)} kPa · {num(a.inputs.flow, 1)} cm/s · {gravityOf(a.inputs.gravity).label} · ignition ({a.inputs.ignition.col}, {a.inputs.ignition.row})</span>
-                <span className="alt-mats">{a.inputs.zones.map((z) => MATERIAL_INFO[z.material].label).join(" · ")}</span>
+                <span className="alt-mats">{a.inputs.pieces.map((q) => `${PIECE_KINDS[q.kind].label} ${(q.lengthMm / 1000).toFixed(1)}×${(q.widthMm / 1000).toFixed(1)} m`).join(" · ")}</span>
               </div>
               <div className="alt-actions">
                 <button title="Load for editing" onClick={() => onLoad(a.inputs, a.name)}>Open</button>
@@ -140,7 +136,7 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
           <button className="button primary" disabled={!ready || selected.length < 2 || running !== null} onClick={compare}>
             {running ? <><LoaderCircle size={13} className="spin" /> Running {running}…</> : <><GitCompareArrows size={13} /> Compare {selected.length} alternatives</>}
           </button>
-          <span className="model-caption">Same seeds ({SEEDS[0]}–{SEEDS[SEEDS.length - 1]}) and horizon; differences come from the inputs, not experimental uncertainty.</span>
+          <span className="model-caption">Same seeds ({SEEDS[0]}–{SEEDS[SEEDS.length - 1]}): differences come only from the inputs.</span>
         </div>
       )}
       {chosen.length >= 2 && base && (
@@ -148,25 +144,21 @@ export function Alternatives({ current, onLoad, registry, anchorKernels, second,
           <table className="alt-table">
             <thead><tr><th>Metric</th>{chosen.map((a) => <th key={a.id}>{a.name}</th>)}</tr></thead>
             <tbody>
-              <tr><th>Level</th>{chosen.map((a) => <td key={a.id} className={results[a.id].level}>{LEVEL_LABEL[results[a.id].level]}</td>)}</tr>
               <tr><th>Reference trial</th>{chosen.map((a) => <td key={a.id}>{results[a.id].anchorId ?? "—"}</td>)}</tr>
-              <tr><th>Cells lit at ignition</th>{chosen.map((a) => <td key={a.id} className={results[a.id].litCells ? "" : "extrapolation"}>{results[a.id].litCells || "0 · ignition on non-propagating material"}</td>)}</tr>
               <tr><th>Final area (m²)</th>{chosen.map((a) => {
                 const r = results[a.id], d = r.areaEnd.median - base.areaEnd.median;
                 return <td key={a.id}>{num(r.areaEnd.median)} <small>({num(r.areaEnd.min)}–{num(r.areaEnd.max)})</small>{a.id !== chosen[0].id && <em>{d >= 0 ? "+" : ""}{num(d)}</em>}</td>;
               })}</tr>
               <tr><th>Front speed (mm/s)</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].speedMmS)}</td>)}</tr>
-              <tr><th>Realizations with contact without evidence</th>{chosen.map((a) => <td key={a.id}>{num(results[a.id].unknownContactFraction * 100, 0)}%</td>)}</tr>
-              {DEFAULT_ZONES.map((z, i) => (
-                <tr key={z.id}><th>{z.name}</th>{chosen.map((a) => {
-                  const zr = results[a.id].zones[i];
-                  return <td key={a.id}>{zr.kind === "inerte" ? "inert" : `${num(zr.probability * 100, 0)}% ${EVENT_LABEL[zr.kind]}${zr.medianTimeS !== null ? ` · ${fmt(zr.medianTimeS)}` : ""}`}</td>;
+              {Array.from({ length: MAX_PIECES }, (_, k) => k).filter((k) => chosen.some((a) => results[a.id].pieces[k])).map((k) => (
+                <tr key={k}><th>Item {k + 1}</th>{chosen.map((a) => {
+                  const pr = results[a.id].pieces[k];
+                  return <td key={a.id}>{pr ? <>{num(pr.probability * 100, 0)}% reached{pr.medianTimeS !== null ? ` · ${fmt(pr.medianTimeS)}` : ""}<small>{pr.name.replace(/^\d+ · /, "")}</small></> : "—"}</td>;
                 })}</tr>
               ))}
-              <tr><th>Field fingerprint</th>{chosen.map((a) => <td key={a.id} className="mono">{results[a.id].fingerprint}</td>)}</tr>
+              <tr><th>Run fingerprint</th>{chosen.map((a) => <td key={a.id} className="mono">{results[a.id].fingerprint}</td>)}</tr>
             </tbody>
           </table>
-          <p className="model-caption">"Contact" is the front touching a material that does not propagate in the model: not a proven barrier. Ranges in parentheses are dispersion across seeds, not experimental uncertainty. Each alternative retains its own reference trial and level.</p>
         </div>
       )}
     </section>

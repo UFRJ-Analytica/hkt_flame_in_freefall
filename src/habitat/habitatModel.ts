@@ -34,14 +34,58 @@ export interface Zone {
   material: MaterialId;
 }
 
+/** The wall itself: structure and panels, treated as non-combustible. Fabric items are placed on it. */
+export const WALL_ZONE: Zone = { id: "wall", name: "Wall panels", hint: "module structure", cols: [0, GRID.cols], rows: [0, GRID.rows], material: "Alumínio" };
+
+/** Reference sample of the propagation rule: SAFFIRE I · S1 fabric (cotton/fiberglass SIBAL). */
+export const REFERENCE_FABRIC = { material: "SIBAL" as MaterialId, thicknessMm: 0.37, sampleLengthMm: 940, sampleWidthMm: 406 };
+
+export type PieceKind = "curtain" | "bag" | "liner" | "partition";
+export const PIECE_KINDS: Record<PieceKind, { label: string; lengthMm: number; widthMm: number }> = {
+  curtain: { label: "Crew-quarter curtain", lengthMm: 1200, widthMm: 1800 },
+  bag: { label: "Stowage bag", lengthMm: 500, widthMm: 400 },
+  liner: { label: "Wall liner panel", lengthMm: 2000, widthMm: 1000 },
+  partition: { label: "Fabric partition", lengthMm: 900, widthMm: 1400 },
+};
+
+/** A fabric item on the liner: lower-left corner in cells (col along the module, row along the arc). */
+export interface Piece { id: string; kind: PieceKind; col: number; row: number; lengthMm: number; widthMm: number }
+export const MAX_PIECES = 4;
+export const PIECE_LIMITS = { lengthMm: [100, (GRID.cols * CELL.alongMm)] as const, widthMm: [100, GRID.rows * CELL.acrossMm] as const };
+
+/** Size in cells; the physical cell size never changes, so a larger item is more fabric, not a stretched drawing. */
+export function pieceCells(p: Piece) {
+  const cols = Math.max(1, Math.round(p.lengthMm / CELL.alongMm));
+  const rows = Math.max(1, Math.round(p.widthMm / CELL.acrossMm));
+  const col = Math.min(Math.max(0, p.col), GRID.cols - cols);
+  const row = Math.min(Math.max(0, p.row), GRID.rows - rows);
+  return { col, row, cols, rows };
+}
+
+export function pieceName(p: Piece, index: number) { return `${index + 1} · ${PIECE_KINDS[p.kind].label}`; }
+
+export function piecesToZones(pieces: Piece[]): Zone[] {
+  return [WALL_ZONE, ...pieces.map((p, i) => {
+    const c = pieceCells(p);
+    return { id: p.id, name: pieceName(p, i), hint: `${(p.lengthMm / 1000).toFixed(2)} × ${(p.widthMm / 1000).toFixed(2)} m`,
+      cols: [c.col, c.col + c.cols] as [number, number], rows: [c.row, c.row + c.rows] as [number, number], material: REFERENCE_FABRIC.material };
+  })];
+}
+
 const r = (fraction: number) => Math.round(fraction * GRID.rows);
-export const DEFAULT_ZONES: Zone[] = [
-  { id: "stowage", name: "Stowage bags", hint: "lower rear wall", cols: [0, GRID.cols], rows: [0, r(0.36)], material: "SIBAL" },
-  { id: "racks", name: "Equipment panels", hint: "rear wall, entrance side", cols: [0, 250], rows: [r(0.36), r(0.66)], material: "Alumínio" },
-  { id: "quarters", name: "Crew-quarter curtains", hint: "rear wall, far end", cols: [250, GRID.cols], rows: [r(0.36), r(0.66)], material: "Nomex" },
-  { id: "cables", name: "Cable bundle", hint: "transition to ceiling", cols: [0, GRID.cols], rows: [r(0.66), r(0.71)], material: "Kapton" },
-  { id: "ceiling", name: "Ceiling liner", hint: "ceiling", cols: [0, GRID.cols], rows: [r(0.71), GRID.rows], material: "SIBAL" },
+/** Default layout: a curtain touching a wall liner panel downstream, and a stowage bag 20 cm away from both. */
+export const DEFAULT_PIECES: Piece[] = [
+  { id: "p1", kind: "curtain", col: 40, row: r(0.12), lengthMm: 1200, widthMm: 1800 },
+  { id: "p2", kind: "liner", col: 160, row: r(0.30), lengthMm: 2000, widthMm: 1000 },
+  { id: "p3", kind: "bag", col: 180, row: r(0.12), lengthMm: 600, widthMm: 400 },
 ];
+export const DEFAULT_IGNITION = { col: 70, row: r(0.30) };
+
+/** The cell at the centre of an item, used to keep the ignition inside it. */
+export function pieceCentre(p: Piece) {
+  const c = pieceCells(p);
+  return { col: c.col + (c.cols >> 1), row: c.row + (c.rows >> 1) };
+}
 
 export interface Conditions {
   oxygen: number;
