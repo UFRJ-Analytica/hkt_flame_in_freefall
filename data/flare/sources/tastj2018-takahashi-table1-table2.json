@@ -1,0 +1,52 @@
+{
+ "source": {
+  "citation": "Takahashi S., Maruta K., 'Prediction of Limiting Oxygen Concentration of Thin Materials in Microgravity', Trans. JSASS Aerospace Tech. Japan 16 (1) (2018) 28-34",
+  "doi": "10.2322/tastj.16.28",
+  "manifestId": "tastj-2018-loc-model",
+  "tables": ["Table 1 (p. 30)", "Table 2 (p. 33)"],
+  "transcription": "manual, from pdftotext -layout of the cached PDF; values exactly as printed",
+  "acknowledgment": "conducted as part of the FLARE project supported by JAXA"
+ },
+ "campaigns": [
+  {"id": "ground-1g-downward-loc", "platform": "solo, 1g, propagação descendente (fluxo flutuante assumido 35 cm/s)", "measured": "LOC1g"},
+  {"id": "ground-1g-forced-blowoff", "platform": "solo, 1g, túnel de vento 14 × 14 cm em glovebox de 1 m³ (O2 0-50 %), fluxo ascendente forçado 40-130 cm/s", "measured": "LOC de blowoff (LOCb) por velocidade; A* e E* empíricos"},
+  {"id": "parabolic-flight-mloc", "platform": "voo parabólico (Diamond Air Service), mesmo método da Ref. 16", "measured": "MLOC em microgravidade"},
+  {"id": "drop-tower-4.5s", "platform": "torre de queda de 4,5 s (resultados anteriores)", "measured": "extinção radiativa a Vg = 3 cm/s e 21 % O2 (calibração de B2)"}
+ ],
+ "samples": {
+  "PMMA": "Acryplen (Mitsubishi Rayon), folha fina de 0,125 mm; teste de blowoff com 8 cm × 2 cm × 0,125 mm",
+  "NOMEX": "NOMEX HT90-40 (DuPont), tecido"
+ },
+ "model": {
+  "equation5": "Rrad + 1/Da = 1 at the limiting oxygen concentration (extinction when the sum exceeds unity)",
+  "Da": "B1 · (lambda_g/(rho_g c_g)) · rho_g Y_O A exp(-E/(R Tf)) / Vg_eff^2 (Eq. 4, blow-off location xd fixed at 4 cm)",
+  "Rrad": "B2 · eps(1 - aabs) sigma (Tv^4 - Tinf^4) / (rho_g c_g Vg (Tf - Tinf)) (Eq. 5)",
+  "VgEff": "Vg / (Pr Re_x)^(1/2)-type boundary-layer correction, Re_x = Vg xd / nu (Eq. 3)",
+  "B1": {"value": 0.28, "calibratedFrom": "LOC for downward spread (Vg = 35 cm/s) = 17.0 % (PMMA)"},
+  "B2": {"value": 2.76, "calibratedFrom": "4.5-s drop tower: radiative extinction at Vg = 3 cm/s and 21 % O2"},
+  "sameConstantsForBothMaterials": true,
+  "notReproducedHere": "the full curve needs flame-temperature and gas-property closures not tabulated in the paper",
+  "equationTextNote": "Eqs. 3-5 are written schematically: the PDF text layer garbles the formulae; consult the paper before any implementation"
+ },
+ "table1_properties": {
+  "PMMA": {"Tv_K": 670, "dhc_kJ_kg": 25900, "E_J_mol": "1.50×10^5", "A_m3_kgs": "1.36×10^9"},
+  "NOMEX": {"Tv_K": 730, "dhc_kJ_kg": 25530, "E_J_mol": "unknown", "A_m3_kgs": "unknown"}
+ },
+ "table2": {
+  "columns": ["PMMA", "NOMEX"],
+  "LOC1g_experiment_pct": [17.0, 31.5],
+  "MLOC_experiment_pct": [14.9, 29.5],
+  "MLOC_prediction_pct": [14.8, 29.6],
+  "deltaO2_experiment_pct": [2.1, 2.0],
+  "deltaO2_prediction_pct": [2.2, 1.9],
+  "E_literature_J_mol": ["1.50×10^5", "unknown"],
+  "E_star_blowoff_J_mol": ["1.46×10^5", "9.36×10^5"],
+  "A_literature_m3_kgs": ["1.36×10^9", "unknown"],
+  "A_star_blowoff_m3_kgs": ["1.10×10^9", "1.37×10^24"]
+ },
+ "notesFromText": [
+  "Text p. 30: 'In the previous experiment (Ref. 17), the minimum oxygen concentration in which the flame survived in microgravity was 14.7 % where the opposed flow velocity was 6 cm/s' (PMMA), while Table 2 prints MLOC experiment 14.9 %.",
+  "Text p. 33: NOMEX MLOC by parabolic flights 29.5 %, predicted 29.6 %.",
+  "deltaO2 here is printed as LOC1g - MLOC (positive), opposite sign convention to Tsuboi et al. 2016."
+ ]
+}

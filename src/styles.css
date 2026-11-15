@@ -1423,6 +1423,29 @@ button:disabled:hover {
   padding: 12px;
   border-right: 1px solid var(--line);
 }
+/* Published evidence that is not a PSI investigation (e.g. FLARE): separate group at the top of the catalogue list. */
+.evidence-group {
+  margin-bottom: 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.evidence-group-label {
+  display: block;
+  padding: 0 9px 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.evidence-item {
+  border-style: dashed;
+  border-color: var(--line-strong);
+}
+.evidence-loading {
+  color: #c3ccd6;
+  font-size: 13px;
+}
 .investigation-item {
   width: 100%;
   display: flex;

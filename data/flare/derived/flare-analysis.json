@@ -1,0 +1,315 @@
+{
+ "schemaVersion": 1,
+ "deltaO2Reproduction": {
+  "kind": "derived",
+  "tolerance_pp": 0.051,
+  "checks": [
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "N2",
+    "kind": "measured",
+    "convention": "MLOC - LOC",
+    "computed_pp": -2.3,
+    "printed_pp": -2.3,
+    "reproduced": true,
+    "records": [
+     "r000",
+     "r006",
+     "r012"
+    ]
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "N2",
+    "kind": "predicted",
+    "convention": "MLOC - LOC",
+    "computed_pp": -4.0,
+    "printed_pp": -4.0,
+    "reproduced": true,
+    "records": [
+     "r003",
+     "r009",
+     "r015"
+    ]
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "CO2",
+    "kind": "measured",
+    "convention": "MLOC - LOC",
+    "computed_pp": -5.1,
+    "printed_pp": -5.1,
+    "reproduced": true,
+    "records": [
+     "r001",
+     "r007",
+     "r013"
+    ]
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "CO2",
+    "kind": "predicted",
+    "convention": "MLOC - LOC",
+    "computed_pp": -8.6,
+    "printed_pp": -8.6,
+    "reproduced": true,
+    "records": [
+     "r004",
+     "r010",
+     "r016"
+    ]
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "Ar",
+    "kind": "measured",
+    "convention": "MLOC - LOC",
+    "computed_pp": -1.3,
+    "printed_pp": -1.3,
+    "reproduced": true,
+    "records": [
+     "r002",
+     "r008",
+     "r014"
+    ]
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "Ar",
+    "kind": "predicted",
+    "convention": "MLOC - LOC",
+    "computed_pp": -2.8,
+    "printed_pp": -2.8,
+    "reproduced": true,
+    "records": [
+     "r005",
+     "r011",
+     "r017"
+    ]
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "PMMA",
+    "balanceGas": "N2 (air-like)",
+    "kind": "measured",
+    "convention": "LOC1g - MLOC",
+    "computed_pp": 2.1,
+    "printed_pp": 2.1,
+    "reproduced": true,
+    "records": [
+     "r036",
+     "r038",
+     "r042"
+    ]
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "PMMA",
+    "balanceGas": "N2 (air-like)",
+    "kind": "predicted",
+    "convention": "LOC1g - MLOC",
+    "computed_pp": 2.2,
+    "printed_pp": 2.2,
+    "reproduced": true,
+    "records": [
+     "r036",
+     "r040",
+     "r044"
+    ]
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "NOMEX",
+    "balanceGas": "N2 (air-like)",
+    "kind": "measured",
+    "convention": "LOC1g - MLOC",
+    "computed_pp": 2.0,
+    "printed_pp": 2.0,
+    "reproduced": true,
+    "records": [
+     "r037",
+     "r039",
+     "r043"
+    ]
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "NOMEX",
+    "balanceGas": "N2 (air-like)",
+    "kind": "predicted",
+    "convention": "LOC1g - MLOC",
+    "computed_pp": 1.9,
+    "printed_pp": 1.9,
+    "reproduced": true,
+    "records": [
+     "r037",
+     "r041",
+     "r045"
+    ]
+   }
+  ],
+  "allReproduced": true
+ },
+ "modelErrors": {
+  "kind": "derived",
+  "rows": [
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "N2",
+    "MLOC_measured": 14.7,
+    "MLOC_predicted": 13.0,
+    "error_pp": -1.7,
+    "reading": "previsão abaixo do medido (lado seguro: prevê inflamável onde não queimou)"
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "CO2",
+    "MLOC_measured": 19.2,
+    "MLOC_predicted": 15.4,
+    "error_pp": -3.8,
+    "reading": "previsão abaixo do medido (lado seguro: prevê inflamável onde não queimou)"
+   },
+   {
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA",
+    "balanceGas": "Ar",
+    "MLOC_measured": 11.6,
+    "MLOC_predicted": 9.2,
+    "error_pp": -2.4,
+    "reading": "previsão abaixo do medido (lado seguro: prevê inflamável onde não queimou)"
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "PMMA",
+    "balanceGas": "N2 (air-like)",
+    "MLOC_measured": 14.9,
+    "MLOC_predicted": 14.8,
+    "error_pp": -0.1,
+    "reading": "previsão abaixo do medido (lado seguro: prevê inflamável onde não queimou)"
+   },
+   {
+    "source": "tastj-2018-loc-model",
+    "material": "NOMEX",
+    "balanceGas": "N2 (air-like)",
+    "MLOC_measured": 29.5,
+    "MLOC_predicted": 29.6,
+    "error_pp": 0.1,
+    "reading": "previsão acima do medido"
+   }
+  ],
+  "note": "O LOC previsto em N2 (2016) é o ponto de calibração do modelo; o B1 de 2018 também foi calibrado no LOC descendente de 17,0 %. Erros de MLOC não são validações independentes do LOC."
+ },
+ "crossSource": {
+  "kind": "derived",
+  "PMMA_LOC1g_N2": {
+   "tsuboi2016": 17.0,
+   "takahashi2018": 17.0,
+   "consistent": true
+  },
+  "PMMA_MLOC_microgravity": {
+   "tsuboi2016_table": 14.7,
+   "takahashi2018_table": 14.9,
+   "takahashi2018_text_citing_ref17": 14.7,
+   "difference_pp": 0.2,
+   "reading": "Divergência de 0,2 p.p. entre a Tabela 2 de 2018 (14,9 %) e a de 2016 / texto de 2018 (14,7 %, Vg = 6 cm/s). Não é reconciliada aqui; ambas preservadas."
+  },
+  "PMMA_Vcr_N2": {
+   "tsuboi2016_table_measured": 10.0,
+   "takahashi2018_text_citing_ref17": 6.0,
+   "reading": "Vcr de 10 cm/s (Tabela de 2016) contra 6 cm/s (texto de 2018, Ref. 17). Não reconciliado."
+  },
+  "deltaO2SignConvention": "2016: MLOC - LOC (negativo); 2018: LOC1g - MLOC (positivo); registrados como impressos"
+ },
+ "mlocEvidence": {
+  "kind": "derived",
+  "relation": "MLOC = f(U, O2, material, geometria, g)",
+  "points": [
+   {
+    "campaigns": [
+     "ground-1g-japan",
+     "parabolic-flight"
+    ],
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA 0,125 mm",
+    "geometry": "folha plana fina",
+    "balanceGas": "N2",
+    "LOC1g_pct": 17.0,
+    "MLOC_pct": 14.7,
+    "Vcr_cm_s": 10.0,
+    "Vcr_raw": "10 cm/s",
+    "MLOC_over_LOC": 0.865
+   },
+   {
+    "campaigns": [
+     "ground-1g-japan",
+     "parabolic-flight"
+    ],
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA 0,125 mm",
+    "geometry": "folha plana fina",
+    "balanceGas": "CO2",
+    "LOC1g_pct": 24.3,
+    "MLOC_pct": 19.2,
+    "Vcr_cm_s": null,
+    "Vcr_raw": "2~6cm/s",
+    "MLOC_over_LOC": 0.79
+   },
+   {
+    "campaigns": [
+     "ground-1g-japan",
+     "parabolic-flight"
+    ],
+    "source": "tastj-2016-ambient-gas",
+    "material": "PMMA 0,125 mm",
+    "geometry": "folha plana fina",
+    "balanceGas": "Ar",
+    "LOC1g_pct": 12.9,
+    "MLOC_pct": 11.6,
+    "Vcr_cm_s": 9.0,
+    "Vcr_raw": "9cm/s",
+    "MLOC_over_LOC": 0.899
+   },
+   {
+    "campaigns": [
+     "ground-1g-japan",
+     "parabolic-flight"
+    ],
+    "source": "tastj-2018-loc-model",
+    "material": "PMMA 0,125 mm",
+    "geometry": "folha plana fina",
+    "balanceGas": "N2 (ar)",
+    "LOC1g_pct": 17.0,
+    "MLOC_pct": 14.9,
+    "Vcr_cm_s": null,
+    "Vcr_raw": "não tabelado",
+    "MLOC_over_LOC": 0.876
+   },
+   {
+    "campaigns": [
+     "ground-1g-japan",
+     "parabolic-flight"
+    ],
+    "source": "tastj-2018-loc-model",
+    "material": "NOMEX HT90-40",
+    "geometry": "tecido",
+    "balanceGas": "N2 (ar)",
+    "LOC1g_pct": 31.5,
+    "MLOC_pct": 29.5,
+    "Vcr_cm_s": null,
+    "Vcr_raw": "não tabelado",
+    "MLOC_over_LOC": 0.937
+   }
+  ],
+  "coverage": "Pontos de 1g + voo parabólico para PMMA fino (N2, CO2, Ar) e NOMEX HT90-40 (ar). Os mapas completos (O2 × Vg) existem só em figuras; os valores da ISS (papel-filtro 2024, PMMA/NOMEX 2026) estão em textos completos não obtidos.",
+  "notDerived": "nenhuma regressão, interpolação ou extrapolação entre materiais, gases ou geometrias"
+ }
+}

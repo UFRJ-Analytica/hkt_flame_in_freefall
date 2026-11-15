@@ -64,6 +64,15 @@ npm run preview
 - Aplicabilidade de modelos calibrados no modo cabine: compara material, O₂, pressão, escoamento e gravidade com o domínio medido, critério a critério; fora do domínio mostra os ensaios medidos mais próximos. Em gravidade parcial, cita LUCI/FM².
 - Alvos de modelagem curados (`npm run targets:build` → `public/data/modeling-targets.json`, exportáveis em JSON/CSV) com a célula original de cada valor interpretado.
 - Catálogo real com filtros, busca, paginação, campos originais, exportação e aplicação das condições numéricas disponíveis ao cenário; verificado no navegador com BASS-II e FLEX.
+- **FLARE — Flammability Limits at Reduced Gravity**, no grupo *Evidência publicada · fora do PSI* em Experimentos. FLARE (JAXA) não tem dataset no PSI.
+  - Conteúdo: LOC (1g) e MLOC (microgravidade) de PMMA/NOMEX das Tabelas 2 de Tsuboi et al. 2016 e Takahashi & Maruta 2018. Os valores vêm sobretudo de campanhas em 1g e voo parabólico, não dos mapas da ISS.
+  - O que fica separado:
+    - medido, previsto pelo modelo dos autores e ponto de calibração;
+    - ΔO₂ com a convenção de sinal de cada fonte;
+    - Vcr como impresso (`2~6cm/s` permanece texto).
+  - Divergências preservadas: 14,7 % contra 14,9 %, e 10 contra 6 cm/s. Seis limitações ficam sempre visíveis.
+  - O módulo não tem regressão, interpolação nem previsão. Carrega sob demanda.
+  - Mais detalhes em [FLARE_FRONTEND_REVIEW.md](docs/research/FLARE_FRONTEND_REVIEW.md), com base em [FLARE_ANALYSIS.md](docs/research/FLARE_ANALYSIS.md).
 - Proveniência e limitações visíveis na aplicação.
 - Vídeos brutos da NASA por registro: 1.629 vídeos referenciados pelos metadados PSI, 790 registros ligados por regra explícita de nome de arquivo (ensaio exato no BASS-II, ACME Flame Design/CFI-G e CFI; mesmo dia de teste nos resumos diários do ACME). Os vídeos não são redistribuídos: `/api/media` aceita só arquivos do índice e redireciona para o link assinado do PSI. Reconstruir o índice: `npm run media:index`.
 
@@ -124,6 +133,7 @@ src/
   components/CabinScene.tsx        cena Three.js / React Three Fiber
   components/SaffireScene.tsx      cena da amostra SAFFIRE na grade
   components/ExperimentExplorer.tsx catálogo e fontes
+  components/research/Flare*      módulo FLARE (evidência publicada, carregado sob demanda)
   hooks/                          carregamento de dados e acesso por teclado
   config.ts                       presets e materiais hipotéticos
   types.ts                        contrato de cena e dados
@@ -138,6 +148,9 @@ scripts/ingest_saffire.py         download e manifesto das imagens do ensaio
 scripts/calibrate_saffire*.py     extração da frente e ajuste das transições
 data/saffire/                     registro e proveniência do ensaio
 data/cache/saffire/               arquivos grandes locais, fora do Git
+scripts/flare/                    fontes, normalização, análise e JSON da interface FLARE
+data/flare/                       manifesto, transcrições de tabelas e derivados FLARE
+data/cache/flare/                 PDFs FLARE locais, fora do Git
 public/data/                     snapshot e manifesto consumidos pela UI
 data/raw/psi/                    CSVs, metadados e hashes preservados
 data/raw/research/               PDFs/HTML NASA e manifesto de proveniência

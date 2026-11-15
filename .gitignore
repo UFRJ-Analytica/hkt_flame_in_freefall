@@ -10,3 +10,4 @@ __pycache__/
 .scratch/
 data/cache/saffire/
 .DS_Store
+data/cache/flare/

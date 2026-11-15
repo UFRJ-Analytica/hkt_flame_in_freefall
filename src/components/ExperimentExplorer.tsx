@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import {
   ArrowDownToLine,
   ArrowUpRight,
   Beaker,
   ChevronRight,
+  Flame,
   Database,
   Search,
   SlidersHorizontal,
@@ -13,6 +14,10 @@ import type { ExperimentTest, Investigation, NasaData } from "../types";
 import { CATEGORY_LABELS, number } from "../config";
 import { useModalFocus } from "../hooks/useModalFocus";
 import { RecordVideos } from "./research/RecordVideos";
+import { FLARE_TITLE } from "./research/flareEvidence";
+
+// Published evidence outside the PSI catalogue: module and JSON load only when opened.
+const FlareObservation = lazy(() => import("./research/FlareObservation"));
 
 export function ExperimentExplorer({
   data,
@@ -28,6 +33,7 @@ export function ExperimentExplorer({
   const [selectedId, setSelectedId] = useState("PSI-25");
   const [detail, setDetail] = useState<ExperimentTest | null>(null);
   const [page, setPage] = useState(0);
+  const [flareOpen, setFlareOpen] = useState(false);
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -118,6 +124,27 @@ export function ExperimentExplorer({
       </div>
       <div className="explorer-layout">
         <aside className="investigation-list">
+          {(category === "all" || category === "solid") && (
+            <div className="evidence-group">
+              <span className="evidence-group-label">
+                Evidência publicada · fora do PSI
+              </span>
+              <button
+                className="investigation-item evidence-item"
+                onClick={() => setFlareOpen(true)}
+                aria-label={`${FLARE_TITLE}: abrir evidência publicada (sem dataset PSI)`}
+              >
+                <div className="investigation-icon">
+                  <Flame size={19} />
+                </div>
+                <span>
+                  <strong>FLARE</strong>
+                  <small>JAXA · LOC/MLOC publicados · sem dataset PSI</small>
+                </span>
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          )}
           {investigations.map((investigation) => (
             <button
               key={investigation.id}
@@ -394,6 +421,17 @@ export function ExperimentExplorer({
             </button>
           </section>
         </div>
+      )}
+      {flareOpen && (
+        <Suspense
+          fallback={
+            <div className="modal-backdrop">
+              <p className="evidence-loading">Carregando evidência FLARE…</p>
+            </div>
+          }
+        >
+          <FlareObservation onClose={() => setFlareOpen(false)} />
+        </Suspense>
       )}
     </div>
   );
