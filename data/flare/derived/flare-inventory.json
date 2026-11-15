@@ -1,0 +1,334 @@
+{
+ "schemaVersion": 1,
+ "program": "FLARE — Fundamental Research on International Standard of Fire Safety in Space (JAXA)",
+ "principalInvestigator": "Osamu Fujita (Hokkaido University)",
+ "partners": "JAXA, NASA (GRC, WSTF), ESA, universidades no Japão, EUA e França",
+ "officialPages": [
+  "https://humans-in-space.jaxa.jp/en/biz-lab/experiment/theme/detail/000807.html",
+  "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/flammability-limits-at-reduced-g-experiment-flare/",
+  "https://science.nasa.gov/mission/flare/"
+ ],
+ "psi": {
+  "status": "not-found",
+  "detail": "Nenhuma investigação FLARE no NASA PSI (busca no índice em 2026-11-15; IDs públicos PSI-1 a PSI-230 já verificados nesta sessão); ocorrências do índice são coautorias em outras investigações."
+ },
+ "campaigns": [
+  {
+   "id": "ground-1g-nasa-wstf",
+   "group": "1g terrestre (NASA)",
+   "platform": "NASA White Sands Test Facility, laboratório",
+   "gravity": "1g",
+   "materials": [
+    "LDPE",
+    "ETFE (Tefzel 750)",
+    "HDPE",
+    "PMMA fundido (0,8 / 2,99 / 5,99 mm)",
+    "Nomex HT90-40"
+   ],
+   "geometry": "placas e fios (configuração de fio com LDPE e ETFE)",
+   "atmosphere": "101,3 kPa (14,7 psia), temperatura ambiente nos testes de qualificação do ignitor",
+   "measured": "MOC pelo NASA-STD-6001 Test 1; desenvolvimento de ignitor de fio quente; critério de autoextinção de 6\"",
+   "objective": "correlacionar NASA-STD-6001 Test 1 com o LOI de voo (Task Group 5)",
+   "sources": [
+    "ntrs-flare-2016"
+   ],
+   "quantitative": "não (tabela de MOC só com \"MOC below Igniter\"; sem valores numéricos)",
+   "sourceStatus": {
+    "ntrs-flare-2016": "downloaded"
+   }
+  },
+  {
+   "id": "ground-1g-japan",
+   "group": "1g terrestre (Japão)",
+   "platform": "laboratório (Gifu): propagação descendente e túnel de blowoff em glovebox de 1 m³",
+   "gravity": "1g",
+   "materials": [
+    "PMMA 0,125 mm (Acryplen)",
+    "NOMEX HT90-40"
+   ],
+   "geometry": "folha plana fina, 8 cm × 2 cm",
+   "atmosphere": "O2 0-50 % em N2 (blowoff); N2, CO2 ou Ar (LOC 2016); ~1 atm",
+   "measured": "LOC1g (descendente); LOC de blowoff em fluxo forçado 40-130 cm/s; A* e E* empíricos",
+   "objective": "fornecer em solo os parâmetros que preveem o MLOC em microgravidade",
+   "sources": [
+    "tastj-2016-ambient-gas",
+    "tastj-2018-loc-model"
+   ],
+   "quantitative": "sim: Tabela 2 de 2016 e Tabela 2 de 2018",
+   "sourceStatus": {
+    "tastj-2016-ambient-gas": "downloaded",
+    "tastj-2018-loc-model": "downloaded"
+   }
+  },
+  {
+   "id": "parabolic-flight",
+   "group": "voo parabólico",
+   "platform": "aeronave Diamond Air Service, ~20 s de microgravidade",
+   "gravity": "microgravidade de curta duração (~20 s)",
+   "materials": [
+    "PMMA 0,125 mm (Acryplen)",
+    "NOMEX HT90-40"
+   ],
+   "geometry": "folha plana fina, 8 cm × 2 cm",
+   "atmosphere": "O2 em N2, CO2 ou Ar; câmara fechada; fluxo oposto 0-20 cm/s",
+   "measured": "MLOC e Vcr; taxa de propagação (mm/s); comprimento de pré-aquecimento (IR)",
+   "objective": "validar o modelo de escala que prevê o MLOC a partir de dados de 1g",
+   "sources": [
+    "tastj-2016-ambient-gas",
+    "tastj-2018-loc-model"
+   ],
+   "quantitative": "sim: MLOC medido nas Tabelas 2 de 2016 e 2018",
+   "sourceStatus": {
+    "tastj-2016-ambient-gas": "downloaded",
+    "tastj-2018-loc-model": "downloaded"
+   }
+  },
+  {
+   "id": "drop-tower",
+   "group": "torre de queda",
+   "platform": "torre de queda de 4,5 s (resultado anterior citado)",
+   "gravity": "microgravidade de curtíssima duração (4,5 s)",
+   "materials": [
+    "PMMA fino"
+   ],
+   "geometry": "folha plana fina",
+   "atmosphere": "21 % O2",
+   "measured": "extinção radiativa a Vg = 3 cm/s",
+   "objective": "calibrar a constante empírica B2 do modelo (B2 = 2,76)",
+   "sources": [
+    "tastj-2018-loc-model"
+   ],
+   "quantitative": "só o ponto de calibração citado no texto",
+   "sourceStatus": {
+    "tastj-2018-loc-model": "downloaded"
+   }
+  },
+  {
+   "id": "iss-kibo-filter-paper",
+   "group": "ISS/Kibo — papel-filtro",
+   "platform": "Solid Combustion Experiment Module (SCEM), MSPR, Kibo; desde maio de 2022",
+   "gravity": "microgravidade de longa duração",
+   "materials": [
+    "papel-filtro"
+   ],
+   "geometry": "folha plana, 130 mm × 40 ou 20 mm",
+   "atmosphere": "298 K, 100 kPa; ex.: 15,5 % O2 com fluxo oposto de 10 a 18 cm/s em passos de 2 cm/s",
+   "measured": "mapa de inflamabilidade (O2 × Vg), taxa de propagação, distribuição de velocidade em órbita, imagens visível/IR/alta velocidade",
+   "objective": "verificar a curva-limite prevista em solo; modo \"flamelet\" perto do limite",
+   "sources": [
+    "proci-2024-filter-paper",
+    "firetech-2023-filter-paper",
+    "proci-2026-filter-paper-dynamics",
+    "nasa-ahr-2024"
+   ],
+   "quantitative": "só o que está nos resumos (19 ensaios; condições; 1,0-1,5 mm/s em 2-D); textos completos não obtidos",
+   "sourceStatus": {
+    "proci-2024-filter-paper": "blocked",
+    "firetech-2023-filter-paper": "blocked",
+    "proci-2026-filter-paper-dynamics": "blocked",
+    "nasa-ahr-2024": "downloaded"
+   }
+  },
+  {
+   "id": "iss-kibo-pmma-nomex",
+   "group": "ISS/Kibo — PMMA e NOMEX",
+   "platform": "SCEM, Kibo",
+   "gravity": "microgravidade de longa duração",
+   "materials": [
+    "PMMA (não carbonizante)",
+    "NOMEX HT90-40 (carbonizante)"
+   ],
+   "geometry": "folha plana termicamente fina",
+   "atmosphere": "fluxo oposto, inclusive quiescente",
+   "measured": "LOC, MLOC, raio da chama 3-D Rf, comprimento de pré-aquecimento Lg",
+   "objective": "estender o mapa a materiais carbonizantes e não carbonizantes; critério de raio crítico para chamas 3-D",
+   "sources": [
+    "cnf-2026-pmma-nomex"
+   ],
+   "quantitative": "não: valores no texto completo, que não foi obtido (HTTP 403)",
+   "sourceStatus": {
+    "cnf-2026-pmma-nomex": "blocked"
+   }
+  },
+  {
+   "id": "iss-kibo-wire",
+   "group": "ISS/Kibo — fios isolados",
+   "platform": "SCEM, Kibo (carretel de fios)",
+   "gravity": "microgravidade de longa duração",
+   "materials": [
+    "fios com isolamento polimérico"
+   ],
+   "geometry": "fio isolado",
+   "atmosphere": "não informada",
+   "measured": "não informado (experimentos \"em andamento\" segundo o folheto)",
+   "objective": "efeito da geometria; autoignição por sobrecorrente",
+   "sources": [
+    "jaxa-leaflet-2026"
+   ],
+   "quantitative": "não",
+   "sourceStatus": {
+    "jaxa-leaflet-2026": "downloaded"
+   }
+  },
+  {
+   "id": "extensions-2026",
+   "group": "extensões (CFRP, gravidade parcial)",
+   "platform": "previsões (ICES 2026)",
+   "gravity": "microgravidade e gravidade parcial (previsão)",
+   "materials": [
+    "CFRP",
+    "materiais sólidos diversos"
+   ],
+   "geometry": "folhas",
+   "atmosphere": "não informada",
+   "measured": "previsões de modelo",
+   "objective": "aplicar o método a novos materiais e a habitats lunares/marcianos",
+   "sources": [
+    "ices-2026-cfrp",
+    "ices-2026-partial-g"
+   ],
+   "quantitative": "não: PDFs com HTTP 403",
+   "sourceStatus": {
+    "ices-2026-cfrp": "failed",
+    "ices-2026-partial-g": "failed"
+   }
+  }
+ ],
+ "sources": [
+  {
+   "id": "cnf-2026-pmma-nomex",
+   "title": "Flame spread over charring and non-charring materials in microgravity on ISS/Kibo",
+   "identifier": "doi:10.1016/j.combustflame.2026.114803",
+   "origin": "https://www.sciencedirect.com/science/article/pii/S0010218026000398",
+   "status": "blocked",
+   "reason": "ScienceDirect HTTP 403 a acesso automatizado; usados apenas metadados Crossref e resumo OpenAlex"
+  },
+  {
+   "id": "firetech-2023-filter-paper",
+   "title": "Flame Spread Behavior Over a Filter Paper Near Extinction Limit Under Microgravity on the ISS/Kibo",
+   "identifier": "doi:10.1007/s10694-023-01507-3",
+   "origin": "https://jaxa.repo.nii.ac.jp/records/2001801",
+   "status": "blocked",
+   "reason": "Repositório JAXA (JAIRO Cloud) em manutenção desde 2026-10-28, HTTP 503; versão da editora não aberta"
+  },
+  {
+   "id": "proci-2024-filter-paper",
+   "title": "Quantitative prediction of the flammability limits of filter paper in microgravity conditions",
+   "identifier": "doi:10.1016/j.proci.2024.105200",
+   "origin": "https://www.sciencedirect.com/science/article/pii/S1540748924000105",
+   "status": "blocked",
+   "reason": "ScienceDirect HTTP 403 a acesso automatizado; usados apenas metadados Crossref e resumo OpenAlex"
+  },
+  {
+   "id": "proci-2026-filter-paper-dynamics",
+   "title": "Dynamics of flame spread over filter papers in microgravity aboard the ISS",
+   "identifier": "doi:10.1016/j.proci.2026.106032",
+   "origin": "https://www.sciencedirect.com/science/article/pii/S1540748926000337",
+   "status": "blocked",
+   "reason": "não tentado: mesmo host (ScienceDirect) que bloqueia acesso automatizado; usados metadados Crossref e resumo OpenAlex"
+  },
+  {
+   "id": "jaxa-leaflet-2026",
+   "title": "Combustion Experiment in Microgravity (JAXA leaflet)",
+   "identifier": "Leaflet_CombustionExperimentInMicrogravity.pdf",
+   "origin": "JAXA",
+   "status": "downloaded",
+   "bytes": 1427519,
+   "sha256": "969cc44e95f0060cfa9daff060ec86ed3f923586b7efb28cf038fe6805a13b40"
+  },
+  {
+   "id": "nasa-ahr-2024",
+   "title": "NASA Biological and Physical Sciences — Annual Highlights of Results 2024",
+   "identifier": "ahr-2024-final.pdf",
+   "origin": "NASA",
+   "status": "downloaded",
+   "bytes": 12482999,
+   "sha256": "ecf8af21520fc1e483cb5e7544ce71265ce8b92fa8814ca15b677b9e0926efa9"
+  },
+  {
+   "id": "ntrs-flare-2016",
+   "title": "Flammability Limits at Reduced-g Experiment (FLARE) — Task Group 5: Fundamental Research on International Standard of Fire Safety in Space",
+   "identifier": "NTRS 20160001023",
+   "origin": "NASA NTRS",
+   "status": "downloaded",
+   "bytes": 1130863,
+   "sha256": "610ea73544a49a24e94624844e437b5a77cbb2ac9fc8cc3215a03688a6a58594"
+  },
+  {
+   "id": "tastj-2016-ambient-gas",
+   "title": "Effect of Ambient Gas on Flammability Limit of Flat Materials in Microgravity (Tsuboi et al.)",
+   "identifier": "doi:10.2322/tastj.14.ph_1",
+   "origin": "J-STAGE (open access)",
+   "status": "downloaded",
+   "bytes": 822655,
+   "sha256": "5641b462461ea3019a4c8ece239a700b3242dbccb3ce7c19fd2ff6b80096aaa2"
+  },
+  {
+   "id": "tastj-2018-loc-model",
+   "title": "Prediction of Limiting Oxygen Concentration of Thin Materials in Microgravity (Takahashi, Maruta)",
+   "identifier": "doi:10.2322/tastj.16.28",
+   "origin": "J-STAGE (open access)",
+   "status": "downloaded",
+   "bytes": 999734,
+   "sha256": "7bc9eb42f57c80cdfde345fc3daabc28afcd05e328c1bf0e9ad1777cd50b4470"
+  },
+  {
+   "id": "ices-2026-cfrp",
+   "title": "ices-2026-cfrp",
+   "identifier": "https://ttu-ir.tdl.org/bitstreams/3fc9a49b-c58a-4094-9bf5-515626122548/download",
+   "origin": "https://ttu-ir.tdl.org/bitstreams/3fc9a49b-c58a-4094-9bf5-515626122548/download",
+   "status": "failed",
+   "reason": "HTTP 403"
+  },
+  {
+   "id": "ices-2026-partial-g",
+   "title": "ices-2026-partial-g",
+   "identifier": "https://ttu-ir.tdl.org/bitstreams/755f75b3-7b3d-49bf-8053-81d97938b0cf/download",
+   "origin": "https://ttu-ir.tdl.org/bitstreams/755f75b3-7b3d-49bf-8053-81d97938b0cf/download",
+   "status": "failed",
+   "reason": "HTTP 403"
+  }
+ ],
+ "publications": [
+  {
+   "id": "proci-2024-filter-paper",
+   "doi": "10.1016/j.proci.2024.105200",
+   "title": "Quantitative prediction of the flammability limits of filter paper in microgravity conditions",
+   "venue": "Proceedings of the Combustion Institute 40 (2024) 105200",
+   "license": "CC BY-NC-ND 4.0",
+   "fullTextRetrieved": false
+  },
+  {
+   "id": "cnf-2026-pmma-nomex",
+   "doi": "10.1016/j.combustflame.2026.114803",
+   "title": "Flame spread over charring and non-charring materials in microgravity on ISS/Kibo",
+   "venue": "Combustion and Flame 286 (2026) 114803",
+   "license": "CC BY-NC-ND 4.0",
+   "fullTextRetrieved": false
+  },
+  {
+   "id": "proci-2026-filter-paper-dynamics",
+   "doi": "10.1016/j.proci.2026.106032",
+   "title": "Dynamics of flame spread over filter papers in microgravity aboard the ISS",
+   "venue": "Proceedings of the Combustion Institute 42 (2026) 106032",
+   "license": "CC BY 4.0",
+   "fullTextRetrieved": false
+  },
+  {
+   "id": "firetech-2023-filter-paper",
+   "doi": "10.1007/s10694-023-01507-3",
+   "title": "Flame Spread Behavior Over a Filter Paper Near Extinction Limit Under Microgravity on the ISS/Kibo",
+   "venue": "Fire Technology 60 (2024) 313-334 (online 2023-11-04)",
+   "license": "publisher TDM licence; open copy on JAXA repository (record 2001801), unavailable during JAIRO Cloud maintenance",
+   "fullTextRetrieved": false
+  }
+ ],
+ "excludedNotFlare": [
+  {
+   "doi": "10.1016/j.proci.2026.106484",
+   "title": "Quiescent flame spread and extinction over acrylic sheets in microgravity at increased oxygen concentration",
+   "reason": "NASA SoFIE investigation (Carmignani, Bhattacharjee, Kaplan, Ferkul, Olson), not FLARE; kept out of the FLARE base"
+  }
+ ],
+ "downloadBytes": 16863770
+}

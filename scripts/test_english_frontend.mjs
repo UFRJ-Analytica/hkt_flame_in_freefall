@@ -27,7 +27,7 @@ test('display translation preserves original evidence and raw source cells', () 
 
 test('published display dictionaries are complete nonempty string mappings', () => {
   const merged = {};
-  for (const path of ['src/i18n/catalog.en.json', 'src/i18n/saffire.en.json', 'src/i18n/experiments.en.json']) {
+  for (const path of ['src/i18n/catalog.en.json', 'src/i18n/saffire.en.json', 'src/i18n/experiments.en.json', 'src/i18n/flare.en.json']) {
     const dictionary = json(path);
     assert.ok(Object.keys(dictionary).length > 0, path);
     for (const [source, translation] of Object.entries(dictionary)) {

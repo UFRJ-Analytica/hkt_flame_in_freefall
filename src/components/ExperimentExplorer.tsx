@@ -5,6 +5,7 @@ import {
   Beaker,
   BookOpen,
   ChevronRight,
+  Flame,
   Database,
   Film,
   Search,
@@ -31,6 +32,11 @@ import { BASS_B1_RECORD_ID } from "./research/bassB1";
 
 // Measured video analysis of BASS-II test B1, loaded only when opened.
 const BassB1Observation = lazy(() => import("./research/BassB1Observation"));
+
+import { FLARE_TITLE } from "./research/flareEvidence";
+
+// FLARE (JAXA) published flammability limits, outside the PSI catalogue: loaded only when opened.
+const FlareObservation = lazy(() => import("./research/FlareObservation"));
 
 export function ExperimentExplorer({
   data,
@@ -59,6 +65,7 @@ export function ExperimentExplorer({
     setPage(0);
     setDetail(null);
   };
+  const [flareOpen, setFlareOpen] = useState(false);
   useModalFocus(detail !== null && !applicationPending, () => setDetail(null));
   const investigations = data.investigations.filter(
     (i) => category === "all" || i.category === category,
@@ -188,6 +195,20 @@ export function ExperimentExplorer({
                 <span>
                   <strong>SoFIE-GEL</strong>
                   <small>NASA · 5 published cases · no PSI dataset</small>
+                </span>
+                <ChevronRight size={15} />
+              </button>
+              <button
+                className="investigation-item evidence-item"
+                onClick={() => setFlareOpen(true)}
+                aria-label={`${FLARE_TITLE}: open published evidence (no PSI dataset)`}
+              >
+                <div className="investigation-icon">
+                  <Flame size={19} />
+                </div>
+                <span>
+                  <strong>FLARE</strong>
+                  <small>JAXA · published LOC/MLOC · no PSI dataset</small>
                 </span>
                 <ChevronRight size={15} />
               </button>
@@ -550,6 +571,17 @@ export function ExperimentExplorer({
           }
         >
           <BassB1Observation onClose={() => setObservationOpen(false)} />
+        </Suspense>
+      )}
+      {flareOpen && (
+        <Suspense
+          fallback={
+            <div className="modal-backdrop">
+              <p className="evidence-loading">Loading FLARE evidence…</p>
+            </div>
+          }
+        >
+          <FlareObservation onClose={() => setFlareOpen(false)} />
         </Suspense>
       )}
     </div>

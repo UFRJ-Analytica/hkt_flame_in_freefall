@@ -1423,7 +1423,7 @@ button:disabled:hover {
   padding: 12px;
   border-right: 1px solid var(--line);
 }
-/* Published evidence that is not a PSI investigation (e.g. SoFIE-GEL): separate group under the catalogue. */
+/* Published evidence that is not a PSI investigation (SoFIE-GEL, FLARE): separate group at the top of the catalogue list. */
 .evidence-group {
   margin-bottom: 12px;
   padding-bottom: 7px;

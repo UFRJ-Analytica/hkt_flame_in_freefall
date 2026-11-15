@@ -10,3 +10,5 @@ data/sofie/** -text
 public/data/bass2/*.json -text
 public/data/same/*.json -text
 public/data/sofie/*.json -text
+data/flare/** -text
+public/data/flare/*.json -text

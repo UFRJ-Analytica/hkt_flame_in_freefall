@@ -1,6 +1,7 @@
 import catalog from "./catalog.en.json" with { type: "json" };
 import saffire from "./saffire.en.json" with { type: "json" };
 import experiments from "./experiments.en.json" with { type: "json" };
+import flare from "./flare.en.json" with { type: "json" };
 
 // Presentation-only translations. Never rewrite the source artifacts: their
 // original values and hashes remain part of the scientific audit trail.
@@ -8,6 +9,7 @@ const translations: Readonly<Record<string, string>> = {
   ...catalog,
   ...saffire,
   ...experiments,
+  ...flare,
   "Alumínio": "Aluminum",
   "Algodão": "Cotton",
   "Algodão jersey": "Cotton jersey",

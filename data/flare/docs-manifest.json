@@ -1,0 +1,140 @@
+{
+  "program": "FLARE (Flammability Limits at Reduced-g Experiment), JAXA",
+  "budgetBytes": 120000000,
+  "usedBytes": 16863770,
+  "psiStatus": "Nenhuma investigação FLARE no NASA PSI (busca no índice em 2026-11-15; IDs públicos PSI-1 a PSI-230 já verificados nesta sessão); ocorrências do índice são coautorias em outras investigações.",
+  "localCopies": [
+    {
+      "id": "nasa-flare-page",
+      "path": "data/raw/research/nasa-flare.html",
+      "note": "página NASA GRC do FLARE já preservada no corpus de pesquisa; não baixada de novo"
+    }
+  ],
+  "cacheNote": "Originais em data/cache/flare/ (ignorado pelo Git); este manifesto é a única parte versionada.",
+  "files": [
+    {
+      "id": "jaxa-leaflet-2026",
+      "campaign": "Solid Combustion / FLARE (Kibo)",
+      "kind": "leaflet",
+      "origin": "JAXA",
+      "title": "Combustion Experiment in Microgravity (JAXA leaflet)",
+      "identifier": "Leaflet_CombustionExperimentInMicrogravity.pdf",
+      "landing": "https://humans-in-space.jaxa.jp/2026/07/Leaflet_CombustionExperimentInMicrogravity.pdf",
+      "url": "https://humans-in-space.jaxa.jp/2026/07/Leaflet_CombustionExperimentInMicrogravity.pdf",
+      "fileName": "JAXA_Leaflet_Combustion_2026.pdf",
+      "bytes": 1427519,
+      "sha256": "969cc44e95f0060cfa9daff060ec86ed3f923586b7efb28cf038fe6805a13b40",
+      "retrievedAt": "2026-11-15T06:58:11+00:00",
+      "cachePath": "data/cache/flare/JAXA_Leaflet_Combustion_2026.pdf"
+    },
+    {
+      "id": "nasa-ahr-2024",
+      "campaign": "FLARE (resultados ISS)",
+      "kind": "report",
+      "origin": "NASA",
+      "title": "NASA Biological and Physical Sciences — Annual Highlights of Results 2024",
+      "identifier": "ahr-2024-final.pdf",
+      "landing": "https://www.nasa.gov/wp-content/uploads/2025/02/ahr-2024-final.pdf",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/02/ahr-2024-final.pdf",
+      "fileName": "NASA_AHR_2024.pdf",
+      "bytes": 12482999,
+      "sha256": "ecf8af21520fc1e483cb5e7544ce71265ce8b92fa8814ca15b677b9e0926efa9",
+      "retrievedAt": "2026-11-15T06:58:09+00:00",
+      "cachePath": "data/cache/flare/NASA_AHR_2024.pdf"
+    },
+    {
+      "id": "ntrs-flare-2016",
+      "campaign": "FLARE (projeto)",
+      "kind": "presentation",
+      "origin": "NASA NTRS",
+      "title": "Flammability Limits at Reduced-g Experiment (FLARE) — Task Group 5: Fundamental Research on International Standard of Fire Safety in Space",
+      "identifier": "NTRS 20160001023",
+      "landing": "https://ntrs.nasa.gov/citations/20160001023",
+      "url": "https://ntrs.nasa.gov/api/citations/20160001023/downloads/20160001023.pdf",
+      "fileName": "NTRS-20160001023_FLARE.pdf",
+      "bytes": 1130863,
+      "sha256": "610ea73544a49a24e94624844e437b5a77cbb2ac9fc8cc3215a03688a6a58594",
+      "retrievedAt": "2026-11-15T06:58:08+00:00",
+      "cachePath": "data/cache/flare/NTRS-20160001023_FLARE.pdf"
+    },
+    {
+      "id": "tastj-2016-ambient-gas",
+      "campaign": "Solid Combustion (pré-FLARE)",
+      "kind": "journal-paper",
+      "origin": "J-STAGE (open access)",
+      "title": "Effect of Ambient Gas on Flammability Limit of Flat Materials in Microgravity (Tsuboi et al.)",
+      "identifier": "doi:10.2322/tastj.14.ph_1",
+      "landing": "https://doi.org/10.2322/tastj.14.ph_1",
+      "url": "https://www.jstage.jst.go.jp/article/tastj/14/ists30/14_Ph_1/_pdf",
+      "fileName": "TASTJ_2016_14_Ph1_ambient_gas.pdf",
+      "bytes": 822655,
+      "sha256": "5641b462461ea3019a4c8ece239a700b3242dbccb3ce7c19fd2ff6b80096aaa2",
+      "retrievedAt": "2026-11-15T06:58:26+00:00",
+      "cachePath": "data/cache/flare/TASTJ_2016_14_Ph1_ambient_gas.pdf"
+    },
+    {
+      "id": "tastj-2018-loc-model",
+      "campaign": "FLARE (modelo)",
+      "kind": "journal-paper",
+      "origin": "J-STAGE (open access)",
+      "title": "Prediction of Limiting Oxygen Concentration of Thin Materials in Microgravity (Takahashi, Maruta)",
+      "identifier": "doi:10.2322/tastj.16.28",
+      "landing": "https://doi.org/10.2322/tastj.16.28",
+      "url": "https://www.jstage.jst.go.jp/article/tastj/16/1/16_28/_pdf",
+      "fileName": "TASTJ_2018_16_28_LOC_prediction.pdf",
+      "bytes": 999734,
+      "sha256": "7bc9eb42f57c80cdfde345fc3daabc28afcd05e328c1bf0e9ad1777cd50b4470",
+      "retrievedAt": "2026-11-15T06:58:19+00:00",
+      "cachePath": "data/cache/flare/TASTJ_2018_16_28_LOC_prediction.pdf"
+    }
+  ],
+  "blocked": [
+    {
+      "id": "proci-2024-filter-paper",
+      "title": "Quantitative prediction of the flammability limits of filter paper in microgravity conditions",
+      "identifier": "doi:10.1016/j.proci.2024.105200",
+      "license": "CC BY-NC-ND 4.0 (hybrid open access)",
+      "landing": "https://www.sciencedirect.com/science/article/pii/S1540748924000105",
+      "reason": "ScienceDirect HTTP 403 a acesso automatizado; usados apenas metadados Crossref e resumo OpenAlex"
+    },
+    {
+      "id": "cnf-2026-pmma-nomex",
+      "title": "Flame spread over charring and non-charring materials in microgravity on ISS/Kibo",
+      "identifier": "doi:10.1016/j.combustflame.2026.114803",
+      "license": "CC BY-NC-ND 4.0 (hybrid open access)",
+      "landing": "https://www.sciencedirect.com/science/article/pii/S0010218026000398",
+      "reason": "ScienceDirect HTTP 403 a acesso automatizado; usados apenas metadados Crossref e resumo OpenAlex"
+    },
+    {
+      "id": "proci-2026-filter-paper-dynamics",
+      "title": "Dynamics of flame spread over filter papers in microgravity aboard the ISS",
+      "identifier": "doi:10.1016/j.proci.2026.106032",
+      "license": "CC BY 4.0 (hybrid open access)",
+      "landing": "https://www.sciencedirect.com/science/article/pii/S1540748926000337",
+      "reason": "não tentado: mesmo host (ScienceDirect) que bloqueia acesso automatizado; usados metadados Crossref e resumo OpenAlex"
+    },
+    {
+      "id": "firetech-2023-filter-paper",
+      "title": "Flame Spread Behavior Over a Filter Paper Near Extinction Limit Under Microgravity on the ISS/Kibo",
+      "identifier": "doi:10.1007/s10694-023-01507-3",
+      "license": "cópia aberta no repositório JAXA (record 2001801)",
+      "landing": "https://jaxa.repo.nii.ac.jp/records/2001801",
+      "reason": "Repositório JAXA (JAIRO Cloud) em manutenção desde 2026-10-28, HTTP 503; versão da editora não aberta"
+    }
+  ],
+  "failures": [
+    {
+      "id": "ices-2026-cfrp",
+      "url": "https://ttu-ir.tdl.org/bitstreams/3fc9a49b-c58a-4094-9bf5-515626122548/download",
+      "reason": "HTTP 403",
+      "attemptedAt": "2026-11-15T07:01:33+00:00"
+    },
+    {
+      "id": "ices-2026-partial-g",
+      "url": "https://ttu-ir.tdl.org/bitstreams/755f75b3-7b3d-49bf-8053-81d97938b0cf/download",
+      "reason": "HTTP 403",
+      "attemptedAt": "2026-11-15T07:01:33+00:00"
+    }
+  ],
+  "videos": "nenhum vídeo baixado: nenhum vídeo público com associação comprovada a um teste FLARE foi identificado"
+}

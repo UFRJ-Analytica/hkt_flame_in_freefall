@@ -1,0 +1,42 @@
+{
+ "source": {
+  "citation": "Tsuboi K., Maruta K., Takahashi S., Ihara T., Bhattacharjee S., 'Effect of Ambient Gas on Flammability Limit of Flat Materials in Microgravity', Trans. JSASS Aerospace Tech. Japan 14 (ists30) (2016) Ph_1-Ph_6",
+  "doi": "10.2322/tastj.14.ph_1",
+  "manifestId": "tastj-2016-ambient-gas",
+  "tables": ["Table 1 (p. Ph_2)", "Table 2 (p. Ph_5)"],
+  "transcription": "manual, from pdftotext -raw of the cached PDF; values and strings exactly as printed",
+  "acknowledgment": "conducted as part of the SOLID COMBUSTION and FLARE projects supported by JAXA"
+ },
+ "campaign": {
+  "id": "parabolic-flight-2016-pmma-balance-gas",
+  "platform": "voo parabólico (Diamond Air Service), ~20 s de microgravidade; LOC em 1g com propagação descendente no mesmo aparato",
+  "material": "PMMA (Acryplen, Mitsubishi Rayon)",
+  "geometry": "folha plana fina, 0,125 mm de espessura, 8 cm × 2 cm",
+  "flow": "fluxo oposto forçado, 0 a 20 cm/s (ventilador de sucção)",
+  "ambient": "O2 em gás de balanço N2, CO2 ou Ar; câmara fechada",
+  "ignition": "fio Ni-Cr na extremidade a jusante, 10 s antes do início da microgravidade",
+  "measured": "LOC (1g, descendente), MLOC e Vcr (microgravidade), taxa de propagação (mm/s, câmera visível), comprimento de pré-aquecimento (IR)"
+ },
+ "definitions": {
+  "LOC": "minimum oxygen concentration in which steady downward spread is achieved (normal gravity)",
+  "MLOC": "minimum limiting oxygen concentration observed in microgravity while varying the opposed flow velocity",
+  "Vcr": "critical opposed flow velocity at which the MLOC is observed",
+  "deltaO2": "MLOC - LOC as printed (negative = more flammable in microgravity)"
+ },
+ "table1_gasProperties_300K_1atm": [
+  {"gas": "N2", "cp_J_molK": 29.06, "lambda_W_mK": 0.0249, "alpha_mm2_s": 21.1, "aabs": 0.0},
+  {"gas": "CO2", "cp_J_molK": 37.20, "lambda_W_mK": 0.0164, "alpha_mm2_s": 10.9, "aabs": 0.6},
+  {"gas": "Ar", "cp_J_molK": 20.78, "lambda_W_mK": 0.0178, "alpha_mm2_s": 21.1, "aabs": 0.0}
+ ],
+ "table2": {
+  "columns": ["N2", "CO2", "Ar"],
+  "LOC": {"predicted": ["17.0%", "24.0%", "12.0%"], "measured": ["17.0%", "24.3%", "12.9%"]},
+  "MLOC": {"predicted": ["13.0%", "15.4%", "9.2%"], "measured": ["14.7%", "19.2%", "11.6%"]},
+  "deltaO2": {"predicted": ["-4%", "-8.6%", "-2.8%"], "measured": ["-2.3%", "-5.1%", "-1.3%"]},
+  "Vcr": {"predicted": ["8 cm/s", "3 cm/s", "9cm/s"], "measured": ["10 cm/s", "2~6cm/s", "9cm/s"]}
+ },
+ "notesFromText": [
+  "N2: the LOC predicted 17.0 % is the calibration point of the model (LOC in 1g is an input), not an independent prediction.",
+  "The authors state the simplified model underestimated the MLOC in all balance gases (safe-side prediction)."
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "retrieved": "2026-11-15",
+ "via": "Crossref API (metadata, licence) and OpenAlex API (abstract, open-access status). Full texts on ScienceDirect and Springer were not retrieved (HTTP 403 / closed); see data/flare/docs-manifest.json.",
+ "abstractPolicy": "abstracts are stored verbatim only for Creative Commons licensed articles; others keep metadata and a short attributed summary",
+ "publications": [
+  {
+   "id": "proci-2024-filter-paper",
+   "program": "FLARE (JAXA)",
+   "doi": "10.1016/j.proci.2024.105200",
+   "title": "Quantitative prediction of the flammability limits of filter paper in microgravity conditions",
+   "authors": ["Shuhei Takahashi", "Hiroyuki Torikai", "Yoshinari Kobayashi", "Masao Kikuchi", "Osamu Fujita"],
+   "venue": "Proceedings of the Combustion Institute 40 (2024) 105200",
+   "license": "CC BY-NC-ND 4.0",
+   "fullTextRetrieved": false,
+   "abstract": "Under JAXA's FLARE project, ongoing since May 2022, long-duration microgravity combustion experiments have been conducted using filter paper. These experiments utilize the Solid Combustion Experiment Module (SCEM) in the ISS/Kibo module. The dimensions of the filter paper used were 130 mm in length and either 40 mm or 20 mm in width, with the experiments conducted in an environment of 298 K and 100 kPa. This paper highlights the results of 19 flame spread experiments performed in opposed-flow environments and compares the predetermined flammability limiting curve with the flammability map obtained in orbital experiments. One of the objectives of the FLARE project is to predict the flammability limiting curve in microgravity environments based on the results of tests that can be conducted on the ground. These experiments produced intriguing findings, demonstrating the effects of both radiation loss and blow-off during flame spread, as the opposed flow velocity was incrementally increased from 10 cm/s to 18 cm/s in 2 cm/s steps, within an environment containing 15.5 % oxygen concentration. When comparing with the combustible map obtained from orbital experiments, it was discovered that the original limit curve accurately replicated the blow-off branch but overestimated the flammable region in areas with opposed-flow velocity below 10 cm/s. This discrepancy was attributed to the inadequate consideration of the effect of opposed-flow velocity on the radiation quenching branch. Therefore, by considering the velocity distribution measurement results obtained in orbit and modeling the impact of the effective flow velocity opposing the flame front on both the radiation quenching branch and the blow-off branch, we successfully quantitatively replicated the results of the orbital experiments. These findings indicate that the flammability limits of thin flat plate samples can be accurately predicted by properly assessing the effect of the boundary layer on the sample surface."
+  },
+  {
+   "id": "cnf-2026-pmma-nomex",
+   "program": "FLARE (JAXA)",
+   "doi": "10.1016/j.combustflame.2026.114803",
+   "title": "Flame spread over charring and non-charring materials in microgravity on ISS/Kibo",
+   "authors": ["Shuhei Takahashi", "Yoshinari Kobayashi", "Masao Kikuchi", "Osamu Fujita"],
+   "venue": "Combustion and Flame 286 (2026) 114803",
+   "license": "CC BY-NC-ND 4.0",
+   "fullTextRetrieved": false,
+   "abstract": "As part of the FLARE project, long-duration microgravity experiments were conducted on two additional materials—non-charring PMMA and charring NOMEX HT90-40—using the Solid Combustion Experimental Module (SCEM) onboard the ISS/Kibo module. Flammability maps were obtained under opposed-flow velocities, including quiescent conditions, extending previous studies performed with filter paper. For PMMA, both the limiting oxygen concentration (LOC) and the minimum LOC (MLOC) agreed well with predictions from a simplified two-dimensional scaling model, confirming its applicability to thermally thin, non-charring materials. In contrast, NOMEX exhibited robust three-dimensional spherical flames once the two-dimensional thermal balance broke down, even at moderate flow velocities. Under these conditions, the flame radius R f decreased with decreasing opposed-flow velocity, and extinction occurred when R f reached a critical value. To quantify this behavior, the preheat-zone length L g of three-dimensional flames was modeled as a function of R f and the Reynolds number Re , and incorporated into the thermal balance to derive a limiting oxygen concentration for three-dimensional flames. The resulting expression reproduced the observed relationships among R f , V g , and L g , and correctly predicted the extinction behavior. Applying the same formulation to filter paper and PMMA further demonstrated that the critical flame radius provides a unified criterion for the transition and extinction of three-dimensional flames across different material classes. These findings demonstrate that both the two-dimensional and three-dimensional flammability limits of charring and non-charring materials can be predicted within a unified experimental–modeling framework, and they provide essential guidance for advancing microgravity fire-safety modeling."
+  },
+  {
+   "id": "proci-2026-filter-paper-dynamics",
+   "program": "FLARE (JAXA)",
+   "doi": "10.1016/j.proci.2026.106032",
+   "title": "Dynamics of flame spread over filter papers in microgravity aboard the ISS",
+   "authors": ["Yoshinari Kobayashi", "Shuhei Takahashi", "Hiroyuki Torikai", "Masao Kikuchi", "Osamu Fujita"],
+   "venue": "Proceedings of the Combustion Institute 42 (2026) 106032",
+   "license": "CC BY 4.0",
+   "fullTextRetrieved": false,
+   "abstract": "Flame spread over solid fuels in microgravity is a fundamental phenomenon relevant to fire safety in spacecraft and space habitats. However, experimental data obtained under sustained microgravity conditions are still very limited because access to orbital research platforms is restricted. In the present study, flame spread over filter paper was experimentally investigated through orbital combustion experiments conducted aboard the International Space Station (ISS) using the Solid Combustion Experiment Module (SCEM) installed in the Japanese Experiment Module “Kibo.” Experiments were performed under various combinations of opposed-flow velocity and oxygen concentration to clarify flame spread characteristics in low-flow microgravity environments. Two distinct flame spread modes were observed: conventional two-dimensional (2D) flame spread and a unique spread mode referred to as flamelet spread. The flamelet spread was characterized by a small flame spreading in a zigzag manner along the sample surface and was mainly observed under extremely low-flow conditions near the flammability limit. Notably, flame spread was observed even below the limiting oxygen concentration predicted by a conventional two-dimensional flame spread model, suggesting that the conventional LOC concept may underestimate flammability limits under microgravity conditions. The measured flame spread rates for the 2D flame spread were typically 1.0–1.5 mm/s in the thermal regime, whereas the flamelet spread exhibited significantly lower spread rates. The preheating length decreased with increasing opposed-flow velocity, and the observed trends were reasonably reproduced by theoretical scaling relations. These findings provide new experimental insights into flame spread behavior over thin cellulosic fuels in microgravity and contribute to improving the understanding of solid fuel combustion relevant to fire safety in future space habitats."
+  },
+  {
+   "id": "firetech-2023-filter-paper",
+   "program": "FLARE (JAXA)",
+   "doi": "10.1007/s10694-023-01507-3",
+   "title": "Flame Spread Behavior Over a Filter Paper Near Extinction Limit Under Microgravity on the ISS/Kibo",
+   "authors": ["Shuhei Takahashi", "Hiroyuki Torikai", "Yoshinari Kobayashi", "Masao Kikuchi", "Osamu Fujita"],
+   "venue": "Fire Technology 60 (2024) 313-334 (online 2023-11-04)",
+   "license": "publisher TDM licence; open copy on JAXA repository (record 2001801), unavailable during JAIRO Cloud maintenance",
+   "fullTextRetrieved": false,
+   "summary": "On-orbit opposed-flow flame spread over filter paper on ISS/Kibo compared with a flammability map predicted in advance by scale analysis for a two-dimensional flame (attributed summary; abstract not stored)."
+  }
+ ],
+ "excludedNotFlare": [
+  {
+   "doi": "10.1016/j.proci.2026.106484",
+   "title": "Quiescent flame spread and extinction over acrylic sheets in microgravity at increased oxygen concentration",
+   "reason": "NASA SoFIE investigation (Carmignani, Bhattacharjee, Kaplan, Ferkul, Olson), not FLARE; kept out of the FLARE base"
+  }
+ ]
+}
