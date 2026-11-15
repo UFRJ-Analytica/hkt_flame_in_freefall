@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "investigationId": "PSI-25",
+  "kind": "b1",
+  "source": "NASA Physical Sciences Informatics (PSI), arquivos públicos listados no metadata.json local",
+  "portalUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+  "budgetBytes": 20000000,
+  "totalBytes": 17732291,
+  "note": "Os arquivos ficam em data/cache/bass2/ (fora do Git). URLs assinadas temporárias não são gravadas.",
+  "files": [
+    {
+      "name": "PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1_Still_Sequence.mp4",
+      "investigationId": "PSI-25",
+      "psiResourceId": "65e739c18e263688e9f9200d",
+      "psiFolder": "Raw Data",
+      "s3Path": "psi-data/PSI-25/Raw Data/PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1_Still_Sequence.mp4",
+      "version": 2,
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=PSI-25_Raw+Data_BASS_GMT50_SAMPLE_147_TEST_B1_Still_Sequence.mp4&version=2&redirect=false",
+      "catalogBytes": 2831066,
+      "path": "data/cache/bass2/b1/PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1_Still_Sequence.mp4",
+      "retrievedAt": "2026-11-14T20:39:10+00:00",
+      "status": "available",
+      "bytes": 2831066,
+      "sha256": "ba6fa93947d9271cecc07eddb02852ebbed09306dd7754d9536bf97eabd8cd66"
+    },
+    {
+      "name": "PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1 original videos.zip",
+      "investigationId": "PSI-25",
+      "psiResourceId": "65e739c18e263688e9f9200d",
+      "psiFolder": "Raw Data",
+      "s3Path": "psi-data/PSI-25/Raw Data/PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1 original videos.zip",
+      "version": 2,
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=PSI-25_Raw+Data_BASS_GMT50_SAMPLE_147_TEST_B1+original+videos.zip&version=2&redirect=false",
+      "catalogBytes": 14636823,
+      "path": "data/cache/bass2/b1/PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1 original videos.zip",
+      "retrievedAt": "2026-11-14T20:39:14+00:00",
+      "status": "available",
+      "bytes": 14636823,
+      "sha256": "60174c8d490e4e83d087f2b14f3e19a385737b26cfbed3532118e429cd4eb951"
+    },
+    {
+      "name": "PSI-25_Raw Data_GMT2014_050_BASS_S147M_TPB1_ProofSheet.pdf",
+      "investigationId": "PSI-25",
+      "psiResourceId": "65e739c18e263688e9f9200d",
+      "psiFolder": "Raw Data",
+      "s3Path": "psi-data/PSI-25/Raw Data/PSI-25_Raw Data_GMT2014_050_BASS_S147M_TPB1_ProofSheet.pdf",
+      "version": 2,
+      "sourceUrl": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=PSI-25_Raw+Data_GMT2014_050_BASS_S147M_TPB1_ProofSheet.pdf&version=2&redirect=false",
+      "catalogBytes": 264402,
+      "path": "data/cache/bass2/b1/PSI-25_Raw Data_GMT2014_050_BASS_S147M_TPB1_ProofSheet.pdf",
+      "retrievedAt": "2026-11-14T21:26:51+00:00",
+      "status": "available",
+      "bytes": 264402,
+      "sha256": "408e80af0e46cb95b0be56124dd1267505fb2663ff656f43f76dda38c0a9acdc"
+    }
+  ]
+}

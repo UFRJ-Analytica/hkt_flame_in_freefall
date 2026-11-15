@@ -1,0 +1,181 @@
+{
+ "schemaVersion": 1,
+ "recordId": "PSI-25:t0:r2",
+ "test": "B1",
+ "view": "vídeo lateral (câmera Panasonic WV-CP654 com espelho, janela frontal)",
+ "status": "insufficient",
+ "reason": "Nenhuma dimensão física documentada é visível no plano do vídeo lateral, e a única outra vista (fotos de topo) não mostra a amostra nem tem correspondência geométrica demonstrável com o vídeo.",
+ "transformation": null,
+ "origin_px": null,
+ "scale_mm_per_px": null,
+ "referencePoints": [],
+ "residuals_mm": null,
+ "uncertainty": null,
+ "image": {
+  "source": "data/cache/bass2/b1/original/BASS_GMT50_SAMPLE_147_TEST_B1.ts",
+  "sha256": "8ab341de8a5aa4b17d8c2edc2200916f117f43102f06ce77251ad33ab33fbd8d",
+  "width_px": 720,
+  "height_px": 480,
+  "pixelAspect": "não determinada para o TS; o MP4 do PSI declara 10:11 — x e y precisam de escalas próprias"
+ },
+ "documentedDimensions": [
+  {
+   "quantity": "largura da amostra",
+   "value_mm": 20.0,
+   "qualifier": "nominal",
+   "sources": [
+    "PSI-25 CSV / Test.Matrices.xlsx, aba Bhattacharjee, E2: \"100 micron pmma film, 2 cm wide\"",
+    "Summary Report, PDF p. 29 e 45: \"20 mm wide\"",
+    "SRD, p. 5: \"Flat 2 cm PMMA Samples (0.1 mm thick)\""
+   ],
+   "visibleInSideView": false,
+   "why": "a câmera de vídeo vê o filme de perfil (pela janela frontal, ortogonal à câmera de topo; PDF p. 12–13 e 64): a largura fica na linha de visada"
+  },
+  {
+   "quantity": "comprimento da amostra",
+   "value_mm": 95.0,
+   "qualifier": "aproximado (\"about 95 mm long\")",
+   "sources": [
+    "Summary Report, PDF p. 29 e 45"
+   ],
+   "visibleInSideView": "não nos quadros disponíveis",
+   "why": "é a dimensão ao longo do eixo de propagação, mas a amostra não aparece no vídeo escuro: só a chama e, por instantes, peças iluminadas pelo ignitor"
+  },
+  {
+   "quantity": "espessura da amostra",
+   "value_mm": 0.1,
+   "qualifier": "nominal",
+   "sources": [
+    "CSV / Test.Matrices E2 (\"100 micron\")",
+    "SRD p. 5 (\"0.1 mm thick\")"
+   ],
+   "visibleInSideView": false,
+   "why": "menor que um pixel e invisível no escuro; não serve de escala"
+  },
+  {
+   "quantity": "seção do duto",
+   "value_mm": [
+    76.0,
+    76.0,
+    170.0
+   ],
+   "qualifier": "7,6 x 7,6 x 17 cm; seção de teste de 17 cm",
+   "sources": [
+    "Summary Report, PDF p. 12 e 74"
+   ],
+   "visibleInSideView": false,
+   "why": "paredes pretas anodizadas, sem iluminação; campo de visão do vídeo não documentado"
+  },
+  {
+   "quantity": "escala móvel na seção de teste",
+   "value_mm": null,
+   "qualifier": "existência citada, sem dimensões",
+   "sources": [
+    "Summary Report, PDF p. 12: \"a movable scale\"",
+    "Ops §5 nota: \"the deployed scale may not be visible in the image\""
+   ],
+   "visibleInSideView": "não identificada",
+   "why": "nenhuma graduação aparece nos quadros do B1"
+  },
+  {
+   "quantity": "pontos de 6 mm na imagem de topo",
+   "value_mm": 6.0,
+   "qualifier": "sobreposição gráfica da análise SDSU",
+   "sources": [
+    "Summary Report, PDF p. 30 e 47 (Figuras 2.7 e 2.18)"
+   ],
+   "visibleInSideView": false,
+   "why": "acrescentados pela análise em fotos de topo de outro teste; não existem no vídeo"
+  }
+ ],
+ "pixelObservationsWithoutScale": {
+  "litStructures": {
+   "framesUsed": [
+    327,
+    328,
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338
+   ],
+   "method": "máximo por pixel dos 12 quadros mais claros (brilho do ignitor), gama 0,35; bordas por gradiente médio",
+   "verticalEdge_px": {
+    "x": 158,
+    "yRange": [
+     90,
+     135
+    ]
+   },
+   "horizontalEdges_px": {
+    "y": [
+     460,
+     461,
+     471
+    ],
+    "xRange": [
+     30,
+     400
+    ]
+   },
+   "searchWindow_px": {
+    "x": [
+     30,
+     400
+    ],
+    "yFrom": 90,
+    "note": "abaixo da sobreposição (que termina em y ~ 82)"
+   },
+   "identity": "desconhecida (provavelmente partes do suporte da amostra ou do ignitor)",
+   "physicalDimension": null,
+   "usableAsReference": false
+  }
+ },
+ "topViewStills": {
+  "file": "PSI-25_Raw Data_BASS_GMT50_SAMPLE_147_TEST_B1_Still_Sequence.mp4",
+  "sha256": "ba6fa93947d9271cecc07eddb02852ebbed09306dd7754d9536bf97eabd8cd66",
+  "frames": 1129,
+  "content": "vídeo da tela de revisão da Nikon D300s: miniatura da foto, histograma e metadados (arquivo DSC_7171–7217.NEF, foto n/57, 4288 x 2848 RAW, ISO 1000, F2, \"35mm\", compensação -4.0, hora da câmera 02/19/2014 10:03:42–10:04:33)",
+  "photoCount": 57,
+  "photoCountMatchesCsv": "Total Frames Shot = 57 (CSV / Test.Matrices J2)",
+  "sampleVisible": false,
+  "why": "a miniatura ocupa ~200 x 120 px do quadro de vídeo e, com exposição de 1/160–1/250 s e -4 EV, só a chama e o ignitor aparecem; nenhuma borda da amostra ou do suporte é visível",
+  "viewMatchesSideVideo": false,
+  "viewNote": "vista de topo (câmera fotográfica pela janela superior), ortogonal à vista lateral do vídeo"
+ },
+ "rejectedShortcuts": [
+  "Transferir uma escala das fotos de topo: outra câmera, outro plano, e a amostra não aparece nas miniaturas.",
+  "Supor que a largura do quadro cobre a seção de teste de 17 cm: o campo de visão não está documentado.",
+  "Usar \"the flame propagated across half the sample length\" (PDF p. 21): o ponto de partida e o comprimento (\"about 95 mm\") são imprecisos, e o mesmo texto fornece a velocidade de referência (2,2 mm/s), o que tornaria a validação circular.",
+  "Usar a separação entre as duas lâminas da chama: é uma propriedade da chama, não uma dimensão conhecida."
+ ],
+ "pathsForward": [
+  {
+   "option": "Folha de prova das fotos do B1 (GMT2014_050_BASS_S147M_TPB1_ProofSheet.pdf, 264 402 bytes)",
+   "expectation": "pode conter a foto pós-queima iluminada com lanterna (Ops §9.12), com a amostra e o suporte; serviria para escala da vista de topo, não do vídeo lateral"
+  },
+  {
+   "option": "Vídeos de outros testes com o volume de trabalho iluminado ou com a escala móvel visível",
+   "expectation": "a câmera e o campo de visão são fixos (SRD p. 1: \"The field of view of the video can not be changed\"); uma escala medida em outro teste valeria para o B1 se a montagem do suporte for a mesma (a confirmar)"
+  },
+  {
+   "option": "Desenho de engenharia do suporte de amostra plana e do duto",
+   "expectation": "não está entre os documentos do PSI-25; daria dimensões das peças iluminadas pelo ignitor"
+  },
+  {
+   "option": "Medir em pixels e converter depois",
+   "expectation": "a próxima etapa pode trabalhar em px e px/s, deixando a conversão em aberto"
+  }
+ ],
+ "diagnostics": {
+  "ignition-max-gamma.png": "data/cache/bass2/b1/calibration/ignition-max-gamma.png",
+  "all-frames-max.png": "data/cache/bass2/b1/calibration/all-frames-max.png",
+  "still-sequence-thumbs.png": "data/cache/bass2/b1/calibration/still-sequence-thumbs.png"
+ },
+ "validation": "não aplicável: nenhuma transformação foi estabelecida"
+}
