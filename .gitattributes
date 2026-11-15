@@ -4,3 +4,9 @@ data/raw/research/** -text
 public/data/*.json -text
 data/saffire/**/*.json -text
 public/data/saffire/*.json -text
+data/bass2/** -text
+data/same/** -text
+data/sofie/** -text
+public/data/bass2/*.json -text
+public/data/same/*.json -text
+public/data/sofie/*.json -text

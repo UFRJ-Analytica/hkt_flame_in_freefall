@@ -1,0 +1,3 @@
+# Dependencies for scripts/bass2 (video segmentation, overlay OCR by template matching, telemetry).
+numpy==2.4.6
+opencv-python-headless==5.0.0.93
